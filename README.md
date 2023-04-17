@@ -30,7 +30,7 @@
 
 ### 기능명세서
 
-![](./docs/asset/docs-func/img.png)
+[기능명세서 LINK](https://docs.google.com/spreadsheets/d/1r_Q3wj2S8LpA_8p1xgQYoIveTYeNxu2gi-hhOvXI3gA/edit?usp=sharing)
 
 ### ER Diagram
 

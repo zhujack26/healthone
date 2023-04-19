@@ -1,0 +1,164 @@
+@import "Colors.scss";
+
+.user-table-item {
+  /* user-table-head */
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  align-self: flex-start;
+  padding: 0px;
+  width: max-content;
+  height: 48px;
+  .name-div,
+  .id-div,
+  .email-div,
+  .date-div,
+  .state-div,
+  .controll-div {
+    /* name */
+    box-sizing: border-box;
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background: $white;
+    border: 1px solid $mono400;
+    width: max-content;
+    height: 48px;
+  }
+
+  /* 720px 이하일 때 */
+  @media (max-width: 720px) {
+    .name-div,
+    .id-div,
+    .email-div,
+    .date-div,
+    .state-div,
+    .controll-div {
+      color: $black;
+      font-size: 8px;
+      padding: 0px 16px;
+    }
+    .email-div {
+      padding: 0px 8px;
+    }
+    .controll-div {
+      padding: 0px;
+    }
+  }
+
+  /* 720 ~ 1024 일 때 */
+  @media (min-width: 721px) and (max-width: 1024px) {
+    .name-div,
+    .id-div,
+    .email-div,
+    .date-div,
+    .state-div,
+    .controll-div {
+      color: $black;
+      font-size: 16px;
+      padding: 0px 2.35vw;
+    }
+    .id-div {
+      padding: 0px 2.3vw;
+    }
+    .email-div {
+      padding: 0px 2.35vw;
+    }
+    .date-div {
+      padding: 0px 2.7vw;
+    }
+    .state-div {
+      padding: 0px 2.1vw;
+    }
+    .controll-div {
+      padding: 0px 1.2vw;
+    }
+  }
+
+  /* 1024px 이상일 때 */
+  @media (min-width: 1025px) {
+    /* 스타일 속성 */
+  }
+
+  .controll-div {
+    .user-controll-frame {
+      /* user-controll-frame */
+      /* Auto layout */
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 0px;
+      width: max-content;
+      height: max-content;
+      background-color: $white;
+
+      .controll-select-btn {
+        /* controll-select-btn */
+        box-sizing: border-box;
+        /* Auto layout */
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 0px 8px;
+
+        border: 1px solid $green300;
+        border-radius: 8px;
+        /* 720px 이하일 때 */
+        @media (max-width: 720px) {
+          width: 64px;
+          height: 40px;
+          font-size: 10px;
+        }
+        /* 720 ~ 1024 일 때 */
+        @media (min-width: 721px) and (max-width: 1024px) {
+        }
+
+        /* 1024px 이상일 때 */
+        @media (min-width: 1025px) {
+          /* 스타일 속성 */
+          width: 132px;
+          height: 40px;
+        }
+      }
+      .user-edit-btn-frame {
+        /* user-edit-btn-frame */
+        /* Auto layout */
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 0px 8px;
+        gap: 16px;
+
+        width: max-content;
+        height: max-content;
+        background-color: $white;
+
+        .apply-btn,
+        .cancel-btn {
+          /* apply-btn */
+          /* Auto layout */
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+
+          //   width: 94px;
+          //   height: 40px;
+        }
+        .apply-btn {
+          background: $red300;
+        }
+        .cancel-btn {
+          background: $white;
+          border: 1px solid $green300;
+        }
+      }
+    }
+  }
+}

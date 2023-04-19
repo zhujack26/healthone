@@ -1,3 +1,52 @@
+@charset "UTF-8";
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
 
+.search-user-bar {
+  /* search-user-bar */
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  padding: 12px 16px;
+  gap: 24px;
+  width: 100%;
+  height: max-content;
+}
+.search-user-bar .search-user-title {
+  /* search-user-title */
+  width: max-content;
+  height: max-content;
+  font-weight: 700;
+  font-size: 24px;
+  /* black */
+  color: #0c0a0b;
+}
+.search-user-bar .user-search-input {
+  /* user-search-input */
+  box-sizing: border-box;
+  flex: 1;
+  height: 48px;
+  /* mono100 */
+  background: #fdfdfd;
+  border: 1px solid #0c0a0b;
+  padding-left: 16px;
+  /* media 추가! */
+}
+.search-user-bar .search-btn {
+  /* 검색 */
+  width: max-content;
+  height: max-content;
+  font-weight: 700;
+  font-size: 24px;
+  /* mono700 */
+  color: #6e6969;
+  cursor: pointer;
+  padding-right: 36px;
+}
 
 /*# sourceMappingURL=SearchUserBar.css.map */

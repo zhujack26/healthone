@@ -1,0 +1,123 @@
+@charset "UTF-8";
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.user-table-head {
+  /* user-table-head */
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  width: max-content;
+  height: 48px;
+  /* 720px 이하일 때 */
+  /* 720 ~ 1024 일 때 */
+  /* 1024px 이상일 때 */
+}
+.user-table-head .name-div,
+.user-table-head .id-div,
+.user-table-head .email-div,
+.user-table-head .date-div,
+.user-table-head .state-div,
+.user-table-head .controll-div {
+  /* name */
+  box-sizing: border-box;
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background: #e8e8e8;
+  border: 1px solid #ababab;
+  width: max-content;
+  height: 48px;
+  color: #0c0a0b;
+  font-weight: 900;
+}
+@media (max-width: 720px) {
+  .user-table-head .name-div,
+  .user-table-head .id-div,
+  .user-table-head .email-div,
+  .user-table-head .date-div,
+  .user-table-head .state-div,
+  .user-table-head .controll-div {
+    font-size: 12px;
+    padding: 0px 19px;
+  }
+  .user-table-head .id-div {
+    padding: 0px 17.5px;
+  }
+  .user-table-head .email-div {
+    padding: 0px 37.5px;
+  }
+  .user-table-head .date-div {
+    padding: 0px 25.5px;
+  }
+  .user-table-head .state-div {
+    padding: 0px 14px;
+  }
+  .user-table-head .controll-div {
+    padding: 0px 100px;
+  }
+}
+@media (min-width: 721px) and (max-width: 1024px) {
+  .user-table-head .name-div,
+  .user-table-head .id-div,
+  .user-table-head .email-div,
+  .user-table-head .date-div,
+  .user-table-head .state-div,
+  .user-table-head .controll-div {
+    font-size: 16px;
+    padding: 0px 3.2vw;
+  }
+  .user-table-head .id-div {
+    padding: 0px 3.1vw;
+  }
+  .user-table-head .email-div {
+    padding: 0px 7.9vw;
+  }
+  .user-table-head .date-div {
+    padding: 0px 4.8vw;
+  }
+  .user-table-head .state-div {
+    padding: 0px 2.1vw;
+  }
+  .user-table-head .controll-div {
+    padding: 0px 10.2vw;
+  }
+}
+@media (min-width: 1025px) {
+  .user-table-head {
+    /* 스타일 속성 */
+  }
+  .user-table-head .name-div,
+  .user-table-head .id-div,
+  .user-table-head .email-div,
+  .user-table-head .date-div,
+  .user-table-head .state-div,
+  .user-table-head .controll-div {
+    font-size: 16px;
+    padding: 0px 24px;
+  }
+  .user-table-head .id-div {
+    padding: 0px 23.5px;
+  }
+  .user-table-head .email-div {
+    padding: 0px 67.5px;
+  }
+  .user-table-head .date-div {
+    padding: 0px 36px;
+  }
+  .user-table-head .state-div {
+    padding: 0px 16px;
+  }
+  .user-table-head .controll-div {
+    padding: 0px 128px;
+  }
+}
+
+/*# sourceMappingURL=UserTableHead.css.map */

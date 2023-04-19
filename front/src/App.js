@@ -1,6 +1,7 @@
 
 /* import component */
 import LoginPage from "./pages/LoginPage"
+import UserManagePage from "./pages/UserManagePage"
 
 import './App.css';
 
@@ -12,7 +13,9 @@ function App() {
       {/* <Router>
         <Transition />
       </Router> */}
-      <LoginPage/>
+      {/* <LoginPage/> */}
+
+      <UserManagePage/>
       {/* <Main></Main> */}
     </div>
   );

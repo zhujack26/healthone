@@ -1,0 +1,21 @@
+@import "Colors.scss";
+
+.user-manage-page{
+    /* user-manage-page */
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    gap: 16px;
+
+    width: 1408px;
+    height: 992px;
+
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}

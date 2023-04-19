@@ -1,0 +1,54 @@
+@import "Colors.scss";
+
+.search-user-bar {
+  /* search-user-bar */
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  padding: 12px 16px;
+  gap: 24px;
+
+  width: 100%;
+  height: max-content;
+
+  .search-user-title {
+    /* search-user-title */
+    width: max-content;
+    height: max-content;
+
+    font-weight: 700;
+    font-size: 24px;
+
+    /* black */
+    color: $black;
+  }
+
+  .user-search-input {
+    /* user-search-input */
+    box-sizing: border-box;
+
+    flex: 1;
+    height: 48px;
+    /* mono100 */
+    background: $white;
+    border: 1px solid $black;
+    padding-left: 16px;
+    /* media 추가! */
+  }
+
+  .search-btn {
+    /* 검색 */
+    width: max-content;
+    height: max-content;
+
+    font-weight: 700;
+    font-size: 24px;
+
+    /* mono700 */
+    color: $mono700;
+    cursor: pointer;
+    padding-right: 36px;
+  }
+}

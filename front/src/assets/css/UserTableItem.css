@@ -1,0 +1,160 @@
+@charset "UTF-8";
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.user-table-item {
+  /* user-table-head */
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  align-self: flex-start;
+  padding: 0px;
+  width: max-content;
+  height: 48px;
+  /* 720px 이하일 때 */
+  /* 720 ~ 1024 일 때 */
+  /* 1024px 이상일 때 */
+}
+.user-table-item .name-div,
+.user-table-item .id-div,
+.user-table-item .email-div,
+.user-table-item .date-div,
+.user-table-item .state-div,
+.user-table-item .controll-div {
+  /* name */
+  box-sizing: border-box;
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background: #fdfdfd;
+  border: 1px solid #ababab;
+  width: max-content;
+  height: 48px;
+}
+@media (max-width: 720px) {
+  .user-table-item .name-div,
+  .user-table-item .id-div,
+  .user-table-item .email-div,
+  .user-table-item .date-div,
+  .user-table-item .state-div,
+  .user-table-item .controll-div {
+    color: #0c0a0b;
+    font-size: 8px;
+    padding: 0px 16px;
+  }
+  .user-table-item .email-div {
+    padding: 0px 8px;
+  }
+  .user-table-item .controll-div {
+    padding: 0px;
+  }
+}
+@media (min-width: 721px) and (max-width: 1024px) {
+  .user-table-item .name-div,
+  .user-table-item .id-div,
+  .user-table-item .email-div,
+  .user-table-item .date-div,
+  .user-table-item .state-div,
+  .user-table-item .controll-div {
+    color: #0c0a0b;
+    font-size: 16px;
+    padding: 0px 2.35vw;
+  }
+  .user-table-item .id-div {
+    padding: 0px 2.3vw;
+  }
+  .user-table-item .email-div {
+    padding: 0px 2.35vw;
+  }
+  .user-table-item .date-div {
+    padding: 0px 2.7vw;
+  }
+  .user-table-item .state-div {
+    padding: 0px 2.1vw;
+  }
+  .user-table-item .controll-div {
+    padding: 0px 1.2vw;
+  }
+}
+@media (min-width: 1025px) {
+  .user-table-item {
+    /* 스타일 속성 */
+  }
+}
+.user-table-item .controll-div .user-controll-frame {
+  /* user-controll-frame */
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  width: max-content;
+  height: max-content;
+  background-color: #fdfdfd;
+}
+.user-table-item .controll-div .user-controll-frame .controll-select-btn {
+  /* controll-select-btn */
+  box-sizing: border-box;
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 8px;
+  border: 1px solid #aad1ae;
+  border-radius: 8px;
+  /* 720px 이하일 때 */
+  /* 720 ~ 1024 일 때 */
+  /* 1024px 이상일 때 */
+}
+@media (max-width: 720px) {
+  .user-table-item .controll-div .user-controll-frame .controll-select-btn {
+    width: 64px;
+    height: 40px;
+    font-size: 10px;
+  }
+}
+@media (min-width: 1025px) {
+  .user-table-item .controll-div .user-controll-frame .controll-select-btn {
+    /* 스타일 속성 */
+    width: 132px;
+    height: 40px;
+  }
+}
+.user-table-item .controll-div .user-controll-frame .user-edit-btn-frame {
+  /* user-edit-btn-frame */
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px 8px;
+  gap: 16px;
+  width: max-content;
+  height: max-content;
+  background-color: #fdfdfd;
+}
+.user-table-item .controll-div .user-controll-frame .user-edit-btn-frame .apply-btn,
+.user-table-item .controll-div .user-controll-frame .user-edit-btn-frame .cancel-btn {
+  /* apply-btn */
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.user-table-item .controll-div .user-controll-frame .user-edit-btn-frame .apply-btn {
+  background: #ff5f6d;
+}
+.user-table-item .controll-div .user-controll-frame .user-edit-btn-frame .cancel-btn {
+  background: #fdfdfd;
+  border: 1px solid #aad1ae;
+}
+
+/*# sourceMappingURL=UserTableItem.css.map */

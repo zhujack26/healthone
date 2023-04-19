@@ -1,1 +1,1 @@
-{"version":3,"sourceRoot":"","sources":[],"names":[],"mappings":"","file":"UserInfoTable.css"}
+{"version":3,"sourceRoot":"","sources":["../scss/Commons.scss","../scss/UserInfoTable.scss"],"names":[],"mappings":"AAAA;EACE;EACA;EACA;;;ACDF;AACE;AACA;EAEA;EACA;EACA;EAEA;EAEA;EACA;;AAEA;AACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA","file":"UserInfoTable.css"}

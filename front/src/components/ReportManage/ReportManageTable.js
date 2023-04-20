@@ -8,11 +8,16 @@ import "../../assets/css/ReportTableItem.css"
 /* import .. */
 import { useState, useEffect } from "react";
 
-const ReportManageTable = () => {
+/**
+ * 
+ * @param {function} showAnswerModal 답변등록 모달 함수
+ * @returns 
+ */
+const ReportManageTable = ({showAnswerModal}) => {
 
   const size = 20;
   
-  const [reportTableItem, setReportTableItem] = useState([Array(size).fill().map((e, i)=> <ReportTableItem key={i}/>)]);
+  const [reportTableItem, setReportTableItem] = useState([Array(size).fill().map((e, i)=> <ReportTableItem showAnswerModal={()=>{showAnswerModal()}} key={i}/>)]);
 
   useEffect(() => {}, []);
   return (

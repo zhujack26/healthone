@@ -13,9 +13,9 @@ import "../assets/css/LoginPage.css"
 
 const LoginPage = () => {
   return (
-    <>
+    <div className="login-page">
       <LoginForm/>
-    </>
+    </div>
   );
 };
 

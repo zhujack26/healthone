@@ -4,7 +4,7 @@
   margin: 0;
 }
 
-.user-manage-page {
+.manage-page {
   /* user-manage-page */
   /* Auto layout */
   display: flex;
@@ -15,4 +15,4 @@
   gap: 16px;
 }
 
-/*# sourceMappingURL=UserManagePage.css.map */
+/*# sourceMappingURL=ManagePage.css.map */

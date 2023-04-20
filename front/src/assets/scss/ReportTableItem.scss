@@ -1,0 +1,68 @@
+@import "Colors.scss";
+
+
+.report-table-item {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 8px;
+  height: max-content;
+
+  td{
+    flex:1;
+    min-width: 8vw;
+    width: max-content;
+    box-sizing: border-box;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    height: 32px;      
+    line-height: 32px;
+    .report-status-option{
+      border-radius: 4px;
+      background-color: $white;
+      border: 1px solid $green300;
+
+      font-size: 16px;
+      text-align: center;
+      width: 128px;
+      height: 36px;
+
+    }
+  }
+  
+
+  td:first-child{
+    flex: 0.3;
+  }
+
+  td:last-child{
+    // flex:3;
+    // min-width: 10vw;
+    width: max-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    .answer-btn, 
+    .save-btn{
+      color: $white;
+      margin-left: 8px;
+      margin-right: 8px;
+
+      /* media... */
+
+    }
+
+    .answer-btn{
+      width: 96px;
+      background-color: $green300;
+
+    }
+    .save-btn{
+      width: 72px;
+      background-color: $blue400;      
+    }
+  }
+  
+}

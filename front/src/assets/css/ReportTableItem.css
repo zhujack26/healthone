@@ -1,0 +1,59 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.report-table-item {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 8px;
+  height: max-content;
+}
+.report-table-item td {
+  flex: 1;
+  min-width: 8vw;
+  width: max-content;
+  box-sizing: border-box;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  height: 32px;
+  line-height: 32px;
+}
+.report-table-item td .report-status-option {
+  border-radius: 4px;
+  background-color: #fdfdfd;
+  border: 1px solid #aad1ae;
+  font-size: 16px;
+  text-align: center;
+  width: 128px;
+  height: 36px;
+}
+.report-table-item td:first-child {
+  flex: 0.3;
+}
+.report-table-item td:last-child {
+  width: max-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.report-table-item td:last-child .answer-btn,
+.report-table-item td:last-child .save-btn {
+  color: #fdfdfd;
+  margin-left: 8px;
+  margin-right: 8px;
+  /* media... */
+}
+.report-table-item td:last-child .answer-btn {
+  width: 96px;
+  background-color: #aad1ae;
+}
+.report-table-item td:last-child .save-btn {
+  width: 72px;
+  background-color: #408fff;
+}
+
+/*# sourceMappingURL=ReportTableItem.css.map */

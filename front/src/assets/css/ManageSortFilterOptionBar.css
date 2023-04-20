@@ -46,7 +46,7 @@
   width: max-content;
   height: max-content;
   font-weight: 400;
-  font-size: 24px;
+  font-size: 20px;
   text-align: center;
   color: #0c0a0b;
 }
@@ -61,12 +61,13 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 12px 16px;
+  padding: 8px 8px;
   gap: 16px;
-  width: 196px;
+  width: 128px;
   height: max-content;
   border: 1px solid #aad1ae;
-  border-radius: 8px;
+  text-align: center;
+  font-size: 16px;
 }
 
 /*# sourceMappingURL=ManageSortFilterOptionBar.css.map */

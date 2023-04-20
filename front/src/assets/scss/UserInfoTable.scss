@@ -1,30 +1,52 @@
 @import "Colors.scss";
 
 .user-info-table {
-  /* user-info-table */
-  /* Auto layout */
 
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  width: 100vw;
+  height: max-content;
+  padding: 8px;
 
-  padding: 0px;
-
-  width: 100%;
-  height: max-content; // todo..
-
-  .user-info-item-list {
-    /* Auto layout */
+  table{
+    width: 100%;
+    height: max-content;
+    max-height: 600px;
     display: flex;
     flex-direction: column;
-    align-content: flex-start;
     flex-wrap: nowrap;
-    padding: 0px;
-    margin: 0;
-    width: 100%;
-    min-height: 48px;
-    max-height: 60vh;
-    height: max-content;
-    overflow-y: scroll;
-  }
+    
+    thead{
+      width: 100%;
+      tr{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+            
+        th{
+          flex:1;
+          min-width: 8vw;
+          width: max-content;
+          box-sizing: border-box;
+          padding-left: 1vw;
+          padding-right: 1vw;
+          background-color: $mono300;
+          height: 48px;      
+          line-height: 48px;
+
+        }
+        th:last-child{
+          flex:3;
+        }
+      }
+    }
+
+    tbody{
+      display: flex;
+      flex-direction: column;
+      overflow-y: scroll;
+      flex-wrap: nowrap;
+      height: max-content;
+      max-height: 480px;
+    
+    }
+  }  
 }

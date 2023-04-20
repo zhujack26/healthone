@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -18,20 +19,27 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun CircularGraph(totalCalories: Int, modifier: Modifier = Modifier) {
-    val graphSize = 150.dp
-    val strokeWidth = 15.dp
-    val graphColor = Color.Red
+fun CircularGraph(totalCalories: Int, recommendedCalories: Int, modifier: Modifier = Modifier) {
+    val graphSize = 300.dp
+    val strokeWidth = 45.dp
+    val graphColors = listOf(Color(0xFFFFA726), Color(0xFFE53935))
 
     Box(modifier = modifier.size(graphSize)) {
         Canvas(modifier = Modifier.matchParentSize()) {
             val circleRadius = (size.minDimension - strokeWidth.toPx()) / 2
-            val halfCircleAngle = 180f
+            val sweepAngle = 180f * (totalCalories.toFloat() / recommendedCalories.toFloat()).coerceAtMost(1f)
+
+            val gradient = Brush.linearGradient(
+                colors = graphColors,
+                start = Offset(0f, 0f),
+                end = Offset(size.width, 0f)
+            )
+
 
             drawArc(
-                color = graphColor,
+                brush = gradient,
                 startAngle = 180f,
-                sweepAngle = halfCircleAngle,
+                sweepAngle = sweepAngle,
                 useCenter = false,
                 topLeft = Offset(
                     (size / 2.0f).width - circleRadius.toFloat(),
@@ -57,5 +65,5 @@ fun CircularGraph(totalCalories: Int, modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun CircularGraphPreview() {
-    CircularGraph(totalCalories = 3300)
+    CircularGraph(totalCalories = 3300, recommendedCalories = 3500)
 }

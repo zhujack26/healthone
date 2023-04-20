@@ -10,10 +10,9 @@
   /* Auto layout */
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
   padding: 16px 32px;
-  gap: 16px;
+  gap: 64px;
   height: max-content;
   /* 360px 이하일 때 */
   /* 361px ~ 720px일 때 */
@@ -40,7 +39,17 @@
 @media (min-width: 1025px) {
   .login-form {
     /* 스타일 속성 */
-    width: 70vw;
+    width: 560px;
+  }
+}
+@media (max-height: 720px) {
+  .login-form {
+    height: 560px;
+  }
+}
+@media (min-height: 721px) {
+  .login-form {
+    height: 592px;
   }
 }
 .login-form .admin-login-title {

@@ -8,14 +8,12 @@ import { Button } from "@material-ui/core";
 import "../../assets/css/ManagePageHeader.css";
 
 /**
- * 
  * @param {String} pageTitle 페이지 제목
- * @returns 
+ * @param {function} doLogout 로그아웃 함수
+ * @returns
  */
-const ManagePageHeader = ({ pageTitle }) => {
-  
-  const [topNavText, setTopNavNext] = useState(["회원 관리", "불편 사항"])
-
+const ManagePageHeader = ({ pageTitle, doLogout }) => {
+  const [topNavText, setTopNavNext] = useState(["회원 관리", "불편 사항"]);
 
   return (
     <>
@@ -26,7 +24,14 @@ const ManagePageHeader = ({ pageTitle }) => {
             <p>{topNavText[0]}</p>
             <p>{topNavText[1]}</p>
           </div>
-          <Button className="logout-btn">로그아웃</Button>
+          <Button
+            className="logout-btn"
+            onClick={(e) => {
+              doLogout();
+            }}
+          >
+            로그아웃
+          </Button>
         </div>
       </div>
     </>

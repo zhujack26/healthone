@@ -1,7 +1,7 @@
 
 /* import component */
 import LoginPage from "./pages/LoginPage"
-import UserManagePage from "./pages/UserManagePage"
+import ManagePage from "./pages/ManagePage"
 
 import './App.css';
 
@@ -15,7 +15,7 @@ function App() {
       </Router> */}
       {/* <LoginPage/> */}
 
-      <UserManagePage/>
+      <ManagePage/>
       {/* <Main></Main> */}
     </div>
   );

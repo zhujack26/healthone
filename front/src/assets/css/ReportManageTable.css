@@ -46,7 +46,16 @@
   overflow-y: scroll;
   flex-wrap: nowrap;
   height: max-content;
-  max-height: 400px;
+}
+@media (max-height: 720px) {
+  .report-manage-table .report-table tbody {
+    max-height: 400px;
+  }
+}
+@media (max-height: 1024px) {
+  .report-manage-table .report-table tbody {
+    height: 720px;
+  }
 }
 
 /*# sourceMappingURL=ReportManageTable.css.map */

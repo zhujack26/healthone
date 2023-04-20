@@ -4,15 +4,15 @@
 
 /* import react*/
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 
 /* import component */
 import ManagePageHeader from "../components/Manage/ManagePageHeader";
 import SearchUserBar from "../components/Manage/SearchUserBar";
 import ManageSortFilterOptionBar from "../components/Manage/ManageSortFilterOptionBar";
 import UserInfoTable from "../components/UserManage/UserInfoTable";
-import ReportManageTable from "../components/ReportManage/ReportManageTable"
-import ReportAnswerModal from "../components/ReportManage/ReportAnswerModal"
+import ReportManageTable from "../components/ReportManage/ReportManageTable";
+import ReportAnswerModal from "../components/ReportManage/ReportAnswerModal";
 
 /* import css */
 import "../assets/css/ManagePage.css";
@@ -33,10 +33,15 @@ const ManagePage = () => {
   const filterOptions2 = ["전체", "처리완료", "처리접수", "등록완료"];
 
   const [isShowModal, setIsShowMdoal] = useState(false);
-  
-  
+
+  const navigate = useNavigate();
+
   const report = new Report(
-    "로그인이 안돼요", "홍길동", "hong123@gmail.com", "2023.04.23.", `지금 앱 내에서 로그인 하는데,
+    "로그인이 안돼요",
+    "홍길동",
+    "hong123@gmail.com",
+    "2023.04.23.",
+    `지금 앱 내에서 로그인 하는데,
     구글 계정 로그인 했음에도
     로그인이 자꾸 안됩니다...
     
@@ -49,18 +54,36 @@ const ManagePage = () => {
     정말 답답하네요 
     
     빠른 처리 부탁드립니다`
-  )
+  );
 
   return (
     <>
       <div className="manage-page">
-        <ManagePageHeader pageTitle={"사용자 관리"} />
+        <ManagePageHeader
+          pageTitle={"사용자 관리"}
+          doLogout={() => {
+            navigate("/login");
+          }}
+        />
         <SearchUserBar />
         <ManageSortFilterOptionBar isSort={false} filterOptions={filterOptions2} />
         {/* <UserInfoTable /> */}
-        <ReportManageTable showAnswerModal={()=>{setIsShowMdoal(true)}} />
+        <ReportManageTable
+          showAnswerModal={() => {
+            setIsShowMdoal(true);
+          }}
+        />
         {/* <ReportAnswerModal Report={report} />         */}
-        {isShowModal?<ReportAnswerModal Report={report} closeModal={()=>{setIsShowMdoal(false)}} />:<></>}
+        {isShowModal ? (
+          <ReportAnswerModal
+            Report={report}
+            closeModal={() => {
+              setIsShowMdoal(false);
+            }}
+          />
+        ) : (
+          <></>
+        )}
       </div>
     </>
   );

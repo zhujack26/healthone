@@ -4,7 +4,7 @@
 
 import { Button } from "@material-ui/core";
 import "../../assets/css/ReportTableItem.css";
-const ReportTableItem = () => {
+const ReportTableItem = ({showAnswerModal}) => {
 
   const options = ["등록완료", "처리접수", "처리완료"];
 
@@ -20,7 +20,7 @@ const ReportTableItem = () => {
             {options.map((e, i) => <option key={i}>{e}</option>)}
         </select></td>
       <td>
-        <Button className="answer-btn">답변 등록</Button>
+        <Button className="answer-btn" onClick={(e)=>{showAnswerModal()}}>답변 등록</Button>
         <Button className="save-btn">저장</Button>
       </td>
     </tr>

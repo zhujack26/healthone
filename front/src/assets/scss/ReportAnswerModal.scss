@@ -1,0 +1,45 @@
+@import "Colors.scss";
+
+.report-answer-modal{
+    width: 536px; //TODO.. @Media...
+    height: 720px;
+    padding: 16px;
+    background-color: $red300;
+
+    .title-div{
+        width: 100%;
+        height: max-content;
+        
+        display: flex;
+        justify-content: space-between;
+        padding-left: 8px;
+        padding-right: 8px;
+
+    }
+    .email-div{
+        width: 100%;
+        height: max-content;
+
+    }
+    .date-div{
+        width: 100%;
+        height: max-content;
+
+    }
+    .content-div{
+        width: 100%;
+        height: max-content;
+
+
+    }
+
+    .answer-div{
+        
+    }
+
+    .btn-frame{
+
+    }
+
+
+}

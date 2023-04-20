@@ -1,0 +1,34 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.report-answer-modal {
+  width: 536px;
+  height: 720px;
+  padding: 16px;
+  background-color: #ff5f6d;
+}
+.report-answer-modal .title-div {
+  width: 100%;
+  height: max-content;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.report-answer-modal .email-div {
+  width: 100%;
+  height: max-content;
+}
+.report-answer-modal .date-div {
+  width: 100%;
+  height: max-content;
+}
+.report-answer-modal .content-div {
+  width: 100%;
+  height: max-content;
+}
+
+/*# sourceMappingURL=ReportAnswerModal.css.map */

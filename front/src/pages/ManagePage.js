@@ -6,6 +6,7 @@ import SearchUserBar from "../components/Manage/SearchUserBar";
 import ManageSortFilterOptionBar from "../components/Manage/ManageSortFilterOptionBar";
 import UserInfoTable from "../components/UserManage/UserInfoTable";
 import ReportManageTable from "../components/ReportManage/ReportManageTable"
+import ReportAnswerModal from "../components/ReportManage/ReportAnswerModal"
 
 /* import css */
 import "../assets/css/ManagePage.css";
@@ -19,12 +20,13 @@ const ManagePage = () => {
   return (
     <>
       <div className="manage-page">
-        <ManagePageHeader pageTitle={"사용자 관리"} />
+        {/* <ManagePageHeader pageTitle={"사용자 관리"} />
         <SearchUserBar />
         <ManageSortFilterOptionBar isSort={false} filterOptions={filterOptions2} />
         {/* 여기만 다름! */}
         {/* <UserInfoTable /> */}
-        <ReportManageTable/>
+        {/* <ReportManageTable/> */}
+        <ReportAnswerModal/>        
       </div>
     </>
   );

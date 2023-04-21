@@ -36,7 +36,7 @@ const ReportAnswerModal = ({Report, closeModal}) => {
                 </div>
                 <fieldset className="content-div">
                     <legend>문의 내용</legend>
-                    <textarea readonly>
+                    <textarea disabled={true}>
                         {Report.content}
                     </textarea>
                 </fieldset>

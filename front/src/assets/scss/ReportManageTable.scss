@@ -4,6 +4,7 @@
   width: 100vw;
   height: max-content;
   padding: 8px;
+  position: relative;
 
   .report-table {
     width: 100%;
@@ -50,7 +51,7 @@
       flex-wrap: nowrap;
       height: max-content;
 
-      @media (max-height: 720px) {
+      @media (max-height: 800px) {
         max-height: 400px;
       }
 

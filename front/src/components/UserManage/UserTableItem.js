@@ -19,8 +19,10 @@ const UserTableItem = () => {
         <select className="user-status-option">
             {options.map((e, i) => <option key={i}>{e}</option>)}
         </select>
-        <Button className="apply-btn">적용</Button>
-        <Button className="cancel-btn">취소</Button>
+        <Button className="apply-btn" onClick={(e) => {
+          alert("변경 사항이 저장되었습니다.")
+
+        }}>적용</Button>
       </td>
     </tr>
   );

@@ -21,7 +21,7 @@ const ReportTableItem = ({showAnswerModal}) => {
         </select></td>
       <td>
         <Button className="answer-btn" onClick={(e)=>{showAnswerModal()}}>답변 등록</Button>
-        <Button className="save-btn">저장</Button>
+        <Button className="save-btn" onClick={(e)=>{alert("변경 사항이 저장되었습니다.")}}>저장</Button>
       </td>
     </tr>
   );

@@ -45,7 +45,16 @@
   overflow-y: scroll;
   flex-wrap: nowrap;
   height: max-content;
-  max-height: 400px;
+}
+@media (max-height: 800px) {
+  .user-info-table table tbody {
+    max-height: 400px;
+  }
+}
+@media (max-height: 1024px) {
+  .user-info-table table tbody {
+    height: 720px;
+  }
 }
 
 /*# sourceMappingURL=UserInfoTable.css.map */

@@ -4,17 +4,24 @@
 
 import { Button } from "@material-ui/core";
 import "../../assets/css/UserTableItem.css";
-const UserTableItem = () => {
+
+/**
+ * @param {Object} UserInfoData 사용자 관리 정보 담은 객체
+ * @returns 
+ */
+const UserTableItem = ({UserInfoData}) => {
 
   const options = ["선택안함", "활성", "휴면", "정지"];
 
   return (
     <tr className="user-table-item">
-      <td>홍길동</td>
+      {Object.values(UserInfoData).map((e, i) => <td>{e}</td>)}
+      
+      {/* <td></td>
       <td>hong123</td>
       <td>hong123@gmail.com</td>
       <td>2023. 04. 19.</td>
-      <td>활성</td>
+      <td>활성</td> */}
       <td>
         <select className="user-status-option">
             {options.map((e, i) => <option key={i}>{e}</option>)}

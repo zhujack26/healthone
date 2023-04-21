@@ -9,10 +9,26 @@ import { Button } from "@material-ui/core";
 /* css */
 import "../../assets/css/LoginForm.css";
 
+// 로그인 정보를 담을 객체
+class LoginInfo {
+  constructor(id, pwd) {
+    this.id = id;
+    this.pwd = pwd;
+  }
+}
+
 const LoginForm = () => {
   const navigate = useNavigate();
+
+  // login-form ref
   const adminIdRef = useRef();
   const adminPwdRef = useRef();
+
+  
+  // login 정보를 담을 객체 state
+  const [loginInfo, setLoginInfo] = useState(new LoginInfo("", ""));
+
+  // 로그인 감정 함수
   const verifyAdmin = (id, pwd) => {
     if (id === "admin" && pwd === "admin1234") {
       navigate("/manage");
@@ -27,7 +43,10 @@ const LoginForm = () => {
     let id = adminIdRef.current.value;
     let pwd = adminPwdRef.current.value;
     if (e.code === "Enter") {
-      if (id === "admin" && pwd === "admin1234") {
+      const inputLoginInfo = new LoginInfo(id, pwd);
+      setLoginInfo(inputLoginInfo);
+
+      if (inputLoginInfo.id === "admin" && inputLoginInfo.pwd === "admin1234") {
         navigate("/manage");
         localStorage.setItem("isLogin", true);
       } else {

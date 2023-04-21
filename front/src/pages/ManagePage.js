@@ -1,5 +1,5 @@
 // TODO
-// 1. Transition.js로 페이지네이션 구현
+// 1. table Item 들 객체로 관리할 수 있도록 리팩토링 + 변경사항 저장 가능하게 usetState로 관리
 // 2. Reduxtookit 적용하여 상태관리
 
 /* import react*/
@@ -17,6 +17,7 @@ import ReportAnswerModal from "../components/ReportManage/ReportAnswerModal";
 /* import css */
 import "../assets/css/ManagePage.css";
 
+// Report 내용을 담을 class
 class Report {
   constructor(title, name, email, date, content) {
     this.title = title;
@@ -32,9 +33,10 @@ const ManagePage = () => {
   const sortOptions = ["선택안함", "이메일", "이름", "이메일"];
   const filterOptions1 = ["전체", "활성", "휴면", "정지"];
   const filterOptions2 = ["전체", "처리완료", "처리접수", "등록완료"];
+  const userInfoHeaders = ["이름", "아이디", "이메일", "가입 일자", "상태", "관리"];
+  const reportInfoHeaders = ["코드번호", "이메일", "제목", "등록 날짜", "문의 유형", "처리 상태", "관리"]
 
   const [isShowModal, setIsShowMdoal] = useState(false);
-
   const navigate = useNavigate();
 
   const report = new Report(
@@ -61,9 +63,9 @@ const ManagePage = () => {
   const [tableState, setTableState] = useState(true)
 
   // 테이블들
-  const useInfoTable = <UserInfoTable />
+  const useInfoTable = <UserInfoTable tableColumnName={userInfoHeaders} />
 
-  const reportTable = <ReportManageTable showAnswerModal={()=>{setIsShowMdoal(true)}} />
+  const reportTable = <ReportManageTable showAnswerModal={()=>{setIsShowMdoal(true)}} tableColumnName={reportInfoHeaders} />
 
   return (
     <>

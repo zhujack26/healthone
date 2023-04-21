@@ -11,13 +11,21 @@ import { useState, useEffect } from "react";
 /**
  * 
  * @param {function} showAnswerModal 답변등록 모달 함수
+ * @param {Arrays} tableColumnName 테이블 칼럼 명
  * @returns 
  */
-const ReportManageTable = ({showAnswerModal}) => {
+const ReportManageTable = ({showAnswerModal, tableColumnName}) => {
 
   const size = 20;
   
-  const [reportTableItem, setReportTableItem] = useState([Array(size).fill().map((e, i)=> <ReportTableItem showAnswerModal={()=>{showAnswerModal()}} key={i}/>)]);
+  const [reportTableItem, setReportTableItem] = useState(
+    [Array(size)
+      .fill()
+      .map((e, i) =>
+        <ReportTableItem showAnswerModal={() => { showAnswerModal() }} key={i} />
+    )
+    ]
+  );
 
   useEffect(() => {}, []);
   return (
@@ -25,13 +33,7 @@ const ReportManageTable = ({showAnswerModal}) => {
       <table className="report-table">
         <thead>
           <tr>
-            <th>코드번호</th>
-            <th>이메일</th>
-            <th>제목</th>
-            <th>등록 날짜</th>
-            <th>문의 유형</th>
-            <th>처리 상태</th>
-            <th>관리</th>
+          {tableColumnName.map((e, i) => <th>{e}</th>)}
           </tr>
         </thead>
         <tbody>

@@ -56,6 +56,9 @@
   color: #6e6969;
   cursor: pointer;
 }
+.manage-page-header .right-btn .nav-btns .nav-btn-active {
+  color: #aad1ae;
+}
 .manage-page-header .right-btn .logout-btn {
   /* logout-btn */
   /* Auto layout */

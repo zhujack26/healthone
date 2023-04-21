@@ -28,6 +28,7 @@ class Report {
 }
 
 const ManagePage = () => {
+  const pageTitle = ["사용자 관리", "불편 사항 관리"]
   const sortOptions = ["선택안함", "이메일", "이름", "이메일"];
   const filterOptions1 = ["전체", "활성", "휴면", "정지"];
   const filterOptions2 = ["전체", "처리완료", "처리접수", "등록완료"];
@@ -56,24 +57,30 @@ const ManagePage = () => {
     빠른 처리 부탁드립니다`
   );
 
+  // 테이블 교체 함수
+  const [tableState, setTableState] = useState(true)
+
+  // 테이블들
+  const useInfoTable = <UserInfoTable />
+
+  const reportTable = <ReportManageTable showAnswerModal={()=>{setIsShowMdoal(true)}} />
+
   return (
     <>
       <div className="manage-page">
         <ManagePageHeader
-          pageTitle={"사용자 관리"}
+          pageTitle={tableState?pageTitle[0]:pageTitle[1]}
           doLogout={() => {
+            localStorage.removeItem("isLogin");
             navigate("/login");
           }}
+          setTable = {(e)=>setTableState(e)}
         />
         <SearchUserBar />
-        <ManageSortFilterOptionBar isSort={false} filterOptions={filterOptions2} />
+        <ManageSortFilterOptionBar isSort={tableState} sortOptions={sortOptions} filterOptions={tableState?filterOptions1:filterOptions2} />
         {/* <UserInfoTable /> */}
-        <ReportManageTable
-          showAnswerModal={() => {
-            setIsShowMdoal(true);
-          }}
-        />
-        {/* <ReportAnswerModal Report={report} />         */}
+        {tableState ? useInfoTable : reportTable}
+        
         {isShowModal ? (
           <ReportAnswerModal
             Report={report}

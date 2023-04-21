@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useLocation, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation, Redirect, Navigate } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 // Pages
@@ -14,9 +14,19 @@ const Transition = () => {
       <TransitionGroup className="transitions-wrapper">
         <Routes location={location}>
           <Route path="/login" element={<LoginPage />}></Route>
+
+          <Route
+            path="/manage"
+            element={localStorage.getItem('isLogin')?(
+              <ManagePage/>
+            ) : ( 
+                <Navigate to="/login"/>
+            )}
+          />
+
           <Route path="/manage" element={<ManagePage />}></Route>
 
-          <Route path="*" element={<div>찾을 수 없는 페이지입니다..</div>}></Route>
+          <Route path="*" element={<Navigate to ="/login" />}></Route>
           {/*<Route path="*" element={<NotFoundPage />}></Route>*/}
 
           {/* <Route path="/product/*" element={<Product />}></Route> */}

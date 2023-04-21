@@ -29,6 +29,7 @@ const LoginForm = () => {
     if (e.code === "Enter") {
       if (id === "admin" && pwd === "admin1234") {
         navigate("/manage");
+        localStorage.setItem("isLogin", true);
       } else {
         showWrongInfo();
       }

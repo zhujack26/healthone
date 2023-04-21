@@ -1,19 +1,19 @@
 package com.secui.healthone.compose
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import com.secui.healthone.dataclass.Meal
 import com.secui.healthone.repository.CaloriesData
 import com.secui.healthone.repository.fetchCaloriesData
 import com.secui.healthone.ui.mealplanpage.*
 import kotlinx.coroutines.launch
+import androidx.compose.material.Card
+import androidx.compose.material.Surface
 
 @Composable
 fun MealPlanPage() {
@@ -32,46 +32,71 @@ fun MealPlanPage() {
         val updatedIntakeCalories = caloriesData!!.intakeCalories
         val updatedBurnedCalories = caloriesData!!.burnedCalories
         val updatedTotalCalories = caloriesData!!.totalCalories
+        val updatedRecommendedCalories = caloriesData!!.recommendedCalories
 
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // TopBar 컴포넌트
-            TopBar()
-
-            // 날짜 컴포넌트
-            DateComponent()
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                // 건강 기록 텍스트
-                Text("건강 기록", modifier = Modifier.align(Alignment.CenterVertically))
-
-                // 일간, 주간, 월간 선택 컴포넌트
-                TimeIntervalSelector()
+            Card(modifier = Modifier.fillMaxWidth(), elevation = 4.dp) {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    TopBar()
+                }
             }
 
+            Spacer(modifier = Modifier.height(16.dp))
 
-            // 그래프 컴포넌트
-            CircularGraph(totalCalories = updatedTotalCalories, recommendedCalories = 4540)
+            Card(modifier = Modifier.fillMaxWidth(), elevation = 4.dp) {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    DateComponent()
+                }
+            }
 
-            // 총 칼로리 텍스트
-            Text("총 칼로리")
+            Spacer(modifier = Modifier.height(16.dp))
 
-            // 3300kcal 텍스트
-            Text("${updatedTotalCalories}kcal")
+            Card(modifier = Modifier.fillMaxWidth(), elevation = 4.dp) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text("건강 기록", modifier = Modifier.align(Alignment.CenterVertically))
+                    TimeIntervalSelector()
+                }
+            }
 
-            // 섭취 칼로리 - 소모 칼로리 = 총 칼로리 텍스트
-            Text("섭취 칼로리 (${updatedIntakeCalories}kcal) - 소모 칼로리 (${updatedBurnedCalories}kcal) = 총 칼로리 (${updatedTotalCalories}kcal)")
+            Spacer(modifier = Modifier.height(16.dp))
 
-            // 총 칼로리에 따른 상태 텍스트 컴포넌트
-            CalorieStatus()
+            Card(modifier = Modifier.fillMaxWidth(), elevation = 4.dp) {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    CircularGraph(
+                        intakeCalories = updatedIntakeCalories,
+                        burnedCalories = updatedBurnedCalories,
+                        totalCalories = updatedTotalCalories,
+                        recommendedCalories = updatedRecommendedCalories,
+                        modifier = Modifier.padding(bottom = 1.dp)
+                    )
+                }
+            }
 
-            // MealCard 컴포넌트
-            MealCard(meal)
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Card(modifier = Modifier.fillMaxWidth(), elevation = 4.dp) {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    MealCard(meal)
+                }
+            }
         }
     } else {
         // 데이터를 불러오는 동안 표시할 로딩 인디케이터 등을 여기에 작성합니다.

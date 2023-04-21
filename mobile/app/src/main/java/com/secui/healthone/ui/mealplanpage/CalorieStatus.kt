@@ -5,5 +5,5 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun CalorieStatus() {
-    Text("Status: Adequate")
+    Text("상태: 부족")
 }

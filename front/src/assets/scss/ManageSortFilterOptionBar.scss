@@ -22,10 +22,26 @@
     justify-content: flex-end;
     align-items: center;
     padding: 0px;
-    gap: 32px;
 
     width: max-content;
     height: max-content;
+
+    /* 720px 이하일 때 */
+    @media (max-width: 720px) {
+      gap: 16px;
+      font-size: 12px;
+    }
+
+    /* 721px ~ 1024px 때 */
+    @media (min-width: 721px) and (max-width: 1024px) {
+      gap: 24px;
+      font-size: 14px;
+    }
+    /* 1024px 이상일 때 */
+    @media (min-width: 1025px) {
+      gap: 32px;
+      font-size: 16px;
+    }
 
     .sort-option-div,
     .state-filter-div {
@@ -34,20 +50,29 @@
       flex-direction: row;
       justify-content: center;
       align-items: center;
-      padding: 0px;
-      gap: 32px;
 
       width: max-content;
       height: max-content;
+
+      /* 720px 이하일 때 */
+      @media (max-width: 720px) {
+        gap: 16px;
+      }
+
+      /* 721px ~ 1024px 때 */
+      @media (min-width: 721px) and (max-width: 1024px) {
+        gap: 24px;
+      }
+      /* 1024px 이상일 때 */
+      @media (min-width: 1025px) {
+        gap: 32px;
+      }
 
       p {
         /* 정렬 기준 */
         width: max-content;
         height: max-content;
-        font-weight: 400;
-        font-size: 20px;
         text-align: center;
-        color: $black;
       }
       .sort-role-select,
       .user-state-select {
@@ -59,17 +84,31 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        padding: 8px 8px;
-
-        gap: 16px;
-
-        width: 128px;
         height: max-content;
 
         border: 1px solid $green300;
         text-align: center;
-        font-size: 16px;
+        // text media;
 
+        /* 720px 이하일 때 */
+        @media (max-width: 720px) {
+          font-size: 12px;
+          padding: 4px 0px;
+          width: 72px;
+        }
+
+        /* 721px ~ 1024px 때 */
+        @media (min-width: 721px) and (max-width: 1024px) {
+          font-size: 14px;
+          padding: 6px 0px;
+          width: 96px;
+        }
+        /* 1024px 이상일 때 */
+        @media (min-width: 1025px) {
+          font-size: 16px;
+          padding: 8px 0px;
+          width: 128px;
+        }
       }
     }
   }

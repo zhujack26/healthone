@@ -24,9 +24,29 @@
   justify-content: flex-end;
   align-items: center;
   padding: 0px;
-  gap: 32px;
   width: max-content;
   height: max-content;
+  /* 720px 이하일 때 */
+  /* 721px ~ 1024px 때 */
+  /* 1024px 이상일 때 */
+}
+@media (max-width: 720px) {
+  .manage-sort-filter-option-bar .option-div-frame {
+    gap: 16px;
+    font-size: 12px;
+  }
+}
+@media (min-width: 721px) and (max-width: 1024px) {
+  .manage-sort-filter-option-bar .option-div-frame {
+    gap: 24px;
+    font-size: 14px;
+  }
+}
+@media (min-width: 1025px) {
+  .manage-sort-filter-option-bar .option-div-frame {
+    gap: 32px;
+    font-size: 16px;
+  }
 }
 .manage-sort-filter-option-bar .option-div-frame .sort-option-div,
 .manage-sort-filter-option-bar .option-div-frame .state-filter-div {
@@ -35,20 +55,36 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 0px;
-  gap: 32px;
   width: max-content;
   height: max-content;
+  /* 720px 이하일 때 */
+  /* 721px ~ 1024px 때 */
+  /* 1024px 이상일 때 */
+}
+@media (max-width: 720px) {
+  .manage-sort-filter-option-bar .option-div-frame .sort-option-div,
+  .manage-sort-filter-option-bar .option-div-frame .state-filter-div {
+    gap: 16px;
+  }
+}
+@media (min-width: 721px) and (max-width: 1024px) {
+  .manage-sort-filter-option-bar .option-div-frame .sort-option-div,
+  .manage-sort-filter-option-bar .option-div-frame .state-filter-div {
+    gap: 24px;
+  }
+}
+@media (min-width: 1025px) {
+  .manage-sort-filter-option-bar .option-div-frame .sort-option-div,
+  .manage-sort-filter-option-bar .option-div-frame .state-filter-div {
+    gap: 32px;
+  }
 }
 .manage-sort-filter-option-bar .option-div-frame .sort-option-div p,
 .manage-sort-filter-option-bar .option-div-frame .state-filter-div p {
   /* 정렬 기준 */
   width: max-content;
   height: max-content;
-  font-weight: 400;
-  font-size: 20px;
   text-align: center;
-  color: #0c0a0b;
 }
 .manage-sort-filter-option-bar .option-div-frame .sort-option-div .sort-role-select,
 .manage-sort-filter-option-bar .option-div-frame .sort-option-div .user-state-select,
@@ -61,13 +97,42 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 8px 8px;
-  gap: 16px;
-  width: 128px;
   height: max-content;
   border: 1px solid #aad1ae;
   text-align: center;
-  font-size: 16px;
+  /* 720px 이하일 때 */
+  /* 721px ~ 1024px 때 */
+  /* 1024px 이상일 때 */
+}
+@media (max-width: 720px) {
+  .manage-sort-filter-option-bar .option-div-frame .sort-option-div .sort-role-select,
+  .manage-sort-filter-option-bar .option-div-frame .sort-option-div .user-state-select,
+  .manage-sort-filter-option-bar .option-div-frame .state-filter-div .sort-role-select,
+  .manage-sort-filter-option-bar .option-div-frame .state-filter-div .user-state-select {
+    font-size: 12px;
+    padding: 4px 0px;
+    width: 72px;
+  }
+}
+@media (min-width: 721px) and (max-width: 1024px) {
+  .manage-sort-filter-option-bar .option-div-frame .sort-option-div .sort-role-select,
+  .manage-sort-filter-option-bar .option-div-frame .sort-option-div .user-state-select,
+  .manage-sort-filter-option-bar .option-div-frame .state-filter-div .sort-role-select,
+  .manage-sort-filter-option-bar .option-div-frame .state-filter-div .user-state-select {
+    font-size: 14px;
+    padding: 6px 0px;
+    width: 96px;
+  }
+}
+@media (min-width: 1025px) {
+  .manage-sort-filter-option-bar .option-div-frame .sort-option-div .sort-role-select,
+  .manage-sort-filter-option-bar .option-div-frame .sort-option-div .user-state-select,
+  .manage-sort-filter-option-bar .option-div-frame .state-filter-div .sort-role-select,
+  .manage-sort-filter-option-bar .option-div-frame .state-filter-div .user-state-select {
+    font-size: 16px;
+    padding: 8px 0px;
+    width: 128px;
+  }
 }
 
 /*# sourceMappingURL=ManageSortFilterOptionBar.css.map */

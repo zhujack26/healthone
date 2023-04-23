@@ -1,14 +1,13 @@
 /* react */
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserFilterStatus, setUserFilterOption } from "../../redux/userList";
-import { setReportFilterStatus, setReportFilterOption } from "../../redux/reportList";
+import { setUserFilterStatus, setUserFilterOption, setSortUserInfoList } from "../../redux/userList";
+import { setReportFilterStatus, setReportFilterOption, setSortReportInfoList } from "../../redux/reportList";
 
 /* import component */
 
 /* import css */
 import "../../assets/css/ManageSortFilterOptionBar.css";
-import { useEffect } from "react";
 
 /**
  *
@@ -27,15 +26,22 @@ const ManageSortFilterOptionBar = ({
   isFilter = true,
   filterOptions = ["전체"],
 }) => {
+  // redux
   const dispatch = useDispatch();
-  // 버튼
-  // const userFilterStatus = useSelector((state) => state.userList.userFilterStatus);
-  // const userFilterOption = useSelector((state) => state.userList.filterOption);
+  // 사용자 정보 redux
+  const userList = useSelector((state) => state.userList.userInfoList);
+  const searchUserInfoList = useSelector((state) => state.userList.searchUserInfoList);
+  const sortUserInfoList = useSelector((state) => state.userList.sortUserInfoList); // searchList가 < userList개 미만이다 =  검색했다.
 
-  // const [filterIndex, setFilterIndex] = useState(0);
+  // 불편사항 정보 redux;
+  const reportList = useSelector((state) => state.reportList.reportInfoList);
+  const searchReportInfoList = useSelector((state) => state.reportList.searchReportInfoList);
+  const sortReportInfoList = useSelector((state) => state.reportList.sortReportInfoList); // searchList가 < reportList개 미만이다 =  검색했다.
 
   const filterRef = useRef();
   const sortRef = useRef();
+  // arr.sort((a, b) => a.name.localeCompare(b.name));
+  // "이메일", "이름", "가입일자"
 
   const onChangeHandle = (e) => {
     // 조건식, 사람인지 레포트인지 구분 필요
@@ -49,13 +55,32 @@ const ManageSortFilterOptionBar = ({
     }
   };
 
+  const onSortHandle = (e) => {
+    if (userList.length > 0) {
+      if (searchUserInfoList.length > 0) {
+        // 검색했다.
+        let sortUserList = [...searchUserInfoList];
+        sortUserList.sort((a, b) => a.userEmail.localeCompare(b.userEmail));
+        console.dir(searchUserInfoList);
+        console.dir(sortUserList);
+        dispatch(setSortUserInfoList(sortUserList));
+      } else {
+        let sortUserList = [...userList];
+        sortUserList.sort((a, b) => a.userEmail.localeCompare(b.userEmail));
+        console.dir(userList);
+        console.dir(sortUserList);
+        dispatch(setSortUserInfoList(sortUserList));
+      }
+    }
+  };
+
   return (
     <div className="manage-sort-filter-option-bar">
       <div className="option-div-frame">
         {isSort ? (
           <div className="sort-option-div">
             <p>정렬 기준</p>
-            <select className="sort-role-select">
+            <select className="sort-role-select" ref={sortRef} onChange={onSortHandle}>
               {sortOptions.map((e, i) => (
                 <option key={i}>{e}</option>
               ))}

@@ -12,18 +12,22 @@ import "../../assets/css/ManagePageHeader.css";
  * @param {function} doLogout 로그아웃 함수
  * @returns
  */
-const ManagePageHeader = ({ pageTitle, doLogout, setTable}) => {
-  const [topNavText, setTopNavNext] = useState(["회원 관리", "불편 사항"]);
-  const [navTextState, setNavTextState] = useState(true);
+const ManagePageHeader = ({ pageTitle, doLogout, setTableIndex, tableIndex }) => {
+  const [topNavText] = useState(["회원 관리", "불편 사항"]);
+  const [curNavIdx, setCurNavIdx] = useState(tableIndex);
 
   // 테이블 전환 메서드
-  const changeTable = () => {
-    setNavTextState(!navTextState);
-    if (!navTextState) {
-      setTable(true);
-    }else setTable(false);
-  }
+  const changeTableIndex = (e) => {
+    let index = topNavText.indexOf(e.target.innerText);
+    index = index < 0 ? 0 : index; // -1 처리
+    setTableIndex(index);
+    setCurNavIdx(index);
+  };
 
+  // 네비게이션 따라 클래스 속성 주기 위한 함수
+  const isCurrentNav = (navIdx) => {
+    return navIdx === curNavIdx;
+  };
 
   return (
     <>
@@ -31,15 +35,10 @@ const ManagePageHeader = ({ pageTitle, doLogout, setTable}) => {
         <p className="page-title">{pageTitle}</p>
         <div className="right-btn">
           <div className="nav-btns">
-            <p
-              className={navTextState ? "nav-btn-active" : ""}
-              onClick={(e)=>{changeTable()}}>
+            <p className={isCurrentNav(0) ? "nav-btn-active" : ""} onClick={changeTableIndex}>
               {topNavText[0]}
             </p>
-            <p
-              className={!navTextState ? "nav-btn-active" : ""}
-              onClick={(e)=>{changeTable()}}
-            >
+            <p className={isCurrentNav(1) ? "nav-btn-active" : ""} onClick={changeTableIndex}>
               {topNavText[1]}
             </p>
           </div>

@@ -25,6 +25,8 @@ const ReportManageTable = ({ showAnswerModal, tableColumnName }) => {
   const dispatch = useDispatch();
   const reportList = useSelector((state) => state.reportList.reportInfoList);
   const curRepoInfo = useSelector((state) => state.reportList.currentReportInfo);
+  const reportFilterStatus = useSelector((state) => state.reportList.reportFilterStatus);
+  const reportFilterOption = useSelector((state) => state.reportList.reportFilterOption);
 
   const [reportTableItem, setReportTableItem] = useState([]);
   const [isShowModal, setIsShowModal] = useState(false);
@@ -38,7 +40,7 @@ const ReportManageTable = ({ showAnswerModal, tableColumnName }) => {
       dispatch(setReportInfoList(reportInfoList));
     });
 
-    if (reportList.length > 0) {
+    if (reportFilterStatus === 0) {
       setReportTableItem(
         reportList.map((reportInfoData, i) => (
           <ReportTableItem
@@ -50,8 +52,23 @@ const ReportManageTable = ({ showAnswerModal, tableColumnName }) => {
           />
         ))
       );
+    } else {
+      let filteredReportList = reportList.filter(
+        (reportInfoData, index) => reportInfoData.reportStatus === reportFilterOption
+      );
+      setReportTableItem(
+        filteredReportList.map((reportInfoData, i) => (
+          <ReportTableItem
+            ReportInfo={reportInfoData}
+            showAnswerModal={() => {
+              setIsShowModal(true);
+            }}
+            key={i}
+          />
+        ))
+      );
     }
-  }, [reportList.length]);
+  }, [reportList.length, reportFilterStatus]);
 
   return (
     <div className="report-manage-table">

@@ -1,9 +1,7 @@
 // TODO
-// 1. Reduxtookit 적용하여 상태관리
-// 2. 필터 변경하면 필터 조건에 합치하는 것들만 재 렌더링
-// 3. 검색창 검색 시 서버와 디바운스 기법 적용하여 정보 로딩
-// 4. 정렬 기준 선택 정렬 기준 대로 정보 테이블 정보 재 렌더링
-// 답변등록하면 처리상태 >> 처리 완료로 바꾸기
+// 1. 검색창 검색 시 서버와 디바운스 기법 적용하여 정보 로딩
+// 2. 정렬 기준 선택 정렬 기준 대로 정보 테이블 정보 재 렌더링
+// 3. 답변등록하면 처리상태 >> 처리 완료로 바꾸기
 
 /* import react*/
 import { useState } from "react";
@@ -15,10 +13,8 @@ import SearchUserBar from "../components/Manage/SearchUserBar";
 import ManageSortFilterOptionBar from "../components/Manage/ManageSortFilterOptionBar";
 import UserInfoTable from "../components/UserManage/UserInfoTable";
 import ReportManageTable from "../components/ReportManage/ReportManageTable";
-import ReportAnswerModal from "../components/ReportManage/ReportAnswerModal";
 
 /* data class */
-import ReportInfo from "../data/ReportInfo";
 
 // import modules //
 
@@ -35,43 +31,14 @@ const ManagePage = () => {
   const userInfoHeaders = ["이름", "이메일", "가입 일자", "상태", "관리"];
   const reportInfoHeaders = ["CODE", "이메일", "제목", "등록 날짜", "문의 유형", "처리 상태", "관리"];
 
-  // const [isShowModal, setIsShowModal] = useState(false);
   const navigate = useNavigate();
-
-  const reportInfo = new ReportInfo(
-    1,
-    "로그인이 안돼요",
-    "hong123@gmail.com",
-    "2023.04.23.",
-    `지금 앱 내에서 로그인 하는데,
-    구글 계정 로그인 했음에도
-    로그인이 자꾸 안됩니다...
-    
-    다시 재설치해서 해봐도
-    같은 증상 반복되는데
-    이거 어떻게 해야하나요
-    
-    지금 앱 이용하려고 하는데
-    사용조차 안되니
-    정말 답답하네요 
-    
-    빠른 처리 부탁드립니다`
-  );
 
   // 테이블 교체 함수
   const [tableState, setTableState] = useState(true);
 
   // 테이블들
   const useInfoTable = <UserInfoTable tableColumnName={userInfoHeaders} />;
-
-  const reportTable = (
-    <ReportManageTable
-      // showAnswerModal={() => {
-      //   setIsShowModal(true);
-      // }}
-      tableColumnName={reportInfoHeaders}
-    />
-  );
+  const reportTable = <ReportManageTable tableColumnName={reportInfoHeaders} />;
 
   return (
     <>
@@ -86,6 +53,7 @@ const ManagePage = () => {
         />
         <SearchUserBar />
         <ManageSortFilterOptionBar
+          tableIndex={tableState ? 0 : 1}
           isSort={tableState}
           sortOptions={sortOptions}
           filterOptions={tableState ? filterOptions1 : filterOptions2}

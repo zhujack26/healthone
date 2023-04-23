@@ -23,22 +23,31 @@ import "../../assets/css/UserTableItem.css";
 const UserInfoTable = ({ tableColumnName }) => {
   const dispatch = useDispatch();
   const userList = useSelector((state) => state.userList.userInfoList);
+  const userFilterStatus = useSelector((state) => state.userList.userFilterStatus);
+  const userFilterOption = useSelector((state) => state.userList.userFilterOption);
 
   const [userInfoItem, setUserIntoItem] = useState([]);
 
   useEffect(() => {
-    getUerList().then((res) => {
-      // console.dir(res);
-      let userInfoList = [];
-      res.map((userInfoData, i) => {
-        userInfoList.push(userInfoData);
+    if (!userList.length) {
+      getUerList().then((res) => {
+        // console.dir(res);
+        let userInfoList = [];
+        res.map((userInfoData, i) => {
+          userInfoList.push(userInfoData);
+        });
+        dispatch(setUserInfoList(userInfoList));
       });
-      dispatch(setUserInfoList(userInfoList));
-    });
-    if (userList.length > 0) {
-      setUserIntoItem(userList.map((userInfoData, i) => <UserTableItem key={i} UserInfo={userInfoData} />));
     }
-  }, [userList.length]);
+    if (userFilterStatus === 0) {
+      setUserIntoItem(userList.map((userInfoData, i) => <UserTableItem key={i} UserInfo={userInfoData} />));
+    } else {
+      let filteredUserList = userList.filter((userInfoData, index) => userInfoData.userStatus === userFilterOption);
+      setUserIntoItem(filteredUserList.map((userInfoData, i) => <UserTableItem key={i} UserInfo={userInfoData} />));
+    }
+  }, [userList.length, userFilterStatus]);
+
+  // useEffect
 
   return (
     <div className="user-info-table">

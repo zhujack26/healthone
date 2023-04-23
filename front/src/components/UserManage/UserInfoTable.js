@@ -1,46 +1,41 @@
 /* react */
 import { useState, useEffect } from "react";
-import { Button } from "@material-ui/core";
+
+/* data class */
+// import UserInfo from "../../data/UserInfo.js";
 
 /* import component */
 import UserTableItem from "./UserTableItem";
+
+// import modules //
+import { getUerList } from "../../api/UserInfoAPI";
 
 /* import css */
 import "../../assets/css/UserInfoTable.css";
 import "../../assets/css/UserTableItem.css";
 
-// UserInfoData
-class UserInfoData {
-  constructor(name, email, registDate, userState) {
-    this.name = name;
-    this.email = email;
-    this.registDate = registDate;
-    this.userState = userState;
-  }
-}
 /**
  *
  * @param {Arrays} tableColumnName 테이블 칼럼 명
  * @returns
  */
 const UserInfoTable = ({ tableColumnName }) => {
-  const userInfoData = new UserInfoData("홍길동", "hong123@gmail.com", "2023. 04. 19.", "활성");
+  const [userInfoItem, setUserIntoItem] = useState([]);
 
-  const size = 20;
-  const [userInfoItem, setUserIntoItem] = useState([
-    Array(size)
-      .fill()
-      .map((e, i) => <UserTableItem key={i} UserInfoData={userInfoData} />),
-  ]);
-
-  useEffect(() => {}, []);
+  useEffect(() => {
+    getUerList().then((res) => {
+      // console.dir(res);
+      setUserIntoItem(res.map((userInfoData, i) => <UserTableItem key={i} UserInfo={userInfoData} />));
+    });
+    // console.dir(userList);
+  }, []);
   return (
     <div className="user-info-table">
       <table className="user-table">
         <thead>
           <tr>
             {tableColumnName.map((e, i) => (
-              <th>{e}</th>
+              <th key={i}>{e}</th>
             ))}
           </tr>
         </thead>

@@ -4,6 +4,10 @@
   margin: 0;
 }
 
+body {
+  overflow: hidden !important;
+}
+
 .modal-container {
   width: 100vw;
   height: 100vh;

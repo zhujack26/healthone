@@ -23,6 +23,7 @@ import "../../assets/css/UserTableItem.css";
 const UserInfoTable = ({ tableColumnName }) => {
   const dispatch = useDispatch();
   const userList = useSelector((state) => state.userList.userInfoList);
+  const searchUserInfoList = useSelector((state) => state.userList.searchUserInfoList);
   const userFilterStatus = useSelector((state) => state.userList.userFilterStatus);
   const userFilterOption = useSelector((state) => state.userList.userFilterOption);
 
@@ -39,6 +40,7 @@ const UserInfoTable = ({ tableColumnName }) => {
         dispatch(setUserInfoList(userInfoList));
       });
     }
+    // console.dir(userList);
     if (userFilterStatus === 0) {
       setUserIntoItem(userList.map((userInfoData, i) => <UserTableItem key={i} UserInfo={userInfoData} />));
     } else {
@@ -46,6 +48,12 @@ const UserInfoTable = ({ tableColumnName }) => {
       setUserIntoItem(filteredUserList.map((userInfoData, i) => <UserTableItem key={i} UserInfo={userInfoData} />));
     }
   }, [userList.length, userFilterStatus]);
+
+  useEffect(() => {
+    if (searchUserInfoList.length) {
+      setUserIntoItem(searchUserInfoList.map((userInfoData, i) => <UserTableItem key={i} UserInfo={userInfoData} />));
+    }
+  }, [searchUserInfoList]);
 
   // useEffect
 

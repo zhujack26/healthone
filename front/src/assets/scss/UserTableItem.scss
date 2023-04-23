@@ -114,7 +114,8 @@
       }
     }
     .apply-btn {
-      background-color: $red300;
+      background-color: $orange300;
+      color: $white;
 
       /* 720px 이하일 때 */
       @media (max-width: 720px) {
@@ -125,7 +126,6 @@
       /* 721px ~ 1024px 때 */
       @media (min-width: 721px) and (max-width: 1024px) {
         width: 72px;
-
         font-size: 12px;
       }
       /* 1024px 이상일 때 */

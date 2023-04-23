@@ -58,21 +58,21 @@
   }
 }
 .user-info-table table thead tr th:last-child {
-  flex: 3;
+  flex: 1.525;
 }
 @media (max-width: 720px) {
   .user-info-table table thead tr {
-    font-size: 8px;
+    font-size: 14px;
   }
 }
 @media (min-width: 721px) and (max-width: 1024px) {
   .user-info-table table thead tr {
-    font-size: 12px;
+    font-size: 16px;
   }
 }
 @media (min-width: 1025px) {
   .user-info-table table thead tr {
-    font-size: 16px;
+    font-size: 18px;
   }
 }
 .user-info-table table tbody {

@@ -20,6 +20,8 @@
     justify-content: center;
     align-items: center;
 
+    border-right: 1px solid $mono300;
+
     /* 720px 이하일 때 */
     @media (max-width: 720px) {
       font-size: 14px;
@@ -52,8 +54,13 @@
     }
   }
 
+  td:first-child {
+    flex: 0.97;
+  }
+
   td:last-child {
-    flex: 1.5;
+    border-right: none;
+    flex: 1.45;
     height: max-content;
 
     display: flex;
@@ -90,7 +97,6 @@
       background-color: $white;
       border: 1px solid $green300;
 
-      font-size: 16px;
       text-align: center;
 
       /* 720px 이하일 때 */

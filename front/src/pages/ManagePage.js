@@ -34,7 +34,7 @@ const ManagePage = () => {
   const filterOptions1 = ["전체", "활성", "휴면", "정지"];
   const filterOptions2 = ["전체", "처리완료", "처리접수", "등록완료"];
   const userInfoHeaders = ["이름", "이메일", "가입 일자", "상태", "관리"];
-  const reportInfoHeaders = ["코드번호", "이메일", "제목", "등록 날짜", "문의 유형", "처리 상태", "관리"];
+  const reportInfoHeaders = ["CODE", "이메일", "제목", "등록 날짜", "문의 유형", "처리 상태", "관리"];
 
   const [isShowModal, setIsShowMdoal] = useState(false);
   const navigate = useNavigate();

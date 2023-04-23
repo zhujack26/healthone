@@ -37,7 +37,8 @@
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
-  background-color: #c0c0c0;
+  background-color: #e8e8e8;
+  border-right: 1px solid #c0c0c0;
   /* 720px 이하일 때 */
   /* 721px ~ 1024px 때 */
   /* 1024px 이상일 때 */
@@ -58,7 +59,8 @@
   }
 }
 .user-info-table table thead tr th:last-child {
-  flex: 1.525;
+  flex: 1.5;
+  border-right: none;
 }
 @media (max-width: 720px) {
   .user-info-table table thead tr {
@@ -81,6 +83,7 @@
   overflow-y: scroll;
   flex-wrap: nowrap;
   height: max-content;
+  border: 1px solid #e8e8e8;
 }
 @media (max-height: 800px) {
   .user-info-table table tbody {

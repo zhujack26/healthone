@@ -26,6 +26,7 @@ const UserInfoTable = ({ tableColumnName }) => {
   const searchUserInfoList = useSelector((state) => state.userList.searchUserInfoList);
   const userFilterStatus = useSelector((state) => state.userList.userFilterStatus);
   const userFilterOption = useSelector((state) => state.userList.userFilterOption);
+  const sortUserInfoList = useSelector((state) => state.userList.sortUserInfoList);
 
   const [userInfoItem, setUserIntoItem] = useState([]);
 
@@ -54,6 +55,13 @@ const UserInfoTable = ({ tableColumnName }) => {
       setUserIntoItem(searchUserInfoList.map((userInfoData, i) => <UserTableItem key={i} UserInfo={userInfoData} />));
     }
   }, [searchUserInfoList]);
+
+  useEffect(() => {
+    if (sortUserInfoList.length) {
+      console.dir(sortUserInfoList);
+      setUserIntoItem(sortUserInfoList.map((userInfoData, i) => <UserTableItem key={i} UserInfo={userInfoData} />));
+    }
+  }, [sortUserInfoList]);
 
   // useEffect
 

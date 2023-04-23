@@ -58,7 +58,7 @@
   }
 }
 .user-info-table table thead tr th:last-child {
-  flex: 3;
+  flex: 1.525;
 }
 @media (max-width: 720px) {
   .user-info-table table thead tr {

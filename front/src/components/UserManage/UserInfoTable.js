@@ -1,8 +1,9 @@
 /* react */
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserInfoList } from "../../redux/userList";
 
 /* data class */
-// import UserInfo from "../../data/UserInfo.js";
 
 /* import component */
 import UserTableItem from "./UserTableItem";
@@ -20,15 +21,25 @@ import "../../assets/css/UserTableItem.css";
  * @returns
  */
 const UserInfoTable = ({ tableColumnName }) => {
+  const dispatch = useDispatch();
+  const userList = useSelector((state) => state.userList.userInfoList);
+
   const [userInfoItem, setUserIntoItem] = useState([]);
 
   useEffect(() => {
     getUerList().then((res) => {
       // console.dir(res);
-      setUserIntoItem(res.map((userInfoData, i) => <UserTableItem key={i} UserInfo={userInfoData} />));
+      let userInfoList = [];
+      res.map((userInfoData, i) => {
+        userInfoList.push(userInfoData);
+      });
+      dispatch(setUserInfoList(userInfoList));
     });
-    // console.dir(userList);
-  }, []);
+    if (userList.length > 0) {
+      setUserIntoItem(userList.map((userInfoData, i) => <UserTableItem key={i} UserInfo={userInfoData} />));
+    }
+  }, [userList.length]);
+
   return (
     <div className="user-info-table">
       <table className="user-table">

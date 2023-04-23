@@ -1,45 +1,72 @@
 @import "Colors.scss";
 
 .user-info-table {
-
   width: 100vw;
   height: max-content;
   padding: 8px;
 
-  table{
+  table {
     width: 100%;
     height: max-content;
     max-height: 600px;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    
-    thead{
+
+    thead {
       width: 100%;
-      tr{
+      tr {
         width: 100%;
         display: flex;
         flex-direction: row;
-            
-        th{
-          flex:1;
-          min-width: 8vw;
-          width: max-content;
-          box-sizing: border-box;
-          padding-left: 1vw;
-          padding-right: 1vw;
-          background-color: $mono300;
-          height: 48px;      
-          line-height: 48px;
 
+        th {
+          flex: 1;
+          width: max-content;
+
+          display: flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          justify-content: center;
+          align-items: center;
+
+          background-color: $mono300;
+
+          /* 720px 이하일 때 */
+          @media (max-width: 720px) {
+            height: 32px;
+          }
+
+          /* 721px ~ 1024px 때 */
+          @media (min-width: 721px) and (max-width: 1024px) {
+            height: 40px;
+          }
+          /* 1024px 이상일 때 */
+          @media (min-width: 1025px) {
+            height: 48px;
+          }
         }
-        th:last-child{
-          flex:3;
+        th:last-child {
+          flex: 3;
+        }
+
+        /* 720px 이하일 때 */
+        @media (max-width: 720px) {
+          font-size: 8px;
+        }
+
+        /* 721px ~ 1024px 때 */
+        @media (min-width: 721px) and (max-width: 1024px) {
+          font-size: 12px;
+        }
+        /* 1024px 이상일 때 */
+        @media (min-width: 1025px) {
+          font-size: 16px;
         }
       }
     }
 
-    tbody{
+    tbody {
       display: flex;
       flex-direction: column;
       overflow-y: scroll;
@@ -53,7 +80,15 @@
       @media (max-height: 1024px) {
         height: 720px;
       }
-    
     }
-  }  
+    tbody::-webkit-scrollbar {
+      width: 4px;
+    }
+    tbody::-webkit-scrollbar-thumb {
+      background-color: $mono700;
+    }
+    tbody::-webkit-scrollbar-track {
+      background-color: $mono500;
+    }
+  }
 }

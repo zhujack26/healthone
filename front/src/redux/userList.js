@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   currentUserInfo: {},
   userInfoList: [],
+  userFilterStatus: 0,
+  userFilterOption: "전체",
 };
 
 export const userInfoSlice = createSlice({
@@ -15,11 +17,17 @@ export const userInfoSlice = createSlice({
     setCurrentUserInfo: (state, action) => {
       state.currentUserInfo = action.payload;
     },
+    setUserFilterStatus: (state, action) => {
+      state.userFilterStatus = action.payload;
+    },
+    setUserFilterOption: (state, action) => {
+      state.userFilterOption = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setUserInfoList, setCurrentUserInfo } = userInfoSlice.actions;
+export const { setUserInfoList, setCurrentUserInfo, setUserFilterStatus, setUserFilterOption } = userInfoSlice.actions;
 
 export default userInfoSlice.reducer;
 

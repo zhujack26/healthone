@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   currentReportInfo: {},
   reportInfoList: [],
+  reportFilterStatus: 0,
+  reportFilterOption: "전체",
 };
 
 export const reportInfoSlice = createSlice({
@@ -15,11 +17,18 @@ export const reportInfoSlice = createSlice({
     setCurrentReportInfo: (state, action) => {
       state.currentReportInfo = action.payload;
     },
+    setReportFilterStatus: (state, action) => {
+      state.reportFilterStatus = action.payload;
+    },
+    setReportFilterOption: (state, action) => {
+      state.reportFilterOption = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setReportInfoList, setCurrentReportInfo } = reportInfoSlice.actions;
+export const { setReportInfoList, setCurrentReportInfo, setReportFilterStatus, setReportFilterOption } =
+  reportInfoSlice.actions;
 
 export default reportInfoSlice.reducer;
 

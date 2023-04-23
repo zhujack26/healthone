@@ -29,17 +29,17 @@
 }
 @media (max-width: 720px) {
   .user-table-item td {
-    font-size: 8px;
+    font-size: 14px;
   }
 }
 @media (min-width: 721px) and (max-width: 1024px) {
   .user-table-item td {
-    font-size: 12px;
+    font-size: 16px;
   }
 }
 @media (min-width: 1025px) {
   .user-table-item td {
-    font-size: 16px;
+    font-size: 18px;
   }
 }
 .user-table-item td .long-text {
@@ -67,11 +67,11 @@
   }
 }
 .user-table-item td:last-child {
-  flex: 3;
-  display: flex;
+  flex: 1.5;
   height: max-content;
+  display: flex;
   flex-direction: row;
-  align-items: center;
+  flex-wrap: nowrap;
   justify-content: center;
   /* 720px 이하일 때 */
   /* 721px ~ 1024px 때 */
@@ -79,6 +79,9 @@
 }
 @media (max-width: 720px) {
   .user-table-item td:last-child {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
     gap: 8px;
   }
 }
@@ -112,7 +115,7 @@
   .user-table-item td:last-child .user-status-option {
     width: 64px;
     height: 28px;
-    font-size: 8px;
+    font-size: 10px;
   }
 }
 @media (min-width: 721px) and (max-width: 1024px) {
@@ -126,7 +129,7 @@
   .user-table-item td:last-child .user-status-option {
     width: 112px;
     height: 36px;
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 .user-table-item td:last-child .apply-btn {
@@ -138,7 +141,7 @@
 @media (max-width: 720px) {
   .user-table-item td:last-child .apply-btn {
     width: 64px;
-    font-size: 8px;
+    font-size: 10px;
   }
 }
 @media (min-width: 721px) and (max-width: 1024px) {
@@ -150,7 +153,7 @@
 @media (min-width: 1025px) {
   .user-table-item td:last-child .apply-btn {
     width: 112px;
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 

@@ -4,6 +4,7 @@ const initialState = {
   currentReportInfo: {},
   reportInfoList: [],
   searchReportInfoList: [],
+  sortReportInfoList: [],
   reportFilterStatus: 0,
   reportFilterOption: "전체",
 };
@@ -27,6 +28,9 @@ export const reportInfoSlice = createSlice({
     setSearchReportInfoList: (state, action) => {
       state.searchReportInfoList = action.payload;
     },
+    setSortReportInfoList: (state, action) => {
+      state.sortReportInfoList = action.payload;
+    },
   },
 });
 
@@ -37,6 +41,7 @@ export const {
   setReportFilterStatus,
   setReportFilterOption,
   setSearchReportInfoList,
+  setSortReportInfoList,
 } = reportInfoSlice.actions;
 
 export default reportInfoSlice.reducer;

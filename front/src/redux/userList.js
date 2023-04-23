@@ -4,6 +4,7 @@ const initialState = {
   currentUserInfo: {},
   userInfoList: [],
   searchUserInfoList: [],
+  sortUserInfoList: [],
   userFilterStatus: 0,
   userFilterOption: "전체",
 };
@@ -27,12 +28,21 @@ export const userInfoSlice = createSlice({
     setSearchUserInfoList: (state, action) => {
       state.searchUserInfoList = action.payload;
     },
+    setSortUserInfoList: (state, action) => {
+      state.sortUserInfoList = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setUserInfoList, setCurrentUserInfo, setUserFilterStatus, setUserFilterOption, setSearchUserInfoList } =
-  userInfoSlice.actions;
+export const {
+  setUserInfoList,
+  setCurrentUserInfo,
+  setUserFilterStatus,
+  setUserFilterOption,
+  setSearchUserInfoList,
+  setSortUserInfoList,
+} = userInfoSlice.actions;
 
 export default userInfoSlice.reducer;
 

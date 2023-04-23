@@ -23,6 +23,7 @@
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
+  border-right: 1px solid #c0c0c0;
   /* 720px 이하일 때 */
   /* 721px ~ 1024px 때 */
   /* 1024px 이상일 때 */
@@ -66,8 +67,12 @@
     width: 100%;
   }
 }
+.user-table-item td:first-child {
+  flex: 0.97;
+}
 .user-table-item td:last-child {
-  flex: 1.5;
+  border-right: none;
+  flex: 1.45;
   height: max-content;
   display: flex;
   flex-direction: row;
@@ -105,7 +110,6 @@
   border-radius: 4px;
   background-color: #fdfdfd;
   border: 1px solid #aad1ae;
-  font-size: 16px;
   text-align: center;
   /* 720px 이하일 때 */
   /* 721px ~ 1024px 때 */

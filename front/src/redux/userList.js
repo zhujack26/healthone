@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   currentUserInfo: {},
   userInfoList: [],
+  searchUserInfoList: [],
   userFilterStatus: 0,
   userFilterOption: "전체",
 };
@@ -23,11 +24,15 @@ export const userInfoSlice = createSlice({
     setUserFilterOption: (state, action) => {
       state.userFilterOption = action.payload;
     },
+    setSearchUserInfoList: (state, action) => {
+      state.searchUserInfoList = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setUserInfoList, setCurrentUserInfo, setUserFilterStatus, setUserFilterOption } = userInfoSlice.actions;
+export const { setUserInfoList, setCurrentUserInfo, setUserFilterStatus, setUserFilterOption, setSearchUserInfoList } =
+  userInfoSlice.actions;
 
 export default userInfoSlice.reducer;
 

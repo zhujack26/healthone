@@ -24,6 +24,7 @@ import "../../assets/css/ReportTableItem.css";
 const ReportManageTable = ({ showAnswerModal, tableColumnName }) => {
   const dispatch = useDispatch();
   const reportList = useSelector((state) => state.reportList.reportInfoList);
+  const searchReportInfoList = useSelector((state) => state.reportList.searchReportInfoList);
   const curRepoInfo = useSelector((state) => state.reportList.currentReportInfo);
   const reportFilterStatus = useSelector((state) => state.reportList.reportFilterStatus);
   const reportFilterOption = useSelector((state) => state.reportList.reportFilterOption);
@@ -69,6 +70,22 @@ const ReportManageTable = ({ showAnswerModal, tableColumnName }) => {
       );
     }
   }, [reportList.length, reportFilterStatus]);
+
+  useEffect(() => {
+    if (searchReportInfoList.length) {
+      setReportTableItem(
+        searchReportInfoList.map((reportInfoData, i) => (
+          <ReportTableItem
+            ReportInfo={reportInfoData}
+            showAnswerModal={() => {
+              setIsShowModal(true);
+            }}
+            key={i}
+          />
+        ))
+      );
+    }
+  }, [searchReportInfoList]);
 
   return (
     <div className="report-manage-table">

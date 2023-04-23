@@ -1,6 +1,8 @@
 // TODO
-// 1. table Item 들 객체로 관리할 수 있도록 리팩토링 + 변경사항 저장 가능하게 usetState로 관리
-// 2. Reduxtookit 적용하여 상태관리
+// 1. Reduxtookit 적용하여 상태관리
+// 2. 필터 변경하면 필터 조건에 합치하는 것들만 재 렌더링
+// 3. 검색창 검색 시 서버와 디바운스 기법 적용하여 정보 로딩
+// 4. 정렬 기준 선택 정렬 기준 대로 정보 테이블 정보 재 렌더링
 
 /* import react*/
 import { useState } from "react";
@@ -13,6 +15,8 @@ import ManageSortFilterOptionBar from "../components/Manage/ManageSortFilterOpti
 import UserInfoTable from "../components/UserManage/UserInfoTable";
 import ReportManageTable from "../components/ReportManage/ReportManageTable";
 import ReportAnswerModal from "../components/ReportManage/ReportAnswerModal";
+
+// import modules //
 
 /* import css */
 import "../assets/css/ManagePage.css";

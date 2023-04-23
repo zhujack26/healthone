@@ -64,7 +64,7 @@
 }
 @media (min-width: 1025px) {
   .user-table-item td .long-text {
-    width: 100%;
+    width: 112px;
   }
 }
 .user-table-item td:first-child {

@@ -1,11 +1,13 @@
 /* react */
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setReportInfoList } from "../../redux/reportList";
 
 /* data class */
-import ReportInfo from "../../data/ReportInfo";
 
 /* import component */
 import ReportTableItem from "./ReportTableItem";
+import ReportAnswerModal from "./ReportAnswerModal";
 
 // import server apis //
 import { getReportList } from "../../api/ReportInfoAPI";
@@ -16,37 +18,40 @@ import "../../assets/css/ReportTableItem.css";
 
 /**
  *
- * @param {function} showAnswerModal 답변등록 모달 함수
  * @param {Arrays} tableColumnName 테이블 칼럼 명
  * @returns
  */
 const ReportManageTable = ({ showAnswerModal, tableColumnName }) => {
-  const reportModalTestData = new ReportInfo(
-    1,
-    "hong123@gmail.com",
-    "로그인이 안돼요",
-    "2023. 04. 12.",
-    "로그인/회원가입"
-  );
+  const dispatch = useDispatch();
+  const reportList = useSelector((state) => state.reportList.reportInfoList);
+  const curRepoInfo = useSelector((state) => state.reportList.currentReportInfo);
 
   const [reportTableItem, setReportTableItem] = useState([]);
+  const [isShowModal, setIsShowModal] = useState(false);
 
   useEffect(() => {
     getReportList().then((res) => {
-      console.dir(res);
+      let reportInfoList = [];
+      res.map((reportInfoData, i) => {
+        reportInfoList.push(reportInfoData);
+      });
+      dispatch(setReportInfoList(reportInfoList));
+    });
+
+    if (reportList.length > 0) {
       setReportTableItem(
-        res.map((reportInfoData, i) => (
+        reportList.map((reportInfoData, i) => (
           <ReportTableItem
             ReportInfo={reportInfoData}
             showAnswerModal={() => {
-              showAnswerModal();
+              setIsShowModal(true);
             }}
             key={i}
           />
         ))
       );
-    });
-  }, []);
+    }
+  }, [reportList.length]);
 
   return (
     <div className="report-manage-table">
@@ -60,6 +65,16 @@ const ReportManageTable = ({ showAnswerModal, tableColumnName }) => {
         </thead>
         <tbody>{reportTableItem}</tbody>
       </table>
+      {isShowModal ? (
+        <ReportAnswerModal
+          ReportInfo={curRepoInfo}
+          closeModal={() => {
+            setIsShowModal(false);
+          }}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

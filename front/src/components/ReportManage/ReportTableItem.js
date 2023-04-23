@@ -1,5 +1,7 @@
 /* import react */
 import { useRef, useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentReportInfo } from "../../redux/reportList";
 
 /* import component */
 
@@ -15,6 +17,9 @@ import "../../assets/css/ReportTableItem.css";
  * @returns
  */
 const ReportTableItem = ({ showAnswerModal, ReportInfo }) => {
+  const dispatch = useDispatch();
+  // const currentRepoInfo = useSelector((state) => state.reportList.currentReportInfo);
+
   const options = ["등록완료", "처리접수", "처리완료"];
 
   const selectRef = useRef();
@@ -61,6 +66,7 @@ const ReportTableItem = ({ showAnswerModal, ReportInfo }) => {
         <Button
           className="answer-btn"
           onClick={(e) => {
+            dispatch(setCurrentReportInfo(ReportInfo));
             showAnswerModal();
           }}
         >

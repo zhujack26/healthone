@@ -30,7 +30,8 @@
           justify-content: center;
           align-items: center;
 
-          background-color: $mono300;
+          background-color: $mono100;
+          border-right: 1px solid $mono300;
 
           /* 720px 이하일 때 */
           @media (max-width: 720px) {
@@ -47,7 +48,8 @@
           }
         }
         th:last-child {
-          flex: 1.525;
+          flex: 1.5;
+          border-right: none;
         }
 
         /* 720px 이하일 때 */
@@ -72,6 +74,7 @@
       overflow-y: scroll;
       flex-wrap: nowrap;
       height: max-content;
+      border: 1px solid $mono100;
 
       @media (max-height: 800px) {
         max-height: 400px;

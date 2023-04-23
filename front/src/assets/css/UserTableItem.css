@@ -133,7 +133,8 @@
   }
 }
 .user-table-item td:last-child .apply-btn {
-  background-color: #ff5f6d;
+  background-color: #ffb75f;
+  color: #fdfdfd;
   /* 720px 이하일 때 */
   /* 721px ~ 1024px 때 */
   /* 1024px 이상일 때 */

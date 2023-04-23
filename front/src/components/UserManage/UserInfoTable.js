@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 /* import component */
 import UserTableItem from "./UserTableItem";
 
-// import modules //
+// import server apis //
 import { getUerList } from "../../api/UserInfoAPI";
 
 /* import css */

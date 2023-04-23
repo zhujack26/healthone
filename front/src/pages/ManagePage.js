@@ -3,6 +3,7 @@
 // 2. 필터 변경하면 필터 조건에 합치하는 것들만 재 렌더링
 // 3. 검색창 검색 시 서버와 디바운스 기법 적용하여 정보 로딩
 // 4. 정렬 기준 선택 정렬 기준 대로 정보 테이블 정보 재 렌더링
+// 답변등록하면 처리상태 >> 처리 완료로 바꾸기
 
 /* import react*/
 import { useState } from "react";
@@ -16,21 +17,15 @@ import UserInfoTable from "../components/UserManage/UserInfoTable";
 import ReportManageTable from "../components/ReportManage/ReportManageTable";
 import ReportAnswerModal from "../components/ReportManage/ReportAnswerModal";
 
+/* data class */
+import ReportInfo from "../data/ReportInfo";
+
 // import modules //
 
 /* import css */
 import "../assets/css/ManagePage.css";
 
 // Report 내용을 담을 class
-class Report {
-  constructor(title, name, email, date, content) {
-    this.title = title;
-    this.name = name;
-    this.email = email;
-    this.date = date;
-    this.content = content;
-  }
-}
 
 const ManagePage = () => {
   const pageTitle = ["사용자 관리", "불편 사항 관리"];
@@ -40,12 +35,12 @@ const ManagePage = () => {
   const userInfoHeaders = ["이름", "이메일", "가입 일자", "상태", "관리"];
   const reportInfoHeaders = ["CODE", "이메일", "제목", "등록 날짜", "문의 유형", "처리 상태", "관리"];
 
-  const [isShowModal, setIsShowMdoal] = useState(false);
+  const [isShowModal, setIsShowModal] = useState(false);
   const navigate = useNavigate();
 
-  const report = new Report(
+  const reportInfo = new ReportInfo(
+    1,
     "로그인이 안돼요",
-    "홍길동",
     "hong123@gmail.com",
     "2023.04.23.",
     `지금 앱 내에서 로그인 하는데,
@@ -72,7 +67,7 @@ const ManagePage = () => {
   const reportTable = (
     <ReportManageTable
       showAnswerModal={() => {
-        setIsShowMdoal(true);
+        setIsShowModal(true);
       }}
       tableColumnName={reportInfoHeaders}
     />
@@ -100,9 +95,9 @@ const ManagePage = () => {
 
         {isShowModal ? (
           <ReportAnswerModal
-            Report={report}
+            ReportInfo={reportInfo}
             closeModal={() => {
-              setIsShowMdoal(false);
+              setIsShowModal(false);
             }}
           />
         ) : (

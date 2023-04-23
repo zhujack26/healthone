@@ -35,7 +35,7 @@ const ManagePage = () => {
   const userInfoHeaders = ["이름", "이메일", "가입 일자", "상태", "관리"];
   const reportInfoHeaders = ["CODE", "이메일", "제목", "등록 날짜", "문의 유형", "처리 상태", "관리"];
 
-  const [isShowModal, setIsShowModal] = useState(false);
+  // const [isShowModal, setIsShowModal] = useState(false);
   const navigate = useNavigate();
 
   const reportInfo = new ReportInfo(
@@ -66,9 +66,9 @@ const ManagePage = () => {
 
   const reportTable = (
     <ReportManageTable
-      showAnswerModal={() => {
-        setIsShowModal(true);
-      }}
+      // showAnswerModal={() => {
+      //   setIsShowModal(true);
+      // }}
       tableColumnName={reportInfoHeaders}
     />
   );
@@ -92,17 +92,6 @@ const ManagePage = () => {
         />
         {/* <UserInfoTable /> */}
         {tableState ? useInfoTable : reportTable}
-
-        {isShowModal ? (
-          <ReportAnswerModal
-            ReportInfo={reportInfo}
-            closeModal={() => {
-              setIsShowModal(false);
-            }}
-          />
-        ) : (
-          <></>
-        )}
       </div>
     </>
   );

@@ -1,4 +1,5 @@
 /* import react */
+import { useSelector } from "react-redux";
 
 /* import component */
 import { Button } from "@material-ui/core";
@@ -31,12 +32,12 @@ const ReportAnswerModal = ({ ReportInfo, closeModal }) => {
         </div>
         <fieldset className="content-div">
           <legend>문의 내용</legend>
-          <textarea disabled={true}>{ReportInfo.reportContent}</textarea>
+          <textarea disabled={true} value={ReportInfo.reportContent}></textarea>
         </fieldset>
 
         <fieldset className="answer-div">
           <legend>답변 입력</legend>
-          <textarea></textarea>
+          <textarea defaultValue="" placeholder="답변을 입력해주세요."></textarea>
         </fieldset>
 
         <div className="btn-frame">

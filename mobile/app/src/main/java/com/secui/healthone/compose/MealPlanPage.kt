@@ -7,13 +7,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.secui.healthone.dataclass.Meal
+import com.secui.healthone.data.Meal
 import com.secui.healthone.repository.CaloriesData
 import com.secui.healthone.repository.fetchCaloriesData
 import com.secui.healthone.ui.mealplanpage.*
 import kotlinx.coroutines.launch
 import androidx.compose.material.Card
-import androidx.compose.material.Surface
 
 @Composable
 fun MealPlanPage() {

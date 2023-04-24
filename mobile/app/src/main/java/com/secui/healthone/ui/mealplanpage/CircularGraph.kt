@@ -17,8 +17,6 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 @Composable
@@ -36,7 +34,7 @@ fun CircularGraph(intakeCalories: Int, burnedCalories: Int, totalCalories: Int, 
         ) {
             val circleRadius = (size.minDimension - strokeWidth.toPx()) / 2
 
-            // 배경용 회색 그래프 그리기
+            // 배경용 회색 그래프
             drawArc(
                 color = backgroundColor,
                 startAngle = 180f,
@@ -106,28 +104,27 @@ fun CircularGraph(intakeCalories: Int, burnedCalories: Int, totalCalories: Int, 
 
                 // 총 칼로리에 따른 상태 텍스트 컴포넌트
                 CalorieStatus()
-
-                Spacer(modifier = Modifier.height(16.dp)) // 박스와 텍스트 사이의 공간을 추가합니다.
-
-                Box(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                    .background(Color(0xFFE0E0E0), shape = RoundedCornerShape(4.dp))
-                        .padding(8.dp)
-                        .width(500.dp) // 고정 너비 설정
-                        .height(48.dp) // 고정 높이 설정
-                ) {
-                    Text(
-                        text = "권장 섭취 칼로리 2,800 ~ 3,100 \n 운동으로 200kcal만큼 소모해주세요",
-                        style = TextStyle(
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.Normal,
-                            color = Color.Black
-                        ),
-                        textAlign = TextAlign.Center // 가운데 정렬
-                    )
                 }
             }
         }
+    // 회색 박스 코드
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .background(Color(0xFFE0E0E0), shape = RoundedCornerShape(4.dp))
+            .padding(8.dp)
+            .fillMaxWidth()
+            .height(48.dp)
+    ) {
+        Text(
+            text = "권장 섭취 칼로리 2,800 ~ 3,100 \n 운동으로 200kcal만큼 소모해주세요",
+            style = TextStyle(
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Normal,
+                color = Color.Black
+            ),
+            textAlign = TextAlign.Center // 가운데 정렬
+        )
     }
 }

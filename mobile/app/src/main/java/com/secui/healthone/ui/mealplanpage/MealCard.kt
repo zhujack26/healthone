@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import com.secui.healthone.dataclass.Meal
+import com.secui.healthone.data.Meal
 
 @Composable
 fun MealCard(meal: Meal) {

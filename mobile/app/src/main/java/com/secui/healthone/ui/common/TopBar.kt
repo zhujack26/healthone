@@ -8,7 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,17 +33,17 @@ fun TopBar() {
         scaffoldState = scaffoldState,
         topBar = {
             TopAppBar(
-                title = { Icon(painter = painterResource(id = R.drawable.ic_topbar_logo), contentDescription = "logo", tint = Color.Black,
+                title = { Icon(painter = painterResource(id = R.drawable.ic_topbar_logo), contentDescription = "logo", tint = colorResource(id = R.color.black),
                     modifier = Modifier.size(60.dp)
                 ) },
-                backgroundColor = Color.White,
+                backgroundColor = colorResource(id = R.color.white),
                 actions = {
                     IconButton(onClick = {
                         coroutineScope.launch {
                             scaffoldState.drawerState.open()
                         }
                     }) {
-                        Icon(painter = painterResource(id = R.drawable.ic_topbar_toggle), contentDescription = "Menu", tint = Color.Black,
+                        Icon(painter = painterResource(id = R.drawable.ic_topbar_toggle), contentDescription = "Menu", tint = colorResource(id = R.color.black),
                             modifier = Modifier.size(24.dp)
                         )
                     }
@@ -54,6 +54,7 @@ fun TopBar() {
             Column {
                 DrawerButton(
                     text = "메인",
+                    textColor = R.color.black,
                     onClick = {
                         navController.navigate("main")
                         coroutineScope.launch {
@@ -63,6 +64,7 @@ fun TopBar() {
                 )
                 DrawerButton(
                     text = "심박수",
+                    textColor = R.color.black,
                     onClick = {
 //                        navController.navigate("")
                         coroutineScope.launch {
@@ -72,6 +74,7 @@ fun TopBar() {
                 )
                 DrawerButton(
                     text = "식단",
+                    textColor = R.color.black,
                     onClick = {
                       navController.navigate("mealPlanPage")
                         coroutineScope.launch {
@@ -81,6 +84,7 @@ fun TopBar() {
                 )
                 DrawerButton(
                     text = "로그인(임시)",
+                    textColor = R.color.black,
                     onClick = {
                         navController.navigate("login")
                         coroutineScope.launch {
@@ -108,14 +112,15 @@ fun TopBar() {
         }
     )
 }
+
 @Composable
-fun DrawerButton(text: String, onClick: () -> Unit) {
+fun DrawerButton(text: String, textColor: Int = R.color.black, onClick: () -> Unit) {
     TextButton(
         onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
     ) {
-        Text(text, fontSize = 24.sp)
+        Text(text, fontSize = 16.sp, color = colorResource(id = textColor))
     }
 }

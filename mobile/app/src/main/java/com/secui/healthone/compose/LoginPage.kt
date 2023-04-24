@@ -25,7 +25,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.secui.healthone.ui.login.LoginButton
+import com.secui.healthone.ui.loginpage.LoginButton
 
 @Composable
 fun LoginPage() {
@@ -53,7 +53,7 @@ fun LoginPage() {
                 .weight(0.67f)
                 .fillMaxWidth()
         ) {
-            val animationPainter: Painter = painterResource(R.drawable.run)
+            val animationPainter: Painter = painterResource(R.drawable.login_run)
             Image(
                 painter = animationPainter,
                 contentDescription = "Animation",
@@ -67,7 +67,7 @@ fun LoginPage() {
             textAlign = TextAlign.Center
         )
 
-        val googleSignInPainter: Painter = painterResource(R.drawable.google_logo)
+        val googleSignInPainter: Painter = painterResource(R.drawable.login_google_logo)
         LoginButton(
             painter = googleSignInPainter,
             onClick = { signInWithGoogle(launcher, googleSignInClient) }

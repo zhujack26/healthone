@@ -1,4 +1,4 @@
-package com.secui.healthone.ui.login
+package com.secui.healthone.ui.loginpage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

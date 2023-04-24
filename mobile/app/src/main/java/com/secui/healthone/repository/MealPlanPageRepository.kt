@@ -5,9 +5,9 @@ import kotlinx.coroutines.delay
 suspend fun fetchCaloriesData(): CaloriesData {
     // 이 부분에 실제 API 호출을 처리하는 코드를 작성합니다.
     //예시
-    var Calorie1 = 3200
+    var Calorie1 = 3400
     // Calorie1 = api.intakeCalories
-    var Calorie2 = 1000
+    var Calorie2 = 1500
     // Calorie2 = api.burnedCalories
     var Calorie3 = Calorie1 - Calorie2
     // 남여, 나이에 따라 권장 칼로리 설정

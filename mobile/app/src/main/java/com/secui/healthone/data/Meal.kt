@@ -1,4 +1,4 @@
-package com.secui.healthone.dataclass
+package com.secui.healthone.data
 
 data class Meal(
     val name: String,

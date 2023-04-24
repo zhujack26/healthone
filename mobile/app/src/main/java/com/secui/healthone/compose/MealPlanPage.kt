@@ -1,5 +1,6 @@
 package com.secui.healthone.compose
 
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -13,6 +14,9 @@ import com.secui.healthone.repository.fetchCaloriesData
 import com.secui.healthone.ui.mealplanpage.*
 import kotlinx.coroutines.launch
 import androidx.compose.material.Card
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun MealPlanPage() {
@@ -33,71 +37,91 @@ fun MealPlanPage() {
         val updatedTotalCalories = caloriesData!!.totalCalories
         val updatedRecommendedCalories = caloriesData!!.recommendedCalories
 
-        Column(
+        LazyColumn(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Card(modifier = Modifier.fillMaxWidth(), elevation = 4.dp) {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    TopBar()
+            item {
+                Card(modifier = Modifier.fillMaxWidth(), elevation = 4.dp) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        TopBar()
+                    }
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+            }
 
-            Card(modifier = Modifier.fillMaxWidth(), elevation = 4.dp) {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    DateComponent()
+            item {
+                Card(modifier = Modifier.fillMaxWidth(), elevation = 4.dp) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        DateComponent()
+                    }
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+            }
 
-            Card(modifier = Modifier.fillMaxWidth(), elevation = 4.dp) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text("건강 기록", modifier = Modifier.align(Alignment.CenterVertically))
-                    TimeIntervalSelector()
+            item {
+                Card(modifier = Modifier.fillMaxWidth(), elevation = 4.dp) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text("건강 기록", modifier = Modifier.align(Alignment.CenterVertically),
+                            style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold)
+                        )
+                        TimeIntervalSelector()
+                    }
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+            }
 
-            Card(modifier = Modifier.fillMaxWidth(), elevation = 4.dp) {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    CircularGraph(
-                        intakeCalories = updatedIntakeCalories,
-                        burnedCalories = updatedBurnedCalories,
-                        totalCalories = updatedTotalCalories,
-                        recommendedCalories = updatedRecommendedCalories,
-                        modifier = Modifier.padding(bottom = 1.dp)
-                    )
+            item {
+                Card(modifier = Modifier.fillMaxWidth(), elevation = 4.dp) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        CircularGraph(
+                            intakeCalories = updatedIntakeCalories,
+                            burnedCalories = updatedBurnedCalories,
+                            totalCalories = updatedTotalCalories,
+                            recommendedCalories = updatedRecommendedCalories,
+                            modifier = Modifier.padding(bottom = 1.dp)
+                        )
+                    }
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+            }
 
-            Card(modifier = Modifier.fillMaxWidth(), elevation = 4.dp) {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    MealCard(meal)
+            item {
+                Card(modifier = Modifier.fillMaxWidth(), elevation = 4.dp) {
+                    Column(modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        IntakeAndExpenditure()
+                    }
                 }
             }
         }
     } else {
-        // 데이터를 불러오는 동안 표시할 로딩 인디케이터 등을 여기에 작성합니다.
+// 로딩 인디케이터
     }
 }
+

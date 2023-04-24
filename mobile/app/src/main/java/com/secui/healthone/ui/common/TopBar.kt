@@ -3,10 +3,12 @@ package com.secui.healthone.ui.common
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,15 +33,19 @@ fun TopBar() {
         scaffoldState = scaffoldState,
         topBar = {
             TopAppBar(
-                title = { Icon(painter = painterResource(id = R.drawable.ic_topbar_logo), contentDescription = "logo") },
+                title = { Icon(painter = painterResource(id = R.drawable.ic_topbar_logo), contentDescription = "logo", tint = Color.Black,
+                    modifier = Modifier.size(60.dp)
+                ) },
+                backgroundColor = Color.White,
                 actions = {
                     IconButton(onClick = {
                         coroutineScope.launch {
                             scaffoldState.drawerState.open()
                         }
                     }) {
-                        Icon(painter = painterResource(id = R.drawable.ic_topbar_toggle), contentDescription = "Menu")
-
+                        Icon(painter = painterResource(id = R.drawable.ic_topbar_toggle), contentDescription = "Menu", tint = Color.Black,
+                            modifier = Modifier.size(24.dp)
+                        )
                     }
                 }
             )

@@ -22,12 +22,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.secui.healthone.R
 import com.secui.healthone.util.PageRoutes
 
 @Composable
 fun StressInfoBox(
-    // navController: NavController,
+    navController: NavHostController,
     modifier: Modifier = Modifier
 ){
 
@@ -61,7 +62,6 @@ fun StressInfoBox(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                // TODO... local width로 상대적 단위 적용
                 Box(modifier = modifier
                     .width(halfWidth.dp) // to calc
                     .height(16.dp)
@@ -85,7 +85,11 @@ fun StressInfoBox(
                 horizontalArrangement = Arrangement.End
             ) {
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                              /*TODO*/
+
+
+                              },
                     colors = ButtonDefaults.outlinedButtonColors(backgroundColor = colorResource(id = R.color.white)),
                     modifier = Modifier
                 ) {

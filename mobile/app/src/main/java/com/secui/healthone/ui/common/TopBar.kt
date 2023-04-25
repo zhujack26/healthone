@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 import com.secui.healthone.R
 import com.secui.healthone.compose.LoginPage
 import com.secui.healthone.compose.MealPlanPage
+import com.secui.healthone.compose.OverViewPage
 
 
 @Preview
@@ -56,7 +57,7 @@ fun TopBar() {
                     text = "메인",
                     textColor = R.color.black,
                     onClick = {
-                        navController.navigate("main")
+                        navController.navigate("overviewpage")
                         coroutineScope.launch {
                             scaffoldState.drawerState.close()
                         }
@@ -95,12 +96,12 @@ fun TopBar() {
             }
         },
         content = {
-            NavHost(navController, startDestination = "main") {
-                composable("main") {
-                    MainPage(navController)
+            NavHost(navController, startDestination = "overviewpage") {
+                composable("overviewpage") {
+                    OverViewPage()
                 }
 //                composable("") {
-//                    ""() // 심박수 화면
+//                    ""() // 심박수 화면`
 //                }
                 composable("mealPlanPage") {
                     MealPlanPage() // 식단 화면

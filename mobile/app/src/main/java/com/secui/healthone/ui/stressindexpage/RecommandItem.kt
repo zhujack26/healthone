@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberImagePainter
 import com.secui.healthone.R
 
 @Composable
@@ -16,11 +17,11 @@ fun RecommandItem(modifier: Modifier=Modifier,
     Column(modifier = Modifier
         .wrapContentWidth()
         .wrapContentHeight()
-        .padding(16.dp)) {
+        .padding(8.dp)) {
 
 
         Image(
-            painter = painterResource(id = R.drawable.recommand_sample1),
+            painter = rememberImagePainter("https://picsum.photos/200"),
             contentDescription = StressRecommendBoxText.imgDescString,
             modifier = Modifier
                 .width(128.dp)

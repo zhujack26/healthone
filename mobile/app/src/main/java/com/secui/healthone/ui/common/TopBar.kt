@@ -83,16 +83,16 @@ fun TopBar() {
                         }
                     }
                 )
-                DrawerButton(
-                    text = "로그인(임시)",
-                    textColor = R.color.black,
-                    onClick = {
-                        navController.navigate("login")
-                        coroutineScope.launch {
-                            scaffoldState.drawerState.close()
-                        }
-                    }
-                )
+//                DrawerButton(
+//                    text = "로그인(임시)",
+//                    textColor = R.color.black,
+//                    onClick = {
+//                        navController.navigate("login")
+//                        coroutineScope.launch {
+//                            scaffoldState.drawerState.close()
+//                        }
+//                    }
+//                )
             }
         },
         content = {
@@ -106,9 +106,9 @@ fun TopBar() {
                 composable("mealPlanPage") {
                     MealPlanPage() // 식단 화면
                 }
-                composable("login") {
-                    LoginPage() // 로그인 화면
-                }
+//                composable("login") {
+//                    LoginPage(navController = navController) // 로그인 화면
+//                }
             }
         }
     )

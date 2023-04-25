@@ -16,10 +16,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.secui.healthone.MainPage
 import kotlinx.coroutines.launch
 import com.secui.healthone.R
-import com.secui.healthone.compose.LoginPage
+import com.secui.healthone.compose.DataCollectPage
 import com.secui.healthone.compose.MealPlanPage
 import com.secui.healthone.compose.OverViewPage
 
@@ -83,16 +82,6 @@ fun TopBar() {
                         }
                     }
                 )
-//                DrawerButton(
-//                    text = "로그인(임시)",
-//                    textColor = R.color.black,
-//                    onClick = {
-//                        navController.navigate("login")
-//                        coroutineScope.launch {
-//                            scaffoldState.drawerState.close()
-//                        }
-//                    }
-//                )
             }
         },
         content = {
@@ -106,9 +95,6 @@ fun TopBar() {
                 composable("mealPlanPage") {
                     MealPlanPage() // 식단 화면
                 }
-//                composable("login") {
-//                    LoginPage(navController = navController) // 로그인 화면
-//                }
             }
         }
     )

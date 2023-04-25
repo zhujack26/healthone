@@ -16,8 +16,6 @@ import com.secui.healthone.R
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.runtime.remember
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -76,7 +74,7 @@ fun LoginPage(navController: NavController) {
             painter = googleSignInPainter,
 //            onClick = { signInWithGoogle(launcher, googleSignInClient) }
 //            나중에 구글로그인 구현할 때 사용
-            onClick = { navController.navigate("DataCollectPage") }
+            onClick = { navController.navigate("dataCollectPage") }
         )
 
         Text(

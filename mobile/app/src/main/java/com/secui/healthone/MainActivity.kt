@@ -10,6 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.secui.healthone.compose.DataCollectPage
 import com.secui.healthone.compose.LoginPage
 import com.secui.healthone.compose.OverViewPage
 import com.secui.healthone.ui.common.TopBar
@@ -34,12 +35,10 @@ class MainActivity : ComponentActivity() {
                         OverViewPage()
                     }
                 }
+                composable("DataCollectPage") {
+                    DataCollectPage()
+                }
             }
         }
     }
-}
-
-
-@Composable
-fun MainPage(navController: NavController) {
 }

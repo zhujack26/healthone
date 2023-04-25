@@ -9,6 +9,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.navigation.NavHostController
 import com.secui.healthone.R
 import com.secui.healthone.ui.stressindexpage.StressGraphBox
 import com.secui.healthone.ui.stressindexpage.StressInfoBox
@@ -16,6 +17,7 @@ import com.secui.healthone.ui.stressindexpage.StressRecommendBox
 
 @Composable
 fun StressIndexPage(
+    navController:NavHostController,
     modifier: Modifier =
         Modifier
             .fillMaxWidth()

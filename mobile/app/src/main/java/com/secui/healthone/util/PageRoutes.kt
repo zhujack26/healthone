@@ -9,5 +9,7 @@ sealed class PageRoutes(val route:String){
     object HeartRate: PageRoutes("HeartRatePage")
     object Challenge: PageRoutes("ChallengePage")
     object Alert: PageRoutes("AlertPage")
+    object StressBreath: PageRoutes("StressBreath")
+
 
 }

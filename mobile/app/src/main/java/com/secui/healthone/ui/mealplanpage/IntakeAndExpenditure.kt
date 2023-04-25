@@ -20,7 +20,7 @@ import com.secui.healthone.data.Meal
 @Composable
 fun IntakeAndExpenditure() {
     val meals = listOf(
-        Meal("아침", "된장찌개", 300),
+        Meal("아침", "된장찌개", 300, imageUrl = "https://tifyimage.s3.ap-northeast-2.amazonaws.com/006570ab-0815-45ae-acf4-d12a8e16fc3c.PNG"),
         Meal("점심", "김치찌개", 450)
     )
 

@@ -1,4 +1,4 @@
-package com.secui.healthone.ui.common.stressindexpage
+package com.secui.healthone.ui.stressindexpage
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height

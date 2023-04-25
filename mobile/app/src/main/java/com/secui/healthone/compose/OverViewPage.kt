@@ -8,11 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.secui.healthone.ui.overview.*
 
 
 @Composable
 fun OverViewPage(
+    navController: NavHostController,
     modifier: Modifier = Modifier
         .fillMaxSize()
 ) {
@@ -25,7 +27,7 @@ fun OverViewPage(
 
         TotalHealthBox();
         UserWalkBox();
-        HeartRateBox();
+        HeartRateBox(navController);
         StressIndexBox();
         FoodCalorieBox();
         SleepCheckBox();

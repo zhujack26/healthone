@@ -14,10 +14,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.secui.healthone.R
+import com.secui.healthone.util.PageRoutes
 
 @Composable
 fun HeartRateBox(
+    navController:NavHostController,
     modifier: Modifier = Modifier
 ){
 
@@ -26,7 +29,7 @@ fun HeartRateBox(
         shape = RoundedCornerShape(4.dp),
         modifier = Modifier
             .background(colorResource(id = R.color.white))
-            .padding(16.dp)
+            .padding(16.dp),
     ) {
 
         Column(modifier= Modifier
@@ -34,7 +37,7 @@ fun HeartRateBox(
             .wrapContentHeight()
             .padding(16.dp),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         )
         {
             Text(text = "심박 수",

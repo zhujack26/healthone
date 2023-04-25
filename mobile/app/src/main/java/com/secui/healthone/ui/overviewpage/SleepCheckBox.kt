@@ -1,4 +1,4 @@
-package com.secui.healthone.ui.overview
+package com.secui.healthone.ui.overviewpage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -13,11 +13,13 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.secui.healthone.R
 
 
 @Composable
 fun SleepCheckBox(
+    navController: NavHostController,
     modifier: Modifier=Modifier
 ){
     Card(

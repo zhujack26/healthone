@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
                 composable("overviewpage") {
                     Column {
                         TopBar()
-                        OverViewPage()
+                        OverViewPage(navController)
                     }
                 }
                 composable("DataCollectPage") {

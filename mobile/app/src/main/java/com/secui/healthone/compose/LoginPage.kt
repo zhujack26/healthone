@@ -20,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -66,7 +67,8 @@ fun LoginPage(navController: NavController) {
         Text(
             text = "간편하게 가입하고 로그인해요",
             modifier = Modifier.padding(16.dp),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Bold
         )
 
         val googleSignInPainter: Painter = painterResource(R.drawable.login_google_logo)
@@ -81,7 +83,8 @@ fun LoginPage(navController: NavController) {
             text = "로그인시 이용약관과 개인정보 보호호방침에 동의하게 됩니다.",
             modifier = Modifier.padding(16.dp),
             textAlign = TextAlign.Center,
-            fontSize = 12.sp
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Bold
         )
     }
 }

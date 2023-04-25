@@ -57,7 +57,7 @@ fun DataCollectPage(){
         )
         // 프로필 사진 추가 컴포넌트
         Spacer(modifier = Modifier.height(48.dp))
-        ProfilePicturePicker()
+//        ProfilePicturePicker()
     }
 }
 
@@ -81,44 +81,44 @@ fun CircleNumber(number: Int, filled: Boolean) {
     }
 }
 
-@Composable
-fun ProfilePicturePicker() {
-    val context = LocalContext.current
-    val bitmap = remember { mutableStateOf<Bitmap?>(null) }
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val imageBitmap = result.data?.extras?.get("data") as? Bitmap
-            bitmap.value = imageBitmap
-        }
-    }
-
-    Button(
-        onClick = {
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            launcher.launch(intent)
-        },
-        modifier = Modifier
-            .size(128.dp)
-            .padding(8.dp)
-    ) {
-        if (bitmap.value != null) {
-            Image(
-                bitmap = bitmap.value!!.asImageBitmap(),
-                contentDescription = "Profile Picture",
-                modifier = Modifier
-                    .size(128.dp)
-                    .clip(CircleShape)
-            )
-        } else {
-            Image(
-                painter = painterResource(R.drawable.login_run),
-                contentDescription = "Profile Picture",
-                modifier = Modifier
-                    .size(128.dp)
-                    .clip(CircleShape)
-            )
-        }
-    }
-}
+//@Composable
+//fun ProfilePicturePicker() {
+//    val context = LocalContext.current
+//    val bitmap = remember { mutableStateOf<Bitmap?>(null) }
+//    val launcher = rememberLauncherForActivityResult(
+//        contract = ActivityResultContracts.StartActivityForResult()
+//    ) { result ->
+//        if (result.resultCode == RESULT_OK) {
+//            val imageBitmap = result.data?.extras?.get("data") as? Bitmap
+//            bitmap.value = imageBitmap
+//        }
+//    }
+//
+//    Button(
+//        onClick = {
+//            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//            launcher.launch(intent)
+//        },
+//        modifier = Modifier
+//            .size(128.dp)
+//            .padding(8.dp)
+//    ) {
+//        if (bitmap.value != null) {
+//            Image(
+//                bitmap = bitmap.value!!.asImageBitmap(),
+//                contentDescription = "Profile Picture",
+//                modifier = Modifier
+//                    .size(128.dp)
+//                    .clip(CircleShape)
+//            )
+//        } else {
+//            Image(
+//                painter = painterResource(R.drawable.login_run),
+//                contentDescription = "Profile Picture",
+//                modifier = Modifier
+//                    .size(128.dp)
+//                    .clip(CircleShape)
+//            )
+//        }
+//    }
+//}

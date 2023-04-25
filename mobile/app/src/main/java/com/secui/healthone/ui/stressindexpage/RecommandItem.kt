@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.secui.healthone.R
+import com.secui.healthone.util.PageRoutes
 
 @Composable
 fun RecommandItem(
@@ -29,7 +30,7 @@ fun RecommandItem(
                 .width(128.dp)
                 .height(128.dp)
                 .clickable {
-
+                   navController.navigate(PageRoutes.StressActivity.route);
                 },
             contentScale = ContentScale.Crop,
         )

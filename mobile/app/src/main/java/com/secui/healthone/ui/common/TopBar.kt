@@ -163,16 +163,16 @@ fun TopBar() {
                         LoginPage() // 로그인 화면
                     }
                     composable(PageRoutes.StressIndex.route) {
-                        StressIndexPage() // 스트레스 관리
+                        StressIndexPage(navController) // 스트레스 관리
                     }
                     composable(PageRoutes.HeartRate.route){
-                        HeartRatePage() // 심박수 측정
+                        HeartRatePage(navController) // 심박수 측정
                     }
                     composable(PageRoutes.Challenge.route){
-                        ChallengePage() // 챌린지
+                        ChallengePage(navController) // 챌린지
                     }
                     composable(PageRoutes.Alert.route){
-                        AlertPage() /// 알림
+                        AlertPage(navController) /// 알림
                     }
                 }
             }

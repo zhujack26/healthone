@@ -86,9 +86,7 @@ fun StressInfoBox(
             ) {
                 Button(
                     onClick = {
-                              /*TODO*/
-
-
+                              navController.navigate(PageRoutes.StressBreath.route);
                               },
                     colors = ButtonDefaults.outlinedButtonColors(backgroundColor = colorResource(id = R.color.white)),
                     modifier = Modifier

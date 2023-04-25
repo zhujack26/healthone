@@ -1,6 +1,7 @@
 package com.secui.healthone.ui.stressindexpage
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -26,7 +27,10 @@ fun RecommandItem(
             contentDescription = StressRecommendBoxText.imgDescString,
             modifier = Modifier
                 .width(128.dp)
-                .height(128.dp),
+                .height(128.dp)
+                .clickable {
+
+                },
             contentScale = ContentScale.Crop,
         )
 

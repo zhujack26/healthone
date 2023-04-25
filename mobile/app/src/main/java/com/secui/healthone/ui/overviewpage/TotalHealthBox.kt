@@ -1,4 +1,4 @@
-package com.secui.healthone.ui.overview
+package com.secui.healthone.ui.overviewpage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

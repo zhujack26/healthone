@@ -20,7 +20,18 @@ import com.secui.healthone.data.Meal
 @Composable
 fun IntakeAndExpenditure() {
     val meals = listOf(
-        Meal("아침", "된장찌개", 300, imageUrl = "https://tifyimage.s3.ap-northeast-2.amazonaws.com/006570ab-0815-45ae-acf4-d12a8e16fc3c.PNG"),
+        Meal(
+            "아침",
+            "된장찌개",
+            300,
+            imageUrl = "https://tifyimage.s3.ap-northeast-2.amazonaws.com/006570ab-0815-45ae-acf4-d12a8e16fc3c.PNG"
+        ),
+        Meal(
+            "아침",
+            "김치찌개",
+            300,
+            imageUrl = "https://tifyimage.s3.ap-northeast-2.amazonaws.com/006570ab-0815-45ae-acf4-d12a8e16fc3c.PNG"
+        ),
         Meal("점심", "김치찌개", 450)
     )
 
@@ -28,6 +39,8 @@ fun IntakeAndExpenditure() {
         Exercise("Running", "30 minutes", 200),
         Exercise("Yoga", "1 hour", 250)
     )
+
+    val mealGroups = meals.groupBy { it.name }
 
     var selectedIndex by remember { mutableStateOf(0) }
 
@@ -43,8 +56,7 @@ fun IntakeAndExpenditure() {
                 Text("섭취 내역", color = if (selectedIndex == 0) Color.Black else Color.White)
             }
             Box(
-                modifier = Modifier
-                    .weight(1f)
+                modifier = Modifier.weight(1f)
                     .background(if (selectedIndex == 1) Color.White else Color.Gray)
                     .clickable { selectedIndex = 1 }
                     .padding(8.dp)
@@ -55,14 +67,23 @@ fun IntakeAndExpenditure() {
 
         when (selectedIndex) {
             0 -> {
-                meals.forEach { meal -> MealCard(meal) }
-                Button(onClick = { /* 섭취 기록하기 */ }, colors = ButtonDefaults.buttonColors(backgroundColor = Color.Green)) {
+                mealGroups.forEach { (name, mealList) ->
+                    MealCard(mealList, name)
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+                Button(
+                    onClick = { /* 섭취 기록하기 */ },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.Green)
+                ) {
                     Text("섭취 기록하기")
                 }
             }
             1 -> {
                 exercises.forEach { exercise -> ExerciseCard(exercise) }
-                Button(onClick = { /* 운동 기록하기 */ }, colors = ButtonDefaults.buttonColors(backgroundColor = Color.Green)) {
+                Button(
+                    onClick = { /* 운동 기록하기 */ },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.Green)
+                ) {
                     Text("운동 기록하기")
                 }
             }

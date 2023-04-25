@@ -64,7 +64,14 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:20.5.0'
     implementation 'com.google.android.material:material:1.6.0-alpha01' // material3
 
+<<<<<<< HEAD
     //coil
     implementation 'io.coil-kt:coil-compose:1.4.0'
+=======
+    implementation 'com.github.madrapps:plot:0.1.1' // line-graph
+    implementation 'com.github.jaikeerthick:Composable-Graphs:v1.0' // bar-graph
+    implementation("io.coil-kt:coil-compose:1.3.1") // 웹사이트로부터 이미지 로딩을 위한 라이브러리
+
+>>>>>>> 17bdcf71a5d3b7a0e19ec4d3d24d72f2563aa6bb
 }
 

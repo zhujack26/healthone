@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
-import com.secui.healthone.data.Meal
+import com.secui.healthone.data.MealPlan.Meal
 import android.graphics.drawable.ColorDrawable
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.foundation.Image

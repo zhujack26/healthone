@@ -1,7 +1,8 @@
-package com.secui.healthone.ui.overview
+package com.secui.healthone.ui.overviewpage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -13,17 +14,24 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.secui.healthone.R
+import com.secui.healthone.util.PageRoutes
 
 @Composable
-fun StressIndexBox (modifier: Modifier = Modifier){
+fun StressIndexBox (
+    navController: NavHostController,
+    modifier: Modifier = Modifier
+){
 
     Card(
         elevation = 4.dp,
         shape = RoundedCornerShape(4.dp),
         modifier = Modifier
             .background(colorResource(id = R.color.white))
-            .padding(16.dp)
+            .padding(16.dp).clickable {
+                navController.navigate(PageRoutes.StressIndex.route)
+            }
     ) {
 
         Column(modifier= Modifier

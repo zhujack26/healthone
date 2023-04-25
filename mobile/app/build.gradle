@@ -64,5 +64,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:20.5.0'
     implementation 'com.google.android.material:material:1.6.0-alpha01' // material3
 
+    implementation 'com.github.madrapps:plot:0.1.1' // line-graph
+    implementation 'com.github.jaikeerthick:Composable-Graphs:v1.0' // bar-graph
+
 }
 

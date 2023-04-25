@@ -154,7 +154,7 @@ fun TopBar() {
                     .padding(padding)){
                 NavHost(navController, startDestination = PageRoutes.OverView.route) {
                     composable(PageRoutes.OverView.route) {
-                        OverViewPage(navController)
+                        OverViewPage(navController = navController)
                     }
                     composable(PageRoutes.MealPlan.route) {
                         MealPlanPage() // 식단 화면
@@ -163,16 +163,19 @@ fun TopBar() {
                         LoginPage() // 로그인 화면
                     }
                     composable(PageRoutes.StressIndex.route) {
-                        StressIndexPage(navController) // 스트레스 관리
+                        StressIndexPage(navController = navController) // 스트레스 관리
                     }
                     composable(PageRoutes.HeartRate.route){
-                        HeartRatePage(navController) // 심박수 측정
+                        HeartRatePage(navController = navController) // 심박수 측정
                     }
                     composable(PageRoutes.Challenge.route){
-                        ChallengePage(navController) // 챌린지
+                        ChallengePage(navController = navController) // 챌린지
                     }
                     composable(PageRoutes.Alert.route){
-                        AlertPage(navController) /// 알림
+                        AlertPage(navController = navController) /// 알림
+                    }
+                    composable(PageRoutes.StressBreath.route){
+                        StressBreathPage(navController = navController)
                     }
                 }
             }

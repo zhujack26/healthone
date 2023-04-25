@@ -8,7 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.secui.healthone.data.Meal
+import com.secui.healthone.data.MealPlan.Meal
 import com.secui.healthone.repository.CaloriesData
 import com.secui.healthone.repository.fetchCaloriesData
 import com.secui.healthone.ui.mealplanpage.*

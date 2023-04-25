@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.secui.healthone.data.Exercise
+import com.secui.healthone.data.MealPlan.Exercise
 
 @Composable
 fun ExerciseCard(exercise: Exercise) {

@@ -12,10 +12,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.secui.healthone.R
 
 @Composable
 fun StressRecommendBox(
+//    navController: NavController,
     modifier: Modifier=Modifier
 ){
 
@@ -37,14 +39,15 @@ fun StressRecommendBox(
         {
             repeat(8){
                 // recommand Item으로 분할하기!
-                Image(
-                    painter = painterResource(id = R.drawable.recommand_sample1),
-                    contentDescription = StressRecommendBoxText.imgDescString,
-                    modifier = Modifier
-                        .width(128.dp)
-                        .height(128.dp),
-                    contentScale = ContentScale.Crop,
-                )
+//                Image(
+//                    painter = painterResource(id = R.drawable.recommand_sample1),
+//                    contentDescription = StressRecommendBoxText.imgDescString,
+//                    modifier = Modifier
+//                        .width(128.dp)
+//                        .height(128.dp),
+//                    contentScale = ContentScale.Crop,
+//                )
+                RecommandItem();
                 Spacer(modifier = Modifier.width(8.dp))
             }
         }

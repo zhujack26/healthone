@@ -20,9 +20,8 @@ import androidx.navigation.compose.rememberNavController
 import com.secui.healthone.MainPage
 import kotlinx.coroutines.launch
 import com.secui.healthone.R
-import com.secui.healthone.compose.LoginPage
-import com.secui.healthone.compose.MealPlanPage
-import com.secui.healthone.compose.OverViewPage
+import com.secui.healthone.compose.*
+import com.secui.healthone.util.PageRoutes
 
 
 @Preview
@@ -32,6 +31,8 @@ fun TopBar() {
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
 
+    // BeatRoutes.Home.route
+
 //    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
 //    }
 
@@ -39,7 +40,9 @@ fun TopBar() {
         scaffoldState = scaffoldState,
         topBar = {
             TopAppBar(
-                title = { Icon(painter = painterResource(id = R.drawable.ic_topbar_logo), contentDescription = "logo", tint = colorResource(id = R.color.black),
+                title = { Icon(painter = painterResource(id = R.drawable.ic_topbar_logo),
+                    contentDescription = "logo",
+                    tint = colorResource(id = R.color.black),
                     modifier = Modifier.size(60.dp)
                 ) },
                 backgroundColor = colorResource(id = R.color.white),
@@ -49,7 +52,9 @@ fun TopBar() {
                             scaffoldState.drawerState.open()
                         }
                     }) {
-                        Icon(painter = painterResource(id = R.drawable.ic_topbar_toggle), contentDescription = "Menu", tint = colorResource(id = R.color.black),
+                        Icon(painter = painterResource(id = R.drawable.ic_topbar_toggle),
+                            contentDescription = "Menu",
+                            tint = colorResource(id = R.color.black),
                             modifier = Modifier.size(24.dp)
                         )
                     }
@@ -62,7 +67,7 @@ fun TopBar() {
                     text = "메인",
                     textColor = R.color.black,
                     onClick = {
-                        navController.navigate("overviewpage")
+                        navController.navigate(PageRoutes.OverView.route)
                         coroutineScope.launch {
                             scaffoldState.drawerState.close()
                         }
@@ -72,7 +77,7 @@ fun TopBar() {
                     text = "심박수",
                     textColor = R.color.black,
                     onClick = {
-//                        navController.navigate("")
+                        navController.navigate(PageRoutes.HeartRate.route)
                         coroutineScope.launch {
                             scaffoldState.drawerState.close()
                         }
@@ -82,7 +87,7 @@ fun TopBar() {
                     text = "식단",
                     textColor = R.color.black,
                     onClick = {
-                        navController.navigate("mealPlanPage")
+                        navController.navigate(PageRoutes.MealPlan.route)
                         coroutineScope.launch {
                             scaffoldState.drawerState.close()
                         }
@@ -92,7 +97,49 @@ fun TopBar() {
                     text = "로그인(임시)",
                     textColor = R.color.black,
                     onClick = {
-                        navController.navigate("login")
+                        navController.navigate(PageRoutes.Login.route)
+                        coroutineScope.launch {
+                            scaffoldState.drawerState.close()
+                        }
+                    }
+                )
+                DrawerButton(
+                    text = "스트레스 측정",
+                    textColor = R.color.black,
+                    onClick = {
+                        navController.navigate(PageRoutes.StressIndex.route)
+                        coroutineScope.launch {
+                            scaffoldState.drawerState.close()
+                        }
+                    }
+                )
+                DrawerButton(
+                    text = "심박 수 측정",
+                    textColor = R.color.black,
+                    onClick = {
+                        navController.navigate(PageRoutes.HeartRate.route)
+                        coroutineScope.launch {
+                            scaffoldState.drawerState.close()
+                        }
+                    }
+                )
+
+                DrawerButton(
+                    text = "챌린지 페이지",
+                    textColor = R.color.black,
+                    onClick = {
+                        navController.navigate(PageRoutes.Challenge.route)
+                        coroutineScope.launch {
+                            scaffoldState.drawerState.close()
+                        }
+                    }
+                )
+
+                DrawerButton(
+                    text = "알림 페이지",
+                    textColor = R.color.black,
+                    onClick = {
+                        navController.navigate(PageRoutes.Alert.route)
                         coroutineScope.launch {
                             scaffoldState.drawerState.close()
                         }
@@ -105,18 +152,27 @@ fun TopBar() {
             Column(
                 modifier = Modifier
                     .padding(padding)){
-                NavHost(navController, startDestination = "overviewpage") {
-                    composable("overviewpage") {
-                        OverViewPage()
+                NavHost(navController, startDestination = PageRoutes.OverView.route) {
+                    composable(PageRoutes.OverView.route) {
+                        OverViewPage(navController)
                     }
-                    //                composable("") {
-                    //                    ""() // 심박수 화면`
-                    //                }
-                    composable("mealPlanPage") {
+                    composable(PageRoutes.MealPlan.route) {
                         MealPlanPage() // 식단 화면
                     }
-                    composable("login") {
+                    composable(PageRoutes.Login.route) {
                         LoginPage() // 로그인 화면
+                    }
+                    composable(PageRoutes.StressIndex.route) {
+                        StressIndexPage() // 스트레스 관리
+                    }
+                    composable(PageRoutes.HeartRate.route){
+                        HeartRatePage() // 심박수 측정
+                    }
+                    composable(PageRoutes.Challenge.route){
+                        ChallengePage() // 챌린지
+                    }
+                    composable(PageRoutes.Alert.route){
+                        AlertPage() /// 알림
                     }
                 }
             }

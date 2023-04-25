@@ -18,12 +18,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.secui.healthone.data.MealPlan.CalorieStatus
+import com.secui.healthone.ui.common.AppColors
+
 @Composable
 fun CircularGraph(intakeCalories: Int, burnedCalories: Int, totalCalories: Int, recommendedCalories: Int, modifier: Modifier = Modifier) {
     val graphSize = 300.dp
     val strokeWidth = 45.dp
     val graphColors = listOf(Color(0xFFFFA726), Color(0xFFE53935))
-    val backgroundColor = Color(0xFFD3D3D3) // 옅은 회색 배경 색상
+    val backgroundColor = AppColors.mono200 // 옅은 회색 배경 색상
+    val calorieStatus = CalorieStatus(
+        totalCalories = totalCalories,
+        recommendedCalories = recommendedCalories
+    )
+
+    val status = calorieStatus.status
+    val emoji = calorieStatus.emoji
+    val textColor = calorieStatus.textColor
+    val statusText = calorieStatus.statusText
 
     Box(modifier = modifier) {
         Canvas(
@@ -102,10 +114,7 @@ fun CircularGraph(intakeCalories: Int, burnedCalories: Int, totalCalories: Int, 
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 // 총 칼로리에 따른 상태 텍스트 컴포넌트
-                CalorieStatus(
-                    totalCalories = totalCalories,
-                    recommendedCalories = recommendedCalories
-                )
+                Text("$emoji $status", color = textColor)
             }
         }
     }
@@ -119,7 +128,7 @@ fun CircularGraph(intakeCalories: Int, burnedCalories: Int, totalCalories: Int, 
             .height(60.dp)
     ) {
         Text(
-            text = "권장 섭취 칼로리 2,800 ~ 3,100 \n 운동으로 200kcal만큼 소모해주세요",
+            text = "$statusText",
             style = TextStyle(
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Normal,

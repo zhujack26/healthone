@@ -14,8 +14,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.secui.healthone.data.Exercise
-import com.secui.healthone.data.Meal
+import com.secui.healthone.data.MealPlan.Exercise
+import com.secui.healthone.data.MealPlan.Meal
 
 @Composable
 fun IntakeAndExpenditure() {

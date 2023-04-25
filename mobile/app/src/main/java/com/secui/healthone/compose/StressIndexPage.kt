@@ -21,9 +21,6 @@ fun StressIndexPage(
             .fillMaxWidth()
             .background(colorResource(id = R.color.black))
 ){
-
-
-
     Column(modifier= Modifier
         .fillMaxSize()
         .verticalScroll
@@ -35,7 +32,4 @@ fun StressIndexPage(
         StressRecommendBox();
 
     }
-
-
-
 }

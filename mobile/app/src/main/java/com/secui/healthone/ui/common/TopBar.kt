@@ -32,95 +32,96 @@ fun TopBar() {
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
 
-    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
-        Scaffold(
-            scaffoldState = scaffoldState,
-            topBar = {
-                TopAppBar(
-                    title = { Icon(painter = painterResource(id = R.drawable.ic_topbar_logo), contentDescription = "logo", tint = colorResource(id = R.color.black),
-                        modifier = Modifier.size(60.dp)
-                    ) },
-                    backgroundColor = colorResource(id = R.color.white),
-                    actions = {
-                        IconButton(onClick = {
-                            coroutineScope.launch {
-                                scaffoldState.drawerState.open()
-                            }
-                        }) {
-                            Icon(painter = painterResource(id = R.drawable.ic_topbar_toggle), contentDescription = "Menu", tint = colorResource(id = R.color.black),
-                                modifier = Modifier.size(24.dp)
-                            )
+//    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {
+//    }
+
+    Scaffold(
+        scaffoldState = scaffoldState,
+        topBar = {
+            TopAppBar(
+                title = { Icon(painter = painterResource(id = R.drawable.ic_topbar_logo), contentDescription = "logo", tint = colorResource(id = R.color.black),
+                    modifier = Modifier.size(60.dp)
+                ) },
+                backgroundColor = colorResource(id = R.color.white),
+                actions = {
+                    IconButton(onClick = {
+                        coroutineScope.launch {
+                            scaffoldState.drawerState.open()
+                        }
+                    }) {
+                        Icon(painter = painterResource(id = R.drawable.ic_topbar_toggle), contentDescription = "Menu", tint = colorResource(id = R.color.black),
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
+                }
+            )
+        },
+        drawerContent = {
+            Column (){
+                DrawerButton(
+                    text = "메인",
+                    textColor = R.color.black,
+                    onClick = {
+                        navController.navigate("overviewpage")
+                        coroutineScope.launch {
+                            scaffoldState.drawerState.close()
                         }
                     }
                 )
-            },
-            drawerContent = {
-                Column (){
-                    DrawerButton(
-                        text = "메인",
-                        textColor = R.color.black,
-                        onClick = {
-                            navController.navigate("overviewpage")
-                            coroutineScope.launch {
-                                scaffoldState.drawerState.close()
-                            }
-                        }
-                    )
-                    DrawerButton(
-                        text = "심박수",
-                        textColor = R.color.black,
-                        onClick = {
+                DrawerButton(
+                    text = "심박수",
+                    textColor = R.color.black,
+                    onClick = {
 //                        navController.navigate("")
-                            coroutineScope.launch {
-                                scaffoldState.drawerState.close()
-                            }
+                        coroutineScope.launch {
+                            scaffoldState.drawerState.close()
                         }
-                    )
-                    DrawerButton(
-                        text = "식단",
-                        textColor = R.color.black,
-                        onClick = {
-                            navController.navigate("mealPlanPage")
-                            coroutineScope.launch {
-                                scaffoldState.drawerState.close()
-                            }
+                    }
+                )
+                DrawerButton(
+                    text = "식단",
+                    textColor = R.color.black,
+                    onClick = {
+                        navController.navigate("mealPlanPage")
+                        coroutineScope.launch {
+                            scaffoldState.drawerState.close()
                         }
-                    )
-                    DrawerButton(
-                        text = "로그인(임시)",
-                        textColor = R.color.black,
-                        onClick = {
-                            navController.navigate("login")
-                            coroutineScope.launch {
-                                scaffoldState.drawerState.close()
-                            }
+                    }
+                )
+                DrawerButton(
+                    text = "로그인(임시)",
+                    textColor = R.color.black,
+                    onClick = {
+                        navController.navigate("login")
+                        coroutineScope.launch {
+                            scaffoldState.drawerState.close()
                         }
-                    )
-                }
-            },
-            content = {
-                    padding ->
-                Column(
-                    modifier = Modifier
-                        .padding(padding)){
-                    NavHost(navController, startDestination = "overviewpage") {
-                        composable("overviewpage") {
-                            OverViewPage()
-                        }
-                        //                composable("") {
-                        //                    ""() // 심박수 화면`
-                        //                }
-                        composable("mealPlanPage") {
-                            MealPlanPage() // 식단 화면
-                        }
-                        composable("login") {
-                            LoginPage() // 로그인 화면
-                        }
+                    }
+                )
+            }
+        },
+        content = {
+                padding ->
+            Column(
+                modifier = Modifier
+                    .padding(padding)){
+                NavHost(navController, startDestination = "overviewpage") {
+                    composable("overviewpage") {
+                        OverViewPage()
+                    }
+                    //                composable("") {
+                    //                    ""() // 심박수 화면`
+                    //                }
+                    composable("mealPlanPage") {
+                        MealPlanPage() // 식단 화면
+                    }
+                    composable("login") {
+                        LoginPage() // 로그인 화면
                     }
                 }
             }
-        )
-    }
+        }
+    )
 }
 
 

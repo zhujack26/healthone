@@ -1,4 +1,4 @@
-package com.secui.healthone.ui.overview
+package com.secui.healthone.ui.overviewpage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -13,12 +13,14 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.secui.healthone.R
 
 
 @Composable
-fun SleepCheckBox(
-    modifier: Modifier=Modifier
+fun HealthScoreBox(
+    navController: NavHostController,
+    modifier: Modifier= Modifier
 ){
     Card(
         elevation = 4.dp,
@@ -32,29 +34,28 @@ fun SleepCheckBox(
             .fillMaxWidth()
             .wrapContentHeight()
             .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         )
         {
-            Text(text = "수면은 충분히 취하셨나요?",
+            Text(text = "홍길동님의 건강 신호등",
                 fontSize = 16.sp,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentHeight());
-            Spacer(modifier = Modifier.height(32.dp));
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(text = "6시간 45분", fontSize = 20.sp);
-                Image(painter = painterResource(
-                    id = R.drawable.ic_circle),
-                    contentDescription = "수면 아이콘",
-                    modifier = Modifier.width(24.dp).height(24.dp)
-                )
-            }
+                    .wrapContentHeight())
+            Spacer(modifier = Modifier.height(16.dp))
+            Image(painter = 
+                painterResource(id = R.drawable.ic_signal), 
+                contentDescription = "건강신호등",
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .wrapContentHeight()
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(text = "건강상태 : 양호", fontSize = 16.sp);
+
         }
+
     }
 
 }

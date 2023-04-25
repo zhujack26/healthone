@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
+import com.secui.healthone.compose.OverViewPage
 import com.secui.healthone.ui.common.TopBar
 
 class MainActivity : ComponentActivity() {

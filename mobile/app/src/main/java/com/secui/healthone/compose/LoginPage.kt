@@ -28,7 +28,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.secui.healthone.ui.loginpage.LoginButton
+import com.secui.healthone.ui.loginpage.*
 
 @Composable
 fun LoginPage(navController: NavController) {
@@ -76,7 +76,7 @@ fun LoginPage(navController: NavController) {
             painter = googleSignInPainter,
 //            onClick = { signInWithGoogle(launcher, googleSignInClient) }
 //            나중에 구글로그인 구현할 때 사용
-            onClick = { navController.navigate("dataCollectPage") }
+            onClick = { navController.navigate("datacollect1") }
         )
 
         Text(

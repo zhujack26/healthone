@@ -18,16 +18,10 @@ import java.util.stream.Collectors;
 public class FoodService {
 
     private final FoodRepository foodRepository;
-    private final CustomFoodRepository customFoodRepository;
 
     public FoodResponseDto getFood(Integer no) {
         Optional<Food> result = foodRepository.findById(no);
         return result.map(FoodResponseDto::new).orElse(null);
-    }
-
-    public CustomFoodResponseDto getCustomFood(Integer no, Integer userNo) {
-        Optional<CustomFood> result = customFoodRepository.findAllByNoAndUserNo(no, userNo);
-        return result.map(CustomFoodResponseDto::new).orElse(null);
     }
 
     public List<FoodResponseDto> searchFood(String name) {

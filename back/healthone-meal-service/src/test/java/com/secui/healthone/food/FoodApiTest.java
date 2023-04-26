@@ -21,6 +21,7 @@ public class FoodApiTest extends ApiTest {
         final ExtractableResponse<Response> response = FoodSteps.음식데이터_단일조회요청(no);
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.jsonPath().getString("no")).isEqualTo("1");
+        assertThat(response.jsonPath().getString("name")).isEqualTo("가다랑어");
     }
 
     @Test

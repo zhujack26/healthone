@@ -1,17 +1,34 @@
 package com.secui.healthone.food;
 
+import com.secui.healthone.ApiTest;
+import com.secui.healthone.domain.food.service.FoodService;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
 
-public class FoodApiTest {
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+@Slf4j
+public class FoodApiTest extends ApiTest {
     
     @Test
-    @DisplayName("음식 데이터 가져오기")
+    @DisplayName("음식 데이터 단일 조회")
     void getFoodData() {
-        // given
-        
-        // when
-        
-        // then
+        Integer no = 1;
+        final ExtractableResponse<Response> response = FoodSteps.음식데이터_단일조회요청(no);
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.jsonPath().getString("no")).isEqualTo("1");
+    }
+
+    @Test
+    @DisplayName("음식 데이터 검색 조회")
+    void searchFoodData() {
+        String name = "김밥";
+        final ExtractableResponse<Response> response = FoodSteps.음식데이터_검색조회요청(name);
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        log.info("response : {}", response.asString());
     }
 }

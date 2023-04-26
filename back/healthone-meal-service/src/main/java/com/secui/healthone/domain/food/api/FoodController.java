@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
-@RequestMapping
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class FoodController {
     private final FoodService foodService;
@@ -19,6 +21,11 @@ public class FoodController {
     @GetMapping("/food")
     public ResponseEntity<FoodResponseDto> getFood(@RequestParam("no") Integer no) {
         return ResponseEntity.ok(foodService.getFood(no));
+    }
+
+    @GetMapping("/food/search")
+    public ResponseEntity<List<FoodResponseDto>> searchFood(@RequestParam("name") String name) {
+        return ResponseEntity.ok(foodService.searchFood(name));
     }
 
     @GetMapping("/customfood")

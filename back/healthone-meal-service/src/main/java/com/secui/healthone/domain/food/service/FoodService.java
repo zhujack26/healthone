@@ -9,7 +9,9 @@ import com.secui.healthone.domain.food.repository.FoodRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,4 +30,10 @@ public class FoodService {
         return result.map(CustomFoodResponseDto::new).orElse(null);
     }
 
+    public List<FoodResponseDto> searchFood(String name) {
+        List<Food> result = foodRepository.findAllByNameContaining(name);
+        return result.stream()
+                .map(FoodResponseDto::new)
+                .collect(Collectors.toList());
+    }
 }

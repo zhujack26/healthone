@@ -28,6 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.secui.healthone.R
+import com.secui.healthone.ui.datacollectpage.*
 
 
 //
@@ -39,6 +40,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import coil.compose.rememberAsyncImagePainter
@@ -48,7 +51,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.style.TextAlign
 
 @Composable
-fun DataCollectPage(){
+fun DataCollectPage() {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -56,9 +59,9 @@ fun DataCollectPage(){
     ) {
         // 인덱스 컴포넌트
         Row {
-            CircleNumber(number = 1, filled = true)
+            Index(number = 1, filled = true)
             Spacer(modifier = Modifier.width(16.dp))
-            CircleNumber(number = 2, filled = false)
+            Index(number = 2, filled = false)
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -66,92 +69,38 @@ fun DataCollectPage(){
             text = "건강 분석에 필요한 설정",
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
-//            textAlign = TextAlign.Left
         )
         Spacer(modifier = Modifier.height(4.dp))
         Text(
             text = "1분이면 끝나요",
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
-//            textAlign = TextAlign.Left
         )
-        // 프로필 사진 추가 컴포넌트
         Spacer(modifier = Modifier.height(32.dp))
-        Text(
-            text = "프로필 사진"
-        )
-        PhotoPickerDemoScreen()
+
+        // 프로필 사진 추가 컴포넌트
+        PhotoPicker()
         Spacer(modifier = Modifier.height(16.dp))
 
+        // 성별 컴포넌트
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // 닉네임 컴포넌트
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // 생년월일 컴포넌트
+
+        // 신장 컴포넌트
+
+        // 체중 컴포넌트
+
+        // 신장 컴포넌트
+
+        // 체중 컴포넌트
+
+        // 다음 버튼 컴포넌트
     }
 }
 
-@Composable
-fun CircleNumber(number: Int, filled: Boolean) {
-    val backgroundColor = if (filled) colorResource(id = R.color.black) else colorResource(id = R.color.mono600)
-    val textColor = if (filled) colorResource(id = R.color.white) else colorResource(id = R.color.black)
 
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier
-            .size(48.dp)
-            .background(backgroundColor, CircleShape),
-    ) {
-        Text(
-            text = number.toString(),
-            color = textColor,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold
-        )
-    }
-}
-
-@Composable
-fun PhotoPickerDemoScreen() {
-    //The URI of the photo that the user has picked
-    var photoUri: Uri? by remember { mutableStateOf(null) }
-
-    //The launcher we will use for the PickVisualMedia contract.
-    //When .launch()ed, this will display the photo picker.
-    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-        //When the user has selected a photo, its URI is returned here
-        photoUri = uri
-    }
-
-
-    Column {
-        Button(
-            onClick = {
-                //On button press, launch the photo picker
-                launcher.launch(PickVisualMediaRequest(
-                    //Here we request only photos. Change this to .ImageAndVideo if you want videos too.
-                    //Or use .VideoOnly if you only want videos.
-                    mediaType = ActivityResultContracts.PickVisualMedia.ImageOnly
-                ))
-            }
-        ) {
-            Text("추가하기")
-        }
-
-        if (photoUri != null) {
-            //Use Coil to display the selected image
-            val painter = rememberAsyncImagePainter(
-                ImageRequest
-                    .Builder(LocalContext.current)
-                    .data(data = photoUri)
-                    .build()
-            )
-
-            Image(
-                painter = painter,
-                contentDescription = null,
-                modifier = Modifier
-                    .padding(5.dp)
-                    .fillMaxWidth()
-                    .border(6.0.dp, Color.Gray),
-                contentScale = ContentScale.Crop
-            )
-        }
-    }
-}
 

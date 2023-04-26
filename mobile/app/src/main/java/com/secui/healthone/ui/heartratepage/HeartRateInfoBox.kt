@@ -13,10 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.secui.healthone.R;
+import com.secui.healthone.util.PageRoutes
 
 @Composable
 fun HeartRateInfoBox(
+    navController: NavHostController,
     modifier: Modifier = Modifier
 ){
     Card(
@@ -76,7 +79,9 @@ fun HeartRateInfoBox(
                     .width(256.dp)
                     .height(48.dp)
                 ,
-                onClick = {  }) {
+                onClick = {
+                    navController.navigate(PageRoutes.HeartMeasure.route)
+                }) {
                 Text(text = HeartRateInfoBoxText.heartRateBtnText,
                     fontSize = 16.sp,
                     color = colorResource(id = R.color.white)

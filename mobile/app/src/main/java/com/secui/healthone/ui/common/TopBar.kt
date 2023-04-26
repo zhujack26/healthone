@@ -31,7 +31,6 @@ fun TopBar() {
     val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
-
     // BeatRoutes.Home.route
 
 //    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ) {

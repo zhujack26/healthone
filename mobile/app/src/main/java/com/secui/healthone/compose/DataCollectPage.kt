@@ -81,11 +81,11 @@ fun DataCollectPage() {
         // 프로필 사진 추가 컴포넌트
         PhotoPicker()
         Spacer(modifier = Modifier.height(16.dp))
-
         // 성별 컴포넌트
+        GenderSelection()
         Spacer(modifier = Modifier.height(16.dp))
-
         // 닉네임 컴포넌트
+        NicknameInput()
         Spacer(modifier = Modifier.height(16.dp))
 
         // 생년월일 컴포넌트
@@ -101,6 +101,3 @@ fun DataCollectPage() {
         // 다음 버튼 컴포넌트
     }
 }
-
-
-

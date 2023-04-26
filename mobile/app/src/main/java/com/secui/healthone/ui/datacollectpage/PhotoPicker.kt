@@ -36,9 +36,7 @@ fun PhotoPicker() {
         Text(
             text = "프로필 사진"
         )
-        Spacer(modifier = Modifier.height(32.dp))
-
-
+        Spacer(modifier = Modifier.width(100.dp))
         if (photoUri != null) {
             val painter = rememberAsyncImagePainter(
                 ImageRequest

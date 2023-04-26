@@ -16,19 +16,19 @@ import com.secui.healthone.R
 
 @Composable
 fun Index(number: Int, filled: Boolean) {
-    val backgroundColor = if (filled) colorResource(id = R.color.black) else colorResource(id = R.color.mono400)
+    val backgroundColor = if (filled) colorResource(id = R.color.black) else colorResource(id = R.color.mono200)
     val textColor = if (filled) colorResource(id = R.color.white) else colorResource(id = R.color.black)
 
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
-            .size(48.dp)
+            .size(32.dp)
             .background(backgroundColor, CircleShape),
     ) {
         Text(
             text = number.toString(),
             color = textColor,
-            fontSize = 18.sp,
+            fontSize = 16.sp,
             fontWeight = FontWeight.Bold
         )
     }

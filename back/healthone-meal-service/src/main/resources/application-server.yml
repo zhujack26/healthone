@@ -1,4 +1,4 @@
-# LOCAL Setting
+# SERVER Setting
 spring:
   datasource:
     url: jdbc:mariadb://host.docker.internal:3309/healthone

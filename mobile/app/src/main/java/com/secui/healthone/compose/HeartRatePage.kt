@@ -27,7 +27,7 @@ fun HeartRatePage(
 
         HeartGraphBox();
         Spacer(modifier = Modifier.height(16.dp))
-        HeartRateInfoBox();
+        HeartRateInfoBox(navController);
         Spacer(modifier = Modifier.height(16.dp))
         HeartRateRecordList();
         Spacer(modifier = Modifier.height(32.dp))

@@ -11,6 +11,7 @@ sealed class PageRoutes(val route:String){
     object Alert: PageRoutes("AlertPage")
     object StressBreath: PageRoutes("StressBreathPage")
     object StressActivity: PageRoutes("StressActivityPage")
+    object HeartMeasure: PageRoutes("HeartMeasurePage");
 
 
 }

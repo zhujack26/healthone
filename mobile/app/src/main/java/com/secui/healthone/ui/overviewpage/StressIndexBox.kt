@@ -50,7 +50,7 @@ fun StressIndexBox (
                 horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                 Text(text = "오늘 당신의 스트레스 지수는?", fontSize = 16.sp)
-                Image(painter = painterResource(id = R.drawable.ic_circle),
+                Image(painter = painterResource(id = R.drawable.ic_info),
                     contentDescription ="스트레스 지수" ,
                     modifier = Modifier
                         .width(24.dp)
@@ -67,11 +67,11 @@ fun StressIndexBox (
                 ) {
                 // TODO... local width로 상대적 단위 적용
                 Box(modifier = modifier
-                    .width(50.dp)
+                    .width(128.dp)
                     .height(16.dp)
                     .background(colorResource(id = R.color.blue300)))
                 Box(modifier = modifier
-                    .width(50.dp)
+                    .width(128.dp)
                     .height(16.dp)
                     .background(colorResource(id = R.color.blue100)))
             }

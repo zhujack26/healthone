@@ -20,6 +20,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.secui.healthone.R
+import com.secui.healthone.ui.stressbreathpage.StressBreathBox
+import com.secui.healthone.ui.stressbreathpage.StressBreathCounter
 import com.secui.healthone.util.PageRoutes
 
 @Composable
@@ -28,9 +30,6 @@ fun StressBreathPage(
     modifier: Modifier = Modifier
 ){
 
-    val count: MutableState<Int> = remember {
-        mutableStateOf(1)
-    }
 
     Column(modifier= Modifier
         .fillMaxSize()
@@ -42,61 +41,17 @@ fun StressBreathPage(
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // 타이틀
         Text(text = StressBreathPageText.breathGuideText, fontSize = 16.sp);
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        Row(modifier = Modifier
-            .wrapContentWidth()
-            .wrapContentHeight()) {
-            Spacer(modifier = Modifier.width(8.dp))
-
-            // minus - btn
-            Button(
-                colors = ButtonDefaults
-                    .outlinedButtonColors(
-                        backgroundColor =
-                        colorResource(id = R.color.green50)
-                    ),
-                modifier = Modifier
-                    .width(32.dp)
-                    .height(32.dp)
-                ,
-                onClick = { if(count.value>1)--count.value else count.value = 1 }) {
-                Text(text = "-",
-                    fontSize = 16.sp,
-                    color = colorResource(id = R.color.black)
-                )
-            }
-
-            Spacer(modifier = Modifier.width(16.dp))
-
-            Text(text = count.value.toString(), fontSize = 24.sp);
-
-            Spacer(modifier = Modifier.width(16.dp))
-
-            Button(
-                colors = ButtonDefaults
-                    .outlinedButtonColors(
-                        backgroundColor =
-                        colorResource(id = R.color.green50)
-                    ),
-                modifier = Modifier
-                    .width(32.dp)
-                    .height(32.dp)
-                ,
-                onClick = { ++count.value }) {
-                Text(text = "+",
-                    fontSize = 16.sp,
-                    color = colorResource(id = R.color.black)
-                )
-            }
-
-            Spacer(modifier = Modifier.width(8.dp))
-        }
+        // 호흡 수 카운터
+        StressBreathCounter()
 
         Spacer(modifier = Modifier.height(32.dp))
 
+        // 샘플 이미지
         Image(painter = rememberImagePainter(StressBreathPageText.sampleImgURL),
             contentDescription = "가이드 이미지",
             modifier = Modifier
@@ -107,48 +62,29 @@ fun StressBreathPage(
 
         Spacer(modifier = Modifier.height(32.dp))
 
+        // 호흡 버튼
         Button( colors = ButtonDefaults
             .outlinedButtonColors(
                 backgroundColor =
                 colorResource(id = R.color.green300)
             ),
             modifier = Modifier
-                .width(164.dp)
-                .height(36.dp)
+                .width(256.dp)
+                .height(48.dp)
             ,
             onClick = {  }) {
-            Text(text = StressBreathPageText.breathBtnText, fontSize = 16.sp, color = colorResource(
+            Text(text = StressBreathPageText.breathBtnText,
+                fontSize = 20.sp,
+                color =
+                colorResource(
                 id = R.color.white
             ))
         }
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        Row(modifier = Modifier
-            .wrapContentWidth()
-            .wrapContentHeight()) {
-
-            Column(modifier = Modifier
-                .wrapContentWidth()
-                .wrapContentHeight()) {
-
-                Text(text = StressBreathPageText.inhaleText, fontSize = 16.sp);
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(text = StressBreathPageText.inhalePeriod, fontSize = 16.sp);
-
-            }
-
-            Spacer(modifier = Modifier.width(32.dp))
-
-            Column(modifier = Modifier
-                .wrapContentWidth()
-                .wrapContentHeight()) {
-
-                Text(text = StressBreathPageText.exhalationText, fontSize = 16.sp);
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(text = StressBreathPageText.exhalationPeriod, fontSize = 16.sp);
-            }
-        }
+        // 호흡 수 정보 박스
+        StressBreathBox();
     }
 }
 

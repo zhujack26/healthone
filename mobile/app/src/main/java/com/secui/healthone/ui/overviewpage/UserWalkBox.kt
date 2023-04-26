@@ -44,10 +44,10 @@ fun UserWalkBox(
                 fontSize = 16.sp,
                 textAlign = TextAlign.Center
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             Image(painter = painterResource(id = R.drawable.ic_circle),
                 contentDescription = "걸음 수")
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             Text(text = "3,975 / 6000" ,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -55,7 +55,7 @@ fun UserWalkBox(
                 fontSize = 16.sp,
                 textAlign = TextAlign.Center
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             Text(text = "조금만 더 힘내면 오늘의 목표를 달성할 수 있어요" ,
                 modifier = Modifier
                     .fillMaxWidth()

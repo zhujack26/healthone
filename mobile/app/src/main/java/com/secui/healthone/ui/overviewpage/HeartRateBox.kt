@@ -43,6 +43,7 @@ fun HeartRateBox(
             horizontalAlignment = Alignment.CenterHorizontally,
         )
         {
+            Spacer(modifier = Modifier.height(16.dp))
             Text(text = "심박 수",
                 fontSize = 16.sp,
                 modifier = Modifier
@@ -58,7 +59,7 @@ fun HeartRateBox(
                 horizontalArrangement = Arrangement.Center
             ) {
                 Image(painter = painterResource(
-                    id = R.drawable.ic_circle),
+                    id = R.drawable.ic_heart),
                     contentDescription = "하트 아이콘",
                     modifier= Modifier
                         .width(36.dp)
@@ -67,6 +68,8 @@ fun HeartRateBox(
                 Spacer(modifier = Modifier.width(16.dp));
                 Text(text = "99 bpm", fontSize = 20.sp);
             }
+            Spacer(modifier = Modifier.height(16.dp))
+
         }
     }
 

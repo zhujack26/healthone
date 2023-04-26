@@ -50,7 +50,7 @@ fun FoodCalorieBox(
             ) {
                 Text(text = "1024 / 2,150kcal", fontSize = 16.sp)
                 Image(painter = painterResource(
-                    id = R.drawable.ic_circle),
+                    id = R.drawable.ic_food),
                     contentDescription = "음식 이미지",
                     modifier = Modifier.width(24.dp).height(24.dp)
                 )

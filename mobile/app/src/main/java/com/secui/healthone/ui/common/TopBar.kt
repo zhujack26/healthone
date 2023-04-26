@@ -165,6 +165,12 @@ fun TopBar() {
                     composable(PageRoutes.StressBreath.route){
                         StressBreathPage(navController = navController)
                     }
+                    composable(PageRoutes.StressActivity.route){
+                        StressActivityPage(navController = navController);
+                    }
+                    composable(PageRoutes.HeartMeasure.route){
+                        HeartMeasurePage(navController);
+                    }
                 }
             }
         }

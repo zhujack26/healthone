@@ -51,7 +51,7 @@ fun SleepCheckBox(
             ) {
                 Text(text = "6시간 45분", fontSize = 20.sp);
                 Image(painter = painterResource(
-                    id = R.drawable.ic_circle),
+                    id = R.drawable.ic_sleep),
                     contentDescription = "수면 아이콘",
                     modifier = Modifier.width(24.dp).height(24.dp)
                 )

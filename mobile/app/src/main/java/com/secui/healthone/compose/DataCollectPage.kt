@@ -1,124 +1,116 @@
 package com.secui.healthone.compose
 
-import android.app.Activity.RESULT_OK
-import android.content.Intent
-import android.graphics.Bitmap
-import android.provider.MediaStore
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.secui.healthone.R
+import com.secui.healthone.ui.datacollectpage.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.ui.Alignment
+import androidx.navigation.NavController
 
 @Composable
-fun DataCollectPage(){
-    Column(
+fun DataCollectFirstPage(navController: NavController) {
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row {
-            CircleNumber(number = 1, filled = true)
-            Spacer(modifier = Modifier.width(8.dp))
-            CircleNumber(number = 2, filled = false)
+        item {
+            // 인덱스 컴포넌트
+            Row {
+                Index(number = 1, filled = true)
+                Spacer(modifier = Modifier.width(16.dp))
+                Index(number = 2, filled = false)
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = "건강 분석에 필요한 설정",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "1분이면 끝나요",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+            )
+            Spacer(modifier = Modifier.height(32.dp))
+
+            // 프로필 사진 추가 컴포넌트
+            PhotoPicker()
+            Spacer(modifier = Modifier.height(16.dp))
+            // 성별 컴포넌트
+            GenderSelection()
+            Spacer(modifier = Modifier.height(16.dp))
+            // 닉네임 컴포넌트
+            NicknameInput()
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // 생년월일 컴포넌트
+            val birthDate = remember { mutableStateOf("") }
+            BirthDate(
+                value = birthDate.value,
+                onValueChange = { newDate ->
+                    birthDate.value = newDate
+                }
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            // 신장 컴포넌트
+            Height()
+            Spacer(modifier = Modifier.height(16.dp))
+            // 체중 컴포넌트
+            Weight()
+            Spacer(modifier = Modifier.height(32.dp))
+            // 다음 버튼 컴포넌트
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                NextButton(navController)
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+
         }
-
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = "건강 분석에 필요한 설정",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold
-        )
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = "1분이면 끝나요",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold
-        )
-        // 프로필 사진 추가 컴포넌트
-        Spacer(modifier = Modifier.height(48.dp))
-//        ProfilePicturePicker()
     }
 }
-
 @Composable
-fun CircleNumber(number: Int, filled: Boolean) {
-    val backgroundColor = if (filled) colorResource(id = R.color.black) else colorResource(id = R.color.mono600)
-    val textColor = if (filled) colorResource(id = R.color.white) else colorResource(id = R.color.black)
-
-    Box(
-        contentAlignment = Alignment.Center,
+fun DataCollectSecondPage() {
+    LazyColumn(
         modifier = Modifier
-            .size(48.dp)
-            .background(backgroundColor, CircleShape),
+            .fillMaxSize()
+            .padding(16.dp),
     ) {
-        Text(
-            text = number.toString(),
-            color = textColor,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold
-        )
+        item {
+            // 인덱스 컴포넌트
+            Row {
+                Index(number = 1, filled = false)
+                Spacer(modifier = Modifier.width(16.dp))
+                Index(number = 2, filled = true)
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = "목표를 설정해보세요",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+            )
+            Spacer(modifier = Modifier.height(32.dp))
+            // 목표 걸음수 컴포넌트
+            StepGoal()
+            Spacer(modifier = Modifier.height(16.dp))
+
+            //
+            SleepGoal()
+            Spacer(modifier = Modifier.height(32.dp))
+        }
     }
 }
-
-//@Composable
-//fun ProfilePicturePicker() {
-//    val context = LocalContext.current
-//    val bitmap = remember { mutableStateOf<Bitmap?>(null) }
-//    val launcher = rememberLauncherForActivityResult(
-//        contract = ActivityResultContracts.StartActivityForResult()
-//    ) { result ->
-//        if (result.resultCode == RESULT_OK) {
-//            val imageBitmap = result.data?.extras?.get("data") as? Bitmap
-//            bitmap.value = imageBitmap
-//        }
-//    }
-//
-//    Button(
-//        onClick = {
-//            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//            launcher.launch(intent)
-//        },
-//        modifier = Modifier
-//            .size(128.dp)
-//            .padding(8.dp)
-//    ) {
-//        if (bitmap.value != null) {
-//            Image(
-//                bitmap = bitmap.value!!.asImageBitmap(),
-//                contentDescription = "Profile Picture",
-//                modifier = Modifier
-//                    .size(128.dp)
-//                    .clip(CircleShape)
-//            )
-//        } else {
-//            Image(
-//                painter = painterResource(R.drawable.login_run),
-//                contentDescription = "Profile Picture",
-//                modifier = Modifier
-//                    .size(128.dp)
-//                    .clip(CircleShape)
-//            )
-//        }
-//    }
-//}

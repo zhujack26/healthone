@@ -18,7 +18,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.secui.healthone.R
@@ -34,9 +36,11 @@ fun PhotoPicker() {
     Row(verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = "프로필 사진"
+            text = "프로필 사진",
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Bold,
         )
-        Spacer(modifier = Modifier.width(100.dp))
+        Spacer(modifier = Modifier.width(64.dp))
         if (photoUri != null) {
             val painter = rememberAsyncImagePainter(
                 ImageRequest

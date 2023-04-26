@@ -25,15 +25,15 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun GenderSelection() {
     var selectedGender by remember { mutableStateOf<Gender?>(null) }
-    Column() {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
         Text(
             text = "성별",
             fontSize = 12.sp,
             fontWeight = FontWeight.Bold,
         )
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-        ) {
+        Spacer(modifier = Modifier.width(44.dp))
             GenderButton(
                 gender = Gender.Male,
                 isSelected = selectedGender == Gender.Male,
@@ -50,7 +50,6 @@ fun GenderSelection() {
                 }
             )
         }
-    }
 }
 
 @Composable

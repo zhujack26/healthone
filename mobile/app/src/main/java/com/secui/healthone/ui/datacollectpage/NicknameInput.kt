@@ -2,7 +2,6 @@ package com.secui.healthone.ui.datacollectpage
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -34,7 +33,7 @@ fun NicknameInput() {
             fontSize = 12.sp,
             fontWeight = FontWeight.Bold,
         )
-        Spacer(modifier = Modifier.width(16.dp))
+        Spacer(modifier = Modifier.width(32.dp))
         TextField(
             value = textState,
             onValueChange = setTextState,
@@ -48,12 +47,11 @@ fun NicknameInput() {
             modifier = Modifier
                 .width(240.dp)
                 .height(48.dp)
-                .clip(RoundedCornerShape(16.dp)),
+                .clip(RoundedCornerShape(32.dp)),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Done
-            ),
-//            keyboardActions = KeyboardActions(onDone = { /* Dismiss the keyboard */ }),
+            )
         )
     }
 }

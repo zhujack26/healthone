@@ -53,7 +53,7 @@ fun DataCollectPage() {
         Spacer(modifier = Modifier.height(16.dp))
 
         // 생년월일 컴포넌트
-        val birthDate = remember { mutableStateOf("2023-04-26") }
+        val birthDate = remember { mutableStateOf("") }
         BirthDate(
             value = birthDate.value,
             onValueChange = { newDate ->
@@ -62,13 +62,11 @@ fun DataCollectPage() {
         )
         Spacer(modifier = Modifier.height(16.dp))
         // 신장 컴포넌트
-
+        Height()
+        Spacer(modifier = Modifier.height(16.dp))
         // 체중 컴포넌트
-
-        // 신장 컴포넌트
-
-        // 체중 컴포넌트
-
+        Weight()
+        Spacer(modifier = Modifier.height(16.dp))
         // 다음 버튼 컴포넌트
     }
 }

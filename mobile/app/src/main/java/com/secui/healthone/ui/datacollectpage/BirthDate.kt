@@ -3,14 +3,20 @@ package com.secui.healthone.ui.datacollectpage
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun BirthDate(
@@ -45,14 +51,25 @@ fun BirthDate(
         )
         datePickerDialog.show()
     }
-    Text(text = "생년월일")
-    TextField(
-        value = value,
-        onValueChange = { /* do nothing */ },
-        enabled = false,
-        modifier = Modifier.clickable { showDatePickerDialog() },
-        keyboardOptions = keyboardOptions,
-        keyboardActions = keyboardActions,
-        label = { /*Empty Composable*/ }
-    )
+    Row(verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = "생년월일",
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Bold,
+        )
+        Spacer(modifier = Modifier.width(20.dp))
+        TextField(
+            value = value,
+            onValueChange = {},
+            enabled = false,
+            modifier = Modifier
+                .clickable { showDatePickerDialog() }
+                .width(240.dp)
+                .height(48.dp)
+                .clip(RoundedCornerShape(32.dp)),
+            keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions,
+        )
+    }
 }

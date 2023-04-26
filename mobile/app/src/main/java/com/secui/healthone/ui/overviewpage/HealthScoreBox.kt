@@ -43,7 +43,7 @@ fun HealthScoreBox(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight())
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(32.dp))
             Image(painter = 
                 painterResource(id = R.drawable.ic_signal), 
                 contentDescription = "건강신호등",
@@ -51,7 +51,7 @@ fun HealthScoreBox(
                     .wrapContentWidth()
                     .wrapContentHeight()
             )
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(32.dp))
             Text(text = "건강상태 : 양호", fontSize = 16.sp);
 
         }

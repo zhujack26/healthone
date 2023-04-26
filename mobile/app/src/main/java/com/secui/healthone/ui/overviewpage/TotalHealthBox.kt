@@ -30,6 +30,7 @@ fun TotalHealthBox(
         Column(modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
+            .padding(8.dp)
             ,verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
 
@@ -38,7 +39,10 @@ fun TotalHealthBox(
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .padding(8.dp)) {
-                Text(text = "일일 활동", fontSize = 16.sp)
+                Text(
+                    text = TotalHealthBoxText.totalHealthBoxTitle,
+                    fontSize = 16.sp
+                )
             }
 
             Row(modifier= Modifier
@@ -56,13 +60,36 @@ fun TotalHealthBox(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.ic_circle),
-                        contentDescription = "img",
+                        painter = painterResource(id = R.drawable.ic_walk),
+                        contentDescription = "걸음 수",
                         modifier = Modifier
-                            .width(64.dp)
-                            .height(64.dp)
+                            .width(48.dp)
+                            .height(48.dp)
                     )
-                    Text(text = "3456", fontSize = 16.sp)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = TotalHealthBoxText.totalWalkValue,
+                        fontSize = 16.sp
+                    )
+                }
+                Column(modifier = Modifier
+                    .wrapContentWidth()
+                    .wrapContentHeight(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_time),
+                        contentDescription = "수면 시간",
+                        modifier = Modifier
+                            .width(48.dp)
+                            .height(48.dp)
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = TotalHealthBoxText.totalSleepValue,
+                        fontSize = 16.sp
+                    )
                 }
 
                 Column(modifier = Modifier
@@ -72,31 +99,29 @@ fun TotalHealthBox(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.ic_circle),
+                        painter = painterResource(id = R.drawable.ic_fire),
                         contentDescription = "img",
                         modifier = Modifier
-                            .width(64.dp)
-                            .height(64.dp)
+                            .width(48.dp)
+                            .height(48.dp)
                     )
-                    Text(text = "3456", fontSize = 16.sp)
-                }
-
-                Column(modifier = Modifier
-                    .wrapContentWidth()
-                    .wrapContentHeight(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_circle),
-                        contentDescription = "img",
-                        modifier = Modifier
-                            .width(64.dp)
-                            .height(64.dp)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = TotalHealthBoxText.totalCaloriesValue,
+                        fontSize = 16.sp
                     )
-                    Text(text = "3456", fontSize = 16.sp)
                 }
             }
         }
+    }
+}
+
+class TotalHealthBoxText {
+    companion object {
+        const val totalHealthBoxTitle = "일일 활동"
+        const val totalWalkValue = "4631 걸음"
+        const val totalSleepValue = "6시간 45분"
+        const val totalCaloriesValue = "1680 Kcal"
+
     }
 }

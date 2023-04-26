@@ -11,11 +11,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.secui.healthone.data.MealPlan.Exercise
 import com.secui.healthone.data.MealPlan.Meal
+import com.secui.healthone.ui.common.AppColors
 
 @Composable
 fun IntakeAndExpenditure() {
@@ -24,13 +26,11 @@ fun IntakeAndExpenditure() {
             "아침",
             "된장찌개",
             300,
-            imageUrl = "https://tifyimage.s3.ap-northeast-2.amazonaws.com/006570ab-0815-45ae-acf4-d12a8e16fc3c.PNG"
         ),
         Meal(
             "아침",
             "김치찌개",
             300,
-            imageUrl = "https://tifyimage.s3.ap-northeast-2.amazonaws.com/006570ab-0815-45ae-acf4-d12a8e16fc3c.PNG"
         ),
         Meal("점심", "김치찌개", 450)
     )
@@ -49,7 +49,7 @@ fun IntakeAndExpenditure() {
             Box(
                 modifier = Modifier
                     .weight(1f)
-                    .background(if (selectedIndex == 0) Color.White else Color.Gray)
+                    .background(if (selectedIndex == 0) AppColors.mono50 else AppColors.mono200)
                     .clickable { selectedIndex = 0 }
                     .padding(8.dp)
             ) {
@@ -57,7 +57,7 @@ fun IntakeAndExpenditure() {
             }
             Box(
                 modifier = Modifier.weight(1f)
-                    .background(if (selectedIndex == 1) Color.White else Color.Gray)
+                    .background(if (selectedIndex == 1) AppColors.mono50 else AppColors.mono200)
                     .clickable { selectedIndex = 1 }
                     .padding(8.dp)
             ) {
@@ -69,20 +69,25 @@ fun IntakeAndExpenditure() {
             0 -> {
                 mealGroups.forEach { (name, mealList) ->
                     MealCard(mealList, name)
-                    Spacer(modifier = Modifier.height(8.dp))
                 }
                 Button(
                     onClick = { /* 섭취 기록하기 */ },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.Green)
+                    colors = ButtonDefaults.buttonColors(backgroundColor = AppColors.green200),
+                    modifier = Modifier
+                        .fillMaxWidth(0.8f)
+                        .align(Alignment.CenterHorizontally)
                 ) {
-                    Text("섭취 기록하기")
+                    Text("식단 기록하기")
                 }
             }
             1 -> {
                 exercises.forEach { exercise -> ExerciseCard(exercise) }
                 Button(
                     onClick = { /* 운동 기록하기 */ },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.Green)
+                    colors = ButtonDefaults.buttonColors(backgroundColor = AppColors.green200),
+                    modifier = Modifier
+                        .fillMaxWidth(0.8f)
+                        .align(Alignment.CenterHorizontally)
                 ) {
                     Text("운동 기록하기")
                 }

@@ -1,5 +1,6 @@
-package com.secui.healthone.mattermost;
+package com.secui.healthone.global;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,9 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @GetMapping
-    public ResponseEntity<String> test(){
+    public ResponseEntity<String> testServer(){
+        return ResponseEntity.status(HttpStatus.OK).body("User service SERVER ON");
+    }
+
+    @GetMapping("/error")
+    public ResponseEntity<String> testError(){
         throw new RuntimeException();
-        //return ResponseEntity.status(HttpStatus.FORBIDDEN).body("exception");
     }
 }
 

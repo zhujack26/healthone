@@ -8,9 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.secui.healthone.compose.DataCollectPage
-import com.secui.healthone.compose.LoginPage
-import com.secui.healthone.compose.OverViewPage
+import com.secui.healthone.compose.*
 import com.secui.healthone.ui.common.TopBar
 
 
@@ -34,9 +32,8 @@ class MainActivity : ComponentActivity() {
                         OverViewPage(navController)
                     }
                 }
-                composable("DataCollectPage") {
-                    DataCollectPage()
-                }
+                composable("datacollect1") { DataCollectFirstPage(navController) }
+                composable("datacollect2") { DataCollectSecondPage() }
             }
         }
     }

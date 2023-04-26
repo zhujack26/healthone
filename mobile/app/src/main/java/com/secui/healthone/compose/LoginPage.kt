@@ -76,7 +76,7 @@ fun LoginPage(navController: NavController) {
             painter = googleSignInPainter,
 //            onClick = { signInWithGoogle(launcher, googleSignInClient) }
 //            나중에 구글로그인 구현할 때 사용
-            onClick = { navController.navigate("dataCollectPage") }
+            onClick = { navController.navigate("datacollect1") }
         )
 
         Text(

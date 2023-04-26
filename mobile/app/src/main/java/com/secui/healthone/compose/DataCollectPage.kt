@@ -91,12 +91,26 @@ fun DataCollectSecondPage() {
             .padding(16.dp),
     ) {
         item {
+            // 인덱스 컴포넌트
             Row {
                 Index(number = 1, filled = false)
                 Spacer(modifier = Modifier.width(16.dp))
                 Index(number = 2, filled = true)
             }
             Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = "목표를 설정해보세요",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+            )
+            Spacer(modifier = Modifier.height(32.dp))
+            // 목표 걸음수 컴포넌트
+            StepGoal()
+            Spacer(modifier = Modifier.height(16.dp))
+
+            //
+            SleepGoal()
+            Spacer(modifier = Modifier.height(32.dp))
         }
     }
 }

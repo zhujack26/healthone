@@ -1,4 +1,4 @@
-package com.secui.healthone.mattermost.util;
+package com.secui.healthone.global.mattermost.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

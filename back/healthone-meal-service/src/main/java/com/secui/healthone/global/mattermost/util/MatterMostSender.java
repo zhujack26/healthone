@@ -1,7 +1,7 @@
-package com.secui.healthone.mattermost.util;
+package com.secui.healthone.global.mattermost.util;
 
 import com.google.gson.Gson;
-import com.secui.healthone.mattermost.dto.MatterMostMessageDTO;
+import com.secui.healthone.global.mattermost.dto.MatterMostMessageDTO;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

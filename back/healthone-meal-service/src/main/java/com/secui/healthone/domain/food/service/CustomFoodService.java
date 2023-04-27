@@ -2,12 +2,11 @@ package com.secui.healthone.domain.food.service;
 
 import com.secui.healthone.domain.food.dto.CustomFoodRequestDto;
 import com.secui.healthone.domain.food.dto.CustomFoodResponseDto;
-import com.secui.healthone.domain.food.dto.FoodResponseDto;
 import com.secui.healthone.domain.food.entity.CustomFood;
-import com.secui.healthone.domain.food.entity.Food;
 import com.secui.healthone.domain.food.repository.CustomFoodRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +29,7 @@ public class CustomFoodService {
                 .collect(Collectors.toList());
     }
 
+//    @Transactional
     public CustomFoodResponseDto saveCustomFood(CustomFoodRequestDto requestDto) {
         customFoodRepository.save(requestDto.toEntity());
         return new CustomFoodResponseDto(requestDto.toEntity());

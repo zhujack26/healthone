@@ -20,13 +20,15 @@ public class CustomFoodController {
     
     // 사용자 음식 데이터 단건 조회
     @GetMapping
-    public RestApiResponse<CustomFoodResponseDto> getCustomFood(@RequestParam("no") Integer no, @RequestParam("userNo") Integer userNo) {
+    public RestApiResponse<CustomFoodResponseDto> getCustomFood(@RequestParam("no") Integer no) {
+        Integer userNo = 1;
         return new RestApiResponse<>("사용자 음식 데이터 단건 조회 성공", customFoodService.getCustomFood(no, userNo));
     }
 
     // 사용자 음식 데이터 검색
     @GetMapping("/serarch")
-    public RestApiResponse<List<CustomFoodResponseDto>> getCustomFood(@RequestParam("name") String name, @RequestParam("userNo") Integer userNo) {
+    public RestApiResponse<List<CustomFoodResponseDto>> getCustomFood(@RequestParam("name") String name) {
+        Integer userNo = 1;
         return new RestApiResponse<>("사용자 음식 데이터 검색 성공", customFoodService.searchCustomFood(name, userNo));
     }
 

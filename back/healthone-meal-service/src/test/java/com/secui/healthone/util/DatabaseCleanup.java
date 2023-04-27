@@ -1,4 +1,4 @@
-package com.secui.healthone;
+package com.secui.healthone.util;
 
 
 import org.springframework.beans.factory.InitializingBean;

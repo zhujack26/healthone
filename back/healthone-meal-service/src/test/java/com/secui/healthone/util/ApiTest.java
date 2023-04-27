@@ -1,4 +1,4 @@
-package com.secui.healthone;
+package com.secui.healthone.util;
 
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,7 +1,7 @@
 package com.secui.healthone.food;
 
 import com.jayway.jsonpath.JsonPath;
-import com.secui.healthone.ApiTest;
+import com.secui.healthone.util.ApiTest;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;

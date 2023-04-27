@@ -118,7 +118,7 @@ private fun handleSignInResult(navController: NavController, task: Task<GoogleSi
         val account = task.getResult(ApiException::class.java)
         val idToken = account.idToken
         Log.d("check", "ID Token: $idToken") // ID 토큰 값 확인
-        sendIdTokenToServer(idToken)
+//        sendIdTokenToServer(idToken)
         navController.navigate("datacollect1")
         Log.d("check", "check")
     } catch (e: Exception) {
@@ -135,52 +135,54 @@ private fun signInWithGoogle(
     launcher.launch(signInIntent)
 }
 
-private fun sendIdTokenToServer(idToken: String?) {
-    if (idToken == null) {
-        Log.e("check", "idToken is null")
-        return
-    }
-    else if (idToken != null) {
-        Log.d("check", "idToken is not null")
-    }
-    CoroutineScope(Dispatchers.IO).launch {
-        try {
-            val urlString = "http://192.168.31.33/test"
-            val url = URL(urlString)
-            val connection = url.openConnection() as HttpURLConnection
-            connection.requestMethod = "POST"
-            Log.d("check", "check2")
-            connection.doOutput = true
-            Log.d("check", "check3")
-            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
-            Log.d("check", "check4")
-            val postData = "idToken=" + URLEncoder.encode(idToken, "UTF-8")
+//private fun sendIdTokenToServer(idToken: String?) {
+//    if (idToken == null) {
+//        Log.e("check", "idToken is null")
+//        return
+//    }
+//    else if (idToken != null) {
+//        Log.d("check", "idToken is not null")
+//    }
+//    CoroutineScope(Dispatchers.IO).launch {
+//        try {
+//            val urlString = "http://192.168.31.33/test"
+//            val url = URL(urlString)
+//            val connection = url.openConnection() as HttpURLConnection
+//            connection.requestMethod = "POST"
+//            Log.d("check", "check2")
+//            connection.doOutput = true
+//            Log.d("check", "check3")
+//            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
+//            Log.d("check", "check4")
+//            val postData = "idToken=" + URLEncoder.encode(idToken, "UTF-8")
+//
+//            DataOutputStream(connection.outputStream).use { outputStream ->
+//                outputStream.writeBytes(postData)
+//                Log.d("check", "check5")
+//                outputStream.flush()
+//                Log.d("check", "check6")
+//            }
+//            Log.d("check", "check7")
+//            val responseCode = connection.responseCode
+//            Log.d("check", "Response code from server: $responseCode")
+//
+//            if (responseCode == HttpURLConnection.HTTP_OK) {
+//                BufferedReader(InputStreamReader(connection.inputStream)).use { reader ->
+//                    val response = reader.readText()
+//                    Log.d("check", "Signed in as: $response")
+//                }
+//            } else {
+//                Log.e("check", "Error. Response code: $responseCode")
+//            }
+//
+//            connection.disconnect()
+//        } catch (e: Exception) {
+//            Log.e("check", "Error occurred in sendIdTokenToServer", e)
+//        }
+//    }
+//}
 
-            DataOutputStream(connection.outputStream).use { outputStream ->
-                outputStream.writeBytes(postData)
-                Log.d("check", "check5")
-                outputStream.flush()
-                Log.d("check", "check6")
-            }
-            Log.d("check", "check7")
-            val responseCode = connection.responseCode
-            Log.d("check", "Response code from server: $responseCode")
 
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                BufferedReader(InputStreamReader(connection.inputStream)).use { reader ->
-                    val response = reader.readText()
-                    Log.d("check", "Signed in as: $response")
-                }
-            } else {
-                Log.e("check", "Error. Response code: $responseCode")
-            }
-
-            connection.disconnect()
-        } catch (e: Exception) {
-            Log.e("check", "Error occurred in sendIdTokenToServer", e)
-        }
-    }
-}
 //
 //private fun sendIdTokenToServer(idToken: String?) {
 //    if (idToken == null) {

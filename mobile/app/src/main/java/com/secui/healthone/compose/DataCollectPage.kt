@@ -102,11 +102,13 @@ fun DataCollectSecondPage() {
                 fontWeight = FontWeight.Bold,
             )
             Spacer(modifier = Modifier.height(32.dp))
+            // 목표 운동량 컴포넌트
+            ExcersiseAmount()
+            Spacer(modifier = Modifier.height(16.dp))
             // 목표 걸음수 컴포넌트
             StepGoal()
             Spacer(modifier = Modifier.height(16.dp))
-
-            //
+            // 목표 수면시간 컴포넌트
             SleepGoal()
             Spacer(modifier = Modifier.height(32.dp))
         }

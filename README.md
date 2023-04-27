@@ -9,11 +9,13 @@
 
 ### Client
 
-- Android Studio (Java or Kotlin)
+- Android Studio (Kotlin)
+- Jetpack Compose 1.6.1
+- Junit 4.13.2
 
 ### Server
 - Java zulu 11.62.17 (LTS)
-- Spring Boot 2.10.0
+- Spring Boot 2.11.0
 - Gradle 7.6
 - Spring Security 5.7.6
 - JSONwebToken 2.13
@@ -32,10 +34,24 @@
 
 [기능명세서 LINK](https://docs.google.com/spreadsheets/d/1r_Q3wj2S8LpA_8p1xgQYoIveTYeNxu2gi-hhOvXI3gA/edit?usp=sharing)
 
-### ER Diagram
+### 요구사항 명세서
 
-[ER Diagram LINK](https://drive.google.com/file/d/1QtB_VyqoCMl_VtulgX_leoaHo8y3aFVc/view?usp=sharing)
+[요구사항 명세서 LINK](https://docs.google.com/spreadsheets/d/1AOOW1yvqYiB1NroXmejdV4mmVYuvm-I8jxN5QWHdfV8/edit?usp=sharing)
+
+### 간트차트 
+
+[간트차트 WBS](https://docs.google.com/spreadsheets/d/1FvsPJ7m8gNNactG9YPNQerO08CSHoa1PnIKsdUXKdDw/edit?usp=sharing)
 
 ### FIGMA (와이어프레임, 화면설계)
 
-[FIGMA LINK](https://www.figma.com/file/aqot569RRke0gEZADuEkC5/Untitled?node-id=0%3A1&t=ghFZbFBEacOgT8pO-1)
+[FIGMA LINK](https://www.figma.com/file/HeMbuwAhaAMh2BS1BvAf6Q/SECUI_HEALTHONE_WORKSPACE_PUBLIC?node-id=3%3A127&t=RNOxhFvoJeeLsHvO-1)
+
+### ER Diagram
+
+[ER Diagram LINK](https://drive.google.com/filed/1H7fdTPJy9XP6CaiV6dS2s7VaiFYb_LbA/view?usp=sharing)
+
+### API 명세서
+
+[API명세서](https://playful-reading-a8e.notion.site/BE-API-f61899487fe14190951a19aec4c07b04)
+
+

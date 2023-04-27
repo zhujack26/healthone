@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @GetMapping
-    public ResponseEntity<?> testServer(){
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(new RestApiResponse<>("Meal Server is running", null));
+    public RestApiResponse<String> testServer(){
+        return new RestApiResponse<>("Meal Server is running", null);
     }
 
     @GetMapping("/error")
@@ -25,7 +24,7 @@ public class TestController {
     }
 
     @GetMapping("/customerror")
-    public ResponseEntity<String> testCustomError(){
+    public RestApiException testCustomError(){
         throw new RestApiException(UserErrorCode.USER_401);
     }
 

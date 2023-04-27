@@ -34,8 +34,11 @@ fun MealInputPage(navController: NavController) {
     )
 
     var searchTerm by remember { mutableStateOf("") }
-    val searchResults =
+    val searchResults = if (searchTerm.isBlank()) {
+        listOf()
+    } else {
         sampleFoods.filter { food -> food.name.contains(searchTerm, ignoreCase = true) }
+    }
     var selectedFoodId by remember { mutableStateOf(-1) }
 
     val onSearchTermChanged: (String) -> Unit = { newTerm ->

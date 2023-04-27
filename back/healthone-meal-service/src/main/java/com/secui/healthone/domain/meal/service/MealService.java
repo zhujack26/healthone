@@ -19,8 +19,8 @@ public class MealService {
     private final MealRepository mealRepository;
 
     // 식사 조회
-    public MealResponseDto getMeal(Integer no, Integer calorieNo) {
-        Optional<Meal> result = mealRepository.findMealByNoAndCalorieNo(no, calorieNo);
+    public MealResponseDto getMeal(Integer no) {
+        Optional<Meal> result = mealRepository.findMealByNoAndCalorieNo(no);
         return result.map(MealResponseDto::new).orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
     }
 
@@ -34,7 +34,7 @@ public class MealService {
     // 식사 수정
     @Transactional
     public MealResponseDto updateMeal(MealRequestDto requestDto) {
-        Meal meal = mealRepository.findMealByNoAndCalorieNo(requestDto.getNo(), requestDto.getCalorieNo())
+        Meal meal = mealRepository.findMealByNoAndCalorieNo(requestDto.getNo())
                 .orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
         meal.update(requestDto.toEntity());
         return new MealResponseDto(meal);
@@ -43,7 +43,7 @@ public class MealService {
     // 식사 삭제
     @Transactional
     public void deleteMeal(Integer no) {
-        Meal meal = mealRepository.findMealByNoAndCalorieNo(no, 1)
+        Meal meal = mealRepository.findMealByNoAndCalorieNo(no)
                 .orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
         mealRepository.delete(meal);
     }

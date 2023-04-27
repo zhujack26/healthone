@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface MealRepository extends JpaRepository<Meal, Integer> {
 //    @Query("select m from Meal m where m.no =:no and m.calorieNo =: calorieNo")
-    Optional<Meal> findMealByNoAndCalorieNo(Integer no, Integer calorieNo);
-    void deleteAllByNoAndCalorieNo(Integer no, Integer calorieNo);
+    Optional<Meal> findMealByNoAndCalorieNo(Integer no);
+    void deleteAllByNoAndCalorieNo(Integer no);
 }

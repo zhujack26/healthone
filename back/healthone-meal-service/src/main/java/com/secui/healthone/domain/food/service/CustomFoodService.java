@@ -1,5 +1,6 @@
 package com.secui.healthone.domain.food.service;
 
+import com.secui.healthone.domain.food.dto.CustomFoodRequestDto;
 import com.secui.healthone.domain.food.dto.CustomFoodResponseDto;
 import com.secui.healthone.domain.food.dto.FoodResponseDto;
 import com.secui.healthone.domain.food.entity.CustomFood;
@@ -27,5 +28,10 @@ public class CustomFoodService {
         return result.stream()
                 .map(CustomFoodResponseDto::new)
                 .collect(Collectors.toList());
+    }
+
+    public CustomFoodResponseDto saveCustomFood(CustomFoodRequestDto requestDto) {
+        customFoodRepository.save(requestDto.toEntity());
+        return new CustomFoodResponseDto(requestDto.toEntity());
     }
 }

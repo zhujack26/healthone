@@ -24,4 +24,6 @@ public class CustomFood {
     private Integer kcal;
     @Column(name = "customfood_gram") // 1인분 gram수
     private Float gram;
+
+
 }

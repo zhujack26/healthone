@@ -1,5 +1,6 @@
 package com.secui.healthone.domain.food.api;
 
+import com.secui.healthone.domain.food.dto.CustomFoodRequestDto;
 import com.secui.healthone.domain.food.dto.CustomFoodResponseDto;
 import com.secui.healthone.domain.food.dto.FoodResponseDto;
 import com.secui.healthone.domain.food.service.CustomFoodService;
@@ -30,9 +31,14 @@ public class CustomFoodController {
     }
 
     // 사용자 음식 등록
-//    @PostMapping
-//    public RestApiResponse<CustomFoodResponseDto> getCustomFood(@RequestParam("no") Integer no, @RequestParam("userNo") Integer userNo) {
-//        return new RestApiResponse<>("사용자 음식 데이터 검색 성공", );
-//    }
+    @PostMapping
+    public RestApiResponse<CustomFoodResponseDto> getCustomFood(@RequestBody CustomFoodRequestDto requestDto) {
+        return new RestApiResponse<>("사용자 음식 데이터 등록 성공", customFoodService.saveCustomFood(requestDto));
+    }
+
+    @PatchMapping
+    public RestApiResponse<CustomFoodResponseDto> modifyCustomFood(@RequestBody CustomFoodRequestDto requestDto) {
+        return new RestApiResponse<>("사용자 음식 데이터 수정 성공", customFoodService.saveCustomFood(requestDto));
+    }
 
 }

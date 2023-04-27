@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface CustomFoodRepository extends JpaRepository<CustomFood, Integer> {
     Optional<CustomFood> findAllByNoAndUserNo(Integer no, Integer userNo);
     List<CustomFood> findAllByUserNoAndNameContaining(Integer userNo, String name);
-
+    void deleteAllByNoAndUserNo(Integer no, Integer userNo);
 }

@@ -38,8 +38,8 @@ fun IntakeAndExpenditure(navController: NavController) {
     )
 
     val exercises = listOf(
-        Exercise("Running", "30 minutes", 200),
-        Exercise("Yoga", "1 hour", 250)
+        Exercise(1,"Running", "30 minutes", 200),
+        Exercise(2, "Yoga", "1 hour", 250)
     )
 
     val mealGroups = meals.groupBy { it.name }

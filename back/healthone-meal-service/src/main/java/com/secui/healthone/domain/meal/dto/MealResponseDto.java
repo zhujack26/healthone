@@ -11,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 public class MealResponseDto {
     private Integer no;
-    private String calorieNo;
+    private Integer calorieNo;
     private Integer foodNo;
     private Integer customfoodNo;
     private Float portion;

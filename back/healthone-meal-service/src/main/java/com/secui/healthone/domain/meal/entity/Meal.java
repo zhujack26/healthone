@@ -17,7 +17,7 @@ public class Meal {
     @Column(name = "meal_no") // 식사 식별번호
     private Integer no;
     @Column(name = "calorie_no") // 칼로리 식별번호
-    private String calorieNo;
+    private Integer calorieNo;
     @Column(name = "food_no") // 음식 식별번호
     private Integer foodNo;
     @Column(name = "customfood_no") // 사용자 음식 식별번호
@@ -28,4 +28,13 @@ public class Meal {
     private Float gram;
     @Column(name = "meal_kcal") // 섭취한 kcal 수
     private Float kcal;
+
+    public void update(Meal meal) {
+        this.calorieNo = meal.getCalorieNo();
+        this.foodNo = meal.getFoodNo() == null ? this.foodNo : meal.getFoodNo() ;
+        this.customfoodNo = meal.getCustomfoodNo() == null ? this.customfoodNo : meal.getCustomfoodNo();
+        this.portion = meal.getPortion();
+        this.gram = meal.getGram();
+        this.kcal = meal.getKcal();
+    }
 }

@@ -1,4 +1,4 @@
-package com.secui.healthone.mattermost.dto;
+package com.secui.healthone.global.mattermost.dto;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.*;

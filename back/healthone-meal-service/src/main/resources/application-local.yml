@@ -41,7 +41,7 @@ logging:
 notification:
   mattermost:
     enabled: true
-    webhook-url: ""
+    webhook-url: "https://meeting.ssafy.com/hooks/crunsyygi7d4xkoeb11f41u6nr"
     channel:
     pretext:
     color:

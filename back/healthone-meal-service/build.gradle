@@ -4,6 +4,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 	// QueryDSL plugins append
 	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+	id "org.sonarqube" version "3.0"
 }
 
 group = 'com.secui'
@@ -43,6 +44,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 
 	implementation 'com.google.guava:guava:31.1-jre'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 

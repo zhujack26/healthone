@@ -22,6 +22,8 @@ import com.secui.healthone.R
 import com.secui.healthone.compose.MealPlanPage
 import com.secui.healthone.compose.OverViewPage
 import com.secui.healthone.compose.*
+import com.secui.healthone.compose.MealPlan.ExerciseInputPage
+import com.secui.healthone.compose.MealPlan.MealInputPage
 import com.secui.healthone.util.PageRoutes
 
 
@@ -147,7 +149,7 @@ fun TopBar() {
                         OverViewPage(navController = navController)
                     }
                     composable(PageRoutes.MealPlan.route) {
-                        MealPlanPage() // 식단 화면
+                        MealPlanPage(navController = navController) // 식단 화면
                     }
                     composable(PageRoutes.StressIndex.route) {
                         StressIndexPage(navController = navController) // 스트레스 관리
@@ -169,6 +171,12 @@ fun TopBar() {
                     }
                     composable(PageRoutes.HeartMeasure.route){
                         HeartMeasurePage(navController);
+                    }
+                    composable(PageRoutes.MealInput.route){
+                        MealInputPage(navController);
+                    }
+                    composable(PageRoutes.ExerciseInput.route){
+                        ExerciseInputPage(navController);
                     }
                 }
             }

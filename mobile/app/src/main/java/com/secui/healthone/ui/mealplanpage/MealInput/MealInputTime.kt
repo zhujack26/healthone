@@ -1,8 +1,8 @@
-package com.secui.healthone.ui.mealplanpage
+package com.secui.healthone.ui.mealplanpage.MealInput
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
@@ -19,11 +19,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.painterResource
+import com.secui.healthone.R
 
 @Composable
-fun TimeIntervalSelector() {
-    val timeIntervals = listOf("일간", "주간")
+fun MealInputTime() {
+    val timeIntervals = listOf("아침", "점심", "저녁", "간식")
     var expanded by remember { mutableStateOf(false) }
     var selectedInterval by remember { mutableStateOf(timeIntervals.first()) }
 
@@ -32,6 +35,16 @@ fun TimeIntervalSelector() {
             modifier = Modifier.clickable { expanded = !expanded },
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // 음식 이미지 추가
+            Image(
+                painter = painterResource(id = R.drawable.ic_food),
+                contentDescription = "음식 이미지",
+                modifier = Modifier.width(24.dp).height(24.dp)
+            )
+
+            // 간격 조정
+            Spacer(modifier = Modifier.width(8.dp))
+
             Text(
                 text = selectedInterval,
                 style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold)

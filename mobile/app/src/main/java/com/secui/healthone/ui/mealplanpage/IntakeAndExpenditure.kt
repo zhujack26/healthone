@@ -15,12 +15,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.secui.healthone.data.MealPlan.Exercise
 import com.secui.healthone.data.MealPlan.Meal
 import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.util.PageRoutes
 
 @Composable
-fun IntakeAndExpenditure() {
+fun IntakeAndExpenditure(navController: NavController) {
     val meals = listOf(
         Meal(
             "아침",
@@ -71,7 +73,7 @@ fun IntakeAndExpenditure() {
                     MealCard(mealList, name)
                 }
                 Button(
-                    onClick = { /* 섭취 기록하기 */ },
+                    onClick = { navController.navigate(PageRoutes.MealInput.route)},
                     colors = ButtonDefaults.buttonColors(backgroundColor = AppColors.green200),
                     modifier = Modifier
                         .fillMaxWidth(0.8f)
@@ -83,7 +85,7 @@ fun IntakeAndExpenditure() {
             1 -> {
                 exercises.forEach { exercise -> ExerciseCard(exercise) }
                 Button(
-                    onClick = { /* 운동 기록하기 */ },
+                    onClick = { navController.navigate(PageRoutes.ExerciseInput.route) },
                     colors = ButtonDefaults.buttonColors(backgroundColor = AppColors.green200),
                     modifier = Modifier
                         .fillMaxWidth(0.8f)

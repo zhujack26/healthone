@@ -17,11 +17,13 @@ import androidx.compose.material.Card
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 
 @Composable
-fun MealPlanPage() {
-    val meal = Meal("Sample Meal", "Sample Description", 300)
-    val context = LocalContext.current
+fun MealPlanPage(
+                 navController: NavHostController,
+                 modifier: Modifier=Modifier) {
     val scope = rememberCoroutineScope()
     var caloriesData by remember { mutableStateOf<CaloriesData?>(null) }
 
@@ -41,16 +43,6 @@ fun MealPlanPage() {
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            item {
-                Card(modifier = Modifier.fillMaxWidth(), elevation = 4.dp) {
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        TopBar()
-                    }
-                }
-            }
 
             item {
                 Spacer(modifier = Modifier.height(16.dp))
@@ -115,7 +107,7 @@ fun MealPlanPage() {
                     Column(modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        IntakeAndExpenditure()
+                        IntakeAndExpenditure(navController)
                     }
                 }
             }

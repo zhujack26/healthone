@@ -1,27 +1,23 @@
-package com.secui.healthone.ui.mealplanpage
+package com.secui.healthone.ui.mealplanpage.MealInput
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.Alignment
 import android.icu.util.Calendar
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.ui.mealplanpage.DatePickerDialog
 
 @Composable
-fun DateComponent() {
+fun MealInputDate() {
     var showDialog by remember { mutableStateOf(false) }
     val initialDate = Calendar.getInstance()
     val selectedDate = remember { mutableStateOf(initialDate) }
@@ -29,18 +25,10 @@ fun DateComponent() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(AppColors.mono200)
             .padding(horizontal = 8.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // 이전 날짜로 가는 화살표
-        IconButton(onClick = {
-            selectedDate.value = (selectedDate.value.clone() as Calendar).apply { add(Calendar.DAY_OF_MONTH, -1) }
-        }) {
-            Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Previous Date")
-        }
-
         // 달력 아이콘과 날짜를 가운데에 배치
         Row(verticalAlignment = Alignment.CenterVertically) {
             // 달력 아이콘
@@ -55,12 +43,22 @@ fun DateComponent() {
             )
         }
 
-        // 다음 날짜로 가는 화살표
-        IconButton(onClick = {
-            selectedDate.value = (selectedDate.value.clone() as Calendar).apply { add(Calendar.DAY_OF_MONTH, 1) }
-        }) {
-            Icon(imageVector = Icons.Filled .ArrowForward, contentDescription = "Next Date")
-        }
+        // 세로선 왼쪽 간격 추가
+        Spacer(modifier = Modifier.width(8.dp))
+
+        // 세로선 추가
+        Spacer(
+            modifier = Modifier
+                .height(24.dp)
+                .width(2.dp)
+                .background(AppColors.mono200)
+        )
+
+        // 세로선 오른쪽 간격 추가
+        Spacer(modifier = Modifier.width(8.dp))
+
+        // 시간 입력 컴포넌트 추가
+        MealInputTime()
     }
 
     DatePickerDialog(

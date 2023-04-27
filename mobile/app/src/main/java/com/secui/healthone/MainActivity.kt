@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
 
             val navController = rememberNavController()
 
-            NavHost(navController, startDestination = if (jwtToken != null) "login" else "overviewpage") {
+            NavHost(navController, startDestination = if (jwtToken == null) "login" else "overviewpage") {
                 // 원래 코드는 jwtToken == null
                 composable("login") {
                     LoginPage(navController)

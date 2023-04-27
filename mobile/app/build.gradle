@@ -67,5 +67,9 @@ dependencies {
     implementation 'com.github.madrapps:plot:0.1.1' // line-graph
     implementation 'com.github.jaikeerthick:Composable-Graphs:v1.0' // bar-graph
     implementation 'androidx.activity:activity-ktx:1.6.1'
+    implementation 'com.google.android.gms:play-services-auth:20.5.0' // Google Play 서비스 선언
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 }
 

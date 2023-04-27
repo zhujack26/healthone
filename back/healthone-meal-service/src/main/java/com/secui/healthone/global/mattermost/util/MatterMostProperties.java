@@ -1,4 +1,4 @@
-package com.secui.healthone.mattermost.util;
+package com.secui.healthone.global.mattermost.util;
 
 import lombok.Getter;
 import lombok.Setter;

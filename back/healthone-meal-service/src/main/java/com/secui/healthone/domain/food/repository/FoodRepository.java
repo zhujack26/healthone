@@ -1,0 +1,10 @@
+package com.secui.healthone.domain.food.repository;
+
+import com.secui.healthone.domain.food.entity.Food;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface FoodRepository extends JpaRepository<Food, Integer> {
+    List<Food> findAllByNameContaining(String name);
+}

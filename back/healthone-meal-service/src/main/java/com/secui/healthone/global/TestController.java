@@ -2,8 +2,7 @@ package com.secui.healthone.global;
 
 import com.secui.healthone.global.error.exception.RestApiException;
 import com.secui.healthone.global.response.RestApiResponse;
-import com.secui.healthone.global.error.errorcode.UserErrorCode;
-import org.springframework.http.HttpStatus;
+import com.secui.healthone.global.error.errorcode.CustomErrorCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +24,7 @@ public class TestController {
 
     @GetMapping("/customerror")
     public RestApiException testCustomError(){
-        throw new RestApiException(UserErrorCode.USER_401);
+        throw new RestApiException(CustomErrorCode.USER_401);
     }
 
 }

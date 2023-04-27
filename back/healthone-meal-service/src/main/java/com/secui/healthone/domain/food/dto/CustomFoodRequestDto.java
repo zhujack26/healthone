@@ -6,9 +6,11 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
+@Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class CustomFoodRequestDto {
+    private Integer no;
     private Integer userNo;
     private String name;
     private Integer kcal;
@@ -16,6 +18,7 @@ public class CustomFoodRequestDto {
 
     public CustomFood toEntity() {
         return CustomFood.builder()
+                .no(no)
                 .userNo(userNo)
                 .name(name)
                 .kcal(kcal)

@@ -18,21 +18,21 @@ public class CustomFoodController {
 
     private final CustomFoodService customFoodService;
     
-    // 사용자 음식 데이터 단건 조회
+
     @GetMapping
     public RestApiResponse<CustomFoodResponseDto> getCustomFood(@RequestParam("no") Integer no) {
         Integer userNo = 1;
         return new RestApiResponse<>("사용자 음식 데이터 단건 조회 성공", customFoodService.getCustomFood(no, userNo));
     }
 
-    // 사용자 음식 데이터 검색
+
     @GetMapping("/serarch")
     public RestApiResponse<List<CustomFoodResponseDto>> getCustomFood(@RequestParam("name") String name) {
         Integer userNo = 1;
         return new RestApiResponse<>("사용자 음식 데이터 검색 성공", customFoodService.searchCustomFood(name, userNo));
     }
 
-    // 사용자 음식 등록
+
     @PostMapping
     public RestApiResponse<CustomFoodResponseDto> getCustomFood(@RequestBody CustomFoodRequestDto requestDto) {
         return new RestApiResponse<>("사용자 음식 데이터 등록 성공", customFoodService.saveCustomFood(requestDto));
@@ -40,7 +40,12 @@ public class CustomFoodController {
 
     @PatchMapping
     public RestApiResponse<CustomFoodResponseDto> modifyCustomFood(@RequestBody CustomFoodRequestDto requestDto) {
-        return new RestApiResponse<>("사용자 음식 데이터 수정 성공", customFoodService.saveCustomFood(requestDto));
+        return new RestApiResponse<>("사용자 음식 데이터 수정 성공", customFoodService.updateCustomFood(requestDto));
     }
 
+    @DeleteMapping
+    public RestApiResponse<CustomFoodResponseDto> deleteCustomFood(@RequestParam Integer no) {
+        customFoodService.deleteCustomFood(no);
+        return new RestApiResponse<>("사용자 음식 데이터 삭제 성공", null);
+    }
 }

@@ -4,6 +4,8 @@ import com.secui.healthone.domain.food.dto.CustomFoodRequestDto;
 import com.secui.healthone.domain.food.dto.CustomFoodResponseDto;
 import com.secui.healthone.domain.food.entity.CustomFood;
 import com.secui.healthone.domain.food.repository.CustomFoodRepository;
+import com.secui.healthone.global.error.errorcode.CustomErrorCode;
+import com.secui.healthone.global.error.exception.RestApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,9 +31,22 @@ public class CustomFoodService {
                 .collect(Collectors.toList());
     }
 
-//    @Transactional
+    @Transactional
     public CustomFoodResponseDto saveCustomFood(CustomFoodRequestDto requestDto) {
         customFoodRepository.save(requestDto.toEntity());
         return new CustomFoodResponseDto(requestDto.toEntity());
+    }
+
+    @Transactional
+    public CustomFoodResponseDto updateCustomFood(CustomFoodRequestDto requestDto) {
+        CustomFood result = customFoodRepository.findAllByNoAndUserNo(requestDto.getNo(), requestDto.getUserNo())
+                .orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
+        result.update(requestDto.getName(), requestDto.getKcal(),  requestDto.getGram());
+        return new CustomFoodResponseDto(result);
+    }
+
+    @Transactional
+    public void deleteCustomFood(Integer no) {
+        customFoodRepository.deleteAllByNoAndUserNo(no, 1);
     }
 }

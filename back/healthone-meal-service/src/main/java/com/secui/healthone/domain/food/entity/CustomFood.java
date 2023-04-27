@@ -5,7 +5,6 @@ import lombok.*;
 import javax.persistence.*;
 
 @Getter
-@Setter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -24,6 +23,9 @@ public class CustomFood {
     private Integer kcal;
     @Column(name = "customfood_gram") // 1인분 gram수
     private Float gram;
-
-
+    public void update(String name, Integer kcal, Float gram) {
+        this.name = name;
+        this.kcal = kcal;
+        this.gram = gram;
+    }
 }

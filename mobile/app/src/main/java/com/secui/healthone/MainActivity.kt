@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -23,7 +24,7 @@ class MainActivity : ComponentActivity() {
 
             val navController = rememberNavController()
 
-            NavHost(navController, startDestination = PageRoutes.OverView.route) {
+            NavHost(navController, startDestination = if (jwtToken != null) "login" else "overviewpage") {
                 // 원래 코드는 jwtToken == null
                 // if (jwtToken == null) "login" else PageRoutes.OverView.route
 

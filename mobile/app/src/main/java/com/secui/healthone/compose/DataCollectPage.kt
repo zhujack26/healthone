@@ -1,5 +1,6 @@
 package com.secui.healthone.compose
 
+import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -13,6 +14,7 @@ import com.secui.healthone.ui.datacollectpage.*
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.ui.Alignment
 import androidx.navigation.NavController
 
 @Composable
@@ -45,7 +47,15 @@ fun DataCollectFirstPage(navController: NavController) {
             Spacer(modifier = Modifier.height(32.dp))
 
             // 프로필 사진 추가 컴포넌트
-            PhotoPicker()
+            Row(verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = "프로필 사진",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+                PhotoPicker()
+            }
             Spacer(modifier = Modifier.height(16.dp))
             // 성별 컴포넌트
             GenderSelection()
@@ -104,10 +114,10 @@ fun DataCollectSecondPage(navController: NavController) {
             Spacer(modifier = Modifier.height(32.dp))
             // 목표 운동량 컴포넌트
             ExcersiseAmount()
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(32.dp))
             // 목표 걸음수 컴포넌트
             StepGoal()
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(32.dp))
             // 목표 수면시간 컴포넌트
             SleepGoal()
             Spacer(modifier = Modifier.height(32.dp))

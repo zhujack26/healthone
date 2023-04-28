@@ -1,4 +1,4 @@
-package com.secui.healthone.ui.mealplanpage.MealInput
+package com.secui.healthone.ui.mealplanpage.ExerciseInput
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -10,37 +10,37 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.secui.healthone.data.MealPlan.Food
+import com.secui.healthone.data.MealPlan.Exercise
 import com.secui.healthone.ui.common.AppColors
 
 @Composable
-fun SearchResults(
-    searchResults: List<Food>,
-    selectedFoodId: Int?,
-    onFoodSelected: (Int) -> Unit
+fun ExerciseSearchResults(
+    results: List<Exercise>,
+    selectedId: Int,
+    onItemSelected: (Int) -> Unit
 ) {
     Column {
-        searchResults.forEach { food ->
+        results.forEach { exercise ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 RadioButton(
-                    selected = selectedFoodId == food.id,
-                    onClick = { onFoodSelected(food.id) }
+                    selected = selectedId == exercise.id,
+                    onClick = { onItemSelected(exercise.id) }
                 )
                 Text(
-                    text = food.name,
+                    text = exercise.name,
                     modifier = Modifier.weight(2f),
                     style = TextStyle(fontSize = 16.sp)
                 )
                 Text(
-                    text = "${food.servingSize} g",
+                    text = "${exercise.time} 분",
                     modifier = Modifier.weight(1f),
                     style = TextStyle(fontSize = 16.sp)
                 )
                 Text(
-                    text = "${food.calories} kcal",
+                    text = "${exercise.caloriesBurned} kcal",
                     modifier = Modifier.weight(1f),
                     style = TextStyle(fontSize = 16.sp)
                 )

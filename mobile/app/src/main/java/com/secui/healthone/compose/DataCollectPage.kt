@@ -82,7 +82,7 @@ fun DataCollectFirstPage(navController: NavController) {
     }
 }
 @Composable
-fun DataCollectSecondPage() {
+fun DataCollectSecondPage(navController: NavController) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -102,13 +102,24 @@ fun DataCollectSecondPage() {
                 fontWeight = FontWeight.Bold,
             )
             Spacer(modifier = Modifier.height(32.dp))
+            // 목표 운동량 컴포넌트
+            ExcersiseAmount()
+            Spacer(modifier = Modifier.height(16.dp))
             // 목표 걸음수 컴포넌트
             StepGoal()
             Spacer(modifier = Modifier.height(16.dp))
-
-            //
+            // 목표 수면시간 컴포넌트
             SleepGoal()
             Spacer(modifier = Modifier.height(32.dp))
+            // 완료버튼 컴포넌트
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                CompleteButton(navController)
+            }
+            Spacer(modifier = Modifier.height(32.dp))
+
         }
     }
 }

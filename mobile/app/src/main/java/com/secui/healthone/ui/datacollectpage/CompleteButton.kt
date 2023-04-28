@@ -18,18 +18,18 @@ import androidx.navigation.NavController
 import com.secui.healthone.R
 
 @Composable
-fun NextButton(navController: NavController) {
+fun CompleteButton(navController: NavController) {
     Box(
         modifier = Modifier
             .width(280.dp)
             .height(56.dp)
             .clip(RoundedCornerShape(32.dp))
             .background(colorResource(id = R.color.mono200))
-            .clickable { navController.navigate("datacollect2") },
+            .clickable { navController.navigate("overviewpage") },
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "다음",
+            text = "완료",
             fontWeight = FontWeight.Bold,
             color = colorResource(id = R.color.mono400)
         )

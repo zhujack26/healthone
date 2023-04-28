@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
 
             val navController = rememberNavController()
 
-            NavHost(navController, startDestination = if (jwtToken != null) "login" else "overviewpage") {
+            NavHost(navController, startDestination = if (jwtToken == null) "login" else "overviewpage") {
                 // 원래 코드는 jwtToken == null
                 composable("login") {
                     LoginPage(navController)
@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
                     }
                 }
                 composable("datacollect1") { DataCollectFirstPage(navController) }
-                composable("datacollect2") { DataCollectSecondPage() }
+                composable("datacollect2") { DataCollectSecondPage(navController) }
             }
         }
     }

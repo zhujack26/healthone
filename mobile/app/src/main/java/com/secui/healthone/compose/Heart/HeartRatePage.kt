@@ -10,9 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.secui.healthone.ui.heartratepage.HeartGraphBox
-import com.secui.healthone.ui.heartratepage.HeartRateInfoBox
-import com.secui.healthone.ui.heartratepage.HeartRateRecordList
+import com.secui.healthone.ui.heart.heartratepage.HeartGraphBox
+import com.secui.healthone.ui.heart.heartratepage.HeartRateInfoBox
+import com.secui.healthone.ui.heart.heartratepage.HeartRateRecordList
 
 @Composable
 fun HeartRatePage(

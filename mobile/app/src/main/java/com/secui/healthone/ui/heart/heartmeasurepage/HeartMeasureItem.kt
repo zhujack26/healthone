@@ -1,4 +1,4 @@
-package com.secui.healthone.ui.heartmeasurepage
+package com.secui.healthone.ui.heart.heartmeasurepage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*

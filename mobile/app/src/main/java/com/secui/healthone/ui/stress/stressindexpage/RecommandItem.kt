@@ -1,4 +1,4 @@
-package com.secui.healthone.ui.stressindexpage
+package com.secui.healthone.ui.stress.stressindexpage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

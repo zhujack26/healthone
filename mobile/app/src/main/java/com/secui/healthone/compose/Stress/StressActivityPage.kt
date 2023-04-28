@@ -9,9 +9,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.secui.healthone.ui.stressactivitypage.ActivityProgrammeBox
-import com.secui.healthone.ui.stressactivitypage.ActivityTipsterBox
-import com.secui.healthone.ui.stressactivitypage.StressActivityImage
+import com.secui.healthone.ui.stress.stressactivitypage.ActivityProgrammeBox
+import com.secui.healthone.ui.stress.stressactivitypage.ActivityTipsterBox
+import com.secui.healthone.ui.stress.stressactivitypage.StressActivityImage
 
 @Composable
 fun StressActivityPage(

@@ -14,7 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.secui.healthone.R
-import com.secui.healthone.ui.heartmeasurepage.HeartMeasureItem
+import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.ui.heart.heartmeasurepage.HeartMeasureItem
 
 
 @Composable
@@ -35,8 +36,7 @@ fun HeartMeasurePage(
         Spacer(modifier = Modifier.height(32.dp));
         Button( colors = ButtonDefaults
             .outlinedButtonColors(
-                backgroundColor =
-                colorResource(id = R.color.red100)
+                backgroundColor = AppColors.red100
             ),
             modifier = Modifier
                 .width(196.dp)
@@ -44,7 +44,7 @@ fun HeartMeasurePage(
             onClick = {  }) {
             Text(text = "측정 하기",
                 fontSize = 20.sp,
-                color = colorResource(id = R.color.white)
+                color = AppColors.white
             )
             
         }

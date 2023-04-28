@@ -1,4 +1,4 @@
-package com.secui.healthone.ui.heartratepage
+package com.secui.healthone.ui.heart.heartratepage
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -16,6 +16,7 @@ import com.jaikeerthick.composable_graphs.composables.BarGraph
 import com.jaikeerthick.composable_graphs.style.BarGraphStyle
 import com.jaikeerthick.composable_graphs.style.BarGraphVisibility
 import com.secui.healthone.R
+import com.secui.healthone.ui.common.AppColors
 
 @Composable
 fun HeartGraphBox(
@@ -23,7 +24,7 @@ fun HeartGraphBox(
 ){
     
     Column(modifier = Modifier
-        .border(1.dp, colorResource(id = R.color.black), RectangleShape)
+        .border(1.dp, AppColors.blue100, RectangleShape)
         .fillMaxWidth()
         .height(196.dp)
     ) {

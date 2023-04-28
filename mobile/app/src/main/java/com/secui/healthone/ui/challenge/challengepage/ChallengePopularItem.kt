@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.secui.healthone.R
+import com.secui.healthone.ui.common.AppColors
 
 @Composable
 fun ChallengePopularItem(
@@ -35,7 +36,7 @@ fun ChallengePopularItem(
             .wrapContentWidth()
             .wrapContentHeight()
             .padding(8.dp)
-            .shadow(1.dp, RectangleShape, ambientColor = colorResource(id = R.color.black)),
+            .shadow(1.dp, RectangleShape, ambientColor = AppColors.black),
     )
     {
         // 이미지

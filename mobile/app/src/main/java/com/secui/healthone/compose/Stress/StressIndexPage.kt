@@ -10,9 +10,9 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.secui.healthone.R
-import com.secui.healthone.ui.stressindexpage.StressGraphBox
-import com.secui.healthone.ui.stressindexpage.StressInfoBox
-import com.secui.healthone.ui.stressindexpage.StressRecommendBox
+import com.secui.healthone.ui.stress.stressindexpage.StressGraphBox
+import com.secui.healthone.ui.stress.stressindexpage.StressInfoBox
+import com.secui.healthone.ui.stress.stressindexpage.StressRecommendBox
 
 @Composable
 fun StressIndexPage(

@@ -1,4 +1,4 @@
-package com.secui.healthone.ui.stressindexpage
+package com.secui.healthone.ui.stress.stressindexpage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.secui.healthone.R
+import com.secui.healthone.ui.common.AppColors
 import com.secui.healthone.util.PageRoutes
 
 @Composable
@@ -39,7 +40,7 @@ fun StressInfoBox(
         elevation = 4.dp,
         shape = RoundedCornerShape(4.dp),
         modifier = Modifier
-            .background(colorResource(id = R.color.white))
+            .background(AppColors.white)
             .padding(16.dp)
             .clickable { }
     ) {
@@ -65,11 +66,11 @@ fun StressInfoBox(
                 Box(modifier = modifier
                     .width(halfWidth.dp) // to calc
                     .height(16.dp)
-                    .background(colorResource(id = R.color.blue300)))
+                    .background(AppColors.blue300))
                 Box(modifier = modifier
                     .width(halfWidth.dp) // to calc
                     .height(16.dp)
-                    .background(colorResource(id = R.color.blue100)))
+                    .background(AppColors.blue100))
             }
 
             Spacer(modifier = Modifier.height(16.dp));
@@ -88,14 +89,17 @@ fun StressInfoBox(
                     onClick = {
                               navController.navigate(PageRoutes.StressBreath.route);
                               },
-                    colors = ButtonDefaults.outlinedButtonColors(backgroundColor = colorResource(id = R.color.white)),
+                    colors = ButtonDefaults
+                        .outlinedButtonColors(
+                            backgroundColor =
+                            AppColors.white
+                        ),
                     modifier = Modifier
                 ) {
                     Text(text = StressInfoBoxText.breathBtnString,
                         fontSize = 16.sp,
-                        color = colorResource(
-                        id = R.color.black
-                    ))
+                        color = AppColors.black
+                    )
                 }
 
             }

@@ -17,4 +17,5 @@ sealed class PageRoutes(val route:String){
     object My: PageRoutes("MyPage")
     object Walking: PageRoutes("WalkingPage")
     object PopularDetail: PageRoutes("PopularDetailPage")
+    object Setting: PageRoutes("SettingPage")
 }

@@ -91,7 +91,7 @@ fun ExerciseButton(
         )
     }
 }
-
+  
 enum class ExerciseAmount {
     Less,
     Normal,

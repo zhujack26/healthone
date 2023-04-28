@@ -1,10 +1,7 @@
 package com.secui.healthone.ui.datacollectpage
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -20,7 +17,10 @@ import androidx.compose.ui.unit.sp
 fun StepGoal() {
     val stepCount = remember { mutableStateOf(6000) }
 
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceAround,
+        modifier = Modifier.fillMaxWidth()
+    ) {
         Text(
             text = "-",
             fontWeight = FontWeight.Bold,
@@ -36,7 +36,7 @@ fun StepGoal() {
                 }
         )
 
-        Spacer(modifier = Modifier.width(8.dp))
+//        Spacer(modifier = Modifier.width(8.dp))
 
         Text(
             text = "${stepCount.value}걸음",
@@ -45,7 +45,7 @@ fun StepGoal() {
             color = Color.Black
         )
 
-        Spacer(modifier = Modifier.width(8.dp))
+//        Spacer(modifier = Modifier.width(8.dp))
 
         Text(
             text = "+",

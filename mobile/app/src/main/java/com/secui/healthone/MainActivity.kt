@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
                     }
                 }
                 composable("datacollect1") { DataCollectFirstPage(navController) }
-                composable("datacollect2") { DataCollectSecondPage() }
+                composable("datacollect2") { DataCollectSecondPage(navController) }
             }
         }
     }

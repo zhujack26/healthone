@@ -1,4 +1,4 @@
-package com.secui.healthone.ui.heartratepage
+package com.secui.healthone.ui.heart.heartratepage
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -13,6 +13,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.secui.healthone.R
+import com.secui.healthone.ui.common.AppColors
 
 @Composable
 fun HeartBpmGraph(
@@ -35,12 +36,12 @@ fun HeartBpmGraph(
             Box(modifier = Modifier
                 .width(128.dp)
                 .height(18.dp)
-                .background(colorResource(id = R.color.blue300))
+                .background(AppColors.blue300)
             )
             Box(modifier = Modifier
                 .width(128.dp)
                 .height(18.dp)
-                .background(colorResource(id = R.color.blue100))
+                .background(AppColors.blue100)
             )
         }
 

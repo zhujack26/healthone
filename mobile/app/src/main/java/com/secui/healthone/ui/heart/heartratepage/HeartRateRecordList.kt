@@ -1,4 +1,4 @@
-package com.secui.healthone.ui.heartratepage
+package com.secui.healthone.ui.heart.heartratepage
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*

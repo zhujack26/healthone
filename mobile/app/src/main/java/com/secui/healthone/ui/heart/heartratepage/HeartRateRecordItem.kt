@@ -1,4 +1,4 @@
-package com.secui.healthone.ui.heartratepage
+package com.secui.healthone.ui.heart.heartratepage
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -12,6 +12,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.secui.healthone.R;
+import com.secui.healthone.ui.common.AppColors
 
 @Composable
 fun HeartRateRecordItem(
@@ -21,7 +22,7 @@ fun HeartRateRecordItem(
         elevation = 4.dp,
         shape = RoundedCornerShape(4.dp),
         modifier = Modifier
-            .background(colorResource(id = R.color.white))
+            .background(AppColors.white)
     ) {
         Column(modifier = Modifier
             .wrapContentWidth()
@@ -49,18 +50,18 @@ fun HeartRateRecordItem(
 
                     Text(text = HeartRateRecordItemText.heartBpmValue,
                         fontSize = 16.sp,
-                        color = colorResource(id = R.color.mono900)
+                        color = AppColors.mono900
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(text = HeartRateRecordItemText.heartBpmUnit,
                         fontSize = 16.sp,
-                        color = colorResource(id = R.color.mono900)
+                        color = AppColors.mono900
                     )
                 }
 
                 Text(text = HeartRateRecordItemText.heartBpmDate,
                     fontSize = 16.sp,
-                    color = colorResource(id = R.color.mono900)
+                    color = AppColors.mono900
                 )
 
             }
@@ -78,11 +79,11 @@ fun HeartRateRecordItem(
 
                 Text(text = HeartRateRecordItemText.heartBpmTime,
                     fontSize = 16.sp,
-                    color = colorResource(id = R.color.mono900)
+                    color = AppColors.mono900
                 )
                 Text(text = HeartRateRecordItemText.wearableDeviceName,
                     fontSize = 16.sp,
-                    color = colorResource(id = R.color.mono900)
+                    color = AppColors.mono900
                 )
 
             }

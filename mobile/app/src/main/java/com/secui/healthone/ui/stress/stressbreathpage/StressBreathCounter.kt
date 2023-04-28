@@ -1,4 +1,4 @@
-package com.secui.healthone.ui.stressbreathpage
+package com.secui.healthone.ui.stress.stressbreathpage
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -14,6 +14,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.secui.healthone.R
+import com.secui.healthone.ui.common.AppColors
 
 @Composable
 fun StressBreathCounter(
@@ -39,7 +40,7 @@ fun StressBreathCounter(
             colors = ButtonDefaults
                 .outlinedButtonColors(
                     backgroundColor =
-                    colorResource(id = R.color.green200)
+                    AppColors.green200
                 ),
             modifier = Modifier
                 .width(48.dp)
@@ -49,7 +50,7 @@ fun StressBreathCounter(
             onClick = { if(count.value>1)--count.value else count.value = 1 }) {
             Text(text = "-",
                 fontSize = 16.sp,
-                color = colorResource(id = R.color.white)
+                color = AppColors.white
             )
         }
 
@@ -64,7 +65,7 @@ fun StressBreathCounter(
             colors = ButtonDefaults
                 .outlinedButtonColors(
                     backgroundColor =
-                    colorResource(id = R.color.green200)
+                    AppColors.green200
                 ),
             modifier = Modifier
                 .width(48.dp)
@@ -74,7 +75,7 @@ fun StressBreathCounter(
             onClick = { if(count.value<10)count.value++ }) {
             Text(text = "+",
                 fontSize = 16.sp,
-                color = colorResource(id = R.color.white)
+                color = AppColors.white
             )
         }
 

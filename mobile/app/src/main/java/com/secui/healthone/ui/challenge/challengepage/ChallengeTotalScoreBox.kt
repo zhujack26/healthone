@@ -53,7 +53,7 @@ fun ChallengeTotalScoreBox(
                     .wrapContentHeight(),
                 textAlign = TextAlign.Center,
                 fontSize = 18.sp,
-                color = AppColors.white
+                color = AppColors.black
             )
             Spacer(modifier = Modifier.height(8.dp))
             Row(modifier= Modifier

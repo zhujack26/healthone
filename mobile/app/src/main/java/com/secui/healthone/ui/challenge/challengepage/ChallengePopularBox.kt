@@ -8,19 +8,25 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.secui.healthone.ui.common.AppColors
 
 @Composable
 fun ChallengePopularBox(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ){
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -29,7 +35,8 @@ fun ChallengePopularBox(
         Text(
             text = ChallengePopularBoxText.challangePopularBoxTitle,
             fontSize = 18.sp,
-            modifier = Modifier.padding(8.dp, 0.dp)
+            modifier = Modifier.padding(8.dp, 0.dp),
+            fontWeight = FontWeight.SemiBold
         );
         Spacer(modifier = Modifier.height(8.dp));
         Row(modifier = Modifier
@@ -43,9 +50,8 @@ fun ChallengePopularBox(
                 ChallengePopularItem(navController);
             }
         }
-
-
     }
+
 }
 
 class ChallengePopularBoxText {

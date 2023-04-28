@@ -66,6 +66,16 @@ fun TopBar() {
         drawerContent = {
             Column (){
                 DrawerButton(
+                    text = "내 페이지",
+                    textColor = R.color.black,
+                    onClick = {
+                        navController.navigate(PageRoutes.My.route)
+                        coroutineScope.launch {
+                            scaffoldState.drawerState.close()
+                        }
+                    }
+                )
+                DrawerButton(
                     text = "메인",
                     textColor = R.color.black,
                     onClick = {
@@ -90,6 +100,16 @@ fun TopBar() {
                     textColor = R.color.black,
                     onClick = {
                         navController.navigate(PageRoutes.MealPlan.route)
+                        coroutineScope.launch {
+                            scaffoldState.drawerState.close()
+                        }
+                    }
+                )
+                DrawerButton(
+                    text = "걸음수",
+                    textColor = R.color.black,
+                    onClick = {
+                        navController.navigate(PageRoutes.Walking.route)
                         coroutineScope.launch {
                             scaffoldState.drawerState.close()
                         }
@@ -177,6 +197,12 @@ fun TopBar() {
                     }
                     composable(PageRoutes.ExerciseInput.route){
                         ExerciseInputPage(navController);
+                    }
+                    composable(PageRoutes.My.route){
+                        MyPage(navController = navController);
+                    }
+                    composable(PageRoutes.Walking.route){
+                        WalkingPage(navController = navController);
                     }
                 }
             }

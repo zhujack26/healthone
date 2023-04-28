@@ -118,10 +118,21 @@ fun calculateSleepDuration(
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)
         }
-        val duration = wakeCalendar.timeInMillis - sleepCalendar.timeInMillis
-        val hour = duration / (1000 * 60 * 60)
-        val minute = (duration % (1000 * 60 * 60)) / (1000 * 60)
+        var duration = wakeCalendar.timeInMillis - sleepCalendar.timeInMillis
+        if (duration <= 0) { // 기상 시간이 취침 시간보다 이전인 경우 (다음날로 넘어갔을 경우)
+            duration += 24 * 60 * 60 * 1000
+        }
 
-        sleepDuration.value = "$hour 시간 $minute 분"
+        val totalHours = duration / (1000 * 60 * 60)
+        val totalMinutes = (duration % (1000 * 60 * 60)) / (1000 * 60)
+
+        // 24시간 이상인 경우, 24시간으로 제한하지 않고, 24시간 단위로 계산함
+        if (totalHours >= 24) {
+            val days = totalHours / 24
+            val hours = totalHours % 24
+            sleepDuration.value = "${days}일 ${hours}시간 ${totalMinutes}분"
+        } else {
+            sleepDuration.value = "${totalHours}시간 ${totalMinutes}분"
+        }
     }
 }

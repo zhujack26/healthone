@@ -14,5 +14,6 @@ sealed class PageRoutes(val route:String){
     object HeartMeasure: PageRoutes("HeartMeasurePage");
     object MealInput: PageRoutes("MealInputPage")
     object ExerciseInput: PageRoutes("ExerciseInputPage")
-
+    object My: PageRoutes("MyPage")
+    object Walking: PageRoutes("WalkingPage")
 }

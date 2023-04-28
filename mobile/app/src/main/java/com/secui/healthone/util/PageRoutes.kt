@@ -15,4 +15,6 @@ sealed class PageRoutes(val route:String){
     object MealInput: PageRoutes("MealInputPage")
     object ExerciseInput: PageRoutes("ExerciseInputPage")
 
+    object PopularDetail: PageRoutes("PopularDetailPage")
+
 }

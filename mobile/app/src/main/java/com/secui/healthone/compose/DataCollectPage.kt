@@ -1,5 +1,6 @@
 package com.secui.healthone.compose
 
+import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -104,10 +105,10 @@ fun DataCollectSecondPage(navController: NavController) {
             Spacer(modifier = Modifier.height(32.dp))
             // 목표 운동량 컴포넌트
             ExcersiseAmount()
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(32.dp))
             // 목표 걸음수 컴포넌트
             StepGoal()
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(32.dp))
             // 목표 수면시간 컴포넌트
             SleepGoal()
             Spacer(modifier = Modifier.height(32.dp))

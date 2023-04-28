@@ -148,12 +148,21 @@ fun TopBar() {
                         }
                     }
                 )
-
                 DrawerButton(
                     text = "알림 페이지",
                     textColor = R.color.black,
                     onClick = {
                         navController.navigate(PageRoutes.Alert.route)
+                        coroutineScope.launch {
+                            scaffoldState.drawerState.close()
+                        }
+                    }
+                )
+                DrawerButton(
+                    text = "설정",
+                    textColor = R.color.black,
+                    onClick = {
+                        navController.navigate(PageRoutes.Setting.route)
                         coroutineScope.launch {
                             scaffoldState.drawerState.close()
                         }
@@ -208,6 +217,9 @@ fun TopBar() {
                     }
                     composable(PageRoutes.PopularDetail.route){
                         PopularDetailPage(navController)
+                    }
+                    composable(PageRoutes.Setting.route){
+                        SettingPage(navController = navController)
                     }
                 }
             }

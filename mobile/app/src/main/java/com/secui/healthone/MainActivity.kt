@@ -5,12 +5,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.secui.healthone.compose.*
-import com.secui.healthone.compose.MealPlan.MealInputPage
 import com.secui.healthone.ui.common.TopBar
 import com.secui.healthone.util.PageRoutes
 
@@ -24,7 +22,7 @@ class MainActivity : ComponentActivity() {
 
             val navController = rememberNavController()
 
-            NavHost(navController, startDestination = if (jwtToken != null) "login" else "overviewpage") {
+            NavHost(navController, startDestination = if (jwtToken != null) PageRoutes.Login.route else PageRoutes.OverView.route) {
                 // 원래 코드는 jwtToken == null
                 // if (jwtToken == null) "login" else PageRoutes.OverView.route
 

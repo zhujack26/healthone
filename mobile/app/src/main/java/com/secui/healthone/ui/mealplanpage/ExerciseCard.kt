@@ -31,7 +31,7 @@ fun ExerciseCard(exercise: Exercise) {
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(text = exercise.name)
-                    Text(text = exercise.description, fontSize = 12.sp)
+                    Text(text = exercise.time.toString(), fontSize = 12.sp)
                 }
 
                 Spacer(modifier = Modifier.width(16.dp))

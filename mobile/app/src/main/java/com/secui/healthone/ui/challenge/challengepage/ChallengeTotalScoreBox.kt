@@ -26,6 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.secui.healthone.R
+import com.secui.healthone.ui.common.AppColors
 
 @Composable
 fun ChallengeTotalScoreBox(
@@ -36,7 +37,7 @@ fun ChallengeTotalScoreBox(
         elevation = 4.dp,
         shape = RoundedCornerShape(4.dp),
         modifier = Modifier
-            .background(colorResource(id = R.color.white))
+            .background(AppColors.white)
             .padding(16.dp)
             .clickable { }
     ) {
@@ -52,7 +53,7 @@ fun ChallengeTotalScoreBox(
                     .wrapContentHeight(),
                 textAlign = TextAlign.Center,
                 fontSize = 18.sp,
-                color = colorResource(id = R.color.black)
+                color = AppColors.black
             )
             Spacer(modifier = Modifier.height(8.dp))
             Row(modifier= Modifier
@@ -65,7 +66,7 @@ fun ChallengeTotalScoreBox(
                 Text(
                     text = ChallengeTotalScoreBoxText.scoreCountValue,
                     fontSize = 28.sp,
-                    color = colorResource(id = R.color.orange300)
+                    color = AppColors.orange300
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Image(
@@ -82,7 +83,7 @@ fun ChallengeTotalScoreBox(
                     .wrapContentHeight(),
                 fontSize = 18.sp,
                 textAlign = TextAlign.Center,
-                color = colorResource(id = R.color.black)
+                color = AppColors.black
             )
 
         }

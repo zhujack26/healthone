@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.secui.healthone.R
+import com.secui.healthone.ui.common.AppColors
 import com.secui.healthone.util.PageRoutes
 
 @Composable
@@ -28,7 +29,7 @@ fun StressIndexBox (
         elevation = 4.dp,
         shape = RoundedCornerShape(4.dp),
         modifier = Modifier
-            .background(colorResource(id = R.color.white))
+            .background(AppColors.white)
             .padding(16.dp).clickable {
                 navController.navigate(PageRoutes.StressIndex.route)
             }
@@ -69,11 +70,11 @@ fun StressIndexBox (
                 Box(modifier = modifier
                     .width(128.dp)
                     .height(16.dp)
-                    .background(colorResource(id = R.color.blue300)))
+                    .background(AppColors.blue300))
                 Box(modifier = modifier
                     .width(128.dp)
                     .height(16.dp)
-                    .background(colorResource(id = R.color.blue100)))
+                    .background(AppColors.blue100))
             }
 
         }

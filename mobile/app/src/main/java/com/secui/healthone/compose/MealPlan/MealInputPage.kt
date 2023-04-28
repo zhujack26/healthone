@@ -19,10 +19,10 @@ import androidx.navigation.NavController
 import com.secui.healthone.data.MealPlan.Food
 import com.secui.healthone.ui.mealplanpage.MealInput.MealInputDate
 import com.secui.healthone.ui.mealplanpage.MealInput.SearchBar
-import com.secui.healthone.ui.mealplanpage.MealInput.SearchResults
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.ui.mealplanpage.MealInput.MealSearchResults
 import com.secui.healthone.util.PageRoutes
 
 @Composable
@@ -32,7 +32,7 @@ fun MealInputPage(navController: NavController) {
         Food(id = 2, name = "바나나", servingSize = 100f, calories = 89f),
         Food(id = 3, name = "포도", servingSize = 100f, calories = 67f)
     )
-
+    var showWarning by remember { mutableStateOf(false) }
     var searchTerm by remember { mutableStateOf("") }
     val searchResults = if (searchTerm.isBlank()) {
         listOf()
@@ -92,15 +92,31 @@ fun MealInputPage(navController: NavController) {
         }
         item {
             // 검색창 컴포저블
-            SearchBar(searchTerm, onSearchTermChanged)
+            SearchBar("Food", searchTerm, onSearchTermChanged)
         }
         item {
             // 검색결과 컴포저블
-            SearchResults(searchResults, selectedFoodId, onFoodSelected)
+            MealSearchResults(searchResults, selectedFoodId, onFoodSelected)
+        }
+        item {
+            if (showWarning) {
+                Text(
+                    text = "식단을 선택해주세요.",
+                    modifier = Modifier.padding(8.dp),
+                    color = AppColors.red200,
+                    style = TextStyle(fontSize = 12.sp)
+                )
+            }
         }
         item {
             Button(
-                onClick = { navController.navigate(PageRoutes.MealPlan.route)},
+                onClick = {
+                    if (selectedFoodId != -1) {
+                        navController.navigate(PageRoutes.MealPlan.route)
+                    } else {
+                        showWarning = true
+                    }
+                },
                 colors = ButtonDefaults.buttonColors(backgroundColor = AppColors.green200),
                 modifier = Modifier
                     .fillMaxWidth(0.8f)

@@ -1,4 +1,4 @@
-package com.secui.healthone.ui.stressactivitypage
+package com.secui.healthone.ui.stress.stressactivitypage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.height

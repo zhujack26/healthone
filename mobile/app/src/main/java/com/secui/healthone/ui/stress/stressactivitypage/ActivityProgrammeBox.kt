@@ -1,4 +1,4 @@
-package com.secui.healthone.ui.stressactivitypage
+package com.secui.healthone.ui.stress.stressactivitypage
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
@@ -9,6 +9,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.secui.healthone.R;
+import com.secui.healthone.ui.common.AppColors
 
 @Composable
 fun ActivityProgrammeBox(
@@ -55,9 +56,7 @@ fun ActivityProgrammeBox(
 
             Text(text = ActivityProgrammeBoxText.programmeOverviewContent,
                 fontSize = 14.sp,
-                color = colorResource(
-                id = R.color.mono700
-                )
+                color = AppColors.mono700
             )
         }
 

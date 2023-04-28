@@ -1,4 +1,4 @@
-package com.secui.healthone.compose
+package com.secui.healthone.compose.Stress
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -20,8 +20,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.secui.healthone.R
-import com.secui.healthone.ui.stressbreathpage.StressBreathBox
-import com.secui.healthone.ui.stressbreathpage.StressBreathCounter
+import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.ui.stress.stressbreathpage.StressBreathBox
+import com.secui.healthone.ui.stress.stressbreathpage.StressBreathCounter
 import com.secui.healthone.util.PageRoutes
 
 @Composable
@@ -65,8 +66,7 @@ fun StressBreathPage(
         // 호흡 버튼
         Button( colors = ButtonDefaults
             .outlinedButtonColors(
-                backgroundColor =
-                colorResource(id = R.color.green300)
+                backgroundColor = AppColors.green300
             ),
             modifier = Modifier
                 .width(256.dp)

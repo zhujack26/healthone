@@ -1,4 +1,4 @@
-package com.secui.healthone.ui.stressindexpage
+package com.secui.healthone.ui.stress.stressindexpage
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
@@ -11,6 +11,7 @@ import com.madrapps.plot.line.DataPoint
 import com.madrapps.plot.line.LineGraph
 import com.madrapps.plot.line.LinePlot
 import com.secui.healthone.R
+import com.secui.healthone.ui.common.AppColors
 
 
 @Composable
@@ -37,12 +38,12 @@ fun StressIndexLineGraph(lines: List<List<DataPoint>>) {
             listOf(
                 LinePlot.Line(
                     lines[0],
-                    LinePlot.Connection(color = colorResource(id = R.color.red200)),
-                    LinePlot.Intersection(color = colorResource(id = R.color.red200)),
-                    LinePlot.Highlight(color = colorResource(id = R.color.yellow300)),
+                    LinePlot.Connection(color = AppColors.red200),
+                    LinePlot.Intersection(color = AppColors.red200),
+                    LinePlot.Highlight(color = AppColors.yellow300),
                 )
             ),
-            grid = LinePlot.Grid(color = colorResource(id = R.color.mono700), steps = 1),
+            grid = LinePlot.Grid(color = AppColors.mono700, steps = 1),
         ),
         modifier = Modifier.fillMaxWidth().height(200.dp),
         onSelection = { xLine, points ->

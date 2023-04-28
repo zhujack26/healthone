@@ -26,6 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.secui.healthone.R
+import com.secui.healthone.ui.common.AppColors
 
 @Composable
 fun ChallengeUserRewardBox(
@@ -36,7 +37,7 @@ fun ChallengeUserRewardBox(
         elevation = 4.dp,
         shape = RoundedCornerShape(4.dp),
         modifier = Modifier
-            .background(colorResource(id = R.color.white))
+            .background(AppColors.white)
             .padding(16.dp)
             .clickable { }
     ) {
@@ -65,7 +66,7 @@ fun ChallengeUserRewardBox(
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(text = ChallengeUserRewardBoxText.currentRewardValue,
                         fontSize = 36.sp,
-                        color = colorResource(id = R.color.red300),
+                        color = AppColors.red300,
                         textAlign = TextAlign.Right
                     )
                 }

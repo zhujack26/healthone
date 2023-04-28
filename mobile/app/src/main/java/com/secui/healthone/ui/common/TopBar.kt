@@ -22,8 +22,10 @@ import com.secui.healthone.R
 import com.secui.healthone.compose.MealPlanPage
 import com.secui.healthone.compose.OverViewPage
 import com.secui.healthone.compose.*
+import com.secui.healthone.compose.Challenge.PopularDetailPage
 import com.secui.healthone.compose.MealPlan.ExerciseInputPage
 import com.secui.healthone.compose.MealPlan.MealInputPage
+import com.secui.healthone.compose.Stress.StressBreathPage
 import com.secui.healthone.util.PageRoutes
 
 
@@ -178,6 +180,10 @@ fun TopBar() {
                     composable(PageRoutes.ExerciseInput.route){
                         ExerciseInputPage(navController);
                     }
+                    composable(PageRoutes.PopularDetail.route){
+                        PopularDetailPage(navController)
+                    }
+
                 }
             }
         }

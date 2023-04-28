@@ -23,19 +23,21 @@ class MainActivity : ComponentActivity() {
 
             val navController = rememberNavController()
 
-            NavHost(navController, startDestination = if (jwtToken != null) "login" else "overviewpage") {
+            NavHost(navController, startDestination = PageRoutes.OverView.route) {
                 // 원래 코드는 jwtToken == null
+                // if (jwtToken == null) "login" else PageRoutes.OverView.route
+
                 composable("login") {
                     LoginPage(navController)
                 }
-                composable("overviewpage") {
+                composable(PageRoutes.OverView.route) {
                     Column {
                         TopBar()
                         OverViewPage(navController)
                     }
                 }
                 composable("datacollect1") { DataCollectFirstPage(navController) }
-                composable("datacollect2") { DataCollectSecondPage() }
+                composable("datacollect2") { DataCollectSecondPage(navController) }
             }
         }
     }

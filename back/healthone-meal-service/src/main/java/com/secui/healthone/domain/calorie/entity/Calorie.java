@@ -19,7 +19,7 @@ public class Calorie {
     @Column(name = "user_no")
     private Integer userNo;
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "user_no")
+    @Column(name = "meal_type")
     private MealType mealType;
     @Column(name = "createtime")
     private LocalDateTime createTime;

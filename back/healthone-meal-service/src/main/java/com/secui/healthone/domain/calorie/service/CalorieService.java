@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 public class CalorieService {
     private CalorieRepository calorieRepository;
 
+    // TODO: 소모 칼로리, 섭취 칼로리 로직 추가 필요
     public CalorieResponseDto getCalorie(String date) {
         return null;
     }

@@ -1,5 +1,6 @@
 package com.secui.healthone.domain.calorie.entity;
 
+import com.secui.healthone.domain.meal.entity.MealType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,9 +19,6 @@ public class Calorie {
     private Integer no;
     @Column(name = "user_no")
     private Integer userNo;
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "meal_type")
-    private MealType mealType;
     @Column(name = "createtime")
     private LocalDateTime createTime;
 }

@@ -7,7 +7,9 @@ import com.secui.healthone.global.response.RestApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-// TODO: Implement Meal API
+import java.text.ParseException;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/meal")
 @RequiredArgsConstructor
@@ -17,7 +19,12 @@ public class MealController {
 
     @GetMapping
     public RestApiResponse<MealResponseDto> getMeal(@RequestParam("no") Integer no) {
-        return new RestApiResponse<>("음식 데이터 단일 조회 성공", mealService.getMeal(no));
+        return new RestApiResponse<>("식사 정보 단일 조회 성공", mealService.getMeal(no));
+    }
+
+    @GetMapping("/list")
+    public RestApiResponse<List<MealResponseDto>> getMealList(@RequestParam("date") String date) throws ParseException {
+        return new RestApiResponse<>("식사 리스트 조회 성공", mealService.getMealList(date));
     }
     
     @PostMapping

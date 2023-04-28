@@ -21,7 +21,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 
 @Composable
-fun SearchBar(searchTerm: String, onSearchTermChanged: (String) -> Unit) {
+fun SearchBar(search: String,searchTerm: String, onSearchTermChanged: (String) -> Unit) {
     var textFieldValue by remember { mutableStateOf(TextFieldValue(searchTerm)) }
 
     Row(modifier = Modifier.fillMaxWidth()) {
@@ -30,7 +30,7 @@ fun SearchBar(searchTerm: String, onSearchTermChanged: (String) -> Unit) {
             onValueChange = { newTextFieldValue ->
                 textFieldValue = newTextFieldValue
             },
-            label = { Text("Search Food") },
+            label = { Text("Search $search") },
             modifier = Modifier.weight(1f),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
             keyboardActions = KeyboardActions(onSearch = {

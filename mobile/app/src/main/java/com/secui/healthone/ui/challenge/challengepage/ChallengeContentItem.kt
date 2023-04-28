@@ -1,13 +1,18 @@
 package com.secui.healthone.ui.challenge.challengepage
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -27,23 +32,34 @@ fun ChallengeContentItem(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ){
-    Column(
+    Card(
+        elevation = 4.dp,
+        shape = RoundedCornerShape(8.dp),
         modifier = Modifier
             .wrapContentWidth()
             .wrapContentHeight()
+            .background(AppColors.white)
             .padding(8.dp)
-            .shadow(1.dp, RectangleShape, ambientColor = AppColors.black),
-    )
-    {
-        // 이미지
-        Image(painter =
-        rememberImagePainter(ChallengeContentItemText.contentImgUrl),
-            contentDescription = "컨텐츠 이미지",
+            .clickable { }
+    ) {
+        Column(
             modifier = Modifier
                 .width(204.dp)
-                .height(136.dp),
-            contentScale = ContentScale.Crop
+                .wrapContentHeight()
+                .shadow(1.dp, RectangleShape, ambientColor = AppColors.black),
         )
+        {
+            // 이미지
+            Image(painter =
+            rememberImagePainter(ChallengeContentItemText.contentImgUrl),
+                contentDescription = "컨텐츠 이미지",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(136.dp),
+                contentScale = ContentScale.Crop
+            )
+        }
+
     }
 }
 

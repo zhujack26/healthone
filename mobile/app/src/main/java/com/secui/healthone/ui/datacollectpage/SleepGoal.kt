@@ -38,6 +38,11 @@ fun SleepGoal() {
         modifier = Modifier
             .padding(16.dp)
     ) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceEvenly,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
         AndroidView(
             factory = { context ->
                 val timePicker = TimePicker(context).apply {
@@ -59,11 +64,6 @@ fun SleepGoal() {
                 view.minute = minute
             }
         )
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = "취침 시간 : ",

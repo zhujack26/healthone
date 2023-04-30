@@ -14,17 +14,19 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MealRequestDto {
     private Integer no;
+    private Integer userNo;
     private Integer foodNo;
     private Integer customfoodNo;
     private LocalDateTime createTime;
     private MealType mealType;
     private Float portion;
     private Float gram;
-    private Float kcal;
+    private Integer kcal;
 
     public Meal toEntity() {
         return Meal.builder()
                 .no(no)
+                .userNo(userNo)
                 .foodNo(foodNo)
                 .customfoodNo(customfoodNo)
                 .createTime(createTime)

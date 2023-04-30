@@ -24,7 +24,7 @@ public class MealController {
 
     @GetMapping("/list")
     public RestApiResponse<List<MealResponseDto>> getMealList(@RequestParam("date") String date) throws ParseException {
-        return new RestApiResponse<>("식사 리스트 조회 성공", mealService.getMealList(date));
+        return new RestApiResponse<>(date+ "날짜 식사 리스트 조회 성공", mealService.getMealList(date));
     }
     
     @PostMapping

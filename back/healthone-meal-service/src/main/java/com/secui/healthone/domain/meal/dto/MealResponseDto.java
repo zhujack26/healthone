@@ -20,7 +20,7 @@ public class MealResponseDto {
     private MealType mealType;
     private Float portion;
     private Float gram;
-    private Float kcal;
+    private Integer kcal;
 
     @Builder
     public MealResponseDto(Meal entity) {

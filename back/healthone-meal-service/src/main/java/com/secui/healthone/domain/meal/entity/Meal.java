@@ -17,6 +17,8 @@ public class Meal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "meal_no") // 식사 식별번호
     private Integer no;
+    @Column(name = "user_no") // 회원 식별번호
+    private Integer userNo;
     @Column(name = "food_no") // 음식 식별번호
     private Integer foodNo;
     @Column(name = "customfood_no") // 사용자 음식 식별번호
@@ -31,7 +33,7 @@ public class Meal {
     @Column(name = "meal_gram") // 섭취한 gram 수
     private Float gram;
     @Column(name = "meal_kcal") // 섭취한 kcal 수
-    private Float kcal;
+    private Integer kcal;
 
     public void update(Meal meal) {
         this.foodNo = meal.getFoodNo() == null ? this.foodNo : meal.getFoodNo() ;

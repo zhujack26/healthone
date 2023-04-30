@@ -33,6 +33,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.Scope
 import com.google.android.gms.tasks.Task
 import com.secui.healthone.ui.loginpage.*
+import com.secui.healthone.util.PageRoutes
 //
 import java.io.BufferedReader
 import java.io.DataOutputStream
@@ -123,7 +124,7 @@ fun LoginPage(navController: NavController) {
 //        val idToken = account.idToken
 //        Log.d("check", "ID Token: $idToken") // ID 토큰 값 확인
 ////        sendIdTokenToServer(idToken)
-//        navController.navigate("datacollect1")
+//       navController.navigate(PageRoutes.DataCollectFirst.route)
 //        Log.d("check", "check")
 //    } catch (e: Exception) {
 //        Log.e("check", "Error2", e)
@@ -137,7 +138,7 @@ private fun handleSignInResult(navController: NavController, task: Task<GoogleSi
         val authCode = account.serverAuthCode
         Log.d("check", "Auth Code: $authCode") //authCode 값 확인
         sendAuthCodeToServer(authCode)
-        navController.navigate("datacollect1")
+        navController.navigate(PageRoutes.DataCollectFirst.route)
         Log.d("check", "check")
     } catch (e: Exception) {
         Log.e("check", "Error2", e)
@@ -170,35 +171,35 @@ private fun sendAuthCodeToServer(authCode: String?) {
 //    else if (idToken != null) {
 //        Log.d("check", "idToken is not null")
 //    }
-    CoroutineScope(Dispatchers.IO).launch {
-        try {
-            val urlString = "http://192.168.31.33/test"
-            val url = URL(urlString)
-            val connection = url.openConnection() as HttpURLConnection
-            connection.requestMethod = "POST"
-            connection.doOutput = true
-            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
-            val postData = URLEncoder.encode(authCode, "UTF-8")
-            DataOutputStream(connection.outputStream).use { outputStream ->
-                outputStream.writeBytes(authCode)
-                Log.d("check", "check, $postData")
-                outputStream.flush()
-            }
-            val responseCode = connection.responseCode
-            Log.d("check", "Response code : $responseCode")
-
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                BufferedReader(InputStreamReader(connection.inputStream)).use { reader ->
-                    val response = reader.readText()
-                    Log.d("check", "Signed in as: $response")
-                }
-            } else {
-                Log.e("check", "Error. Response code : $responseCode")
-            }
-
-            connection.disconnect()
-        } catch (e: Exception) {
-            Log.e("check", "exception", e)
-        }
-    }
+//    CoroutineScope(Dispatchers.IO).launch {
+//        try {
+//            val urlString = "http://192.168.31.33/test"
+//            val url = URL(urlString)
+//            val connection = url.openConnection() as HttpURLConnection
+//            connection.requestMethod = "POST"
+//            connection.doOutput = true
+//            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
+//            val postData = URLEncoder.encode(authCode, "UTF-8")
+//            DataOutputStream(connection.outputStream).use { outputStream ->
+//                outputStream.writeBytes(authCode)
+//                Log.d("check", "check, $postData")
+//                outputStream.flush()
+//            }
+//            val responseCode = connection.responseCode
+//            Log.d("check", "Response code : $responseCode")
+//
+//            if (responseCode == HttpURLConnection.HTTP_OK) {
+//                BufferedReader(InputStreamReader(connection.inputStream)).use { reader ->
+//                    val response = reader.readText()
+//                    Log.d("check", "Signed in as: $response")
+//                }
+//            } else {
+//                Log.e("check", "Error. Response code : $responseCode")
+//            }
+//
+//            connection.disconnect()
+//        } catch (e: Exception) {
+//            Log.e("check", "exception", e)
+//        }
+//    }
 }

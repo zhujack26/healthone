@@ -8,4 +8,6 @@ public interface WalkService {
 
     List<Walk> getWalkEntitiesForSevenDays(String date);
 
+    List<Walk> getDetailedWalkInfo(String date);
+
 }

@@ -39,6 +39,21 @@ public class WalkServiceImpl implements WalkService {
         return walkList;
     }
 
+    @Override
+    public List<Walk> getDetailedWalkInfo(String date) {
+        Optional<User> optionalUser = userRepository.findById(1);
+//        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+//        Optional<User> optionalUser = userRepository.findByUserEmail(userEmail);
+        if (optionalUser.isEmpty()) {
+        }
+        User user = optionalUser.get();
+        LocalDateTime localDateTime = typeConverter(date);
+        List<Walk> walkList = walkRepository.findAllByUserAndWalkCreatetime(user, localDateTime);
+        if (walkList.isEmpty()) {
+        }
+        return walkList;
+    }
+
     public LocalDateTime typeConverter(String dateTime) {
         int year = Integer.parseInt(dateTime.substring(0, 4));
         int month = Integer.parseInt(dateTime.substring(5, 7));

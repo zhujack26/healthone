@@ -85,6 +85,8 @@ fun StressInfoBox(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.End
             ) {
+
+                // 호흡하기 라우팅
                 Button(
                     onClick = {
                               navController.navigate(PageRoutes.StressBreath.route);

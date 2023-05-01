@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -55,11 +57,24 @@ fun OverViewPage(
         .fillMaxSize()
 ) {
 
+    val walkValue = remember { mutableStateOf(0) } // 걸음 수
+    val bpmValue = remember { mutableStateOf(0) } // 심박 수
+    val calorieValue = remember { mutableStateOf(0) } // 심박 수
+    val sleepValue = remember { mutableStateOf(0) } // 심박 수
+
+
     context = LocalContext.current;
     fitnessOptions = FitnessOptions.builder()
         .addDataType(DataType.TYPE_STEP_COUNT_DELTA, FitnessOptions.ACCESS_READ)
+        .addDataType(DataType.TYPE_STEP_COUNT_DELTA, FitnessOptions.ACCESS_WRITE)
         .addDataType(DataType.AGGREGATE_STEP_COUNT_DELTA, FitnessOptions.ACCESS_READ)
+        .addDataType(DataType.AGGREGATE_STEP_COUNT_DELTA, FitnessOptions.ACCESS_WRITE)
         .addDataType(DataType.AGGREGATE_HEART_RATE_SUMMARY, FitnessOptions.ACCESS_READ)
+        .addDataType(DataType.AGGREGATE_HEART_RATE_SUMMARY, FitnessOptions.ACCESS_WRITE)
+        .addDataType(DataType.AGGREGATE_NUTRITION_SUMMARY, FitnessOptions.ACCESS_READ)
+        .addDataType(DataType.AGGREGATE_NUTRITION_SUMMARY, FitnessOptions.ACCESS_WRITE)
+        .addDataType(DataType.TYPE_SLEEP_SEGMENT, FitnessOptions.ACCESS_READ)
+        .addDataType(DataType.TYPE_SLEEP_SEGMENT, FitnessOptions.ACCESS_WRITE)
         .build()
 
     val account = GoogleSignIn.getAccountForExtension(LocalContext.current, fitnessOptions)
@@ -67,7 +82,6 @@ fun OverViewPage(
     Log.d( MY_TAG, "${GoogleSignIn.hasPermissions(account, fitnessOptions)}")
 
     val thisActivity = LocalContext.current as Activity;
-
     // GOOGLE_FIT_PERMISSIONS_REQUEST_CODE
     if(!GoogleSignIn.hasPermissions(account, fitnessOptions)){
         GoogleSignIn.requestPermissions(
@@ -78,7 +92,10 @@ fun OverViewPage(
     }else {
 
         if (ContextCompat.checkSelfPermission(thisActivity, Manifest.permission.ACTIVITY_RECOGNITION)
+            != PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(thisActivity, Manifest.permission.BODY_SENSORS)
             != PackageManager.PERMISSION_GRANTED) {
+
             // Permission is not granted
             ActivityCompat.requestPermissions(thisActivity,
                 arrayOf(Manifest.permission.ACTIVITY_RECOGNITION, Manifest.permission.BODY_SENSORS),
@@ -115,8 +132,9 @@ fun OverViewPage(
                 val totalSteps =
                     result.dataPoints.firstOrNull()?.getValue(Field.FIELD_STEPS)?.asInt() ?: 0
                 // Do something with totalSteps
-                Log.d( MY_TAG,"${totalSteps}")
-                Log.d( MY_TAG, "${result.dataPoints.firstOrNull()?.getValue(Field.FIELD_STEPS)}")
+                Log.d( MY_TAG,"STEP : ${totalSteps}")
+                walkValue.value = totalSteps
+                //  Log.d( MY_TAG, "${result.dataPoints.firstOrNull()?.getValue(Field.FIELD_STEPS)}")
 
             }
             .addOnFailureListener { e ->
@@ -130,8 +148,40 @@ fun OverViewPage(
                 val totalBpm =
                     result.dataPoints.firstOrNull()?.getValue(Field.FIELD_BPM)?.asInt() ?: 0
                 // Do something with totalSteps
-                Log.d( MY_TAG,"${totalBpm}")
-                Log.d( MY_TAG, "${result.dataPoints.firstOrNull()?.getValue(Field.FIELD_BPM)}")
+                Log.d( MY_TAG,"BPM : ${totalBpm}")
+                // Log.d( MY_TAG, "${result.dataPoints.firstOrNull()?.getValue(Field.FIELD_BPM)}")
+                bpmValue.value = totalBpm;
+            }
+            .addOnFailureListener { e ->
+                Log.i(TAG, "There was a problem getting steps.", e)
+            }
+
+        // 식단 불러오기
+        Fitness.getHistoryClient(context, GoogleSignIn.getAccountForExtension(context, fitnessOptions))
+            .readDailyTotal(DataType.TYPE_CALORIES_EXPENDED)
+            .addOnSuccessListener { result ->
+                val totalCalories =
+                    result.dataPoints.firstOrNull()?.getValue(Field.FIELD_CALORIES)?.asInt() ?: 0
+                // Do something with totalSteps
+                Log.d( MY_TAG,"totalCalories : ${totalCalories}")
+                // Log.d( MY_TAG, "${result.dataPoints.firstOrNull()?.getValue(Field.FIELD_CALORIES)}")
+                calorieValue.value = totalCalories;
+            }
+            .addOnFailureListener { e ->
+                Log.i(TAG, "There was a problem getting steps.", e)
+            }
+
+
+        // 잠 불러오기
+        Fitness.getHistoryClient(context, GoogleSignIn.getAccountForExtension(context, fitnessOptions))
+            .readDailyTotal(DataType.TYPE_SLEEP_SEGMENT)
+            .addOnSuccessListener { result ->
+                val totalSleep =
+                    result.dataPoints.firstOrNull()?.getValue(Field.FIELD_SLEEP_SEGMENT_TYPE)?.asInt() ?: 0
+                // Do something with totalSteps
+                Log.d( MY_TAG,"SLEEP : ${totalSleep}")
+                // Log.d( MY_TAG, "${result.dataPoints.firstOrNull()?.getValue(Field.FIELD_SLEEP_SEGMENT_TYPE)}")
+                sleepValue.value = totalSleep;
             }
             .addOnFailureListener { e ->
                 Log.i(TAG, "There was a problem getting steps.", e)
@@ -147,11 +197,11 @@ fun OverViewPage(
     {
 
         TotalHealthBox();
-        UserWalkBox(navController);
-        HeartRateBox(navController);
+        UserWalkBox(navController, walkValue.value.toInt());
+        HeartRateBox(navController, bpmValue.value.toInt());
         StressIndexBox(navController);
-        FoodCalorieBox(navController);
-        SleepCheckBox(navController);
+        FoodCalorieBox(navController, calorieValue.value.toInt());
+        SleepCheckBox(navController, sleepValue.value.toInt());
         HealthScoreBox(navController);
         Spacer(modifier = Modifier.height(64.dp));
 

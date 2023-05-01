@@ -24,21 +24,21 @@ fun OverViewPage(
         .fillMaxSize()
 ) {
 
-    val context = LocalContext.current;
-    val account = GoogleSignIn.getLastSignedInAccount(context)
-    if (account == null) {
-        // 사용자가 로그인하지 않았으면 로그인 화면으로 이동
-        // ...
-
-        navController.navigate(PageRoutes.Login.route)
-
-    } else {
-        // 사용자가 로그인한 경우
-        // API 클라이언트 생성
-        val historyClient = Fitness.getHistoryClient(context, account)
-         // navController.navigate(PageRoutes.OverView.route)
-        Log.d("overview:::::", "${historyClient.toString()}");
-    }
+//    val context = LocalContext.current;
+//    val account = GoogleSignIn.getLastSignedInAccount(context)
+//    if (account == null) {
+//        // 사용자가 로그인하지 않았으면 로그인 화면으로 이동
+//        // ...
+//
+//        navController.navigate(PageRoutes.Login.route)
+//
+//    } else {
+//        // 사용자가 로그인한 경우
+//        // API 클라이언트 생성
+//        val historyClient = Fitness.getHistoryClient(context, account)
+//         // navController.navigate(PageRoutes.OverView.route)
+//        Log.d("overview:::::", "${historyClient.toString()}");
+//    }
 
     Column(modifier= Modifier
         .fillMaxSize()

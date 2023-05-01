@@ -2,6 +2,7 @@ package com.secui.healthone.ui.overviewpage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -16,6 +17,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.secui.healthone.R
 import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.util.PageRoutes
 
 
 @Composable
@@ -29,6 +31,8 @@ fun SleepCheckBox(
         modifier = Modifier
             .background(AppColors.white)
             .padding(16.dp)
+            .clickable { navController.navigate(PageRoutes.Sleep.route) }
+
     ) {
 
         Column(modifier= Modifier
@@ -37,6 +41,7 @@ fun SleepCheckBox(
             .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
+
         )
         {
             Text(text = "수면은 충분히 취하셨나요?",

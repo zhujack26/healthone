@@ -4,22 +4,19 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.secui.healthone.ui.common.AppColors
 
 @Composable
-fun WalkingScreen() {
+fun WalkingDetail() {
     val stepsData = listOf(1000, 500, 750, 300, 1200, 800, 100, 0, 900, 400, 600, 0, 1000, 500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     Column {
-        StepsPerHour(stepsData)
+        WalkingDetailGraph(stepsData)
     }
 }
 @Composable
-fun StepsPerHour(stepsData: List<Int>) {
+fun WalkingDetailGraph(stepsData: List<Int>) {
     Row(
         modifier = Modifier
             .fillMaxWidth()

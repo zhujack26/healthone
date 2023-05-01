@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.secui.healthone"
-        minSdk 24
+        minSdk 26
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -71,5 +71,11 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+//    implementation 'com.google.android.gms:play-services-fitness:20.0.0' // fit API 추가
+    implementation("com.google.android.gms:play-services-fitness:21.0.1")
+    implementation("com.google.android.gms:play-services-auth:20.1.0")
+
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5' // fit API 관련 의존성...
 }
 

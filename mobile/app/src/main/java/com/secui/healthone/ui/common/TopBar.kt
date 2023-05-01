@@ -21,6 +21,7 @@ import com.secui.healthone.compose.Challenge.PopularDetailPage
 import com.secui.healthone.compose.MealPlan.ExerciseInputPage
 import com.secui.healthone.compose.MealPlan.MealInputPage
 import com.secui.healthone.compose.Stress.StressBreathPage
+import com.secui.healthone.compose.sleep.SleepPage
 import com.secui.healthone.util.PageRoutes
 
 
@@ -92,6 +93,16 @@ fun TopBar() {
                     textColor = R.color.black,
                     onClick = {
                         navController.navigate(PageRoutes.MealPlan.route)
+                        coroutineScope.launch {
+                            scaffoldState.drawerState.close()
+                        }
+                    }
+                )
+                DrawerButton(
+                    text = "수면",
+                    textColor = R.color.black,
+                    onClick = {
+                        navController.navigate(PageRoutes.Sleep.route)
                         coroutineScope.launch {
                             scaffoldState.drawerState.close()
                         }
@@ -198,6 +209,9 @@ fun TopBar() {
                     }
                     composable(PageRoutes.ExerciseInput.route){
                         ExerciseInputPage(navController);
+                    }
+                    composable(PageRoutes.Sleep.route){
+                        SleepPage(navController = navController)
                     }
                     composable(PageRoutes.My.route){
                         MyPage(navController = navController);

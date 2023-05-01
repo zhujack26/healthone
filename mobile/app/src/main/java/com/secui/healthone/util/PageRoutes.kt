@@ -14,6 +14,7 @@ sealed class PageRoutes(val route:String){
     object HeartMeasure: PageRoutes("HeartMeasurePage");
     object MealInput: PageRoutes("MealInputPage")
     object ExerciseInput: PageRoutes("ExerciseInputPage")
+    object Sleep: PageRoutes("SleepPage")
     object DataCollectFirst : PageRoutes("DataCollectFirst")
     object DataCollectSecond : PageRoutes("DataCollectSecond")
     object My: PageRoutes("MyPage")

@@ -2,6 +2,7 @@ package com.secui.healthone.ui.overviewpage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -16,11 +17,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.secui.healthone.R
 import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.util.PageRoutes
 
 
 @Composable
 fun SleepCheckBox(
     navController: NavHostController,
+    sleepValue:Int = 0,
     modifier: Modifier=Modifier
 ){
     Card(
@@ -29,6 +32,8 @@ fun SleepCheckBox(
         modifier = Modifier
             .background(AppColors.white)
             .padding(16.dp)
+            .clickable { navController.navigate(PageRoutes.Sleep.route) }
+
     ) {
 
         Column(modifier= Modifier
@@ -37,6 +42,7 @@ fun SleepCheckBox(
             .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
+
         )
         {
             Text(text = "수면은 충분히 취하셨나요?",
@@ -50,7 +56,7 @@ fun SleepCheckBox(
                 .wrapContentHeight(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "6시간 45분", fontSize = 20.sp);
+                Text(text = "${calcSleepValue(sleepValue)}", fontSize = 20.sp);
                 Image(painter = painterResource(
                     id = R.drawable.ic_sleep),
                     contentDescription = "수면 아이콘",
@@ -58,6 +64,19 @@ fun SleepCheckBox(
                 )
             }
         }
+    }
+}
+
+fun calcSleepValue(sleepValue:Int):String{
+    val hour = sleepValue/60;
+    val min = sleepValue%60;
+
+    if(hour > 0){
+        return "${hour}시간 ${min}분"
+    }else if(hour == 0 && min >= 0){
+        return "${min}분"
+    }else {
+        return "잘못된 값";
     }
 
 }

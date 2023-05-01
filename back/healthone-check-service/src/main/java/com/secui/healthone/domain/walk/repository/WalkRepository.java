@@ -11,4 +11,6 @@ public interface WalkRepository extends JpaRepository<Walk, Integer> {
 
     List<Walk> findAllByUserAndWalkCreatetimeBetween(User user, LocalDateTime walkCreatetime1, LocalDateTime walkCreatetime2);
 
+    List<Walk> findAllByUserAndWalkCreatetime(User user, LocalDateTime walkCreatetime);
+
 }

@@ -28,4 +28,10 @@ public class WalkController {
         return ResponseEntity.ok().body(walkList);
     }
 
+    @GetMapping("/detail")
+    public ResponseEntity<List<Walk>> getDetailedWalkInfo(@RequestParam String date) {
+        List<Walk> walkList = walkService.getDetailedWalkInfo(date);
+        return ResponseEntity.ok().body(walkList);
+    }
+
 }

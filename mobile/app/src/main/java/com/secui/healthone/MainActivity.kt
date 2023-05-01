@@ -12,7 +12,6 @@ import com.secui.healthone.compose.*
 import com.secui.healthone.ui.common.TopBar
 import com.secui.healthone.util.PageRoutes
 
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,11 +21,10 @@ class MainActivity : ComponentActivity() {
 
             val navController = rememberNavController()
 
-            NavHost(navController, startDestination = if (jwtToken != null) PageRoutes.Login.route else PageRoutes.OverView.route) {
+            NavHost(navController, startDestination = if (jwtToken == null) PageRoutes.Login.route else PageRoutes.OverView.route) {
                 // 원래 코드는 jwtToken == null
-                // if (jwtToken == null) "login" else PageRoutes.OverView.route
 
-                composable("login") {
+                composable(PageRoutes.Login.route){
                     LoginPage(navController)
                 }
                 composable(PageRoutes.OverView.route) {
@@ -35,8 +33,12 @@ class MainActivity : ComponentActivity() {
                         OverViewPage(navController)
                     }
                 }
-                composable("datacollect1") { DataCollectFirstPage(navController) }
-                composable("datacollect2") { DataCollectSecondPage(navController) }
+                composable(PageRoutes.DataCollectFirst.route){
+                    DataCollectFirstPage(navController)
+                }
+                composable(PageRoutes.DataCollectSecond.route){
+                    DataCollectSecondPage(navController)
+                }
             }
         }
     }

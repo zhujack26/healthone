@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.secui.healthone.ui.walking.*
 
@@ -30,6 +31,7 @@ fun WalkingPage(
             )
             Spacer(modifier = Modifier.height(16.dp))
             WalkingType(todaySteps = todaySteps, highestSteps = highestSteps, totalSteps = totalSteps)
+            WalkingContent()
         }
     }
 }

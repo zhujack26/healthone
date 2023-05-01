@@ -1,8 +1,8 @@
 package com.secui.healthone.domain.walk.service.impl;
 
-import com.secui.healthone.domain.walk.entity.User;
+import com.secui.healthone.global.entity.User;
 import com.secui.healthone.domain.walk.entity.Walk;
-import com.secui.healthone.domain.walk.repository.UserRepository;
+import com.secui.healthone.global.repository.UserRepository;
 import com.secui.healthone.domain.walk.repository.WalkRepository;
 import com.secui.healthone.domain.walk.service.WalkService;
 import lombok.RequiredArgsConstructor;

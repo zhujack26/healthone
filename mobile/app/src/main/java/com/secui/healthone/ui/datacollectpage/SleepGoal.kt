@@ -9,9 +9,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import java.util.*
 import android.widget.TimePicker
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
@@ -30,7 +31,17 @@ fun SleepGoal() {
     val sleepTime = remember { mutableStateOf("") }
     val wakeTime = remember { mutableStateOf("") }
     val sleepDuration = remember { mutableStateOf("") }
-
+    Card(
+        elevation = 4.dp,
+        shape = RoundedCornerShape(8.dp),
+        modifier = Modifier
+            .padding(16.dp)
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceEvenly,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
         AndroidView(
             factory = { context ->
                 val timePicker = TimePicker(context).apply {
@@ -52,46 +63,44 @@ fun SleepGoal() {
                 view.minute = minute
             }
         )
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                text = "취침 시간 : ",
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold)
-            Text(
-                text = sleepTime.value,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
-            )
-            IconButton(onClick = { sleepTime.value = "" }) {
-                Icon(Icons.Default.Edit, contentDescription = "Edit")
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = "취침 시간 : ",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = sleepTime.value,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                IconButton(onClick = { sleepTime.value = "" }) {
+                    Icon(Icons.Default.Edit, contentDescription = "Edit")
+                }
             }
-        }
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                text = "기상 시간 : ",
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = wakeTime.value,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
-            )
-            IconButton(onClick = { wakeTime.value = "" }) {
-                Icon(Icons.Default.Edit, contentDescription = "Edit")
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = "기상 시간 : ",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = wakeTime.value,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                IconButton(onClick = { wakeTime.value = "" }) {
+                    Icon(Icons.Default.Edit, contentDescription = "Edit")
+                }
             }
+            Spacer(modifier = Modifier.size(16.dp))
+            Text(
+                text = "${sleepDuration.value}",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Spacer(modifier = Modifier.size(16.dp))
         }
-        Spacer(modifier = Modifier.size(16.dp))
-        Text(
-            text = "${sleepDuration.value}",
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold
-        )
     }
 }
 

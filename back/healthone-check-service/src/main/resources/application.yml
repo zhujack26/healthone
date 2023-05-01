@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://127.0.0.1:3307/walkhealth
+    #    url: jdbc:mariadb://127.0.0.1:3307/healthone
+    username: root
+    password: ssafy
+  jpa:
+    hibernate:
+      ddl-auto: update
+    #      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+#springboot:
+#  jwt:
+#    secret: 8q2ht89sbguniuqt9iegjwt

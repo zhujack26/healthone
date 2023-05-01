@@ -63,6 +63,12 @@ public class StressServiceImpl implements StressService {
         stressRepository.save(stress);
     }
 
+    @Override
+    public void deleteUserStressInfo(String no) {
+        int stressNo = Integer.parseInt(no);
+        stressRepository.deleteById(stressNo);
+    }
+
     public LocalDateTime typeConverter(String dateTime) {
         int year = Integer.parseInt(dateTime.substring(0, 4));
         int month = Integer.parseInt(dateTime.substring(5, 7));

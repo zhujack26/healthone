@@ -11,4 +11,6 @@ public interface StressService {
 
     void uploadUserStressInfo(UploadUserStressInfoRequestDto stressInfoDto);
 
+    void deleteUserStressInfo(String stressNo);
+
 }

@@ -31,5 +31,10 @@ public class StressController {
     public void uploadUserStressInfo(@RequestBody UploadUserStressInfoRequestDto stressInfoDto) {
         stressService.uploadUserStressInfo(stressInfoDto);
     }
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteUserStressInfo(@RequestParam String stressNo) {
+        stressService.deleteUserStressInfo(stressNo);
+    }
 
 }

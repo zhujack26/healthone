@@ -23,8 +23,11 @@ import com.secui.healthone.util.PageRoutes
 @Composable
 fun FoodCalorieBox(
     navController: NavHostController,
+    calorieValue:Int = 0,
     modifier: Modifier = Modifier
 ){
+    val targetCalories = 2150
+
     Card(
         elevation = 4.dp,
         shape = RoundedCornerShape(4.dp),
@@ -49,7 +52,7 @@ fun FoodCalorieBox(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "1024 / 2,150kcal", fontSize = 16.sp)
+                Text(text = "${calorieValue} / ${targetCalories}kcal", fontSize = 16.sp)
                 Image(painter = painterResource(
                     id = R.drawable.ic_food),
                     contentDescription = "음식 이미지",

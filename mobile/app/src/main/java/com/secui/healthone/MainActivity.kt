@@ -39,6 +39,9 @@ class MainActivity : ComponentActivity() {
                 composable(PageRoutes.DataCollectSecond.route){
                     DataCollectSecondPage(navController)
                 }
+                composable(PageRoutes.Guide.route){
+                    GuidePage(navController)
+                }
             }
         }
     }

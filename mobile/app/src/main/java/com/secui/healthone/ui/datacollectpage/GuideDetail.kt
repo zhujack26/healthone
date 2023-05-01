@@ -37,13 +37,13 @@ fun GuideDetail(navController: NavController) {
 
         LaunchedEffect(true) {
             firstText = true
-            delay(1000)
+            delay(500)
             secondText = true
-            delay(1000)
+            delay(500)
             thirdText = true
-            delay(1000)
+            delay(500)
             fourthText = true
-            delay(1000)
+            delay(500)
             fifthText = true
         }
 

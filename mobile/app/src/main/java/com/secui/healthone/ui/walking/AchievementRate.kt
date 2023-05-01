@@ -10,22 +10,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.secui.healthone.ui.common.AppColors
 
 @Composable
-fun AchievementRate(percentage: Float, onNavigate: () -> Unit) {
+fun AchievementRate(percentage: Float) {
     Column(modifier = Modifier.padding(16.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("오늘 당신의 걸음 목표 달성률은?")
+            Text(
+                text ="오늘 당신의 걸음 목표 달성률은?",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 buildAnnotatedString {
-                    withStyle(style = SpanStyle(color = Color.Blue)) {
+                    withStyle(style = SpanStyle(color = AppColors.black)) {
                         append(">")
                     }
                 },
-                modifier = Modifier.clickable { onNavigate() }
+//                modifier = Modifier.clickable { onNavigate() }
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
@@ -41,13 +49,13 @@ fun ProgressBar(percentage: Float) {
         modifier = Modifier
             .height(24.dp)
             .fillMaxWidth()
-            .background(color = Color.LightGray)
+            .background(color = AppColors.mono200)
     ) {
         Box(
             modifier = Modifier
                 .fillMaxHeight()
                 .width(filledWidth.dp)
-                .background(color = Color.Green)
+                .background(color = AppColors.green600)
         )
     }
 }

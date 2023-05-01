@@ -19,7 +19,7 @@ fun LineGraph (
     // 더미데이터
     val dataList = mutableListOf<DataPoint>();
     for(i in 0..10){
-        val dataPoint = DataPoint(i.toFloat(), 1*Math.random().toFloat());
+        val dataPoint = DataPoint(i.toFloat(), 10*Math.random().toFloat());
         dataList.add(dataPoint);
     }
     dataList.sortedWith(Comparator { t1, t2 -> t1.x.toInt()-t2.x.toInt()  })

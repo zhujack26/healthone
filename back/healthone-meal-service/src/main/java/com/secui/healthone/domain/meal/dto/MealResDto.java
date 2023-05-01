@@ -1,5 +1,7 @@
 package com.secui.healthone.domain.meal.dto;
 
+import com.secui.healthone.domain.food.dto.CustomFoodResDto;
+import com.secui.healthone.domain.food.dto.FoodResponseDto;
 import com.secui.healthone.domain.meal.entity.Meal;
 import com.secui.healthone.domain.meal.entity.MealType;
 import lombok.*;
@@ -12,10 +14,10 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MealResponseDto {
+public class MealResDto {
     private Integer no;
-    private Integer foodNo;
-    private Integer customfoodNo;
+    private FoodResponseDto food;
+    private CustomFoodResDto customfood;
     private LocalDateTime createTime;
     private MealType mealType;
     private Float portion;
@@ -23,10 +25,10 @@ public class MealResponseDto {
     private Integer kcal;
 
     @Builder
-    public MealResponseDto(Meal entity) {
+    public MealResDto(Meal entity) {
         this.no = entity.getNo();
-        this.foodNo = entity.getFoodNo();
-        this.customfoodNo = entity.getCustomfoodNo();
+        this.food = entity.getFood() != null ? new FoodResponseDto(entity.getFood()) : null;
+        this.customfood = entity.getCustomfood() != null ? new CustomFoodResDto(entity.getCustomfood()) : null;
         this.createTime = entity.getCreateTime();
         this.mealType = entity.getMealType();
         this.portion = entity.getPortion();

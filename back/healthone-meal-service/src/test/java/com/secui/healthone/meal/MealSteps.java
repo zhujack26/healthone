@@ -1,7 +1,6 @@
 package com.secui.healthone.meal;
 
-import com.secui.healthone.domain.food.dto.CustomFoodRequestDto;
-import com.secui.healthone.domain.meal.dto.MealRequestDto;
+import com.secui.healthone.domain.meal.dto.MealReqDto;
 import com.secui.healthone.domain.meal.entity.MealType;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
@@ -12,7 +11,7 @@ import java.time.LocalDateTime;
 
 public class MealSteps {
 
-    public static MealRequestDto 일반_식단_등록요청_생성1() {
+    public static MealReqDto 일반_식단_등록요청_생성1() {
         Integer no = null;
         Integer userNo = 1;
         Integer foodNo = 1;
@@ -22,10 +21,10 @@ public class MealSteps {
         Float portion = 2.0f;
         Float gram =  100.0f;
         Integer kcal = 143;
-        return new MealRequestDto(no, userNo, foodNo, customfoodNo, createTime, mealType, portion, gram, kcal);
+        return new MealReqDto(no, userNo, foodNo, customfoodNo, createTime, mealType, portion, gram, kcal);
     }
 
-    public static MealRequestDto 사용자_식단_등록요청_생성1() {
+    public static MealReqDto 사용자_식단_등록요청_생성1() {
         Integer no = null;
         Integer userNo = 1;
         Integer foodNo = null;
@@ -35,7 +34,7 @@ public class MealSteps {
         Float portion = 2.0f;
         Float gram =  100.0f;
         Integer kcal = 145;
-        return new MealRequestDto(no, userNo, foodNo, customfoodNo, createTime, mealType, portion, gram, kcal);
+        return new MealReqDto(no, userNo, foodNo, customfoodNo, createTime, mealType, portion, gram, kcal);
     }
 
     public static ExtractableResponse<Response> 식단_단일조회요청(Integer no) {
@@ -47,7 +46,7 @@ public class MealSteps {
                 .extract();
     }
 
-    public static ExtractableResponse<Response> 식단_일반_등록요청(MealRequestDto request) {
+    public static ExtractableResponse<Response> 식단_등록요청(MealReqDto request) {
         return RestAssured.given().log().all()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(request)

@@ -15,8 +15,8 @@ public class OpenApiConfig {
     public OpenAPI openAPI() {
         final String securitySchemeName = "bearerAuth";
 
-        Info info = new Info().title("HealthOne Info Service API").version("Ver.1.1.0")
-                .description("HealthOne Info Service API docs")
+        Info info = new Info().title("HealthOne Meal Service API").version("Ver.1.0.0")
+                .description("Meal(식사), Food(일반음식), CustomFood(사용자지정음식), Sport(운동), SportRecord(운동기록) Domain")
 //                .termsOfService("http://swagger.io/terms/")\
 //                .contact(new Contact().name("HealthOne").url("http://localhost:8083").email("healthOne@healthone.com"))
                 .license(new License().name("MIT Licence").url("https://opensource.org/licenses/MIT"));

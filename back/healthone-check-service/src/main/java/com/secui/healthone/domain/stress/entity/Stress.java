@@ -1,4 +1,4 @@
-package com.secui.healthone.domain.walk.entity;
+package com.secui.healthone.domain.stress.entity;
 
 import com.secui.healthone.global.entity.User;
 import lombok.*;
@@ -12,23 +12,20 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
-public class Walk {
+public class Stress {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int walkNo;
+    private int stressNo;
 
     @ManyToOne
-    @JoinColumn(name = "user_no")
+    @JoinColumn(name = "user_no", nullable = false)
     private User user;
 
     @Column(nullable = false)
-    private LocalDateTime walkCreatetime;
+    private int stressLevel;
 
     @Column(nullable = false)
-    private int walkStepCount;
-
-    private float walkDistance;
+    private LocalDateTime stressCreatetime;
 
 }

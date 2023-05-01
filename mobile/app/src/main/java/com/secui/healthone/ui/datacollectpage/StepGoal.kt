@@ -25,7 +25,7 @@ fun StepGoal() {
     val stepCount = remember { mutableStateOf(6000) }
     Card(
         elevation = 4.dp,
-        shape = RoundedCornerShape(4.dp),
+        shape = RoundedCornerShape(8.dp),
         modifier = Modifier
             .padding(16.dp)
     ) {

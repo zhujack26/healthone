@@ -9,7 +9,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import java.util.*
 import android.widget.TimePicker
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -34,7 +33,7 @@ fun SleepGoal() {
     val sleepDuration = remember { mutableStateOf("") }
     Card(
         elevation = 4.dp,
-        shape = RoundedCornerShape(4.dp),
+        shape = RoundedCornerShape(8.dp),
         modifier = Modifier
             .padding(16.dp)
     ) {
@@ -100,6 +99,7 @@ fun SleepGoal() {
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
+            Spacer(modifier = Modifier.size(16.dp))
         }
     }
 }

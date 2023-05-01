@@ -23,7 +23,7 @@ public class SportRecord {
     @Column(name = "customsport_no")
     private Integer customSportNo;
     @Column(name = "sportrecord_worktime")
-    private Integer workTime;
+    private Float workTime;
     @Column(name = "sportrecord_consume_calorie")
     private Integer consumeCalorie;
     @Column(name = "sportrecord_heartrate")

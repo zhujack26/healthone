@@ -1,24 +1,26 @@
 package com.secui.healthone.customfood;
 
 import com.jayway.jsonpath.JsonPath;
-import com.secui.healthone.util.ApiResetTest;
+import com.secui.healthone.util.ApiTest;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @Slf4j
-public class CustomFoodApiTest extends ApiResetTest {
+public class CustomFoodApiTest extends ApiTest {
 
     @Test
     @DisplayName("사용자 음식 데이터 단일 조회")
+    @Transactional
     void getCustomFoodData() {
         //given
-        CustomFoodSteps.사용자_음식데이터_등록요청(CustomFoodSteps.사용자_음식데이터_등록요청_생성());
+        CustomFoodSteps.사용자_음식데이터_등록요청(CustomFoodSteps.사용자_음식데이터_등록요청_생성1());
         Integer no = 1;
         //when
         final ExtractableResponse<Response> response = CustomFoodSteps.사용자_음식데이터_단일조회요청(no);
@@ -31,9 +33,10 @@ public class CustomFoodApiTest extends ApiResetTest {
 
     @Test
     @DisplayName("사용자 음식 데이터 등록")
+    @Transactional
     void insertCustomFoodData() {
         //given
-        CustomFoodSteps.사용자_음식데이터_등록요청(CustomFoodSteps.사용자_음식데이터_등록요청_생성());
+        CustomFoodSteps.사용자_음식데이터_등록요청(CustomFoodSteps.사용자_음식데이터_등록요청_생성1());
         CustomFoodSteps.사용자_음식데이터_등록요청(CustomFoodSteps.사용자_음식데이터_등록요청_생성2());
         //when
         final ExtractableResponse<Response> response1 = CustomFoodSteps.사용자_음식데이터_단일조회요청(1);
@@ -50,9 +53,10 @@ public class CustomFoodApiTest extends ApiResetTest {
 
     @Test
     @DisplayName("사용자 음식 데이터 수정")
+    @Transactional
     void modifyCustomFoodData() {
         //given
-        CustomFoodSteps.사용자_음식데이터_등록요청(CustomFoodSteps.사용자_음식데이터_등록요청_생성());
+        CustomFoodSteps.사용자_음식데이터_등록요청(CustomFoodSteps.사용자_음식데이터_등록요청_생성1());
         CustomFoodSteps.사용자_음식데이터_등록요청(CustomFoodSteps.사용자_음식데이터_등록요청_생성2());
         //when
         CustomFoodSteps.사용자_음식데이터_수정요청(CustomFoodSteps.사용자_음식데이터_수정요청_생성1());
@@ -70,9 +74,10 @@ public class CustomFoodApiTest extends ApiResetTest {
 
     @Test
     @DisplayName("사용자 음식 데이터 삭제")
+    @Transactional
     void deleteCustomFoodData() {
         //given
-        CustomFoodSteps.사용자_음식데이터_등록요청(CustomFoodSteps.사용자_음식데이터_등록요청_생성());
+        CustomFoodSteps.사용자_음식데이터_등록요청(CustomFoodSteps.사용자_음식데이터_등록요청_생성1());
         //when
         final ExtractableResponse<Response> response1 = CustomFoodSteps.사용자_음식데이터_단일조회요청(1);
         String resName1 = JsonPath.read(response1.body().asString(), "$.data.name");

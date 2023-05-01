@@ -1,10 +1,7 @@
 package com.secui.healthone.domain.food.service;
 
-import com.secui.healthone.domain.food.dto.CustomFoodResponseDto;
 import com.secui.healthone.domain.food.dto.FoodResponseDto;
-import com.secui.healthone.domain.food.entity.CustomFood;
 import com.secui.healthone.domain.food.entity.Food;
-import com.secui.healthone.domain.food.repository.CustomFoodRepository;
 import com.secui.healthone.domain.food.repository.FoodRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

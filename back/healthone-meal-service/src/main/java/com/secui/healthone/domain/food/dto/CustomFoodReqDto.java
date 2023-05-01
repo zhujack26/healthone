@@ -6,21 +6,23 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
-public class CustomFoodResponseDto {
-
+public class CustomFoodReqDto {
     private Integer no;
     private Integer userNo;
     private String name;
     private Integer kcal;
     private Float gram;
 
-    @Builder
-    public CustomFoodResponseDto(CustomFood entity) {
-        this.no = entity.getNo();
-        this.userNo = entity.getUserNo();
-        this.name = entity.getName();
-        this.kcal = entity.getKcal();
-        this.gram = entity.getGram();
+    public CustomFood toEntity() {
+        return CustomFood.builder()
+                .no(no)
+                .userNo(userNo)
+                .name(name)
+                .kcal(kcal)
+                .gram(gram)
+                .build();
     }
 }

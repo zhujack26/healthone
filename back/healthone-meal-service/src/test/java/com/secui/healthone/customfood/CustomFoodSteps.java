@@ -28,7 +28,7 @@ public class CustomFoodSteps {
                 .extract();
     }
 
-    public static CustomFoodReqDto 사용자_음식데이터_등록요청_생성() {
+    public static CustomFoodReqDto 사용자_음식데이터_등록요청_생성1() {
         final Integer userNo = 1;
         final String name = "돼지고기";
         final int kcal = 100;

@@ -39,24 +39,22 @@ public class MealService {
     }
 
     // 식사 일자별 검색
-    public List<MealResDto> getMealList(String date) throws ParseException {
-//        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE);
-//        List<Meal> result = mealRepository.findAllByCreateTime(localDate);
+    public List<MealResDto> getMealList(String date, Integer userNo) throws ParseException {
         log.info("date : {}", date);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         LocalDateTime startDateTime = LocalDate.parse(date, formatter).atStartOfDay();
         LocalDateTime endDateTime = startDateTime.plusDays(1).minusSeconds(1);
-        List<Meal> result = mealRepository.findByCreateTimeBetween(startDateTime, endDateTime);
+        List<Meal> result = mealRepository.findByCreateTimeBetweenAndUserNo(startDateTime, endDateTime, userNo);
 //        List<Meal> result = mealRepository.findAllByCreateTimeContaining(date.substring(0, 4) + "-" + date.substring(4, 6) + "-" + date.substring(6, 8));
         return result.stream().map(MealResDto::new).collect(Collectors.toList());
     }
 
-    // 식사 등록
+    // 식사 등록, 수정
     @Transactional
     public MealResDto insertMeal(MealReqDto requestDto) {
         Food food = null;
         CustomFood customFood = null;
-        if(requestDto.getFoodNo() != null){
+        if (requestDto.getFoodNo() != null){
             food= foodRepository.findById(requestDto.getFoodNo())
                     .orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
         } else if (requestDto.getCustomfoodNo()!= null){
@@ -67,21 +65,12 @@ public class MealService {
         return new MealResDto(requestDto.toEntity(food,customFood));
     }
 
-    // 식사 수정
-//    @Transactional
-//    public MealResponseDto updateMeal(MealRequestDto requestDto) {
-//        Meal meal = mealRepository.findMealByNo(requestDto.getNo())
-//                .orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
-//        meal.update(requestDto.toEntity());
-//        return new MealResponseDto(meal);
-//    }
-//
-//    // 식사 삭제
-//    @Transactional
-//    public void deleteMeal(Integer no) {
-//        Meal meal = mealRepository.findMealByNo(no)
-//                .orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
-//        mealRepository.delete(meal);
-//    }
+    // 식사 삭제
+    @Transactional
+    public void deleteMeal(Integer no) {
+        Meal meal = mealRepository.findMealByNo(no)
+                .orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
+        mealRepository.delete(meal);
+    }
 
 }

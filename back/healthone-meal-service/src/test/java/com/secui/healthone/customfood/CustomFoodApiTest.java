@@ -20,7 +20,7 @@ public class CustomFoodApiTest extends ApiTest {
     @Transactional
     void getCustomFoodData() {
         //given
-        CustomFoodSteps.사용자_음식데이터_등록요청(CustomFoodSteps.사용자_음식데이터_등록요청_생성());
+        CustomFoodSteps.사용자_음식데이터_등록요청(CustomFoodSteps.사용자_음식데이터_등록요청_생성1());
         Integer no = 1;
         //when
         final ExtractableResponse<Response> response = CustomFoodSteps.사용자_음식데이터_단일조회요청(no);
@@ -36,7 +36,7 @@ public class CustomFoodApiTest extends ApiTest {
     @Transactional
     void insertCustomFoodData() {
         //given
-        CustomFoodSteps.사용자_음식데이터_등록요청(CustomFoodSteps.사용자_음식데이터_등록요청_생성());
+        CustomFoodSteps.사용자_음식데이터_등록요청(CustomFoodSteps.사용자_음식데이터_등록요청_생성1());
         CustomFoodSteps.사용자_음식데이터_등록요청(CustomFoodSteps.사용자_음식데이터_등록요청_생성2());
         //when
         final ExtractableResponse<Response> response1 = CustomFoodSteps.사용자_음식데이터_단일조회요청(1);
@@ -56,7 +56,7 @@ public class CustomFoodApiTest extends ApiTest {
     @Transactional
     void modifyCustomFoodData() {
         //given
-        CustomFoodSteps.사용자_음식데이터_등록요청(CustomFoodSteps.사용자_음식데이터_등록요청_생성());
+        CustomFoodSteps.사용자_음식데이터_등록요청(CustomFoodSteps.사용자_음식데이터_등록요청_생성1());
         CustomFoodSteps.사용자_음식데이터_등록요청(CustomFoodSteps.사용자_음식데이터_등록요청_생성2());
         //when
         CustomFoodSteps.사용자_음식데이터_수정요청(CustomFoodSteps.사용자_음식데이터_수정요청_생성1());
@@ -77,7 +77,7 @@ public class CustomFoodApiTest extends ApiTest {
     @Transactional
     void deleteCustomFoodData() {
         //given
-        CustomFoodSteps.사용자_음식데이터_등록요청(CustomFoodSteps.사용자_음식데이터_등록요청_생성());
+        CustomFoodSteps.사용자_음식데이터_등록요청(CustomFoodSteps.사용자_음식데이터_등록요청_생성1());
         //when
         final ExtractableResponse<Response> response1 = CustomFoodSteps.사용자_음식데이터_단일조회요청(1);
         String resName1 = JsonPath.read(response1.body().asString(), "$.data.name");

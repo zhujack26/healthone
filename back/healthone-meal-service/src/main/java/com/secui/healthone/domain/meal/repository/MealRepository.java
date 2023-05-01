@@ -14,7 +14,7 @@ public interface MealRepository extends JpaRepository<Meal, Integer> {
 
     // 해당 날짜 식단 정보 가져오기
 //    List<Meal> findAllByCreateTime(LocalDate createTime);
-    List<Meal> findByCreateTimeBetween(LocalDateTime startDateTime, LocalDateTime endDateTime);
+    List<Meal> findByCreateTimeBetweenAndUserNo(LocalDateTime startDateTime, LocalDateTime endDateTime, Integer userNo);
 
     void deleteAllByNo(Integer no);
 }

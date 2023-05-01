@@ -23,8 +23,8 @@ public class MealController {
     }
 
     @GetMapping("/list")
-    public RestApiResponse<List<MealResDto>> getMealList(@RequestParam("date") String date) throws ParseException {
-        return new RestApiResponse<>(date+ "날짜 식사 리스트 조회 성공", mealService.getMealList(date));
+    public RestApiResponse<List<MealResDto>> getMealList(@RequestParam("date") String date, @RequestParam("userno") Integer userNo) throws ParseException {
+        return new RestApiResponse<>(date+ "날짜 식사 리스트 조회 성공", mealService.getMealList(date, userNo));
     }
     
     @PostMapping
@@ -32,14 +32,14 @@ public class MealController {
         return new RestApiResponse<>("식사 등록 성공", mealService.insertMeal(requestDto));
     }
 
-//    @PatchMapping
-//    public RestApiResponse<MealResponseDto> updateMeal(@RequestBody MealRequestDto requestDto) {
-//        return new RestApiResponse<>("식사 수정 성공", mealService.updateMeal(requestDto));
-//    }
-//
-//    @DeleteMapping
-//    public RestApiResponse<Void> updateMeal(@RequestParam("no") Integer no) {
-//        mealService.deleteMeal(no);
-//        return new RestApiResponse<>("식사 삭제 성공", null);
-//    }
+    @PatchMapping
+    public RestApiResponse<MealResDto> updateMeal(@RequestBody MealReqDto requestDto) {
+        return new RestApiResponse<>("식사 수정 성공", mealService.insertMeal(requestDto));
+    }
+
+    @DeleteMapping
+    public RestApiResponse<Void> updateMeal(@RequestParam("no") Integer no) {
+        mealService.deleteMeal(no);
+        return new RestApiResponse<>("식사 삭제 성공", null);
+    }
 }

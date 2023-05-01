@@ -1,7 +1,7 @@
 package com.secui.healthone.domain.food.service;
 
-import com.secui.healthone.domain.food.dto.CustomFoodRequestDto;
-import com.secui.healthone.domain.food.dto.CustomFoodResponseDto;
+import com.secui.healthone.domain.food.dto.CustomFoodReqDto;
+import com.secui.healthone.domain.food.dto.CustomFoodResDto;
 import com.secui.healthone.domain.food.entity.CustomFood;
 import com.secui.healthone.domain.food.repository.CustomFoodRepository;
 import com.secui.healthone.global.error.errorcode.CustomErrorCode;
@@ -19,30 +19,30 @@ import java.util.stream.Collectors;
 public class CustomFoodService {
     private final CustomFoodRepository customFoodRepository;
 
-    public CustomFoodResponseDto getCustomFood(Integer no, Integer userNo) {
+    public CustomFoodResDto getCustomFood(Integer no, Integer userNo) {
         Optional<CustomFood> result = customFoodRepository.findAllByNoAndUserNo(no, userNo);
-        return result.map(CustomFoodResponseDto::new).orElse(null);
+        return result.map(CustomFoodResDto::new).orElse(null);
     }
 
-    public List<CustomFoodResponseDto> searchCustomFood(String name, Integer userNo) {
+    public List<CustomFoodResDto> searchCustomFood(String name, Integer userNo) {
         List<CustomFood> result = customFoodRepository.findAllByUserNoAndNameContaining(userNo, name);
         return result.stream()
-                .map(CustomFoodResponseDto::new)
+                .map(CustomFoodResDto::new)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public CustomFoodResponseDto saveCustomFood(CustomFoodRequestDto requestDto) {
+    public CustomFoodResDto saveCustomFood(CustomFoodReqDto requestDto) {
         customFoodRepository.save(requestDto.toEntity());
-        return new CustomFoodResponseDto(requestDto.toEntity());
+        return new CustomFoodResDto(requestDto.toEntity());
     }
 
     @Transactional
-    public CustomFoodResponseDto updateCustomFood(CustomFoodRequestDto requestDto) {
+    public CustomFoodResDto updateCustomFood(CustomFoodReqDto requestDto) {
         CustomFood result = customFoodRepository.findAllByNoAndUserNo(requestDto.getNo(), requestDto.getUserNo())
                 .orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
         result.update(requestDto.getName(), requestDto.getKcal(),  requestDto.getGram());
-        return new CustomFoodResponseDto(result);
+        return new CustomFoodResDto(result);
     }
 
     @Transactional

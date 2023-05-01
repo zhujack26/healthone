@@ -1,4 +1,4 @@
-package com.secui.healthone.domain.calorie.entity;
+package com.secui.healthone.domain.meal.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

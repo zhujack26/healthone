@@ -3,10 +3,12 @@ package com.secui.healthone.ui.walking
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -20,23 +22,25 @@ import com.secui.healthone.ui.common.AppColors
 @Composable
 fun AchievementRate(percentage: Float) {
     Column(modifier = Modifier.padding(16.dp)) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
             Text(
                 text ="오늘 당신의 걸음 목표 달성률은?",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
-            Spacer(modifier = Modifier.width(8.dp))
             Text(
                 buildAnnotatedString {
-                    withStyle(style = SpanStyle(color = AppColors.black)) {
+                    withStyle(style = SpanStyle(fontSize = 24.sp, color = AppColors.black)) {
                         append(">")
                     }
                 },
 //                modifier = Modifier.clickable { onNavigate() }
             )
         }
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         ProgressBar(percentage = percentage)
     }
 }
@@ -45,10 +49,11 @@ fun AchievementRate(percentage: Float) {
 fun ProgressBar(percentage: Float) {
     val filledWidth = (percentage * 100).toInt()
 
-    Row(
+    Box(
         modifier = Modifier
             .height(24.dp)
             .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
             .background(color = AppColors.mono200)
     ) {
         Box(

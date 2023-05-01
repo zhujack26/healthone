@@ -32,6 +32,7 @@ fun WalkingPage(
             Spacer(modifier = Modifier.height(16.dp))
             WalkingType(todaySteps = todaySteps, highestSteps = highestSteps, totalSteps = totalSteps)
             WalkingContent()
+            WalkingScreen()
         }
     }
 }

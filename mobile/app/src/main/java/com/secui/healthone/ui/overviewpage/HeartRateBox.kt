@@ -23,6 +23,7 @@ import com.secui.healthone.util.PageRoutes
 @Composable
 fun HeartRateBox(
     navController:NavHostController,
+    bpmValue:Int = 0,
     modifier: Modifier = Modifier
 ){
 
@@ -67,7 +68,7 @@ fun HeartRateBox(
                         .height(36.dp)
                 )
                 Spacer(modifier = Modifier.width(16.dp));
-                Text(text = "99 bpm", fontSize = 20.sp);
+                Text(text = "${bpmValue} bpm", fontSize = 20.sp);
             }
             Spacer(modifier = Modifier.height(16.dp))
 

@@ -10,13 +10,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.fitness.Fitness
+//import com.google.android.gms.fitness.Fitness
 import com.secui.healthone.compose.DataCollectFirstPage
 import com.secui.healthone.compose.DataCollectSecondPage
 import com.secui.healthone.compose.LoginPage
 import com.secui.healthone.compose.OverViewPage
 import com.secui.healthone.ui.common.TopBar
 import com.secui.healthone.util.PageRoutes
+import com.secui.healthone.compose.*
+
 
 class MainActivity : ComponentActivity() {
 
@@ -33,7 +35,6 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             val context = LocalContext.current;
 
-            //  if (jwtToken != null) PageRoutes.Login.route else
             NavHost(navController, startDestination = if (jwtToken != null) PageRoutes.Login.route else PageRoutes.OverView.route) {
                 // 원래 코드는 jwtToken == null
 
@@ -51,6 +52,9 @@ class MainActivity : ComponentActivity() {
                 }
                 composable(PageRoutes.DataCollectSecond.route){
                     DataCollectSecondPage(navController)
+                }
+                composable(PageRoutes.Guide.route){
+                    GuidePage(navController)
                 }
             }
         }

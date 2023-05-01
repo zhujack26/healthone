@@ -21,4 +21,5 @@ sealed class PageRoutes(val route:String){
     object Walking: PageRoutes("WalkingPage")
     object PopularDetail: PageRoutes("PopularDetailPage")
     object Setting: PageRoutes("SettingPage")
+    object Guide: PageRoutes("GuidePage")
 }

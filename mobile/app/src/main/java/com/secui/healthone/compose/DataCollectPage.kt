@@ -130,7 +130,7 @@ fun DataCollectSecondPage(navController: NavController) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
-                CompleteButton(navController)
+                NextSecondButton(navController)
             }
             Spacer(modifier = Modifier.height(32.dp))
 

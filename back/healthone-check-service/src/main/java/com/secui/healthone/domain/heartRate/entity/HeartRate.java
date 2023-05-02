@@ -1,6 +1,6 @@
 package com.secui.healthone.domain.heartRate.entity;
 
-import com.secui.healthone.global.entity.User;
+import com.secui.healthone.domain.user.entity.User;
 import lombok.*;
 
 import javax.persistence.*;

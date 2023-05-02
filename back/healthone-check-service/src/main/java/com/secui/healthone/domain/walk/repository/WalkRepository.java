@@ -1,6 +1,6 @@
 package com.secui.healthone.domain.walk.repository;
 
-import com.secui.healthone.global.entity.User;
+import com.secui.healthone.domain.user.entity.User;
 import com.secui.healthone.domain.walk.entity.Walk;
 import org.springframework.data.jpa.repository.JpaRepository;
 

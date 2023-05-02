@@ -1,8 +1,11 @@
 package com.secui.healthone.domain.sportrecord.entity;
 
+import com.secui.healthone.domain.sport.entity.CustomSport;
+import com.secui.healthone.domain.sport.entity.Sport;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -18,10 +21,14 @@ public class SportRecord {
     private Integer no;
     @Column(name = "user_no")
     private Integer userNo;
-    @Column(name = "sport_no")
-    private Integer sportNo;
-    @Column(name = "customsport_no")
-    private Integer customSportNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sport_no")
+    private Sport sport;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customsport_no")
+    private CustomSport customSport;
+    @Column(name = "sportrecord_creattime")
+    private LocalDateTime createTime;
     @Column(name = "sportrecord_worktime")
     private Float workTime;
     @Column(name = "sportrecord_consume_calorie")

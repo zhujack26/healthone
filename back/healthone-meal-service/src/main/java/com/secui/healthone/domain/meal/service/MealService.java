@@ -45,7 +45,6 @@ public class MealService {
         LocalDateTime startDateTime = LocalDate.parse(date, formatter).atStartOfDay();
         LocalDateTime endDateTime = startDateTime.plusDays(1).minusSeconds(1);
         List<Meal> result = mealRepository.findByCreateTimeBetweenAndUserNo(startDateTime, endDateTime, userNo);
-//        List<Meal> result = mealRepository.findAllByCreateTimeContaining(date.substring(0, 4) + "-" + date.substring(4, 6) + "-" + date.substring(6, 8));
         return result.stream().map(MealResDto::new).collect(Collectors.toList());
     }
 

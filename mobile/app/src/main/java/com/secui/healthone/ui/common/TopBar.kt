@@ -211,7 +211,7 @@ fun TopBar() {
                         ExerciseInputPage(navController);
                     }
                     composable(PageRoutes.Sleep.route){
-                        SleepPage(navController = navController)
+                        SleepPage(navController, sleepRecords = mutableListOf())
                     }
                     composable(PageRoutes.My.route){
                         MyPage(navController = navController);

@@ -1,51 +1,97 @@
 package com.secui.healthone.ui.sleep
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
-import com.secui.healthone.data.Sleep.SleepTime
-import androidx.compose.ui.graphics.StrokeCap
-
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.unit.dp
+import kotlin.math.cos
+import kotlin.math.sin
 @Composable
-fun SleepTimeClock(sleepTime: SleepTime, wakeTime: SleepTime, modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .aspectRatio(1f)
-            .fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        val color = Color(0xFF3F51B5)
-        Canvas(modifier = Modifier.fillMaxSize()) {
-            val strokeWidth = size.minDimension / 30f
-            val radius = size.minDimension / 2 - strokeWidth / 2
+fun SleepTimeClock(sleepTime: String, wakeTime: String) {
+    val sleepAngle = if (sleepTime.isNotEmpty()) sleepTimeToAngle(sleepTime) else 0f
+    val wakeAngle = if (wakeTime.isNotEmpty()) sleepTimeToAngle(wakeTime) else 0f
+    val sleepDurationAngle = if (sleepTime.isNotEmpty() && wakeTime.isNotEmpty()) wakeAngle - sleepAngle else 0f
 
-            // Draw clock background
-            drawCircle(
-                color = color.copy(alpha = 0.2f),
-                style = Stroke(width = strokeWidth)
+    Canvas(modifier = Modifier.size(200.dp)) {
+        val center = Offset(size.width / 2, size.height / 2)
+        val radius = size.width / 2
+
+        // 기본 회색 원 그리기
+        drawCircle(
+            color = Color.LightGray,
+            center = center,
+            radius = radius
+        )
+
+        // 녹색 원 그리기 (수면 시간 표시)
+        val sweepAngleInRadians = Math.toRadians(sleepDurationAngle.toDouble())
+        val endPoint = Offset(
+            x = center.x + radius * cos(sweepAngleInRadians).toFloat(),
+            y = center.y + radius * sin(sweepAngleInRadians).toFloat()
+        )
+        drawPath(
+            color = Color.Green,
+            path = Path().apply {
+                moveTo(center.x, center.y)
+                lineTo(center.x, 0f)
+                arcTo(Rect(center.x - radius, center.y - radius, center.x + radius, center.y + radius), -90f, sleepDurationAngle, false)
+                lineTo(center.x, center.y)
+            }
+        )
+
+        // 시간 텍스트와 점 그리기
+        val textPaint = Paint().asFrameworkPaint().apply {
+            color = Color.Black.toArgb()
+            textSize = 30f // 텍스트 크기 조정
+        }
+
+        val dotPaint = Paint().asFrameworkPaint().apply {
+            color = Color.Black.toArgb()
+        }
+
+        val dotRadius = 5f
+        val innerRadius = radius * 0.85f
+
+        for (i in 1..24) {
+            val angle = (i * 360f / 24f) - 90f
+            val position = Offset(
+                x = center.x + innerRadius * cos(Math.toRadians(angle.toDouble())).toFloat(),
+                y = center.y + innerRadius * sin(Math.toRadians(angle.toDouble())).toFloat()
             )
 
-            // Draw sleep to wake arc
-            val startAngle = timeToAngle(sleepTime) - 90f
-            val sweepAngle = timeToAngle(wakeTime) - timeToAngle(sleepTime)
-            drawArc(
-                color = color,
-                startAngle = startAngle,
-                sweepAngle = sweepAngle,
-                useCenter = false,
-                style = Stroke(width = strokeWidth, cap = StrokeCap.Round)
-            )
+            if (i == 6 || i == 12 || i == 18 || i == 24) {
+                drawIntoCanvas { canvas ->
+                    canvas.nativeCanvas.drawText(
+                        "$i",
+                        position.x - textPaint.textSize / 2,
+                        position.y + textPaint.textSize / 2,
+                        textPaint
+                    )
+                }
+            } else {
+                drawCircle(
+                    color = Color.Black,
+                    center = position,
+                    radius = dotRadius
+                )
+            }
         }
     }
 }
 
-private fun DrawScope.timeToAngle(time: SleepTime): Float {
-    return (time.timetoFloat() % 24) * 360f / 24f
+private fun sleepTimeToAngle(time: String): Float {
+    val (hour, minute) = time.split(":").map { it.toIntOrNull() ?: 0 }
+    val hoursInDecimal = hour + minute / 60f
+    return (hoursInDecimal * 360f / 24f) - 90f
 }

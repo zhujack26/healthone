@@ -199,7 +199,6 @@ fun OverViewPage(
         TotalHealthBox();
         UserWalkBox(navController, walkValue.value.toInt());
         HeartRateBox(navController, bpmValue.value.toInt());
-        StressIndexBox(navController);
         FoodCalorieBox(navController, calorieValue.value.toInt());
         SleepCheckBox(navController, sleepValue.value.toInt());
         HealthScoreBox(navController);

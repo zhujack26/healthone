@@ -20,7 +20,6 @@ import com.secui.healthone.compose.*
 import com.secui.healthone.compose.Challenge.PopularDetailPage
 import com.secui.healthone.compose.MealPlan.ExerciseInputPage
 import com.secui.healthone.compose.MealPlan.MealInputPage
-import com.secui.healthone.compose.Stress.StressBreathPage
 import com.secui.healthone.compose.sleep.SleepPage
 import com.secui.healthone.util.PageRoutes
 
@@ -119,16 +118,6 @@ fun TopBar() {
                     }
                 )
                 DrawerButton(
-                    text = "스트레스 측정",
-                    textColor = R.color.black,
-                    onClick = {
-                        navController.navigate(PageRoutes.StressIndex.route)
-                        coroutineScope.launch {
-                            scaffoldState.drawerState.close()
-                        }
-                    }
-                )
-                DrawerButton(
                     text = "심박 수 측정",
                     textColor = R.color.black,
                     onClick = {
@@ -183,9 +172,6 @@ fun TopBar() {
                     composable(PageRoutes.MealPlan.route) {
                         MealPlanPage(navController = navController) // 식단 화면
                     }
-                    composable(PageRoutes.StressIndex.route) {
-                        StressIndexPage(navController = navController) // 스트레스 관리
-                    }
                     composable(PageRoutes.HeartRate.route){
                         HeartRatePage(navController = navController) // 심박수 측정
                     }
@@ -194,12 +180,6 @@ fun TopBar() {
                     }
                     composable(PageRoutes.Alert.route){
                         AlertPage(navController = navController) /// 알림
-                    }
-                    composable(PageRoutes.StressBreath.route){
-                        StressBreathPage(navController = navController)
-                    }
-                    composable(PageRoutes.StressActivity.route){
-                        StressActivityPage(navController = navController);
                     }
                     composable(PageRoutes.HeartMeasure.route){
                         HeartMeasurePage(navController);

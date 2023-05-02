@@ -1,12 +1,15 @@
 package com.secui.healthone.domain.walk.service.impl;
 
 import com.secui.healthone.domain.user.entity.User;
+import com.secui.healthone.domain.walk.dto.WalkDtoMapper;
+import com.secui.healthone.domain.walk.dto.WalkResDto;
 import com.secui.healthone.domain.walk.entity.Walk;
 import com.secui.healthone.domain.user.repository.UserRepository;
 import com.secui.healthone.domain.walk.repository.WalkRepository;
 import com.secui.healthone.domain.walk.service.WalkService;
+import com.secui.healthone.global.error.errorcode.CustomErrorCode;
+import com.secui.healthone.global.error.exception.RestApiException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -17,41 +20,30 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class WalkServiceImpl implements WalkService {
 
-    @Autowired
-    private WalkRepository walkRepository;
-
-    @Autowired
-    private UserRepository userRepository;
+    private final WalkRepository walkRepository;
+    private final UserRepository userRepository;
 
     @Override
-    public List<Walk> getWalkEntitiesForSevenDays(String dateTime) {
+    public List<WalkResDto> getWalkEntitiesForSevenDays(String dateTime) {
         Optional<User> optionalUser = userRepository.findById(1);
 //        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
 //        Optional<User> optionalUser = userRepository.findByUserEmail(userEmail);
-        if (optionalUser.isEmpty()) {
-        }
-        User user = optionalUser.get();
+        User user = optionalUser.orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
         LocalDateTime endDateTime = typeConverter(dateTime);
         LocalDateTime startDateTime = endDateTime.minusDays(6).withHour(0).withMinute(0).withSecond(0).withNano(0);
         List<Walk> walkList = walkRepository.findAllByUserAndWalkCreatetimeBetween(user, startDateTime, endDateTime);
-        if (walkList.isEmpty()) {
-        }
-        return walkList;
+        return WalkDtoMapper.INSTANCE.entityToResDto(walkList);
     }
 
     @Override
-    public List<Walk> getDetailedWalkInfo(String date) {
+    public List<WalkResDto> getDetailedWalkInfo(String date) {
         Optional<User> optionalUser = userRepository.findById(1);
 //        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
 //        Optional<User> optionalUser = userRepository.findByUserEmail(userEmail);
-        if (optionalUser.isEmpty()) {
-        }
-        User user = optionalUser.get();
+        User user = optionalUser.orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
         LocalDateTime localDateTime = typeConverter(date);
         List<Walk> walkList = walkRepository.findAllByUserAndWalkCreatetime(user, localDateTime);
-        if (walkList.isEmpty()) {
-        }
-        return walkList;
+        return WalkDtoMapper.INSTANCE.entityToResDto(walkList);
     }
 
     public LocalDateTime typeConverter(String dateTime) {

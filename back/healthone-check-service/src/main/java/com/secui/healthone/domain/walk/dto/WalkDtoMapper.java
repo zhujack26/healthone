@@ -10,9 +10,9 @@ import java.util.List;
 public interface WalkDtoMapper {
     WalkDtoMapper INSTANCE = Mappers.getMapper(WalkDtoMapper.class);
 
-    List<WalkResDto> entityToReqDto(List<Walk> walk);
+    List<WalkResDto> entityToResDto(List<Walk> walk);
 
-    WalkResDto entityToReqDto(Walk walk);
+    WalkResDto entityToResDto(Walk walk);
 
     Walk reqDtoToEntity(WalkReqDto walk);
 

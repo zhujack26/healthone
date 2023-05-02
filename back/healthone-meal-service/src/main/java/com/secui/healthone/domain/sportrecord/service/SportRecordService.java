@@ -46,9 +46,11 @@ public class SportRecordService {
         if (reqDto.getSportNo() != null){
             sport = sportRepository.findById(reqDto.getSportNo())
                     .orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
+            reqDto.setSportNo(sport.getNo());
         } else if (reqDto.getCustomSportNo()!= null){
-            customSport = customSportRepository.findByNoAndUserNo(reqDto.getUserNo(), reqDto.getCustomSportNo())
+            customSport = customSportRepository.findByNoAndUserNo(reqDto.getCustomSportNo(), reqDto.getUserNo())
                     .orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
+            reqDto.setCustomSportNo(customSport.getNo());
         }
         sportRecordRepository.save(sportRecordDtoMapper.reqDtoToEntity(reqDto));
         return sportRecordDtoMapper.entityToResDto(sportRecordDtoMapper.reqDtoToEntity(reqDto));

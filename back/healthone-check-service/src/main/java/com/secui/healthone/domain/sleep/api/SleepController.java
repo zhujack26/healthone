@@ -1,12 +1,11 @@
 package com.secui.healthone.domain.sleep.api;
 
-import com.secui.healthone.domain.sleep.dto.AddSleepInfoReqDto;
-import com.secui.healthone.domain.sleep.dto.UpdateSleepInfoReqDto;
+import com.secui.healthone.domain.sleep.dto.SleepInsertDto;
+import com.secui.healthone.domain.sleep.dto.SleepUpdateDto;
 import com.secui.healthone.domain.sleep.entity.Sleep;
 import com.secui.healthone.domain.sleep.service.SleepService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,13 +13,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/sleep")
 @Slf4j
 @RequiredArgsConstructor
 public class SleepController {
-
-    @Autowired
-    private SleepService sleepService;
+    private final SleepService sleepService;
 
     @GetMapping
     public ResponseEntity<List<Sleep>> getSleepData(@RequestParam String date) {
@@ -30,14 +27,14 @@ public class SleepController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public void addSleepInfo(@RequestBody AddSleepInfoReqDto addSleepInfoReqDto) {
-        sleepService.addSleepInfo(addSleepInfoReqDto);
+    public void addSleepInfo(@RequestBody SleepInsertDto sleepInsertDto) {
+        sleepService.addSleepInfo(sleepInsertDto);
     }
 
     @PatchMapping
     @ResponseStatus(HttpStatus.OK)
-    public void updateSleepInfo(@RequestBody UpdateSleepInfoReqDto updateSleepInfoReqDto) {
-        sleepService.updateSleepInfo(updateSleepInfoReqDto);
+    public void updateSleepInfo(@RequestBody SleepUpdateDto sleepUpdateDto) {
+        sleepService.updateSleepInfo(sleepUpdateDto);
     }
 
     @DeleteMapping

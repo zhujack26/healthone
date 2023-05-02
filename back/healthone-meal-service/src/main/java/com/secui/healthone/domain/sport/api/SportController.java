@@ -4,6 +4,7 @@ import com.secui.healthone.domain.sport.dto.SportResDto;
 import com.secui.healthone.domain.sport.service.SportService;
 import com.secui.healthone.global.response.RestApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -28,7 +29,7 @@ public class SportController {
     @Operation(summary = "일반 운동 데이터 검색 정보 반환", description = "일반 운동 데이터 검색 정보 반환 API", tags = {"Sport"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "운동 데이터 검색 성공", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = SportResDto.class)),
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = SportResDto.class))),
                     @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class))
             }),
     })

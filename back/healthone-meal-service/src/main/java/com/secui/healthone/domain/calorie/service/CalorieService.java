@@ -1,6 +1,6 @@
 package com.secui.healthone.domain.calorie.service;
 
-import com.secui.healthone.domain.calorie.dto.CalorieResponseDto;
+import com.secui.healthone.domain.calorie.dto.CalorieResDto;
 import com.secui.healthone.domain.meal.entity.Meal;
 import com.secui.healthone.domain.meal.repository.MealRepository;
 import com.secui.healthone.domain.sportrecord.entity.SportRecord;
@@ -19,7 +19,7 @@ public class CalorieService {
 //    private final CalorieRepository calorieRepository;
 //    private final CalorieDtoMapper calorieDtoMapper;
 
-    public CalorieResponseDto getCalorie(String date, Integer userNo) {
+    public CalorieResDto getCalorie(String date, Integer userNo) {
         StringDateTrans transDate = new StringDateTrans(date);
 
         List<Meal> getMeal = mealRepository.findByCreateTimeBetweenAndUserNo(transDate.getStartDateTime(), transDate.getEndDateTime(), 1);
@@ -33,7 +33,7 @@ public class CalorieService {
             totalConsumeKcal += sportRecord.getConsumeCalorie();
         }
 
-        return CalorieResponseDto.builder()
+        return CalorieResDto.builder()
                 .userNo(userNo)
                 .sumKcalEaten(totalEatenKcal)
                 .sumKcalConsume(totalConsumeKcal)

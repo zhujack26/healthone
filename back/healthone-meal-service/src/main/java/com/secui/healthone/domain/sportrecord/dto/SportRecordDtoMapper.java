@@ -19,4 +19,6 @@ public interface SportRecordDtoMapper {
     @Mapping(source = "sportRecord.sport", target="sportResDto")
     @Mapping(source = "sportRecord.customSport", target="customSportResDto")
     List<SportRecordResDto> entityToResListDto(List<SportRecord> sportRecords);
+
+    SportRecord reqDtoToEntity(SportRecordReqDto sportRecordReqDto);
 }

@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
 
             val navController = rememberNavController()
 
-            NavHost(navController, startDestination = if (jwtToken != null) PageRoutes.Login.route else PageRoutes.OverView.route) {
+            NavHost(navController, startDestination = if (jwtToken == null) PageRoutes.Login.route else PageRoutes.OverView.route) {
                 // 원래 코드는 jwtToken == null
 
                 composable(PageRoutes.Login.route){
@@ -48,6 +48,9 @@ class MainActivity : ComponentActivity() {
                 composable(PageRoutes.Guide.route){
                     GuidePage(navController)
                 }
+//                composable(PageRoutes.WalkingDetail.route){
+//                    WalkingDetailPage(navController)
+//                }
             }
         }
     }

@@ -197,7 +197,10 @@ fun TopBar() {
                         MyPage(navController = navController);
                     }
                     composable(PageRoutes.Walking.route){
-                        WalkingPage(navController = navController);
+                        WalkingPage(navController);
+                    }
+                    composable(PageRoutes.WalkingDetail.route){
+                        WalkingDetailPage(navController);
                     }
                     composable(PageRoutes.PopularDetail.route){
                         PopularDetailPage(navController)

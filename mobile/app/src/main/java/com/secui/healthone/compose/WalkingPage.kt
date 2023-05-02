@@ -8,13 +8,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import com.secui.healthone.ui.walking.*
 
 @Composable
 fun WalkingPage(
-    navController: NavHostController,
+    navController: NavController,
     todaySteps: Int = 1000,
     highestSteps: Int = 5000,
     totalSteps: Int = 10000){
@@ -27,12 +26,13 @@ fun WalkingPage(
             LineGraph()
             Spacer(modifier = Modifier.height(16.dp))
             AchievementRate(
-                percentage = 0.47f,
+                percentage = 0.47f, navController
             )
             Spacer(modifier = Modifier.height(16.dp))
             WalkingType(todaySteps = todaySteps, highestSteps = highestSteps, totalSteps = totalSteps)
             WalkingContent()
-            WalkingDetail()
+
         }
     }
 }
+

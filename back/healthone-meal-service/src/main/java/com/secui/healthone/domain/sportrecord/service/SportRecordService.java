@@ -52,8 +52,8 @@ public class SportRecordService {
                     .orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
             reqDto.setCustomSportNo(customSport.getNo());
         }
-        sportRecordRepository.save(sportRecordDtoMapper.reqDtoToEntity(reqDto));
-        return sportRecordDtoMapper.entityToResDto(sportRecordDtoMapper.reqDtoToEntity(reqDto));
+        sportRecordRepository.save(sportRecordDtoMapper.reqDtoToEntity(reqDto, sport, customSport));
+        return sportRecordDtoMapper.entityToResDto(sportRecordDtoMapper.reqDtoToEntity(reqDto, sport, customSport));
     }
 
     @Transactional

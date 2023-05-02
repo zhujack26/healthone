@@ -27,7 +27,7 @@ public class SportRecord {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customsport_no")
     private CustomSport customSport;
-    @Column(name = "sportrecord_creattime")
+    @Column(name = "sportrecord_createtime")
     private LocalDateTime createTime;
     @Column(name = "sportrecord_worktime")
     private Float workTime;

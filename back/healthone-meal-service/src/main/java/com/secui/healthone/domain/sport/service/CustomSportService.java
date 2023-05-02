@@ -41,7 +41,7 @@ public class CustomSportService {
 
     // 운동 데이터 삭제
     @Transactional
-    public void deleteCustomSport(CustomSportReqDto reqDto) {
-        customSportRepository.deleteById(customSportMapper.customSportReqDtoToCustomSport(reqDto).getNo());
+    public void deleteCustomSport(Integer no) {
+        customSportRepository.deleteById(no);
     }
 }

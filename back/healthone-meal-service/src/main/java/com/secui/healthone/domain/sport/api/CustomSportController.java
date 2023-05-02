@@ -72,8 +72,8 @@ public class CustomSportController {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @DeleteMapping
-    public RestApiResponse<Integer> deleteCustomSportData (@RequestBody CustomSportReqDto reqDto) {
-        customSportService.deleteCustomSport(reqDto);
-        return new RestApiResponse<>("사용자 운동 데이터 삭제 성공", reqDto.getNo());
+    public RestApiResponse<Integer> deleteCustomSportData (@RequestParam("no") Integer no) {
+        customSportService.deleteCustomSport(no);
+        return new RestApiResponse<>("사용자 운동 데이터 삭제 성공", no);
     }
 }

@@ -39,7 +39,7 @@ public class SportRecordController {
     }
 
     @Operation(summary = "운동 기록 등록", description = "운동 기록 등록 API", tags = {"SportRecord"})
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "식사 등록 성공", content = {
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "운동 기록 등록 성공", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = SportRecordResDto.class)),
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
@@ -68,6 +68,4 @@ public class SportRecordController {
         sportRecordService.deleteSportRecord(no);
         return new RestApiResponse<>("운동 기록 삭제 성공", null);
     }
-
-
 }

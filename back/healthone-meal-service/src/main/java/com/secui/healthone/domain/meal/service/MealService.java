@@ -10,6 +10,7 @@ import com.secui.healthone.domain.meal.entity.Meal;
 import com.secui.healthone.domain.meal.repository.MealRepository;
 import com.secui.healthone.global.error.errorcode.CustomErrorCode;
 import com.secui.healthone.global.error.exception.RestApiException;
+import com.secui.healthone.global.util.StringDateTrans;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -41,11 +42,8 @@ public class MealService {
     // 식사 일자별 검색
     public List<MealResDto> getMealList(String date, Integer userNo) throws ParseException {
         log.info("date : {}", date);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        LocalDateTime startDateTime = LocalDate.parse(date, formatter).atStartOfDay();
-        LocalDateTime endDateTime = startDateTime.plusDays(1).minusSeconds(1);
-        List<Meal> result = mealRepository.findByCreateTimeBetweenAndUserNo(startDateTime, endDateTime, userNo);
-//        List<Meal> result = mealRepository.findAllByCreateTimeContaining(date.substring(0, 4) + "-" + date.substring(4, 6) + "-" + date.substring(6, 8));
+        StringDateTrans trans = new StringDateTrans(date);
+        List<Meal> result = mealRepository.findByCreateTimeBetweenAndUserNo(trans.getStartDateTime(), trans.getEndDateTime(), userNo);
         return result.stream().map(MealResDto::new).collect(Collectors.toList());
     }
 

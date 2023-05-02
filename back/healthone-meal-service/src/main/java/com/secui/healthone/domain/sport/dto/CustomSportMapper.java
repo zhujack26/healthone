@@ -13,6 +13,8 @@ public interface CustomSportMapper {
     CustomSportMapper INSTANCE = Mappers.getMapper(CustomSportMapper.class);
 
     CustomSportResDto customSportToCustomSportResDto(CustomSport customSport);
-
+    CustomSportResDto customSportReqDtoToCustomSportResDto(CustomSportReqDto customSportReqDto);
     List<CustomSportResDto> customSportToCustomSportResListDto(List<CustomSport> customSport);
+    CustomSport customSportReqDtoToCustomSport(CustomSportReqDto customSportResDto);
+
 }

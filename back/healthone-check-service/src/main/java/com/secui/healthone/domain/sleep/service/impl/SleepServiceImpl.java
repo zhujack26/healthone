@@ -1,14 +1,17 @@
 package com.secui.healthone.domain.sleep.service.impl;
 
+import com.secui.healthone.domain.sleep.dto.SleepDtoMapper;
 import com.secui.healthone.domain.sleep.dto.SleepInsertDto;
+import com.secui.healthone.domain.sleep.dto.SleepResDto;
 import com.secui.healthone.domain.sleep.dto.SleepUpdateDto;
 import com.secui.healthone.domain.sleep.entity.Sleep;
 import com.secui.healthone.domain.sleep.repository.SleepRepository;
 import com.secui.healthone.domain.sleep.service.SleepService;
 import com.secui.healthone.domain.user.entity.User;
 import com.secui.healthone.domain.user.repository.UserRepository;
+import com.secui.healthone.global.error.errorcode.CustomErrorCode;
+import com.secui.healthone.global.error.exception.RestApiException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -19,21 +22,17 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SleepServiceImpl implements SleepService {
 
-    @Autowired
-    private SleepRepository sleepRepository;
+    private final SleepRepository sleepRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
-    public List<Sleep> getSleepData(String date) {
+    public List<SleepResDto> getSleepData(String date) {
         //        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
 //        Optional<User> optionalUser = userRepository.findByUserEmail(userEmail);
         Optional<User> optionalUser = userRepository.findById(1);
-        if (optionalUser.isEmpty()) {
-        }
-        User user = optionalUser.get();
-        return sleepRepository.findAllByUserAndSleepCreatetimeLike(user, date);
+        User user = optionalUser.orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
+        return SleepDtoMapper.INSTANCE.entityToResDto(sleepRepository.findAllByUserAndSleepCreatetimeLike(user, date));
     }
 
     @Override
@@ -41,17 +40,17 @@ public class SleepServiceImpl implements SleepService {
         //        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
 //        Optional<User> optionalUser = userRepository.findByUserEmail(userEmail);
         Optional<User> optionalUser = userRepository.findById(sleepInfoReqDto.getUserNo());
-        if (optionalUser.isEmpty()) {
-        }
-        User user = optionalUser.get();
-        LocalDateTime sleepCreatetime = typeConverter(sleepInfoReqDto.getSleepCreatetime());
-        LocalDateTime sleepStartSleepTime = typeConverter(sleepInfoReqDto.getSleepStartSleepTime());
-        LocalDateTime sleepEndSleepTime = typeConverter(sleepInfoReqDto.getSleepEndSleepTime());
+        User user = optionalUser.orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
+
+        LocalDateTime sleepCreatetime = typeConverter(sleepInfoReqDto.getCreateTime());
+        LocalDateTime sleepStartSleepTime = typeConverter(sleepInfoReqDto.getStartSleepTime());
+        LocalDateTime sleepEndSleepTime = typeConverter(sleepInfoReqDto.getEndSleepTime());
+
         Sleep sleep = Sleep.builder()
-                .user(user)
-                .sleepCreatetime(sleepCreatetime)
-                .sleepStartSleepTime(sleepStartSleepTime)
-                .sleepEndSleepTime(sleepEndSleepTime)
+                .userNo(user.getUserNo())
+                .createTime(sleepCreatetime)
+                .startSleepTime(sleepStartSleepTime)
+                .endSleepTime(sleepEndSleepTime)
                 .build();
         sleepRepository.save(sleep);
     }
@@ -64,25 +63,24 @@ public class SleepServiceImpl implements SleepService {
         }
         Sleep sleep = optionalSleep.get();
 
-        if (sleepUpdateDto.getSleepCreatetime() != null) {
-            LocalDateTime sleepCreatetime = typeConverter(sleepUpdateDto.getSleepCreatetime());
-            sleep.setSleepCreatetime(sleepCreatetime);
+        if (sleepUpdateDto.getCreateTime() != null) {
+            LocalDateTime sleepCreatetime = typeConverter(sleepUpdateDto.getCreateTime());
+            sleep.setCreateTime(sleepCreatetime);
         }
-        if (sleepUpdateDto.getSleepStartSleepTime() != null) {
-            LocalDateTime sleepStartSleepTime = typeConverter(sleepUpdateDto.getSleepStartSleepTime());
-            sleep.setSleepStartSleepTime(sleepStartSleepTime);
+        if (sleepUpdateDto.getStartSleepTime() != null) {
+            LocalDateTime sleepStartSleepTime = typeConverter(sleepUpdateDto.getStartSleepTime());
+            sleep.setStartSleepTime(sleepStartSleepTime);
         }
-        if (sleepUpdateDto.getSleepEndSleepTime() != null) {
-            LocalDateTime sleepEndSleepTime = typeConverter(sleepUpdateDto.getSleepEndSleepTime());
-            sleep.setSleepEndSleepTime(sleepEndSleepTime);
+        if (sleepUpdateDto.getEndSleepTime() != null) {
+            LocalDateTime sleepEndSleepTime = typeConverter(sleepUpdateDto.getEndSleepTime());
+            sleep.setEndSleepTime(sleepEndSleepTime);
         }
         sleepRepository.save(sleep);
     }
 
     @Override
-    public void deleteSleepInfo(String no) {
-        int sleepNo = Integer.parseInt(no);
-        sleepRepository.deleteById(sleepNo);
+    public void deleteSleepInfo(Integer no) {
+        sleepRepository.deleteById(no);
     }
 
     public LocalDateTime typeConverter(String dateTime) {

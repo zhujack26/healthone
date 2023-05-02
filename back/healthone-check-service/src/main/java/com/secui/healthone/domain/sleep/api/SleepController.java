@@ -1,6 +1,7 @@
 package com.secui.healthone.domain.sleep.api;
 
 import com.secui.healthone.domain.sleep.dto.SleepInsertDto;
+import com.secui.healthone.domain.sleep.dto.SleepResDto;
 import com.secui.healthone.domain.sleep.dto.SleepUpdateDto;
 import com.secui.healthone.domain.sleep.entity.Sleep;
 import com.secui.healthone.domain.sleep.service.SleepService;
@@ -20,8 +21,8 @@ public class SleepController {
     private final SleepService sleepService;
 
     @GetMapping
-    public ResponseEntity<List<Sleep>> getSleepData(@RequestParam String date) {
-        List<Sleep> sleepList = sleepService.getSleepData(date);
+    public ResponseEntity<List<SleepResDto>> getSleepData(@RequestParam String date) {
+        List<SleepResDto> sleepList = sleepService.getSleepData(date);
         return ResponseEntity.ok().body(sleepList);
     }
 
@@ -39,7 +40,7 @@ public class SleepController {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
-    public void deleteSleepInfo(@RequestParam String no) {
+    public void deleteSleepInfo(@RequestParam("no") Integer no) {
         sleepService.deleteSleepInfo(no);
     }
 }

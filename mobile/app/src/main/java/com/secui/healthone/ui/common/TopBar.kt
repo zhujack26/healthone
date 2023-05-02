@@ -2,7 +2,6 @@ package com.secui.healthone.ui.common
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -10,8 +9,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -40,8 +37,7 @@ fun DrawerButton(text: String, icon: Int? = null, onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        Row(
-            modifier = Modifier.padding(horizontal = 16.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 16.dp)) {
             if (icon != null) {
                 Icon(
                     painter = painterResource(id = icon),
@@ -220,20 +216,6 @@ fun TopBar() {
                 )
                 Divider(color = AppColors.black, thickness = 1.dp)
             }
-            if (menuOpen.value) {
-                Box(
-                    Modifier
-                        .fillMaxSize()
-                        .background(Color.Transparent)
-                        .pointerInput(Unit) {
-                            detectTapGestures(
-                                onTap = {
-                                    menuOpen.value = false
-                                }
-                            )
-                        },
-                    contentAlignment = Alignment.TopStart
-                ) {}
-            }
+
         }
     }

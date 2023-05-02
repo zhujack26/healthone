@@ -41,7 +41,6 @@ class MainActivity : ComponentActivity() {
                 composable(PageRoutes.OverView.route) {
                     Column(){
                         TopBar()
-                        Spacer(modifier = Modifier.height(16.dp))
                         OverViewPage(navController)
                     }
                 }

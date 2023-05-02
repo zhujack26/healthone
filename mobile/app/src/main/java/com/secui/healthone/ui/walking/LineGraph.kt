@@ -1,47 +1,43 @@
 package com.secui.healthone.ui.walking
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
-import com.madrapps.plot.line.DataPoint
-import com.madrapps.plot.line.LineGraph
-import com.madrapps.plot.line.LinePlot
-import com.secui.healthone.ui.common.AppColors
 
 @Composable
-fun LineGraph (
-    modifier: Modifier = Modifier
-        .wrapContentWidth()
-        .wrapContentHeight().padding(16.dp)
-){
+fun LineGraph(steps: List<Int>) {
+    val lineColor = MaterialTheme.colors.primary
+    val lineWidth = 4.dp
 
-    // 더미데이터
-    val dataList = mutableListOf<DataPoint>();
-    for(i in 0..10){
-        val dataPoint = DataPoint(i.toFloat(), 10*Math.random().toFloat());
-        dataList.add(dataPoint);
-    }
-    dataList.sortedWith(Comparator { t1, t2 -> t1.x.toInt()-t2.x.toInt()  })
-    WalkingLineGraph(listOf(dataList));
-}
+    Canvas(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp)
+    ) {
+        val maxValue = steps.maxOrNull() ?: 1
+        val stepWidth = size.width / (steps.size - 1)
 
-@Composable
-fun WalkingLineGraph(lines: List<List<DataPoint>>) {
-    LineGraph(
-        plot = LinePlot(
-            listOf(
-                LinePlot.Line(
-                    lines[0],
-                    LinePlot.Connection(color = AppColors.green500),
-                    LinePlot.Intersection(color = AppColors.green300, radius = 2.dp),
-                    LinePlot.Highlight(color = AppColors.green700),
-                )
-            ),
-            grid = LinePlot.Grid(color = AppColors.green700, steps = 1),
-        ),
-        modifier = Modifier.fillMaxWidth().height(200.dp),
-        onSelection = { xLine, points ->
+        for (i in 1 until steps.size) {
+            val startX = stepWidth * (i - 1)
+            val startY = size.height * (1 - steps[i - 1].toFloat() / maxValue)
+            val endX = stepWidth * i
+            val endY = size.height * (1 - steps[i].toFloat() / maxValue)
+
+            drawLine(
+                start = Offset(x = startX, y = startY),
+                end = Offset(x = endX, y = endY),
+                color = lineColor,
+                strokeWidth = lineWidth.toPx(),
+                cap = StrokeCap.Round
+            )
         }
-    )
+    }
 }

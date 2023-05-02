@@ -17,13 +17,15 @@ fun WalkingPage(
     todaySteps: Int = 1000,
     highestSteps: Int = 5000,
     totalSteps: Int = 10000){
+    val steps = listOf(1000, 2000, 1500, 1800, 3500, 2700, 3200)
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
     ) {
         item {
-            LineGraph()
+            LineGraph(steps = steps)
+
             Spacer(modifier = Modifier.height(16.dp))
             AchievementRate(
                 percentage = 0.47f, navController

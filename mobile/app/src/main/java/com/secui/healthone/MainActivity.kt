@@ -4,7 +4,12 @@ import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -34,8 +39,9 @@ class MainActivity : ComponentActivity() {
                     LoginPage(navController)
                 }
                 composable(PageRoutes.OverView.route) {
-                    Column {
+                    Column(){
                         TopBar()
+                        Spacer(modifier = Modifier.height(16.dp))
                         OverViewPage(navController)
                     }
                 }

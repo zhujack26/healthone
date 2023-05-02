@@ -195,7 +195,6 @@ fun OverViewPage(
         .verticalScroll
             (rememberScrollState()))
     {
-
         TotalHealthBox();
         UserWalkBox(navController, walkValue.value.toInt());
         HeartRateBox(navController, bpmValue.value.toInt());

@@ -2,6 +2,7 @@ package com.secui.healthone.ui.common
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -9,8 +10,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
@@ -28,14 +33,30 @@ import com.secui.healthone.util.PageRoutes
 
 
 @Composable
-fun DrawerButton(text: String, textColor: Int = R.color.black, onClick: () -> Unit) {
+fun DrawerButton(text: String, icon: Int? = null, onClick: () -> Unit) {
+    val textColor = AppColors.black
     TextButton(
         onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
     ) {
-        Text(text, fontSize = 16.sp, color = colorResource(id = textColor))
+        Row(
+            modifier = Modifier.padding(horizontal = 16.dp)) {
+            if (icon != null) {
+                Icon(
+                    painter = painterResource(id = icon),
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+            }
+            Text(
+                text,
+                fontSize = 16.sp,
+                color = textColor,
+                fontWeight = FontWeight.Bold
+            )
+        }
     }
 }
 
@@ -46,52 +67,77 @@ fun TopBar() {
     val menuOffset = animateDpAsState(if (menuOpen.value) 0.dp else 200.dp) // 애니메이션 상태
 
     Box(modifier = Modifier.fillMaxSize()) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            NavHost(navController, startDestination = PageRoutes.OverView.route) {
-                composable(PageRoutes.OverView.route) {
-                    OverViewPage(navController = navController)
-                }
-                composable(PageRoutes.MealPlan.route) {
-                    MealPlanPage(navController = navController) // 식단 화면
-                }
-                composable(PageRoutes.HeartRate.route) {
-                    HeartRatePage(navController = navController) // 심박수 측정
-                }
-                composable(PageRoutes.Challenge.route) {
-                    ChallengePage(navController = navController) // 챌린지
-                }
-                composable(PageRoutes.Alert.route) {
-                    AlertPage(navController = navController) /// 알림
-                }
-                composable(PageRoutes.HeartMeasure.route) {
-                    HeartMeasurePage(navController)
-                }
-                composable(PageRoutes.MealInput.route) {
-                    MealInputPage(navController)
-                }
-                composable(PageRoutes.ExerciseInput.route) {
-                    ExerciseInputPage(navController)
-                }
-                composable(PageRoutes.Sleep.route) {
-                    SleepPage(navController = navController)
-                }
-                composable(PageRoutes.My.route) {
-                    MyPage(navController = navController)
-                }
-                composable(PageRoutes.Walking.route) {
-                    WalkingPage(navController)
-                }
-                composable(PageRoutes.WalkingDetail.route) {
-                    WalkingDetailPage(navController)
-                }
-                composable(PageRoutes.PopularDetail.route) {
-                    PopularDetailPage(navController)
-                }
-                composable(PageRoutes.Setting.route) {
-                    SettingPage(navController = navController)
+        Column(modifier = Modifier.fillMaxSize()) {
+            Column {
+                TopAppBar(
+                    title = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_topbar_logo),
+                            contentDescription = "logo",
+                            modifier = Modifier.size(60.dp)
+                        )
+                    },
+                    backgroundColor = AppColors.white,
+                    actions = {
+                        IconButton(onClick = {
+                            menuOpen.value = !menuOpen.value
+                        }) { // 상태를 업데이트하여 메뉴를 열고 닫습니다.
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_topbar_toggle),
+                                contentDescription = "Menu",
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
+                    }
+                )
+            }
+            Column {
+                NavHost(navController, startDestination = PageRoutes.OverView.route) {
+                    composable(PageRoutes.OverView.route) {
+                        OverViewPage(navController = navController)
+                    }
+                    composable(PageRoutes.MealPlan.route) {
+                        MealPlanPage(navController = navController) // 식단 화면
+                    }
+                    composable(PageRoutes.HeartRate.route) {
+                        HeartRatePage(navController = navController) // 심박수 측정
+                    }
+                    composable(PageRoutes.Challenge.route) {
+                        ChallengePage(navController = navController) // 챌린지
+                    }
+                    composable(PageRoutes.Alert.route) {
+                        AlertPage(navController = navController) /// 알림
+                    }
+                    composable(PageRoutes.HeartMeasure.route) {
+                        HeartMeasurePage(navController)
+                    }
+                    composable(PageRoutes.MealInput.route) {
+                        MealInputPage(navController)
+                    }
+                    composable(PageRoutes.ExerciseInput.route) {
+                        ExerciseInputPage(navController)
+                    }
+                    composable(PageRoutes.Sleep.route) {
+                        SleepPage(navController = navController)
+                    }
+                    composable(PageRoutes.My.route) {
+                        MyPage(navController = navController)
+                    }
+                    composable(PageRoutes.Walking.route) {
+                        WalkingPage(navController)
+                    }
+                    composable(PageRoutes.WalkingDetail.route) {
+                        WalkingDetailPage(navController)
+                    }
+                    composable(PageRoutes.PopularDetail.route) {
+                        PopularDetailPage(navController)
+                    }
+                    composable(PageRoutes.Setting.route) {
+                        SettingPage(navController = navController)
+                    }
                 }
             }
-            }
+        }
             Column(
                 modifier = Modifier
                     .offset(x = menuOffset.value) // 애니메이션 값을 적용
@@ -102,98 +148,92 @@ fun TopBar() {
             ) {
                 DrawerButton(
                     text = "내 페이지",
-                    textColor = R.color.black,
                     onClick = {
                         navController.navigate(PageRoutes.My.route)
                     }
                 )
+                Divider(color = AppColors.black, thickness = 1.dp)
                 DrawerButton(
                     text = "메인",
-                    textColor = R.color.black,
                     onClick = {
                         navController.navigate(PageRoutes.OverView.route)
                     }
                 )
+                Divider(color = AppColors.black, thickness = 1.dp)
                 DrawerButton(
                     text = "심박수",
-                    textColor = R.color.black,
+                    icon = R.drawable.ic_heart,
                     onClick = {
                         navController.navigate(PageRoutes.HeartRate.route)
                     }
                 )
+                Divider(color = AppColors.black, thickness = 1.dp)
                 DrawerButton(
                     text = "식단",
-                    textColor = R.color.black,
+                    icon = R.drawable.ic_food,
                     onClick = {
                         navController.navigate(PageRoutes.MealPlan.route)
                     }
                 )
+                Divider(color = AppColors.black, thickness = 1.dp)
                 DrawerButton(
                     text = "수면",
-                    textColor = R.color.black,
+                    icon = R.drawable.ic_sleep,
                     onClick = {
                         navController.navigate(PageRoutes.Sleep.route)
                     }
                 )
+                Divider(color = AppColors.black, thickness = 1.dp)
                 DrawerButton(
                     text = "걸음수",
-                    textColor = R.color.black,
+                    icon = R.drawable.ic_walking,
                     onClick = {
                         navController.navigate(PageRoutes.Walking.route)
                     }
                 )
+                Divider(color = AppColors.black, thickness = 1.dp)
                 DrawerButton(
                     text = "심박 수 측정",
-                    textColor = R.color.black,
                     onClick = {
                         navController.navigate(PageRoutes.HeartRate.route)
                     }
                 )
-
+                Divider(color = AppColors.black, thickness = 1.dp)
                 DrawerButton(
                     text = "챌린지 페이지",
-                    textColor = R.color.black,
                     onClick = {
                         navController.navigate(PageRoutes.Challenge.route)
                     }
                 )
                 DrawerButton(
                     text = "알림 페이지",
-                    textColor = R.color.black,
                     onClick = {
                         navController.navigate(PageRoutes.Alert.route)
                     }
                 )
+                Divider(color = AppColors.black, thickness = 1.dp)
                 DrawerButton(
                     text = "설정",
-                    textColor = R.color.black,
                     onClick = {
                         navController.navigate(PageRoutes.Setting.route)
                     }
                 )
+                Divider(color = AppColors.black, thickness = 1.dp)
             }
-            TopAppBar(
-                title = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_topbar_logo),
-                        contentDescription = "logo",
-                        tint = colorResource(id = R.color.black),
-                        modifier = Modifier.size(60.dp)
-                    )
-                },
-                backgroundColor = colorResource(id = R.color.white),
-                actions = {
-                    IconButton(onClick = {
-                        menuOpen.value = !menuOpen.value
-                    }) { // 상태를 업데이트하여 메뉴를 열고 닫습니다.
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_topbar_toggle),
-                            contentDescription = "Menu",
-                            tint = colorResource(id = R.color.black),
-                            modifier = Modifier.size(24.dp)
-                        )
-                    }
-                }
-            )
+            if (menuOpen.value) {
+                Box(
+                    Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                        .pointerInput(Unit) {
+                            detectTapGestures(
+                                onTap = {
+                                    menuOpen.value = false
+                                }
+                            )
+                        },
+                    contentAlignment = Alignment.TopStart
+                ) {}
+            }
         }
     }

@@ -20,7 +20,7 @@ public class SportService {
 
     private final SportMapper sportMapper;
 
-    // 운동데이터 가져오기
+    // 운동데이터 검색
     public List<SportResDto> searchSport(String name) {
         List<Sport> result = sportRepository.findAllByNameContaining(name);
         return sportMapper.sportToSportResListDto(result);

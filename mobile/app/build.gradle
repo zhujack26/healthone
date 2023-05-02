@@ -78,9 +78,6 @@ dependencies {
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5' // fit API 관련 의존성...
 
-    implementation 'androidx.compose.ui:ui:<version>'
-    implementation 'androidx.compose.material:material:<version>'
-    implementation 'androidx.compose.runtime:runtime:<version>'
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
 }
 

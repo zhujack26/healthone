@@ -85,9 +85,10 @@ fun LoginPage(navController: NavController) {
     }
     var onBoardingState = remember { mutableStateOf(0) }
     val onBoardingImages = listOf(
-        R.drawable.onboarding_first,
+        R.drawable.onboarding_third,
         R.drawable.onboarding_second,
-        R.drawable.onbording_third
+        R.drawable.onboarding_first,
+
     )
     Column(
         modifier = Modifier
@@ -149,7 +150,7 @@ fun LoginPage(navController: NavController) {
                         modifier = Modifier
                             .fillMaxSize()
                             .graphicsLayer {
-                                translationX = offsetX.value * if (index == 0) 0f else 1f
+                                translationX = offsetX.value * (index - onBoardingState.value)
                             },
                         contentScale = ContentScale.FillBounds
                     )

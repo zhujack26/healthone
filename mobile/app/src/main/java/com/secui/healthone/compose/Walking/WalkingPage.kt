@@ -25,7 +25,6 @@ fun WalkingPage(
     ) {
         item {
             LineGraph(steps = steps)
-
             Spacer(modifier = Modifier.height(16.dp))
             AchievementRate(
                 percentage = 0.47f, navController

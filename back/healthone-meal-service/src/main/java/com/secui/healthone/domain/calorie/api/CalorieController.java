@@ -19,6 +19,7 @@ public class CalorieController {
     // 소모 칼로리 정보 출력
     @GetMapping
     public RestApiResponse<CalorieResponseDto> getMeal(@RequestParam("date") String date) {
-        return new RestApiResponse<>(date + "날짜 소모 칼로리 조회 성공", calorieService.getCalorie(date));
+        Integer userNo = 1;
+        return new RestApiResponse<>(date + "날짜 섭취, 소모 칼로리 조회 성공", calorieService.getCalorie(date, userNo));
     }
 }

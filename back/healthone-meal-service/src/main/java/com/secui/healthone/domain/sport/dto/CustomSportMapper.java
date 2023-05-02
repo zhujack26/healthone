@@ -1,7 +1,6 @@
 package com.secui.healthone.domain.sport.dto;
 
 import com.secui.healthone.domain.sport.entity.CustomSport;
-import com.secui.healthone.domain.sport.entity.Sport;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

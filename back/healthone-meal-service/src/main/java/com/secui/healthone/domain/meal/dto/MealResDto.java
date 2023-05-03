@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(description = "식사 응답 요청 DTO")
 public class MealResDto {
     @Schema(description = "식사 식별번호")
     private Integer no;

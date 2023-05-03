@@ -5,7 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Observer
@@ -28,15 +33,16 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // 스포티파이
-
         setContent {
             val sharedPreferences = getSharedPreferences("healthone", Context.MODE_PRIVATE)
             val jwtToken = sharedPreferences.getString("jwt_token", null)
             val navController = rememberNavController()
+            val mOwner = LocalLifecycleOwner.current
 
-            val mOwner = LocalLifecycleOwner.current;
+            NavHost(
+                navController,
+                startDestination = if (jwtToken != null) PageRoutes.Login.route else PageRoutes.OverView.route
+            ) {
 
 //            val repository = HealthOneRepository();
 //            val viewModel = HealthOneViewModel(repository);
@@ -46,25 +52,24 @@ class MainActivity : ComponentActivity() {
 //
 //            })
 
-            NavHost(navController, startDestination = if (jwtToken != null) PageRoutes.Login.route else PageRoutes.OverView.route) {
-                // 원래 코드는 jwtToken == null
+            NavHost(navController, startDestination = if (jwtToken == null) PageRoutes.Login.route else PageRoutes.OverView.route) {
 
-                composable(PageRoutes.Login.route){
+                composable(PageRoutes.Login.route) {
                     LoginPage(navController)
                 }
                 composable(PageRoutes.OverView.route) {
-                    Column {
+                    Column() {
                         TopBar()
                         OverViewPage(navController)
                     }
                 }
-                composable(PageRoutes.DataCollectFirst.route){
+                composable(PageRoutes.DataCollectFirst.route) {
                     DataCollectFirstPage(navController)
                 }
-                composable(PageRoutes.DataCollectSecond.route){
+                composable(PageRoutes.DataCollectSecond.route) {
                     DataCollectSecondPage(navController)
                 }
-                composable(PageRoutes.Guide.route){
+                composable(PageRoutes.Guide.route) {
                     GuidePage(navController)
                 }
             }

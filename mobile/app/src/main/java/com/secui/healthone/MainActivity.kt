@@ -39,11 +39,6 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             val mOwner = LocalLifecycleOwner.current
 
-            NavHost(
-                navController,
-                startDestination = if (jwtToken != null) PageRoutes.Login.route else PageRoutes.OverView.route
-            ) {
-
 //            val repository = HealthOneRepository();
 //            val viewModel = HealthOneViewModel(repository);
 //

@@ -3,6 +3,7 @@ package com.secui.healthone.domain.heartRate.dto;
 import com.secui.healthone.domain.heartRate.entity.HeartRate;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Slice;
 
 import java.util.List;
 
@@ -11,6 +12,8 @@ public interface HeartRateDtoMapper {
     HeartRateDtoMapper INSTANCE = Mappers.getMapper(HeartRateDtoMapper.class);
 
     List<HeartRateResDto> entityToResDto(List<HeartRate> heartRate);
+
+    Slice<HeartRateResDto> sliceEntityToResDto(Slice<HeartRate> heartRate);
 
     HeartRateResDto entityToResDto(HeartRate heartRate);
 

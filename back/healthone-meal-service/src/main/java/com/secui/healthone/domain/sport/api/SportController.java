@@ -4,6 +4,7 @@ import com.secui.healthone.domain.sport.dto.SportResDto;
 import com.secui.healthone.domain.sport.service.SportService;
 import com.secui.healthone.global.response.RestApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -27,26 +28,22 @@ public class SportController {
     private final SportService sportService;
 
     @Operation(summary = "일반 운동 데이터 검색 정보 반환", description = "일반 운동 데이터 검색 정보 반환 API", tags = {"Sport"})
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "운동 데이터 검색 성공", content = {
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "운동 데이터 검색 성공", content = {
                     @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = SportResDto.class))),
-                    @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class))
-            }),
-    })
+                    @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @GetMapping("/search")
-    public RestApiResponse<List<SportResDto>> searchSport (@RequestParam("name") String name) {
+    public RestApiResponse<List<SportResDto>> searchSport (
+            @Parameter(name = "name", description = "운동 검색", example = "걷기") @RequestParam("name") String name) {
         return new RestApiResponse<>("운동 데이터 검색 성공", sportService.searchSport(name));
     }
 
     @Operation(summary = "운동 데이터 조회 반환", description = "일반 운동 데이터 조회 API", tags = {"Sport"})
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "운동 데이터 조회 성공", content = {
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "운동 데이터 조회 성공", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = SportResDto.class)),
-                    @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class))
-            }),
-    })
+                    @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @GetMapping
-    public RestApiResponse<SportResDto> getSportData (@RequestParam("no") Integer no) {
+    public RestApiResponse<SportResDto> getSportData (
+            @Parameter(name = "no", description = "운동 식별번호", example = "1") @RequestParam("no") Integer no) {
         return new RestApiResponse<>("운동 데이터 조회 성공", sportService.getSport(no));
     }
 }

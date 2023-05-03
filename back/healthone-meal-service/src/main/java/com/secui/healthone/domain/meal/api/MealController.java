@@ -6,6 +6,7 @@ import com.secui.healthone.domain.meal.service.MealService;
 import com.secui.healthone.global.error.response.ErrorResponse;
 import com.secui.healthone.global.response.RestApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -35,7 +36,8 @@ public class MealController {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class))), })
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping
-    public RestApiResponse<MealResDto> getMeal(@RequestParam("no") Integer no) {
+    public RestApiResponse<MealResDto> getMeal(
+            @Parameter(name = "no", description = "식사 정보 식별번호", example = "1") @RequestParam(value = "no") Integer no) {
         return new RestApiResponse<>("식사 정보 단일 조회 성공", mealService.getMeal(no));
     }
 
@@ -45,8 +47,10 @@ public class MealController {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/list")
-    public RestApiResponse<List<MealResDto>> getMealList(@RequestParam("date") String date, @RequestParam("userno") Integer userNo) throws ParseException {
-        return new RestApiResponse<>(date+ "식사 리스트 조회 성공", mealService.getMealList(date, userNo));
+    public RestApiResponse<List<MealResDto>> getMealList(
+            @Parameter(name = "date", description = "조회 날짜", example = "20230503") @RequestParam("date") String date,
+            @Parameter(name = "userno", description = "회원 식별 번호", example = "1") @RequestParam("userno") Integer userno) throws ParseException {
+        return new RestApiResponse<>(date+ "식사 리스트 조회 성공", mealService.getMealList(date, userno));
     }
 
     @Operation(summary = "식사 등록", description = "식사 등록 API", tags = {"Meal"})
@@ -55,7 +59,8 @@ public class MealController {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping
-    public RestApiResponse<MealResDto> insertMeal(@RequestBody MealReqDto requestDto) {
+    public RestApiResponse<MealResDto> insertMeal(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "식사 등록 객체") @RequestBody MealReqDto requestDto) {
         return new RestApiResponse<>("식사 등록 성공", mealService.insertMeal(requestDto));
     }
 
@@ -65,7 +70,8 @@ public class MealController {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @PatchMapping
-    public RestApiResponse<MealResDto> updateMeal(@RequestBody MealReqDto requestDto) {
+    public RestApiResponse<MealResDto> updateMeal(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "식사 수정 객체")  @RequestBody MealReqDto requestDto) {
         return new RestApiResponse<>("식사 수정 성공", mealService.insertMeal(requestDto));
     }
 
@@ -75,7 +81,8 @@ public class MealController {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @DeleteMapping
-    public RestApiResponse<Void> updateMeal(@RequestParam("no") Integer no) {
+    public RestApiResponse<Void> updateMeal(
+            @Parameter(name = "no", description = "식사 식별번호", example = "1") @RequestParam("no") Integer no) {
         mealService.deleteMeal(no);
         return new RestApiResponse<>("식사 삭제 성공", null);
     }

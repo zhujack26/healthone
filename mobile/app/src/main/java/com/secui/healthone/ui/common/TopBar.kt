@@ -97,11 +97,17 @@ fun TopBar() {
             Column {
                 TopAppBar(
                     title = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_topbar_logo),
-                            contentDescription = "logo",
-                            modifier = Modifier.size(60.dp)
-                        )
+                        Box(
+                            modifier = Modifier
+                                .size(60.dp)
+                                .clickable { navController.navigate(PageRoutes.OverView.route) }
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_topbar_logo),
+                                contentDescription = "logo",
+                                modifier = Modifier.size(60.dp)
+                            )
+                        }
                     },
                     backgroundColor = AppColors.white,
                     actions = {
@@ -244,7 +250,7 @@ fun TopBar() {
                 )
                 Divider(color = AppColors.black, thickness = 1.dp)
                 DrawerButton(
-                    text = "챌린지 페이지",
+                    text = "챌린지",
                     icon = R.drawable.ic_fire,
                     onClick = {
                         navController.navigate(PageRoutes.Challenge.route)

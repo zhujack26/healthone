@@ -12,10 +12,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.compose.foundation.clickable
-
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import com.secui.healthone.ui.setting.*
 
 @Composable
 fun SettingPage(navController: NavController) {
+    val showLogoutDialog = remember { mutableStateOf(false) }
+    val showWithdrawDialog = remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -34,8 +38,22 @@ fun SettingPage(navController: NavController) {
         )
 
         settingsItems.forEach { (item, route) ->
-            SettingsRow(item = item, textStyle = textStyle, arrow = arrow, onClick = { navController.navigate(route) })
+            if (item == "로그아웃") {
+                SettingsRow(item = item, textStyle = textStyle, arrow = arrow, onClick = { showLogoutDialog.value = true })
+            } else if (item == "회원탈퇴") {
+                SettingsRow(item = item, textStyle = textStyle, arrow = arrow, onClick = { showWithdrawDialog.value = true })
+            } else {
+                SettingsRow(item = item, textStyle = textStyle, arrow = arrow, onClick = { navController.navigate(route) })
+            }
             Spacer(modifier = Modifier.height(16.dp))
+        }
+
+        if (showLogoutDialog.value) {
+            LogoutDialog(onConfirm = { /* 로그아웃 코드 */ }, onCancel = { showLogoutDialog.value = false })
+        }
+
+        if (showWithdrawDialog.value) {
+            WithdrawDialog(onConfirm = { /* 회원탈퇴 코드 */ }, onCancel = { showWithdrawDialog.value = false })
         }
     }
 }

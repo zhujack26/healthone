@@ -1,11 +1,10 @@
 package com.secui.healthone.domain.heartRate.api;
 
 import com.secui.healthone.domain.heartRate.dto.AddHeartRateInfoReqDto;
-import com.secui.healthone.domain.heartRate.entity.HeartRate;
+import com.secui.healthone.domain.heartRate.dto.HeartRateResDto;
 import com.secui.healthone.domain.heartRate.service.HeartRateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +16,11 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class HeartRateController {
-
-    @Autowired
-    private HeartRateService heartRateService;
+    private final HeartRateService heartRateService;
 
     @GetMapping
-    public ResponseEntity<List<HeartRate>> getWeeklyHeartRate(@RequestParam String dateTime) {
-        List<HeartRate> heartRateList = heartRateService.getWeeklyHeartRate(dateTime);
+    public ResponseEntity<List<HeartRateResDto>> getWeeklyHeartRate(@RequestParam String dateTime) {
+        List<HeartRateResDto> heartRateList = heartRateService.getWeeklyHeartRate(dateTime);
         return ResponseEntity.ok().body(heartRateList);
     }
 

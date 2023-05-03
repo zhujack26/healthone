@@ -5,6 +5,7 @@ import com.secui.healthone.domain.food.service.FoodService;
 import com.secui.healthone.global.error.response.ErrorResponse;
 import com.secui.healthone.global.response.RestApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -26,28 +27,24 @@ public class FoodController {
     private final FoodService foodService;
 
     @Operation(summary = "일반 음식 단일 정보 반환", description = "일반 음식 단일 정보 반환 API", tags = {"Food"})
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "음식 데이터 단일 조회 성공", content = {
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "음식 데이터 단일 조회 성공", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = FoodResponseDto.class)),
-                    @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class))
-            }),
+                    @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }),
             @ApiResponse(responseCode = "DB_100", description = "DB에 해당 데이터를 찾을 수 없음",
-                    content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-    })
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class))), })
     @GetMapping
-    public RestApiResponse<FoodResponseDto> getFood(@RequestParam("no") Integer no) {
+    public RestApiResponse<FoodResponseDto> getFood(
+            @Parameter(name = "no", description = "음식 단일 데이터 식별번호", example = "1") @RequestParam("no") Integer no) {
         return new RestApiResponse<>("음식 데이터 단일 조회 성공", foodService.getFood(no));
     }
 
     @Operation(summary = "일반 음식 검색 정보 반환", description = "일반 음식 검색 정보 반환 API", tags = {"Food"})
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "음식 검색 조회 성공", content = {
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "음식 검색 조회 성공", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = FoodResponseDto.class)),
-                    @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class))
-            }),
-    })
+                    @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @GetMapping("/search")
-    public RestApiResponse<List<FoodResponseDto>> searchFood(@RequestParam("name") String name) {
+    public RestApiResponse<List<FoodResponseDto>> searchFood(
+            @Parameter(name = "name", description = "음식 이름", example = "김밥") @RequestParam("name") String name) {
         return new RestApiResponse<>("음식 검색 조회 성공", foodService.searchFood(name));
     }
 

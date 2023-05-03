@@ -26,8 +26,7 @@ fun StepGoal() {
     Card(
         elevation = 4.dp,
         shape = RoundedCornerShape(8.dp),
-        modifier = Modifier
-            .padding(16.dp)
+
     ) {
         Row(
             horizontalArrangement = Arrangement.SpaceAround,

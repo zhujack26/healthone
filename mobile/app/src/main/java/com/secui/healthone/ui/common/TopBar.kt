@@ -20,6 +20,9 @@ import com.secui.healthone.compose.*
 import com.secui.healthone.compose.Challenge.PopularDetailPage
 import com.secui.healthone.compose.MealPlan.ExerciseInputPage
 import com.secui.healthone.compose.MealPlan.MealInputPage
+import com.secui.healthone.compose.healthstatus.HealthHelpPage
+import com.secui.healthone.compose.healthstatus.HealthInputPage
+import com.secui.healthone.compose.healthstatus.HealthStatusPage
 import com.secui.healthone.compose.sleep.SleepPage
 import com.secui.healthone.util.PageRoutes
 
@@ -127,7 +130,16 @@ fun TopBar() {
                         }
                     }
                 )
-
+                DrawerButton(
+                    text = "건강상태",
+                    textColor = R.color.black,
+                    onClick = {
+                        navController.navigate(PageRoutes.HealthStatus.route)
+                        coroutineScope.launch {
+                            scaffoldState.drawerState.close()
+                        }
+                    }
+                )
                 DrawerButton(
                     text = "챌린지 페이지",
                     textColor = R.color.black,
@@ -204,6 +216,15 @@ fun TopBar() {
                     }
                     composable(PageRoutes.Setting.route){
                         SettingPage(navController = navController)
+                    }
+                    composable(PageRoutes.HealthStatus.route){
+                        HealthStatusPage(navController = navController)
+                    }
+                    composable(PageRoutes.HealthStatusInput.route){
+                        HealthInputPage(navController = navController)
+                    }
+                    composable(PageRoutes.HealthHelp.route){
+                        HealthHelpPage(navController = navController)
                     }
                 }
             }

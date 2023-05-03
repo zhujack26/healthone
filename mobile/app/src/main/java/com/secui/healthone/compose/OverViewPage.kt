@@ -2,10 +2,6 @@ package com.secui.healthone.compose
 
 import android.app.Activity
 import android.content.Context
-import android.hardware.display.DisplayManager
-import android.os.Build
-import android.os.PowerManager
-import android.view.Display
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -42,7 +38,6 @@ fun OverViewPage(
         .fillMaxSize()
 ) {
 
-
     // 초기값 세팅
     context = LocalContext.current;
     thisActivity = LocalContext.current as Activity;
@@ -63,6 +58,7 @@ fun OverViewPage(
     val sleepValue = remember { FitSleepManager.readSleepValue(context) };
 
     val calorieValue = remember { FitNutritionManager.readNutritionData(context = context) } // 칼로리 값 , 미구현!
+
 
     Column(modifier= Modifier
         .fillMaxSize()

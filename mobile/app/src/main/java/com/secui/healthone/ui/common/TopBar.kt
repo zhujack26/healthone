@@ -1,16 +1,20 @@
 package com.secui.healthone.ui.common
 
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -47,12 +51,37 @@ fun DrawerButton(text: String, icon: Int? = null, onClick: () -> Unit) {
                 )
                 Spacer(modifier = Modifier.width(8.dp))
             }
-            Text(
-                text,
-                fontSize = 16.sp,
-                color = textColor,
-                fontWeight = FontWeight.Bold
-            )
+            if (text == "박싸피") {
+                Column(horizontalAlignment = Alignment.Start) {
+                    Box(modifier = Modifier.padding(5.dp)) {
+                        Image(
+                            painter = painterResource(id = R.drawable.onboarding_first),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(4.dp)
+                                .size(48.dp)
+                                .background(AppColors.white)
+                                .clip(shape = CircleShape),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Text(
+                        text,
+                        fontSize = 20.sp,
+                        color = textColor,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            } else {
+                Text(
+                    text,
+                    fontSize = 20.sp,
+                    color = textColor,
+                    fontWeight = FontWeight.Bold
+                )
+            }
         }
     }
 }
@@ -76,6 +105,15 @@ fun TopBar() {
                     },
                     backgroundColor = AppColors.white,
                     actions = {
+                        IconButton(onClick = {
+                            navController.navigate(PageRoutes.Alert.route)
+                        }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_bell),
+                                contentDescription = "Alert",
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
                         IconButton(onClick = {
                             menuOpen.value = !menuOpen.value
                         }) { // 상태를 업데이트하여 메뉴를 열고 닫습니다.
@@ -152,7 +190,7 @@ fun TopBar() {
                     .align(Alignment.TopEnd)
             ) {
                 DrawerButton(
-                    text = "내 페이지",
+                    text = "박싸피",
                     onClick = {
                         navController.navigate(PageRoutes.My.route)
                     }
@@ -160,6 +198,7 @@ fun TopBar() {
                 Divider(color = AppColors.black, thickness = 1.dp)
                 DrawerButton(
                     text = "메인",
+                    icon = R.drawable.ic_home,
                     onClick = {
                         navController.navigate(PageRoutes.OverView.route)
                     }
@@ -206,19 +245,15 @@ fun TopBar() {
                 Divider(color = AppColors.black, thickness = 1.dp)
                 DrawerButton(
                     text = "챌린지 페이지",
+                    icon = R.drawable.ic_fire,
                     onClick = {
                         navController.navigate(PageRoutes.Challenge.route)
-                    }
-                )
-                DrawerButton(
-                    text = "알림 페이지",
-                    onClick = {
-                        navController.navigate(PageRoutes.Alert.route)
                     }
                 )
                 Divider(color = AppColors.black, thickness = 1.dp)
                 DrawerButton(
                     text = "설정",
+                    icon = R.drawable.ic_setting,
                     onClick = {
                         navController.navigate(PageRoutes.Setting.route)
                     }

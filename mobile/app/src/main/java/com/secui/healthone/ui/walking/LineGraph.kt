@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.secui.healthone.ui.common.AppColors
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.ui.text.style.TextAlign
 import java.time.LocalDate
@@ -30,6 +31,7 @@ fun LineGraph(steps: List<Int>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
+                .padding(16.dp)
         ) {
             val maxValue = steps.maxOrNull() ?: 1
             val stepWidth = size.width / (steps.size - 1)

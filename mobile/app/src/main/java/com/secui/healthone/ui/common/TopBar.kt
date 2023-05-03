@@ -182,6 +182,15 @@ fun TopBar() {
                     composable(PageRoutes.AlarmSetting.route) {
                         AlarmSettingPage()
                     }
+                    composable(PageRoutes.HealthStatus.route){
+                        HealthStatusPage(navController = navController)
+                    }
+                    composable(PageRoutes.HealthStatusInput.route){
+                        HealthInputPage(navController = navController)
+                    }
+                    composable(PageRoutes.HealthHelp.route){
+                        HealthHelpPage(navController = navController)
+                    }
                 }
             }
         }
@@ -256,12 +265,8 @@ fun TopBar() {
                 )
                 DrawerButton(
                     text = "건강상태",
-                    textColor = R.color.black,
                     onClick = {
                         navController.navigate(PageRoutes.HealthStatus.route)
-                        coroutineScope.launch {
-                            scaffoldState.drawerState.close()
-                        }
                     }
                 )
                 Divider(color = AppColors.black, thickness = 1.dp)
@@ -282,63 +287,5 @@ fun TopBar() {
                 )
                 Divider(color = AppColors.black, thickness = 1.dp)
             }
-        },
-        content = {
-                padding ->
-            Column(
-                modifier = Modifier
-                    .padding(padding)){
-                NavHost(navController, startDestination = PageRoutes.OverView.route) {
-                    composable(PageRoutes.OverView.route) {
-                        OverViewPage(navController = navController)
-                    }
-                    composable(PageRoutes.MealPlan.route) {
-                        MealPlanPage(navController = navController) // 식단 화면
-                    }
-                    composable(PageRoutes.HeartRate.route){
-                        HeartRatePage(navController = navController) // 심박수 측정
-                    }
-                    composable(PageRoutes.Challenge.route){
-                        ChallengePage(navController = navController) // 챌린지
-                    }
-                    composable(PageRoutes.Alert.route){
-                        AlertPage(navController = navController) /// 알림
-                    }
-                    composable(PageRoutes.HeartMeasure.route){
-                        HeartMeasurePage(navController);
-                    }
-                    composable(PageRoutes.MealInput.route){
-                        MealInputPage(navController);
-                    }
-                    composable(PageRoutes.ExerciseInput.route){
-                        ExerciseInputPage(navController);
-                    }
-                    composable(PageRoutes.Sleep.route){
-                        SleepPage(navController, sleepRecords = mutableListOf())
-                    }
-                    composable(PageRoutes.My.route){
-                        MyPage(navController = navController);
-                    }
-                    composable(PageRoutes.Walking.route){
-                        WalkingPage(navController = navController);
-                    }
-                    composable(PageRoutes.PopularDetail.route){
-                        PopularDetailPage(navController)
-                    }
-                    composable(PageRoutes.Setting.route){
-                        SettingPage(navController = navController)
-                    }
-                    composable(PageRoutes.HealthStatus.route){
-                        HealthStatusPage(navController = navController)
-                    }
-                    composable(PageRoutes.HealthStatusInput.route){
-                        HealthInputPage(navController = navController)
-                    }
-                    composable(PageRoutes.HealthHelp.route){
-                        HealthHelpPage(navController = navController)
-                    }
-                }
-            }
         }
-    )
 }

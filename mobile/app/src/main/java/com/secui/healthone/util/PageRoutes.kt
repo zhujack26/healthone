@@ -20,5 +20,8 @@ sealed class PageRoutes(val route:String){
     object PopularDetail: PageRoutes("PopularDetailPage")
     object Setting: PageRoutes("SettingPage")
     object Guide: PageRoutes("GuidePage")
+    object HealthStatus: PageRoutes("HealthStatusPage")
+    object HealthStatusInput: PageRoutes("HealthInputPage")
+    object HealthHelp: PageRoutes("HealthHelpPage")
     object AlarmSetting: PageRoutes("AlarmSettingPage")
 }

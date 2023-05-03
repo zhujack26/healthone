@@ -77,5 +77,9 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:20.1.0")
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5' // fit API 관련 의존성...
+
+    // 쿠키.., 레트로핏 응답 시간 설정
+    implementation "com.squareup.okhttp3:okhttp-urlconnection:4.9.1"
+
 }
 

@@ -176,6 +176,9 @@ fun TopBar() {
                     composable(PageRoutes.Setting.route) {
                         SettingPage(navController = navController)
                     }
+                    composable(PageRoutes.AlarmSetting.route) {
+                        AlarmSettingPage()
+                    }
                 }
             }
         }

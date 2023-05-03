@@ -15,6 +15,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import com.secui.healthone.ui.setting.*
+import com.secui.healthone.util.PageRoutes
 
 @Composable
 fun SettingPage(navController: NavController) {
@@ -29,6 +30,7 @@ fun SettingPage(navController: NavController) {
         val arrow = ">"
         val settingsItems = listOf(
             "기본설정 및 목표 변경하기" to "basic_settings",
+            "알림 설정" to PageRoutes.AlarmSetting.route,
             "이용약관" to "terms",
             "개인정보 보호방침" to "privacy",
             "개인 데이터 다운로드" to "data_download",
@@ -42,6 +44,8 @@ fun SettingPage(navController: NavController) {
                 SettingsRow(item = item, textStyle = textStyle, arrow = arrow, onClick = { showLogoutDialog.value = true })
             } else if (item == "회원탈퇴") {
                 SettingsRow(item = item, textStyle = textStyle, arrow = arrow, onClick = { showWithdrawDialog.value = true })
+            } else if (item == "알림 설정") {
+                SettingsRow(item = item, textStyle = textStyle, arrow = arrow, onClick = { navController.navigate(route) })
             } else {
                 SettingsRow(item = item, textStyle = textStyle, arrow = arrow, onClick = { navController.navigate(route) })
             }

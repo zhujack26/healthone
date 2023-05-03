@@ -32,27 +32,33 @@ class MainActivity : ComponentActivity() {
 
             val navController = rememberNavController()
 
-            NavHost(navController, startDestination = if (jwtToken != null) PageRoutes.Login.route else PageRoutes.OverView.route) {
+            NavHost(
+                navController,
+                startDestination = if (jwtToken != null) PageRoutes.Login.route else PageRoutes.OverView.route
+            ) {
                 // 원래 코드는 jwtToken == null
 
-                composable(PageRoutes.Login.route){
+                composable(PageRoutes.Login.route) {
                     LoginPage(navController)
                 }
                 composable(PageRoutes.OverView.route) {
-                    Column(){
+                    Column() {
                         TopBar()
                         OverViewPage(navController)
                     }
                 }
-                composable(PageRoutes.DataCollectFirst.route){
+                composable(PageRoutes.DataCollectFirst.route) {
                     DataCollectFirstPage(navController)
                 }
-                composable(PageRoutes.DataCollectSecond.route){
+                composable(PageRoutes.DataCollectSecond.route) {
                     DataCollectSecondPage(navController)
                 }
-                composable(PageRoutes.Guide.route){
+                composable(PageRoutes.Guide.route) {
                     GuidePage(navController)
                 }
+//                composable(PageRoutes.AlarmSetting.route) {
+//                    AlarmSettingPage()
+//                }
             }
         }
     }

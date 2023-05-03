@@ -27,12 +27,12 @@ public class HeartRateServiceImpl implements HeartRateService {
 
     @Override
     public void addHeartRateInfo(AddHeartRateInfoReqDto addHeartRateInfoReqDto) {
-        Optional<User> optionalUser = userRepository.findById(addHeartRateInfoReqDto.getUserNo());
-        User user = optionalUser.orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
+//        Optional<User> optionalUser = userRepository.findById(addHeartRateInfoReqDto.getUserNo());
+//        User user = optionalUser.orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
         HeartRate heartRate = HeartRate.builder()
-                .user(user)
-                .heartRateCount(addHeartRateInfoReqDto.getCount())
-                .heartRateCreatetime(addHeartRateInfoReqDto.getCreatetime())
+                .userNo(addHeartRateInfoReqDto.getUserNo())
+                .count(addHeartRateInfoReqDto.getCount())
+                .createtime(addHeartRateInfoReqDto.getCreatetime())
                 .build();
         heartRateRepository.save(heartRate);
     }
@@ -49,9 +49,7 @@ public class HeartRateServiceImpl implements HeartRateService {
         User user = optionalUser.orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
         LocalDateTime endDateTime = typeConverter(dateTime);
         LocalDateTime startDateTime = endDateTime.minusDays(6).withHour(0).withMinute(0).withSecond(0).withNano(0);
-        List<HeartRate> heartRateList = heartRateRepository.findAllByUserAndHeartRateCreatetimeBetween(user, startDateTime, endDateTime);
-        if (heartRateList.isEmpty()) {
-        }
+        List<HeartRate> heartRateList = heartRateRepository.findAllByUserNoAndCreatetimeBetween(1, startDateTime, endDateTime);
         return HeartRateDtoMapper.INSTANCE.entityToResDto(heartRateList);
     }
 

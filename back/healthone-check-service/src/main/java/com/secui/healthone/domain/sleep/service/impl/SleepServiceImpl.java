@@ -32,7 +32,7 @@ public class SleepServiceImpl implements SleepService {
 //        Optional<User> optionalUser = userRepository.findByUserEmail(userEmail);
         Optional<User> optionalUser = userRepository.findById(1);
         User user = optionalUser.orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
-        return SleepDtoMapper.INSTANCE.entityToResDto(sleepRepository.findAllByUserAndSleepCreatetimeLike(user, date));
+        return SleepDtoMapper.INSTANCE.entityToResDto(sleepRepository.findAllByUserNoAndCreatetimeLike(1, date));
     }
 
     @Override
@@ -48,7 +48,7 @@ public class SleepServiceImpl implements SleepService {
 
         Sleep sleep = Sleep.builder()
                 .userNo(user.getUserNo())
-                .createTime(sleepCreatetime)
+                .createtime(sleepCreatetime)
                 .startSleepTime(sleepStartSleepTime)
                 .endSleepTime(sleepEndSleepTime)
                 .build();
@@ -65,7 +65,7 @@ public class SleepServiceImpl implements SleepService {
 
         if (sleepUpdateDto.getCreateTime() != null) {
             LocalDateTime sleepCreatetime = typeConverter(sleepUpdateDto.getCreateTime());
-            sleep.setCreateTime(sleepCreatetime);
+            sleep.setCreatetime(sleepCreatetime);
         }
         if (sleepUpdateDto.getStartSleepTime() != null) {
             LocalDateTime sleepStartSleepTime = typeConverter(sleepUpdateDto.getStartSleepTime());

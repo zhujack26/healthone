@@ -8,5 +8,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface HeartRateRepository extends JpaRepository<HeartRate, Integer> {
-    List<HeartRate> findAllByUserAndHeartRateCreatetimeBetween(User user, LocalDateTime startDateTime, LocalDateTime endDateTime);
+//    List<HeartRate> findAllByUserAndHeartRateCreatetimeBetween(User user, LocalDateTime startDateTime, LocalDateTime endDateTime);
+    List<HeartRate> findAllByUserNoAndCreatetimeBetween(int userNo, LocalDateTime startDateTime, LocalDateTime endDateTime);
 }

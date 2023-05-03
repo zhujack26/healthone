@@ -20,9 +20,9 @@ public class Walk {
     @Column(name = "user_no")
     private Integer userNo;
     @Column(name = "walk_createtime")
-    private LocalDateTime createTime;
+    private LocalDateTime createtime;
     @Column(name = "walk_step_count")
-    private Integer walkStepCount;
+    private Integer stepCount;
     @Column(name = "walk_distance")
-    private Float walkDistance;
+    private Float distance;
 }

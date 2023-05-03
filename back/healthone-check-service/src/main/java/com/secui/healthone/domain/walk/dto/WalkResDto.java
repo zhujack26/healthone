@@ -17,7 +17,7 @@ public class WalkResDto {
     @Schema(description = "회원 식별 번호")
     private Integer userNo;
     @Schema(description = "기록한 시간")
-    private LocalDateTime createTime;
+    private LocalDateTime createtime;
     @Schema(description = "걸음 수")
     private Integer stepCount;
     @Schema(description = "이동 거리")

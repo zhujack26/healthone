@@ -31,7 +31,7 @@ public class WalkServiceImpl implements WalkService {
         User user = optionalUser.orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
         LocalDateTime endDateTime = typeConverter(dateTime);
         LocalDateTime startDateTime = endDateTime.minusDays(6).withHour(0).withMinute(0).withSecond(0).withNano(0);
-        List<Walk> walkList = walkRepository.findAllByUserAndWalkCreatetimeBetween(user, startDateTime, endDateTime);
+        List<Walk> walkList = walkRepository.findAllByUserNoAndCreatetimeBetween(1, startDateTime, endDateTime);
         return WalkDtoMapper.INSTANCE.entityToResDto(walkList);
     }
 
@@ -42,7 +42,7 @@ public class WalkServiceImpl implements WalkService {
 //        Optional<User> optionalUser = userRepository.findByUserEmail(userEmail);
         User user = optionalUser.orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
         LocalDateTime localDateTime = typeConverter(date);
-        List<Walk> walkList = walkRepository.findAllByUserAndWalkCreatetime(user, localDateTime);
+        List<Walk> walkList = walkRepository.findAllByUserNoAndCreatetime(1, localDateTime);
         return WalkDtoMapper.INSTANCE.entityToResDto(walkList);
     }
 

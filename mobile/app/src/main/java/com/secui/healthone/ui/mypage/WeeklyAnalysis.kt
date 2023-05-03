@@ -1,6 +1,7 @@
 package com.secui.healthone.ui.mypage
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -16,20 +17,32 @@ import java.util.*
 @Composable
 fun WeeklyAnalysis() {
     val currentWeek = remember { getWeekRange(LocalDate.now()) }
-    Column {
-        Text(text = "주간 분석",
-            color = AppColors.black)
-        Text(text = currentWeek,
-            color = AppColors.black)
-        Text(text = "평균 활동 시간 ----------------------------------50분",
-            color = AppColors.black)
+    val textColor = AppColors.black
+    Card(
+        elevation = 4.dp,
+        shape = RoundedCornerShape(8.dp),
+    ) {
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+        )
+        {
+            Text(
+                text = "주간 분석",
+                color = textColor
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = currentWeek,
+                color = textColor
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = "평균 활동 시간 ----------------------------------50분",
+                color = textColor
+            )
+        }
     }
-}
-
-@Preview
-@Composable
-fun PreviewWeeklyAnalysis() {
-    WeeklyAnalysis()
 }
 
 private fun getWeekRange(date: LocalDate): String {

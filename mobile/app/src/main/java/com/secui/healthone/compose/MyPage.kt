@@ -10,7 +10,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
+import com.secui.healthone.ui.common.AppColors
 import com.secui.healthone.ui.datacollectpage.*
 import com.secui.healthone.ui.mypage.*
 
@@ -25,7 +25,6 @@ fun MyPage(navController: NavController) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
     ) {
         item {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -34,13 +33,19 @@ fun MyPage(navController: NavController) {
                     text = "닉네임",
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Bold,
-                )
+                    color = AppColors.black
+                    )
                 Spacer(modifier = Modifier.height(32.dp))
-                WeeklyAnalysis()
-                Spacer(modifier = Modifier.height(32.dp))
-                Records(totalSteps, totalTime, totalCalories, bestSteps, bestTime, bestCalories)
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    WeeklyAnalysis()
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Records(totalSteps, totalTime, totalCalories, bestSteps, bestTime, bestCalories)
+                }
             }
-
         }
     }
 }

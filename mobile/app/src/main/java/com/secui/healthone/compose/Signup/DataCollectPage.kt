@@ -115,15 +115,28 @@ fun DataCollectSecondPage(navController: NavController) {
 //            ExcersiseAmount()
 //            Spacer(modifier = Modifier.height(32.dp))
             // 목표 걸음수 컴포넌트
-            Text(
-                text = "일일 걸음량",
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Bold,
-            )
-            StepGoal()
+            Column(modifier = Modifier
+                .padding(16.dp)) {
+                Text(
+                    text = "일일 걸음수",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                StepGoal()
+            }
             Spacer(modifier = Modifier.height(16.dp))
             // 목표 수면시간 컴포넌트
-            SleepGoal()
+            Column(modifier = Modifier
+                .padding(16.dp)) {
+                Text(
+                    text = "수면",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                SleepGoal()
+            }
             Spacer(modifier = Modifier.height(32.dp))
             // 완료버튼 컴포넌트
             Row(

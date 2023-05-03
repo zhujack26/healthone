@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- 수면 측정을 위한 tracker 권한  -->
+<!--    <uses-permission android:name="android.permission.WAKE_LOCK" />-->
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>  <!-- 구글 핏 API 사용을 위한 권한 설정 -->
     <uses-permission android:name="android.permission.BODY_SENSORS"/>
 
@@ -17,6 +18,12 @@
         android:theme="@style/Theme.Healthone"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <!-- 서비스 등록 -->
+        <service
+            android:name=".service.TrackerService"
+            android:process=":trackerService"
+            android:stopWithTask="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

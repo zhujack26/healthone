@@ -17,10 +17,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.util.PageRoutes
 
 @Composable
-fun AchievementRate(percentage: Float) {
+fun AchievementRate(percentage: Float, navController: NavController) {
     Column(modifier = Modifier.padding(16.dp)) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -31,14 +33,19 @@ fun AchievementRate(percentage: Float) {
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
-            Text(
-                buildAnnotatedString {
-                    withStyle(style = SpanStyle(fontSize = 24.sp, color = AppColors.black)) {
-                        append(">")
+            Box(
+                modifier = Modifier
+                    .clickable { navController.navigate(PageRoutes.WalkingDetail.route) }
+                    .padding(8.dp)
+            ) {
+                Text(
+                    buildAnnotatedString {
+                        withStyle(style = SpanStyle(fontSize = 24.sp, color = AppColors.black)) {
+                            append(">")
+                        }
                     }
-                },
-//                modifier = Modifier.clickable { onNavigate() }
-            )
+                )
+            }
         }
         Spacer(modifier = Modifier.height(16.dp))
         ProgressBar(percentage = percentage)

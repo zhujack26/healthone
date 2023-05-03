@@ -5,6 +5,7 @@ import com.secui.healthone.domain.sport.dto.CustomSportResDto;
 import com.secui.healthone.domain.sport.service.CustomSportService;
 import com.secui.healthone.global.response.RestApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -30,7 +31,8 @@ public class CustomSportController {
                     @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/search")
-    public RestApiResponse<List<CustomSportResDto>> searchCustomSport (@RequestParam("name") String name) {
+    public RestApiResponse<List<CustomSportResDto>> searchCustomSport (
+            @Parameter(name = "name", description = "사용자 운동 이름", example = "걷기") @RequestParam("name") String name) {
         Integer userNo = 1;
         return new RestApiResponse<>("사용자 운동 데이터 검색 성공", customSportService.searchCustomSport(userNo, name));
     }
@@ -41,7 +43,8 @@ public class CustomSportController {
                     @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping
-    public RestApiResponse<CustomSportResDto> getCustomSportData (@RequestParam("no") Integer no) {
+    public RestApiResponse<CustomSportResDto> getCustomSportData (
+            @Parameter(name = "no", description = "사용자 운동 식별번호", example = "1") @RequestParam("no") Integer no) {
         Integer userNo = 1;
         return new RestApiResponse<>("사용자 운동 데이터 조회 성공", customSportService.getCustomSport(userNo, no));
     }
@@ -52,7 +55,8 @@ public class CustomSportController {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping
-    public RestApiResponse<CustomSportResDto> insertCustomSportData (@RequestBody CustomSportReqDto reqDto) {
+    public RestApiResponse<CustomSportResDto> insertCustomSportData (
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "사용자 운등 등록 객체") @RequestBody CustomSportReqDto reqDto) {
         return new RestApiResponse<>("사용자 운동 데이터 등록 성공", customSportService.insertCustomSport(reqDto));
     }
 
@@ -62,7 +66,8 @@ public class CustomSportController {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @PatchMapping
-    public RestApiResponse<CustomSportResDto> updateCustomSportData (@RequestBody CustomSportReqDto reqDto) {
+    public RestApiResponse<CustomSportResDto> updateCustomSportData (
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "사용자 운동 수정 객체")@RequestBody CustomSportReqDto reqDto) {
         return new RestApiResponse<>("사용자 운동 데이터 수정 성공", customSportService.insertCustomSport(reqDto));
     }
 
@@ -72,7 +77,8 @@ public class CustomSportController {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @DeleteMapping
-    public RestApiResponse<Integer> deleteCustomSportData (@RequestParam("no") Integer no) {
+    public RestApiResponse<Integer> deleteCustomSportData (
+            @Parameter(name = "no", description = "사용자 운동 식별번호", example = "1") @RequestParam("no") Integer no) {
         customSportService.deleteCustomSport(no);
         return new RestApiResponse<>("사용자 운동 데이터 삭제 성공", no);
     }

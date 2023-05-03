@@ -9,6 +9,6 @@ import java.time.LocalDateTime;
 @Setter
 public class AddHeartRateInfoReqDto {
     private int userNo;
-    private LocalDateTime createtime;
+    private LocalDateTime createTime;
     private int count;
 }

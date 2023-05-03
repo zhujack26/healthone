@@ -1,27 +1,27 @@
 package com.secui.healthone.domain.heartRate.entity;
 
-import com.secui.healthone.domain.user.entity.User;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
+@Table(name = "heart_rate")
 public class HeartRate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int no;
-
-    private int userNo;
-
-    private LocalDateTime createtime;
-
-    private int count;
-
+    @Column(name = "heart_rate_no")
+    private Integer no;
+    @Column(name = "user_no")
+    private Integer userNo;
+    @Column(name = "heart_rate_createtime")
+    private LocalDateTime createTime;
+    @Column(name = "heart_rate_count")
+    private Integer count;
 }

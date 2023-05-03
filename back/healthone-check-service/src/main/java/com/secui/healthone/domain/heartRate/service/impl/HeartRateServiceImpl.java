@@ -26,21 +26,21 @@ public class HeartRateServiceImpl implements HeartRateService {
     private final HeartRateRepository heartRateRepository;
 
     @Override
-    public void addHeartRateInfo(AddHeartRateInfoReqDto addHeartRateInfoReqDto) {
+    public HeartRateResDto addHeartRateInfo(AddHeartRateInfoReqDto addHeartRateInfoReqDto) {
 //        Optional<User> optionalUser = userRepository.findById(addHeartRateInfoReqDto.getUserNo());
 //        User user = optionalUser.orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
         HeartRate heartRate = HeartRate.builder()
                 .userNo(addHeartRateInfoReqDto.getUserNo())
                 .count(addHeartRateInfoReqDto.getCount())
-                .createtime(addHeartRateInfoReqDto.getCreatetime())
+                .createTime(addHeartRateInfoReqDto.getCreateTime())
                 .build();
         heartRateRepository.save(heartRate);
+        return HeartRateDtoMapper.INSTANCE.entityToResDto(heartRate);
     }
 
     @Override
-    public void deleteHeartRateInfo(String no) {
-        int heartRateNo = Integer.parseInt(no);
-        heartRateRepository.deleteById(heartRateNo);
+    public void deleteHeartRateInfo(Integer no) {
+        heartRateRepository.deleteById(no);
     }
 
     @Override

@@ -6,9 +6,9 @@ import com.secui.healthone.domain.heartRate.dto.HeartRateResDto;
 import java.util.List;
 
 public interface HeartRateService {
-    void addHeartRateInfo(AddHeartRateInfoReqDto addHeartRateInfoReqDto);
+    HeartRateResDto addHeartRateInfo(AddHeartRateInfoReqDto addHeartRateInfoReqDto);
 
-    void deleteHeartRateInfo(String no);
+    void deleteHeartRateInfo(Integer no);
 
     List<HeartRateResDto> getWeeklyHeartRate(String dateTime);
 }

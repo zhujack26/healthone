@@ -19,5 +19,5 @@ public class HeartRateReqDto {
     @Schema(description = "기록한 시간")
     private LocalDateTime createTime;
     @Schema(description = "심박수")
-    private int count;
+    private Integer count;
 }

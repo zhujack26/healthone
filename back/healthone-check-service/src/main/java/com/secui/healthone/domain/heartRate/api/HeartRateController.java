@@ -1,6 +1,6 @@
 package com.secui.healthone.domain.heartRate.api;
 
-import com.secui.healthone.domain.heartRate.dto.AddHeartRateInfoReqDto;
+import com.secui.healthone.domain.heartRate.dto.HeartRateInsertDto;
 import com.secui.healthone.domain.heartRate.dto.HeartRateResDto;
 import com.secui.healthone.domain.heartRate.service.HeartRateService;
 import com.secui.healthone.global.response.RestApiResponse;
@@ -20,8 +20,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/heart-rate")
 @Slf4j
@@ -31,8 +29,7 @@ public class HeartRateController {
     private final HeartRateService heartRateService;
 
     @Operation(summary = "심박수 리스트 조회", description = "회원의 심박수를 최신순으로 출력한다", tags = {"HeartRate"})
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = {
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = HeartRateResDto.class)),
                     @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @Parameter(in = ParameterIn.QUERY, description = "페이지 번호 (0..N)", name = "page", example = "0",
@@ -43,7 +40,7 @@ public class HeartRateController {
     @GetMapping
     public RestApiResponse<Slice<HeartRateResDto>> getHeartRateInfo(@ParameterObject Pageable pageable) {
         Integer userNo = 1;
-        return new RestApiResponse<>("", heartRateService.getHeartRateList(userNo, pageable));
+        return new RestApiResponse<>(pageable.getPageNumber()+"페이지 심박수 리스트 조회 완료", heartRateService.getHeartRateList(userNo, pageable));
     }
 
 //    @GetMapping
@@ -51,11 +48,23 @@ public class HeartRateController {
 //        return new RestApiResponse<>(dateTime + "날짜 심박수 리스트 조회 성공", heartRateService.getWeeklyHeartRate(dateTime));
 //    }
 
+    @Operation(summary = "심박수 등록", description = "회원의 심박수를 등록한다", tags = {"HeartRate"})
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "심박수 추가 성공", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = HeartRateResDto.class)),
+                    @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "심박수 등록 객체")
+    @SecurityRequirement(name = "bearerAuth")
     @PostMapping
-    public RestApiResponse<HeartRateResDto> addHeartRateInfo(@RequestBody AddHeartRateInfoReqDto addHeartRateInfoReqDto) {
-        return new RestApiResponse<>("심박수 추가 성공", heartRateService.addHeartRateInfo(addHeartRateInfoReqDto));
+    public RestApiResponse<HeartRateResDto> addHeartRateInfo(@RequestBody HeartRateInsertDto heartRateInsertDto) {
+        return new RestApiResponse<>("심박수 추가 성공", heartRateService.addHeartRateInfo(heartRateInsertDto));
     }
 
+    @Operation(summary = "심박수 삭제", description = "회원의 심박수를 삭제한다", tags = {"HeartRate"})
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "심박수 데이터 삭제 성공", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = HeartRateResDto.class)),
+            @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
+    @Parameter(name = "no", description = "심박수 식별 번호", example = "1")
+    @SecurityRequirement(name = "bearerAuth")
     @DeleteMapping
     public RestApiResponse<Void> deleteHeartRateInfo(@RequestParam Integer no) {
         heartRateService.deleteHeartRateInfo(no);

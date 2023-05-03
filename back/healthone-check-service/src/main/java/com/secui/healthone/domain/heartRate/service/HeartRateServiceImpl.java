@@ -1,16 +1,16 @@
-package com.secui.healthone.domain.heartRate.service.impl;
+package com.secui.healthone.domain.heartRate.service;
 
-import com.secui.healthone.domain.heartRate.dto.AddHeartRateInfoReqDto;
+import com.secui.healthone.domain.heartRate.dto.HeartRateInsertDto;
 import com.secui.healthone.domain.heartRate.dto.HeartRateDtoMapper;
 import com.secui.healthone.domain.heartRate.dto.HeartRateResDto;
 import com.secui.healthone.domain.heartRate.entity.HeartRate;
 import com.secui.healthone.domain.heartRate.repository.HeartRateRepository;
-import com.secui.healthone.domain.heartRate.service.HeartRateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -22,24 +22,21 @@ public class HeartRateServiceImpl implements HeartRateService {
 
     @Override
     public Slice<HeartRateResDto> getHeartRateList(Integer userNo, Pageable pageable) {
-        Slice<HeartRate> getheartRateList = heartRateRepository.findAllByUserNoOrderByCreateTimeDesc(userNo, pageable);
-        return HeartRateDtoMapper.INSTANCE.sliceEntityToResDto(getheartRateList);
+        return heartRateRepository.findAllByUserNoOrderByCreateTimeDesc(userNo, pageable).map(HeartRateResDto::new);
     }
 
     @Override
-    public HeartRateResDto addHeartRateInfo(AddHeartRateInfoReqDto addHeartRateInfoReqDto) {
+    @Transactional
+    public HeartRateResDto addHeartRateInfo(HeartRateInsertDto heartRateInsertDto) {
 //        Optional<User> optionalUser = userRepository.findById(addHeartRateInfoReqDto.getUserNo());
 //        User user = optionalUser.orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
-        HeartRate heartRate = HeartRate.builder()
-                .userNo(addHeartRateInfoReqDto.getUserNo())
-                .count(addHeartRateInfoReqDto.getCount())
-                .createTime(addHeartRateInfoReqDto.getCreateTime())
-                .build();
-        heartRateRepository.save(heartRate);
-        return HeartRateDtoMapper.INSTANCE.entityToResDto(heartRate);
+        log.info("heartRateInsertDto : {}", heartRateInsertDto);
+        HeartRate result = heartRateRepository.save(HeartRateDtoMapper.INSTANCE.insertDtoToEntity(heartRateInsertDto));
+        return new HeartRateResDto(result);
     }
 
     @Override
+    @Transactional
     public void deleteHeartRateInfo(Integer no) {
         heartRateRepository.deleteById(no);
     }

@@ -10,5 +10,5 @@ import java.time.LocalDateTime;
 public class AddHeartRateInfoReqDto {
     private int userNo;
     private LocalDateTime createtime;
-    private int heartRateCount;
+    private int count;
 }

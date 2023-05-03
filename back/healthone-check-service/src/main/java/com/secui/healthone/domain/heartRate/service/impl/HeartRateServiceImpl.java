@@ -1,15 +1,17 @@
 package com.secui.healthone.domain.heartRate.service.impl;
 
 import com.secui.healthone.domain.heartRate.dto.AddHeartRateInfoReqDto;
+import com.secui.healthone.domain.heartRate.dto.HeartRateDtoMapper;
+import com.secui.healthone.domain.heartRate.dto.HeartRateResDto;
 import com.secui.healthone.domain.heartRate.entity.HeartRate;
 import com.secui.healthone.domain.heartRate.repository.HeartRateRepository;
 import com.secui.healthone.domain.heartRate.service.HeartRateService;
-import com.secui.healthone.domain.walk.entity.Walk;
-import com.secui.healthone.global.entity.User;
-import com.secui.healthone.global.repository.UserRepository;
+import com.secui.healthone.domain.user.entity.User;
+import com.secui.healthone.domain.user.repository.UserRepository;
+import com.secui.healthone.global.error.errorcode.CustomErrorCode;
+import com.secui.healthone.global.error.exception.RestApiException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -20,25 +22,17 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 public class HeartRateServiceImpl implements HeartRateService {
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private HeartRateRepository heartRateRepository;
+    private final UserRepository userRepository;
+    private final HeartRateRepository heartRateRepository;
 
     @Override
     public void addHeartRateInfo(AddHeartRateInfoReqDto addHeartRateInfoReqDto) {
-        //        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-//        Optional<User> optionalUser = userRepository.findByUserEmail(userEmail);
-        Optional<User> optionalUser = userRepository.findById(addHeartRateInfoReqDto.getUserNo());
-        if (optionalUser.isEmpty()) {
-        }
-        User user = optionalUser.get();
+//        Optional<User> optionalUser = userRepository.findById(addHeartRateInfoReqDto.getUserNo());
+//        User user = optionalUser.orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
         HeartRate heartRate = HeartRate.builder()
-                .user(user)
-                .heartRateCount(addHeartRateInfoReqDto.getHeartRateCount())
-                .heartRateCreatetime(addHeartRateInfoReqDto.getCreatetime())
+                .userNo(addHeartRateInfoReqDto.getUserNo())
+                .count(addHeartRateInfoReqDto.getCount())
+                .createtime(addHeartRateInfoReqDto.getCreatetime())
                 .build();
         heartRateRepository.save(heartRate);
     }
@@ -50,19 +44,13 @@ public class HeartRateServiceImpl implements HeartRateService {
     }
 
     @Override
-    public List<HeartRate> getWeeklyHeartRate(String dateTime) {
+    public List<HeartRateResDto> getWeeklyHeartRate(String dateTime) {
         Optional<User> optionalUser = userRepository.findById(1);
-//        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-//        Optional<User> optionalUser = userRepository.findByUserEmail(userEmail);
-        if (optionalUser.isEmpty()) {
-        }
-        User user = optionalUser.get();
+        User user = optionalUser.orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
         LocalDateTime endDateTime = typeConverter(dateTime);
         LocalDateTime startDateTime = endDateTime.minusDays(6).withHour(0).withMinute(0).withSecond(0).withNano(0);
-        List<HeartRate> heartRateList = heartRateRepository.findAllByUserAndHeartRateCreatetimeBetween(user, startDateTime, endDateTime);
-        if (heartRateList.isEmpty()) {
-        }
-        return heartRateList;
+        List<HeartRate> heartRateList = heartRateRepository.findAllByUserNoAndCreatetimeBetween(1, startDateTime, endDateTime);
+        return HeartRateDtoMapper.INSTANCE.entityToResDto(heartRateList);
     }
 
     public LocalDateTime typeConverter(String dateTime) {

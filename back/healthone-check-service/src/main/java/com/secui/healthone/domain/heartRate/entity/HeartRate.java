@@ -1,6 +1,6 @@
 package com.secui.healthone.domain.heartRate.entity;
 
-import com.secui.healthone.global.entity.User;
+import com.secui.healthone.domain.user.entity.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,13 +16,12 @@ public class HeartRate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int heartRateNo;
+    private int no;
 
-    @ManyToOne
-    private User user;
+    private int userNo;
 
-    private LocalDateTime heartRateCreatetime;
+    private LocalDateTime createtime;
 
-    private int heartRateCount;
+    private int count;
 
 }

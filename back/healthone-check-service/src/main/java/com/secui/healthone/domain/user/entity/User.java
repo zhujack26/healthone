@@ -1,4 +1,4 @@
-package com.secui.healthone.global.entity;
+package com.secui.healthone.domain.user.entity;
 
 import lombok.*;
 

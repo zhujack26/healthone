@@ -1,11 +1,10 @@
 package com.secui.healthone.domain.walk.api;
 
-import com.secui.healthone.domain.walk.entity.Walk;
+import com.secui.healthone.domain.walk.dto.WalkResDto;
 import com.secui.healthone.domain.walk.service.WalkService;
+import com.secui.healthone.global.response.RestApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,19 +18,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WalkController {
 
-    @Autowired
-    private WalkService walkService;
+    private final WalkService walkService;
 
     @GetMapping
-    public ResponseEntity<List<Walk>> getWalkEntitiesForSevenDays(@RequestParam String dateTime) {
-        List<Walk> walkList = walkService.getWalkEntitiesForSevenDays(dateTime);
-        return ResponseEntity.ok().body(walkList);
+    public RestApiResponse<List<WalkResDto>> getWalkEntitiesForSevenDays(@RequestParam String dateTime) {
+        return new RestApiResponse<>("걸음 수 리스트 조회 성공" , walkService.getWalkEntitiesForSevenDays(dateTime));
     }
 
     @GetMapping("/detail")
-    public ResponseEntity<List<Walk>> getDetailedWalkInfo(@RequestParam String date) {
-        List<Walk> walkList = walkService.getDetailedWalkInfo(date);
-        return ResponseEntity.ok().body(walkList);
+    public RestApiResponse<List<WalkResDto>> getDetailedWalkInfo(@RequestParam String date) {
+        return new RestApiResponse<>("걸음 수 세부 정보 조회 성공" , walkService.getDetailedWalkInfo(date));
     }
 
 }

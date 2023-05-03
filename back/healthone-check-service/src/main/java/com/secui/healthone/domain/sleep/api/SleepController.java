@@ -1,12 +1,14 @@
 package com.secui.healthone.domain.sleep.api;
 
-import com.secui.healthone.domain.sleep.dto.AddSleepInfoReqDto;
-import com.secui.healthone.domain.sleep.dto.UpdateSleepInfoReqDto;
+import com.secui.healthone.domain.sleep.dto.SleepInsertDto;
+import com.secui.healthone.domain.sleep.dto.SleepResDto;
+import com.secui.healthone.domain.sleep.dto.SleepUpdateDto;
 import com.secui.healthone.domain.sleep.entity.Sleep;
 import com.secui.healthone.domain.sleep.service.SleepService;
+import com.secui.healthone.domain.walk.dto.WalkResDto;
+import com.secui.healthone.global.response.RestApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,35 +16,33 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/sleep")
 @Slf4j
 @RequiredArgsConstructor
 public class SleepController {
-
-    @Autowired
-    private SleepService sleepService;
+    private final SleepService sleepService;
 
     @GetMapping
-    public ResponseEntity<List<Sleep>> getSleepData(@RequestParam String date) {
-        List<Sleep> sleepList = sleepService.getSleepData(date);
-        return ResponseEntity.ok().body(sleepList);
+    public RestApiResponse<List<SleepResDto>> getSleepData(@RequestParam String date) {
+        List<SleepResDto> sleepList = sleepService.getSleepData(date);
+        return new RestApiResponse<>("수면 세부 정보 조회 성공" , sleepList);
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.OK)
-    public void addSleepInfo(@RequestBody AddSleepInfoReqDto addSleepInfoReqDto) {
-        sleepService.addSleepInfo(addSleepInfoReqDto);
+    public RestApiResponse<?> addSleepInfo(@RequestBody SleepInsertDto sleepInsertDto) {
+        sleepService.addSleepInfo(sleepInsertDto);
+        return new RestApiResponse<>("수면 정보 등록 성공" , null);
     }
 
     @PatchMapping
-    @ResponseStatus(HttpStatus.OK)
-    public void updateSleepInfo(@RequestBody UpdateSleepInfoReqDto updateSleepInfoReqDto) {
-        sleepService.updateSleepInfo(updateSleepInfoReqDto);
+    public RestApiResponse<?> updateSleepInfo(@RequestBody SleepUpdateDto sleepUpdateDto) {
+        sleepService.updateSleepInfo(sleepUpdateDto);
+        return new RestApiResponse<>("수면 정보 수정 성공" , null);
     }
 
     @DeleteMapping
-    @ResponseStatus(HttpStatus.OK)
-    public void deleteSleepInfo(@RequestParam String no) {
+    public RestApiResponse<?> deleteSleepInfo(@RequestParam("no") Integer no) {
         sleepService.deleteSleepInfo(no);
+        return new RestApiResponse<>("수면 정보 삭제 성공" , null);
     }
 }

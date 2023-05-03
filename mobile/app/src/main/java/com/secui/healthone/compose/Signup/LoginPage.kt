@@ -34,7 +34,6 @@ import com.google.android.gms.common.api.Scope
 import com.google.android.gms.tasks.Task
 import com.secui.healthone.ui.loginpage.*
 import com.secui.healthone.util.PageRoutes
-//
 import java.io.BufferedReader
 import java.io.DataOutputStream
 import java.io.InputStreamReader
@@ -48,15 +47,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun LoginPage(navController: NavController) {
     val context = LocalContext.current
-    //idToken
-//    val gso = remember {
-//        GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//            .requestIdToken(context.getString(R.string.server_client_id))
-//            .requestEmail()
-//            .build()
-//    }
-
-    //authCode
     val gso = remember {
         GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestScopes(Scope(Scopes.EMAIL))
@@ -117,21 +107,7 @@ fun LoginPage(navController: NavController) {
         )
     }
 }
-//idToken
-//private fun handleSignInResult(navController: NavController, task: Task<GoogleSignInAccount>) {
-//    try {
-//        val account = task.getResult(ApiException::class.java)
-//        val idToken = account.idToken
-//        Log.d("check", "ID Token: $idToken") // ID 토큰 값 확인
-////        sendIdTokenToServer(idToken)
-//        navController.navigate("datacollect1")
-//        Log.d("check", "check")
-//    } catch (e: Exception) {
-//        Log.e("check", "Error2", e)
-//    }
-//}
 
-//auth token
 private fun handleSignInResult(navController: NavController, task: Task<GoogleSignInAccount>) {
     try {
         val account = task.getResult(ApiException::class.java)
@@ -163,14 +139,6 @@ private fun sendAuthCodeToServer(authCode: String?) {
     else if (authCode != null) {
         Log.d("check", "authCode is not null")
     }
-//private fun sendIdTokenToServer(idToken: String?) {
-//    if (idToken == null) {
-//        Log.e("check", "idToken is null")
-//        return
-//    }
-//    else if (idToken != null) {
-//        Log.d("check", "idToken is not null")
-//    }
     CoroutineScope(Dispatchers.IO).launch {
         try {
             val urlString = "http://192.168.31.33:8080/test"

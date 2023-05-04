@@ -3,6 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!--  브로드 캐스트 리시버를 위한 권한 설정  -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+
+    <!-- 구글 핏 API 사용을 위한 권한 설정 -->
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
+    <uses-permission android:name="android.permission.BODY_SENSORS"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,6 +23,26 @@
         android:theme="@style/Theme.Healthone"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <activity
+            android:name=".util.HealthOneRetrofitInstance"
+            android:exported="true"
+            />
+
+        <!-- 브로드 캐스트 리시버 등록-->
+        <receiver
+            android:name=".reciever.ScreenStateReceiver"
+            android:enabled="true"
+            android:exported="true"
+            />
+        <!-- 브로드 캐스트 리시버를 관리할 서비스 등록 -->
+        <service
+            android:name=".service.ScreenService"
+            android:stopWithTask="false"
+            android:enabled="true"
+            android:exported="true"
+            />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

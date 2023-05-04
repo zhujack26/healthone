@@ -33,13 +33,7 @@ fun PhotoPicker() {
     }
     val imageColor = colorResource(id = R.color.white)
 
-    Row(verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            text = "프로필 사진",
-            fontSize = 12.sp,
-            fontWeight = FontWeight.Bold,
-        )
+
         Spacer(modifier = Modifier.width(64.dp))
         if (photoUri != null) {
             val painter = rememberAsyncImagePainter(
@@ -76,6 +70,5 @@ fun PhotoPicker() {
             ) {
                 Text("추가하기")
             }
-        }
     }
 }

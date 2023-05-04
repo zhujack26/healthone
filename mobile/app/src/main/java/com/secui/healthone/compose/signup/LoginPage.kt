@@ -1,7 +1,6 @@
 package com.secui.healthone.compose.signup
 
 import android.app.Activity
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,22 +16,40 @@ import com.secui.healthone.R
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.navigation.NavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.Scope
 import com.secui.healthone.repository.GoogleSignInRepository
-import com.secui.healthone.ui.loginpage.*
 
 
 @Composable
 fun LoginPage(navController: NavController) {
+    val termsOfServiceText = "이용약관"
+    val privacyPolicyText = "개인정보 처리방침"
+    val agreementText = "로그인시 $termsOfServiceText 과 $privacyPolicyText 에 동의하게 됩니다."
+
+    val annotatedText = remember {
+        AnnotatedString.Builder(agreementText).apply {
+            addStyle(SpanStyle(textDecoration = TextDecoration.Underline), agreementText.indexOf(termsOfServiceText), agreementText.indexOf(termsOfServiceText) + termsOfServiceText.length)
+            addStyle(SpanStyle(textDecoration = TextDecoration.Underline), agreementText.indexOf(privacyPolicyText), agreementText.indexOf(privacyPolicyText) + privacyPolicyText.length)
+            addStringAnnotation("URL", "https://www.example.com", agreementText.indexOf(termsOfServiceText), agreementText.indexOf(termsOfServiceText) + termsOfServiceText.length)
+            addStringAnnotation("URL", "https://www.example.com", agreementText.indexOf(privacyPolicyText), agreementText.indexOf(privacyPolicyText) + privacyPolicyText.length)
+        }
+    }.toAnnotatedString()
+
     val context = LocalContext.current
     //authCode->idToken 전환시 총 세부분의 코드 변경 요망
 
@@ -64,8 +81,7 @@ fun LoginPage(navController: NavController) {
     }
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .background(colorResource(id = R.color.white)),
+            .fillMaxSize(),
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
@@ -81,27 +97,37 @@ fun LoginPage(navController: NavController) {
                 contentScale = ContentScale.FillWidth,
             )
         }
-
+        Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "간편하게 가입하고 로그인해요",
-            modifier = Modifier.padding(16.dp),
+            text = "간편하게 가입하고 로그인하세요",
+            modifier = Modifier.padding(8.dp),
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold
         )
 
-        val googleSignInPainter: Painter = painterResource(R.drawable.login_google_logo)
-        LoginButton(
-            painter = googleSignInPainter,
-            onClick = { repository.signInWithGoogle(navController, launcher, googleSignInClient) }
+        Image(
+            painter = painterResource(R.drawable.login_google_logo),
+            contentDescription = "Login Button",
+            modifier = Modifier
+                .padding(16.dp)
+                .size(48.dp)
+                .clickable(onClick = { repository.signInWithGoogle(navController, launcher, googleSignInClient) })
         )
-
-        Text(
-            text = "로그인시 이용약관과 개인정보 보호호방침에 동의하게 됩니다.",
-            modifier = Modifier.padding(16.dp),
-            textAlign = TextAlign.Center,
-            fontSize = 12.sp,
-            fontWeight = FontWeight.Bold
+        ClickableText(
+            text = annotatedText,
+            modifier = Modifier.padding(8.dp),
+            style = MaterialTheme.typography.body2.copy(
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            ),
+            onClick = { offset ->
+                annotatedText.getStringAnnotations("URL", offset, offset).firstOrNull()?.let { annotation ->
+                    navController.navigate("webView")
+                }
+            }
         )
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 

@@ -13,6 +13,7 @@ import com.secui.healthone.compose.signup.*
 import com.secui.healthone.compose.OverViewPage
 import com.secui.healthone.ui.common.TopBar
 import com.secui.healthone.util.PageRoutes
+import com.secui.healthone.ui.webview.WebViewScreen
 
 
 class MainActivity : ComponentActivity() {
@@ -52,6 +53,10 @@ class MainActivity : ComponentActivity() {
                 }
                 composable(PageRoutes.Guide.route) {
                     GuidePage(navController)
+                }
+                composable("webView") { backStackEntry ->
+                    val url = backStackEntry.arguments?.getString("url")
+                    WebViewScreen(url = url ?: "", onBack = { navController.popBackStack() })
                 }
             }
         }

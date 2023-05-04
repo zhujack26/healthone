@@ -48,7 +48,7 @@ public class MealController {
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/list")
     public RestApiResponse<List<MealResDto>> getMealList(
-            @Parameter(name = "date", description = "조회 날짜", example = "20230503") @RequestParam("date") String date,
+            @Parameter(name = "date", description = "조회 날짜", example = "2023-05-03T00:00:00") @RequestParam("date") String date,
             @Parameter(name = "userno", description = "회원 식별 번호", example = "1") @RequestParam("userno") Integer userno) throws ParseException {
         return new RestApiResponse<>(date+ "식사 리스트 조회 성공", mealService.getMealList(date, userno));
     }

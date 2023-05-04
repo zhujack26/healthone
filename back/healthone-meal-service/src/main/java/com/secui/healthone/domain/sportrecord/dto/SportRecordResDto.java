@@ -19,10 +19,12 @@ public class SportRecordResDto {
     private Integer no;
     @Schema(description = "유저 식별 번호")
     private Integer userNo;
-    @Schema(description = "일반 운동 데이터 객체")
-    private SportResDto sportResDto;
-    @Schema(description = "사용자 운동 데이터 객체")
-    private CustomSportResDto customSportResDto;
+//    @Schema(description = "일반 운동 데이터 객체")
+//    private SportResDto sportResDto;
+//    @Schema(description = "사용자 운동 데이터 객체")
+//    private CustomSportResDto customSportResDto;
+    @Schema(description = "운둥 이름")
+    private String name;
     @Schema(description = "운둥 기록 시간(날짜)")
     private LocalDateTime createTime;
     @Schema(description = "운동 시간")

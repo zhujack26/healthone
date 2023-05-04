@@ -26,8 +26,8 @@ fun MealSearchResults(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 RadioButton(
-                    selected = selectedFoodId == food.id,
-                    onClick = { onFoodSelected(food.id) }
+                    selected = selectedFoodId == food.no,
+                    onClick = { onFoodSelected(food.no) }
                 )
                 Text(
                     text = food.name,
@@ -35,12 +35,12 @@ fun MealSearchResults(
                     style = TextStyle(fontSize = 16.sp)
                 )
                 Text(
-                    text = "${food.servingSize} g",
+                    text = "${food.gram} g",
                     modifier = Modifier.weight(1f),
                     style = TextStyle(fontSize = 16.sp)
                 )
                 Text(
-                    text = "${food.calories} kcal",
+                    text = "${food.kcal} kcal",
                     modifier = Modifier.weight(1f),
                     style = TextStyle(fontSize = 16.sp)
                 )

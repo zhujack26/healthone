@@ -21,7 +21,7 @@ import android.icu.util.Calendar
 import com.secui.healthone.ui.common.AppColors
 
 @Composable
-fun DateComponent() {
+fun DateComponent(onDateChanged: (Calendar) -> Unit) {
     var showDialog by remember { mutableStateOf(false) }
     val initialDate = Calendar.getInstance()
     val selectedDate = remember { mutableStateOf(initialDate) }
@@ -67,8 +67,7 @@ fun DateComponent() {
         showDialog = showDialog,
         initialDate = initialDate,
         onDateSelected = { newDate ->
-            // 날짜 선택 이벤트 처리
-            selectedDate.value = newDate
+            onDateChanged(newDate)
             showDialog = false
         },
         onDismissRequest = {

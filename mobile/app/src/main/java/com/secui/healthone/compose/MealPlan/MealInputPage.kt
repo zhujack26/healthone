@@ -7,6 +7,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -21,28 +22,26 @@ import com.secui.healthone.ui.mealplanpage.MealInput.MealInputDate
 import com.secui.healthone.ui.mealplanpage.MealInput.SearchBar
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.secui.healthone.ui.common.AppColors
 import com.secui.healthone.ui.mealplanpage.MealInput.MealSearchResults
 import com.secui.healthone.util.PageRoutes
+import com.secui.healthone.viewmodel.FoodViewModel
+import androidx.compose.runtime.livedata.observeAsState
 
 @Composable
 fun MealInputPage(navController: NavController) {
-    val sampleFoods = listOf(
-        Food(id = 1, name = "사과", servingSize = 100f, calories = 52f),
-        Food(id = 2, name = "바나나", servingSize = 100f, calories = 89f),
-        Food(id = 3, name = "포도", servingSize = 100f, calories = 67f)
-    )
+    val viewModel: FoodViewModel = viewModel()
+    val searchResults: State<List<Food>> = viewModel.searchResults.observeAsState(emptyList())
     var showWarning by remember { mutableStateOf(false) }
     var searchTerm by remember { mutableStateOf("") }
-    val searchResults = if (searchTerm.isBlank()) {
-        listOf()
-    } else {
-        sampleFoods.filter { food -> food.name.contains(searchTerm, ignoreCase = true) }
-    }
     var selectedFoodId by remember { mutableStateOf(-1) }
 
     val onSearchTermChanged: (String) -> Unit = { newTerm ->
         searchTerm = newTerm
+        if (searchTerm.isNotBlank()) {
+            viewModel.searchFood(searchTerm)
+        }
     }
 
     val onFoodSelected: (Int) -> Unit = { selectedId ->
@@ -96,7 +95,7 @@ fun MealInputPage(navController: NavController) {
         }
         item {
             // 검색결과 컴포저블
-            MealSearchResults(searchResults, selectedFoodId, onFoodSelected)
+            MealSearchResults(searchResults.value, selectedFoodId, onFoodSelected)
         }
         item {
             if (showWarning) {

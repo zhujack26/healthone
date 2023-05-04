@@ -1,4 +1,4 @@
-package com.secui.healthone.domain.sleep.service.impl;
+package com.secui.healthone.domain.sleep.service;
 
 import com.secui.healthone.domain.sleep.dto.SleepDtoMapper;
 import com.secui.healthone.domain.sleep.dto.SleepInsertDto;

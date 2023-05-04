@@ -1,32 +1,18 @@
 package com.secui.healthone
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.lifecycle.Observer
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.secui.healthone.compose.DataCollectFirstPage
-import com.secui.healthone.compose.DataCollectSecondPage
-import com.secui.healthone.compose.LoginPage
+import com.secui.healthone.compose.signup.*
 import com.secui.healthone.compose.OverViewPage
 import com.secui.healthone.ui.common.TopBar
 import com.secui.healthone.util.PageRoutes
-import com.secui.healthone.compose.*
-import com.secui.healthone.repository.HealthOneRepository
-import com.secui.healthone.service.ScreenService
-import com.secui.healthone.viewmodel.HealthOneViewModel
 
 
 class MainActivity : ComponentActivity() {

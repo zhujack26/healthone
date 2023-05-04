@@ -47,6 +47,20 @@ import kotlinx.coroutines.launch
 @Composable
 fun LoginPage(navController: NavController) {
     val context = LocalContext.current
+
+
+    //authCode->idToken 전환시 총 세부분의 코드 변경 요망
+    
+    //idToken1
+//    val gso = remember {
+//        GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//            .requestIdToken(context.getString(R.string.server_client_id))
+//            .requestEmail()
+//            .build()
+//    }
+
+
+    //authCode1
     val gso = remember {
         GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestScopes(Scope(Scopes.EMAIL))
@@ -60,9 +74,9 @@ fun LoginPage(navController: NavController) {
         if (result.resultCode == Activity.RESULT_OK) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
             handleSignInResult(navController, task)
-            Log.d("check","check1, $result")
+            Log.d("check","check, $result")
         } else {
-            Log.e("check", "Error1")
+            Log.e("check", "Error result")
         }
     }
     Column(
@@ -108,6 +122,7 @@ fun LoginPage(navController: NavController) {
     }
 }
 
+//authCode2
 private fun handleSignInResult(navController: NavController, task: Task<GoogleSignInAccount>) {
     try {
         val account = task.getResult(ApiException::class.java)
@@ -121,6 +136,21 @@ private fun handleSignInResult(navController: NavController, task: Task<GoogleSi
     }
 }
 
+//idToken2
+//private fun handleSignInResult(navController: NavController, task: Task<GoogleSignInAccount>) {
+//    try {
+//        val account = task.getResult(ApiException::class.java)
+//        val idToken = account.idToken
+//        Log.d("check", "ID Token: $idToken") // ID 토큰 값 확인
+////        sendIdTokenToServer(idToken)
+//        navController.navigate("datacollect1")
+//        Log.d("check", "check")
+//    } catch (e: Exception) {
+//        Log.e("check", "Error2", e)
+//    }
+//}
+
+
 private fun signInWithGoogle(
     navController: NavController,
     launcher: androidx.activity.result.ActivityResultLauncher<Intent>,
@@ -130,15 +160,25 @@ private fun signInWithGoogle(
     launcher.launch(signInIntent)
 }
 
-
+//authCode3
 private fun sendAuthCodeToServer(authCode: String?) {
     if (authCode == null) {
         Log.e("check", "authCode is null")
         return
-    }
-    else if (authCode != null) {
+    } else if (authCode != null) {
         Log.d("check", "authCode is not null")
     }
+
+//idToken3
+//private fun sendIdTokenToServer(idToken: String?) {
+//    if (idToken == null) {
+//        Log.e("check", "idToken is null")
+//        return
+//    }
+//    else if (idToken != null) {
+//        Log.d("check", "idToken is not null")
+//    }
+
     CoroutineScope(Dispatchers.IO).launch {
         try {
             val urlString = "http://192.168.31.33:8080/test"

@@ -53,7 +53,7 @@ class MainActivity : ComponentActivity() {
                     LoginPage(navController)
                 }
                 composable(PageRoutes.OverView.route) {
-                    Column() {
+                    Column {
                         TopBar()
                         OverViewPage(navController)
                     }

@@ -35,7 +35,7 @@ public class SportRecordController {
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping
     public RestApiResponse<List<SportRecordResDto>> getSportRecordList(
-            @Parameter(name = "date", description = "운동 날짜", example = "20230503") @RequestParam("date") String date) {
+            @Parameter(name = "date", description = "운동 날짜", example = "2023-05-03T00:00:00") @RequestParam("date") String date) {
         Integer userNo = 1;
         return new RestApiResponse<>(date +"날짜 운동 기록 정보 리스트 조회 성공", sportRecordService.getSportRecordList(date, userNo));
     }

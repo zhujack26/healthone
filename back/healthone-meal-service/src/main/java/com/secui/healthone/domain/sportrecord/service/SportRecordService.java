@@ -11,14 +11,12 @@ import com.secui.healthone.domain.sportrecord.entity.SportRecord;
 import com.secui.healthone.domain.sportrecord.repository.SportRecordRepository;
 import com.secui.healthone.global.error.errorcode.CustomErrorCode;
 import com.secui.healthone.global.error.exception.RestApiException;
+import com.secui.healthone.global.util.StringDateTrans;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -31,10 +29,8 @@ public class SportRecordService {
     private final SportRecordDtoMapper sportRecordDtoMapper;
 
     public List<SportRecordResDto> getSportRecordList(String date, Integer userNo) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        LocalDateTime startDateTime = LocalDate.parse(date, formatter).atStartOfDay();
-        LocalDateTime endDateTime = startDateTime.plusDays(1).minusSeconds(1);
-        List<SportRecord> result = sportRecordRepository.findByCreateTimeBetweenAndUserNo(startDateTime, endDateTime, userNo);
+        StringDateTrans dateTrans = new StringDateTrans(date);
+        List<SportRecord> result = sportRecordRepository.findByCreateTimeBetweenAndUserNo(dateTrans.getStartDateTime(), dateTrans.getEndDateTime(), userNo);
         return sportRecordDtoMapper.entityToResListDto(result);
     }
 

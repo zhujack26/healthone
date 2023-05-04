@@ -36,7 +36,7 @@ public class CalorieController {
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping
     public RestApiResponse<CalorieResDto> getMeal(
-            @Parameter(name = "date", description = "조회 날짜", example = "20230503") @RequestParam("date") String date) {
+            @Parameter(name = "date", description = "조회 날짜", example = "2023-05-03T00:00:00") @RequestParam("date") String date) {
         Integer userNo = 1;
         return new RestApiResponse<>(date + "날짜 섭취, 소모 칼로리 조회 성공", calorieService.getCalorie(date, userNo));
     }

@@ -6,12 +6,16 @@ import com.secui.healthone.global.error.response.ErrorResponse;
 import com.secui.healthone.global.response.RestApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.api.annotations.ParameterObject;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,10 +46,12 @@ public class FoodController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "음식 검색 조회 성공", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = FoodResponseDto.class)),
                     @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
+    @Parameter(name = "name", description = "음식 이름", example = "김밥")
+    @Parameter(in = ParameterIn.QUERY, description = "페이지 번호 (0~N)", name = "page", content = @Content(schema = @Schema(type = "Integer", defaultValue = "0")))
+    @Parameter(in = ParameterIn.QUERY, description = "페이지 크기 (기본: 20)", name = "size", content = @Content(schema = @Schema(type = "Integer", defaultValue = "20")))
     @GetMapping("/search")
-    public RestApiResponse<List<FoodResponseDto>> searchFood(
-            @Parameter(name = "name", description = "음식 이름", example = "김밥") @RequestParam("name") String name) {
-        return new RestApiResponse<>("음식 검색 조회 성공", foodService.searchFood(name));
+    public RestApiResponse<Slice<FoodResponseDto>> searchFood(@RequestParam("name") String name, @ParameterObject Pageable pageable) {
+        return new RestApiResponse<>("음식 검색 조회 성공", foodService.searchFood(name, pageable));
     }
 
 }

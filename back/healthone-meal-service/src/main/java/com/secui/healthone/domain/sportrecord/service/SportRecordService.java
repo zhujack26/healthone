@@ -1,9 +1,5 @@
 package com.secui.healthone.domain.sportrecord.service;
 
-import com.secui.healthone.domain.sport.entity.CustomSport;
-import com.secui.healthone.domain.sport.entity.Sport;
-import com.secui.healthone.domain.sport.repository.CustomSportRepository;
-import com.secui.healthone.domain.sport.repository.SportRepository;
 import com.secui.healthone.domain.sportrecord.dto.SportRecordDtoMapper;
 import com.secui.healthone.domain.sportrecord.dto.SportRecordReqDto;
 import com.secui.healthone.domain.sportrecord.dto.SportRecordResDto;
@@ -24,32 +20,31 @@ import java.util.List;
 @Slf4j
 public class SportRecordService {
     private final SportRecordRepository sportRecordRepository;
-    private final SportRepository sportRepository;
-    private final CustomSportRepository customSportRepository;
-    private final SportRecordDtoMapper sportRecordDtoMapper;
 
     public List<SportRecordResDto> getSportRecordList(String date, Integer userNo) {
         StringDateTrans dateTrans = new StringDateTrans(date);
         List<SportRecord> result = sportRecordRepository.findByCreateTimeBetweenAndUserNo(dateTrans.getStartDateTime(), dateTrans.getEndDateTime(), userNo);
-        return sportRecordDtoMapper.entityToResListDto(result);
+        return SportRecordDtoMapper.INSTANCE.entityToResListDto(result);
     }
 
-    // 등록, 수정 (테스트 미수행)
+    // 등록, 수정
     @Transactional
     public SportRecordResDto insertSportRecord(SportRecordReqDto reqDto) {
-        Sport sport = null;
-        CustomSport customSport = null;
-        if (reqDto.getSportNo() != null){
-            sport = sportRepository.findById(reqDto.getSportNo())
-                    .orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
-            reqDto.setSportNo(sport.getNo());
-        } else if (reqDto.getCustomSportNo()!= null){
-            customSport = customSportRepository.findByNoAndUserNo(reqDto.getCustomSportNo(), reqDto.getUserNo())
-                    .orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
-            reqDto.setCustomSportNo(customSport.getNo());
-        }
-        sportRecordRepository.save(sportRecordDtoMapper.reqDtoToEntity(reqDto, sport, customSport));
-        return sportRecordDtoMapper.entityToResDto(sportRecordDtoMapper.reqDtoToEntity(reqDto, sport, customSport));
+//        Sport sport = null;
+//        CustomSport customSport = null;
+//        if (reqDto.getSportNo() != null){
+//            sport = sportRepository.findById(reqDto.getSportNo())
+//                    .orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
+//            reqDto.setSportNo(sport.getNo());
+//        } else if (reqDto.getCustomSportNo()!= null){
+//            customSport = customSportRepository.findByNoAndUserNo(reqDto.getCustomSportNo(), reqDto.getUserNo())
+//                    .orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
+//            reqDto.setCustomSportNo(customSport.getNo());
+//        }
+//        sportRecordRepository.save(SportRecordDtoMapper.INSTANCE.reqDtoToEntity(reqDto, sport, customSport));
+//        return SportRecordDtoMapper.INSTANCE.entityToResDto(SportRecordDtoMapper.INSTANCE.reqDtoToEntity(reqDto, sport, customSport));
+        SportRecord saveResult = sportRecordRepository.save(SportRecordDtoMapper.INSTANCE.reqDtoToEntity(reqDto));
+        return SportRecordDtoMapper.INSTANCE.entityToResDto(saveResult);
     }
 
     @Transactional

@@ -31,6 +31,15 @@ public class TestController {
         return new RestApiResponse<>("Meal Server is running", null);
     }
 
+    @Operation(summary = "CI/CD 테스트용 서버 응답", description = "서버응답 API", tags = {"Test"})
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "Meal Server is running", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = String.class)),
+            @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }) })
+    @GetMapping
+    public RestApiResponse<String> cicdTestServer(){
+        return new RestApiResponse<>("Meal Server is running", null);
+    }
+
     @Operation(summary = "서버 에러 응답", description = "서버 에러 응답 API", tags = {"Test"})
     @GetMapping("/error")
     public ResponseEntity<String> testError(){

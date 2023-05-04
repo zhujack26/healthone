@@ -2,6 +2,7 @@ package com.secui.healthone.domain.walk.service;
 
 import com.secui.healthone.domain.user.entity.User;
 import com.secui.healthone.domain.walk.dto.WalkDtoMapper;
+import com.secui.healthone.domain.walk.dto.WalkReqDto;
 import com.secui.healthone.domain.walk.dto.WalkResDto;
 import com.secui.healthone.domain.walk.entity.Walk;
 import com.secui.healthone.domain.user.repository.UserRepository;
@@ -11,6 +12,7 @@ import com.secui.healthone.global.error.errorcode.CustomErrorCode;
 import com.secui.healthone.global.error.exception.RestApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -45,6 +47,20 @@ public class WalkServiceImpl implements WalkService {
         List<Walk> walkList = walkRepository.findAllByUserNoAndCreatetime(1, localDateTime);
         return WalkDtoMapper.INSTANCE.entityToResDto(walkList);
     }
+
+    @Override
+    @Transactional
+    public WalkResDto insertWalk(WalkReqDto reqDto) {
+        walkRepository.save(WalkDtoMapper.INSTANCE.reqDtoToEntity(reqDto));
+        return WalkDtoMapper.INSTANCE.resDtoToReqDto(reqDto);
+    }
+
+    @Override
+    public void deleteWalk(Integer no) {
+        Walk getWalk = walkRepository.findById(no).orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
+        walkRepository.delete(getWalk);
+    }
+
 
     public LocalDateTime typeConverter(String dateTime) {
         int year = Integer.parseInt(dateTime.substring(0, 4));

@@ -16,4 +16,6 @@ public interface WalkDtoMapper {
 
     Walk reqDtoToEntity(WalkReqDto walk);
 
+    WalkResDto resDtoToReqDto(WalkReqDto walkReqDto);
+
 }

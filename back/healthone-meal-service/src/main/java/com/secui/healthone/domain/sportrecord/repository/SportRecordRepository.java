@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface SportRecordRepository extends JpaRepository<SportRecord, Integer> {
     List<SportRecord> findByCreateTimeBetweenAndUserNo(LocalDateTime startDateTime, LocalDateTime endDateTime, Integer userNo);
+    SportRecord save(SportRecord sportRecord);
+
 }

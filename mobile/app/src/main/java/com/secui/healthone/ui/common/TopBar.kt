@@ -27,7 +27,7 @@ import com.secui.healthone.R
 import com.secui.healthone.compose.MealPlanPage
 import com.secui.healthone.compose.OverViewPage
 import com.secui.healthone.compose.*
-import com.secui.healthone.compose.Challenge.PopularDetailPage
+import com.secui.healthone.compose.challenge.PopularDetailPage
 import com.secui.healthone.compose.MealPlan.ExerciseInputPage
 import com.secui.healthone.compose.MealPlan.MealInputPage
 import com.secui.healthone.compose.healthstatus.HealthHelpPage

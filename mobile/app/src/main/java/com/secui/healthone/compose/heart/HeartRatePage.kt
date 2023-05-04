@@ -8,11 +8,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.secui.healthone.ui.heart.heartratepage.HeartGraphBox
 import com.secui.healthone.ui.heart.heartratepage.HeartRateInfoBox
 import com.secui.healthone.ui.heart.heartratepage.HeartRateRecordList
+import com.secui.healthone.util.PreferenceUtil
 
 @Composable
 fun HeartRatePage(

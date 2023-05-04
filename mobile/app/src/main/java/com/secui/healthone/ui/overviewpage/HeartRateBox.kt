@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -20,6 +21,7 @@ import com.secui.healthone.R
 import com.secui.healthone.ui.common.AppColors
 import com.secui.healthone.util.BoxTool
 import com.secui.healthone.util.PageRoutes
+import com.secui.healthone.util.PreferenceUtil
 
 @Composable
 fun HeartRateBox(
@@ -28,6 +30,8 @@ fun HeartRateBox(
     modifier: Modifier = Modifier
 ){
 
+    val context = LocalContext.current;
+    val prefs: PreferenceUtil = PreferenceUtil(context);
     val displayBpmValue:String = BoxTool.getBpmDisplayString(bpmValue);
 
 
@@ -72,7 +76,8 @@ fun HeartRateBox(
                         .height(36.dp)
                 )
                 Spacer(modifier = Modifier.width(16.dp));
-                Text(text = "${displayBpmValue} bpm", fontSize = 20.sp);
+                Text(text = "${prefs.getString("current_heart_bpm", "-")} bpm",
+                    fontSize = 20.sp);
             }
             Spacer(modifier = Modifier.height(16.dp))
 

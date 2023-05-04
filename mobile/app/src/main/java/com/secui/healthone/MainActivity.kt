@@ -3,6 +3,7 @@ package com.secui.healthone
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -27,12 +28,16 @@ import com.secui.healthone.compose.*
 import com.secui.healthone.repository.HealthOneRepository
 import com.secui.healthone.service.ScreenService
 import com.secui.healthone.viewmodel.HealthOneViewModel
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.Date
 
 
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             val sharedPreferences = getSharedPreferences("healthone", Context.MODE_PRIVATE)
             val jwtToken = sharedPreferences.getString("jwt_token", null)
@@ -47,7 +52,7 @@ class MainActivity : ComponentActivity() {
 //
 //            })
 
-            NavHost(navController, startDestination = if (jwtToken == null) PageRoutes.Login.route else PageRoutes.OverView.route) {
+            NavHost(navController, startDestination = if (jwtToken != null) PageRoutes.Login.route else PageRoutes.OverView.route) {
 
                 composable(PageRoutes.Login.route) {
                     LoginPage(navController)

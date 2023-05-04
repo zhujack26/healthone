@@ -6,9 +6,6 @@ import com.secui.healthone.domain.sleep.dto.SleepResDto;
 import com.secui.healthone.domain.sleep.dto.SleepUpdateDto;
 import com.secui.healthone.domain.sleep.entity.Sleep;
 import com.secui.healthone.domain.sleep.repository.SleepRepository;
-import com.secui.healthone.domain.sleep.service.SleepService;
-import com.secui.healthone.domain.user.entity.User;
-import com.secui.healthone.domain.user.repository.UserRepository;
 import com.secui.healthone.global.error.errorcode.CustomErrorCode;
 import com.secui.healthone.global.error.exception.RestApiException;
 import lombok.RequiredArgsConstructor;
@@ -24,14 +21,12 @@ public class SleepServiceImpl implements SleepService {
 
     private final SleepRepository sleepRepository;
 
-    private final UserRepository userRepository;
-
     @Override
     public List<SleepResDto> getSleepData(String date) {
         //        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
 //        Optional<User> optionalUser = userRepository.findByUserEmail(userEmail);
-        Optional<User> optionalUser = userRepository.findById(1);
-        User user = optionalUser.orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
+//        Optional<User> optionalUser = userRepository.findById(1);
+//        User user = optionalUser.orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
         return SleepDtoMapper.INSTANCE.entityToResDto(sleepRepository.findAllByUserNoAndCreatetimeLike(1, date));
     }
 
@@ -39,15 +34,16 @@ public class SleepServiceImpl implements SleepService {
     public void addSleepInfo(SleepInsertDto sleepInfoReqDto) {
         //        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
 //        Optional<User> optionalUser = userRepository.findByUserEmail(userEmail);
-        Optional<User> optionalUser = userRepository.findById(sleepInfoReqDto.getUserNo());
-        User user = optionalUser.orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
+//        Optional<User> optionalUser = userRepository.findById(sleepInfoReqDto.getUserNo());
+//        User user = optionalUser.orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
 
         LocalDateTime sleepCreatetime = typeConverter(sleepInfoReqDto.getCreateTime());
         LocalDateTime sleepStartSleepTime = typeConverter(sleepInfoReqDto.getStartSleepTime());
         LocalDateTime sleepEndSleepTime = typeConverter(sleepInfoReqDto.getEndSleepTime());
 
         Sleep sleep = Sleep.builder()
-                .userNo(user.getUserNo())
+//                .userNo(user.getUserNo())
+                .userNo(1)
                 .createtime(sleepCreatetime)
                 .startSleepTime(sleepStartSleepTime)
                 .endSleepTime(sleepEndSleepTime)

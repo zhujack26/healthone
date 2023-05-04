@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.secui.healthone.R
+import com.secui.healthone.util.PageRoutes
 
 @Composable
 fun NextButton(navController: NavController) {
@@ -25,7 +26,7 @@ fun NextButton(navController: NavController) {
             .height(56.dp)
             .clip(RoundedCornerShape(32.dp))
             .background(colorResource(id = R.color.mono200))
-            .clickable { navController.navigate("datacollect2") },
+            .clickable { navController.navigate(PageRoutes.DataCollectSecond.route)},
         contentAlignment = Alignment.Center
     ) {
         Text(

@@ -18,13 +18,18 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.secui.healthone.R
 import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.util.BoxTool
 import com.secui.healthone.util.PageRoutes
 
 @Composable
 fun HeartRateBox(
     navController:NavHostController,
+    bpmValue:Int = 0,
     modifier: Modifier = Modifier
 ){
+
+    val displayBpmValue:String = BoxTool.getBpmDisplayString(bpmValue);
+
 
     Card(
         elevation = 4.dp,
@@ -67,7 +72,7 @@ fun HeartRateBox(
                         .height(36.dp)
                 )
                 Spacer(modifier = Modifier.width(16.dp));
-                Text(text = "99 bpm", fontSize = 20.sp);
+                Text(text = "${displayBpmValue} bpm", fontSize = 20.sp);
             }
             Spacer(modifier = Modifier.height(16.dp))
 

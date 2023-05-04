@@ -17,12 +17,17 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.secui.healthone.R
 import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.util.BoxTool
 
 @Composable
 fun UserWalkBox(
     navController: NavHostController,
+    walkValue:Int = 0,
     modifier: Modifier = Modifier
 ){
+    val targetWalkNumber = 6000;
+    val displayWalkValue:String = BoxTool.getDisplayString(walkValue);
+
     Card(
         elevation = 4.dp,
         shape = RoundedCornerShape(4.dp),
@@ -49,7 +54,7 @@ fun UserWalkBox(
             Image(painter = painterResource(id = R.drawable.ic_circle),
                 contentDescription = "걸음 수")
             Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "3,975 / 6000" ,
+            Text(text = "${displayWalkValue} / ${targetWalkNumber}" ,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight(),

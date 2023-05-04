@@ -35,7 +35,7 @@ public class TestController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "Meal Server is running", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = String.class)),
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }) })
-    @GetMapping
+    @GetMapping("/cicd")
     public RestApiResponse<String> cicdTestServer(){
         return new RestApiResponse<>("Meal Server is running", null);
     }

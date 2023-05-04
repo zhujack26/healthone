@@ -50,17 +50,19 @@ public class MealService {
     // 식사 등록, 수정
     @Transactional
     public MealResDto insertMeal(MealReqDto requestDto) {
-        Food food = null;
-        CustomFood customFood = null;
-        if (requestDto.getFoodNo() != null){
-            food= foodRepository.findById(requestDto.getFoodNo())
-                    .orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
-        } else if (requestDto.getCustomfoodNo()!= null){
-            customFood = customFoodRepository.findAllByNoAndUserNo(requestDto.getCustomfoodNo(), requestDto.getUserNo())
-                    .orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
-        }
-        mealRepository.save(requestDto.toEntity(food,customFood));
-        return new MealResDto(requestDto.toEntity(food,customFood));
+//        Food food = null;
+//        CustomFood customFood = null;
+//        if (requestDto.getFoodNo() != null){
+//            food= foodRepository.findById(requestDto.getFoodNo())
+//                    .orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
+//        } else if (requestDto.getCustomfoodNo()!= null){
+//            customFood = customFoodRepository.findAllByNoAndUserNo(requestDto.getCustomfoodNo(), requestDto.getUserNo())
+//                    .orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
+//        }
+//        mealRepository.save(requestDto.toEntity(food,customFood));
+//        return new MealResDto(requestDto.toEntity(food,customFood));
+        mealRepository.save(requestDto.toEntity());
+        return new MealResDto(requestDto.toEntity());
     }
 
     // 식사 삭제

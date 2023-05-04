@@ -1,4 +1,4 @@
-package com.secui.healthone.domain.walk.service.impl;
+package com.secui.healthone.domain.walk.service;
 
 import com.secui.healthone.domain.user.entity.User;
 import com.secui.healthone.domain.walk.dto.WalkDtoMapper;

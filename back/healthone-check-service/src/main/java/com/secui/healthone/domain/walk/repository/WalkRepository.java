@@ -1,6 +1,5 @@
 package com.secui.healthone.domain.walk.repository;
 
-import com.secui.healthone.domain.user.entity.User;
 import com.secui.healthone.domain.walk.entity.Walk;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -14,5 +13,7 @@ public interface WalkRepository extends JpaRepository<Walk, Integer> {
 
     List<Walk> findAllByUserNoAndCreatetime(int userNo, LocalDateTime createtime);
 //    List<Walk> findAllByUserAndWalkCreatetime(User user, LocalDateTime walkCreatetime);
+
+    Walk save(Walk walk);
 
 }

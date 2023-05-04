@@ -1,14 +1,16 @@
 package com.secui.healthone.domain.heartRate.service;
 
-import com.secui.healthone.domain.heartRate.dto.AddHeartRateInfoReqDto;
+import com.secui.healthone.domain.heartRate.dto.HeartRateInsertDto;
 import com.secui.healthone.domain.heartRate.dto.HeartRateResDto;
-
-import java.util.List;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 
 public interface HeartRateService {
-    void addHeartRateInfo(AddHeartRateInfoReqDto addHeartRateInfoReqDto);
+    HeartRateResDto addHeartRateInfo(HeartRateInsertDto heartRateInsertDto);
 
-    void deleteHeartRateInfo(String no);
+    void deleteHeartRateInfo(Integer no);
 
-    List<HeartRateResDto> getWeeklyHeartRate(String dateTime);
+    Slice<HeartRateResDto> getHeartRateList(Integer userNo, Pageable pageable);
+
+//    List<HeartRateResDto> getWeeklyHeartRate(String dateTime);
 }

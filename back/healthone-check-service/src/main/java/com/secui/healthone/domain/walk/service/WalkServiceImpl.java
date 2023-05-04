@@ -1,34 +1,31 @@
-package com.secui.healthone.domain.walk.service.impl;
+package com.secui.healthone.domain.walk.service;
 
-import com.secui.healthone.domain.user.entity.User;
 import com.secui.healthone.domain.walk.dto.WalkDtoMapper;
+import com.secui.healthone.domain.walk.dto.WalkReqDto;
 import com.secui.healthone.domain.walk.dto.WalkResDto;
 import com.secui.healthone.domain.walk.entity.Walk;
-import com.secui.healthone.domain.user.repository.UserRepository;
 import com.secui.healthone.domain.walk.repository.WalkRepository;
-import com.secui.healthone.domain.walk.service.WalkService;
 import com.secui.healthone.global.error.errorcode.CustomErrorCode;
 import com.secui.healthone.global.error.exception.RestApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class WalkServiceImpl implements WalkService {
 
     private final WalkRepository walkRepository;
-    private final UserRepository userRepository;
 
     @Override
     public List<WalkResDto> getWalkEntitiesForSevenDays(String dateTime) {
-        Optional<User> optionalUser = userRepository.findById(1);
+//        Optional<User> optionalUser = userRepository.findById(1);
 //        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
 //        Optional<User> optionalUser = userRepository.findByUserEmail(userEmail);
-        User user = optionalUser.orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
+//        User user = optionalUser.orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
         LocalDateTime endDateTime = typeConverter(dateTime);
         LocalDateTime startDateTime = endDateTime.minusDays(6).withHour(0).withMinute(0).withSecond(0).withNano(0);
         List<Walk> walkList = walkRepository.findAllByUserNoAndCreatetimeBetween(1, startDateTime, endDateTime);
@@ -37,14 +34,28 @@ public class WalkServiceImpl implements WalkService {
 
     @Override
     public List<WalkResDto> getDetailedWalkInfo(String date) {
-        Optional<User> optionalUser = userRepository.findById(1);
+//        Optional<User> optionalUser = userRepository.findById(1);
 //        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
 //        Optional<User> optionalUser = userRepository.findByUserEmail(userEmail);
-        User user = optionalUser.orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
+//        User user = optionalUser.orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
         LocalDateTime localDateTime = typeConverter(date);
         List<Walk> walkList = walkRepository.findAllByUserNoAndCreatetime(1, localDateTime);
         return WalkDtoMapper.INSTANCE.entityToResDto(walkList);
     }
+
+    @Override
+    @Transactional
+    public WalkResDto insertWalk(WalkReqDto reqDto) {
+        Walk result = walkRepository.save(WalkDtoMapper.INSTANCE.reqDtoToEntity(reqDto));
+        return WalkDtoMapper.INSTANCE.entityToResDto(result);
+    }
+
+    @Override
+    public void deleteWalk(Integer no) {
+        Walk getWalk = walkRepository.findById(no).orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
+        walkRepository.delete(getWalk);
+    }
+
 
     public LocalDateTime typeConverter(String dateTime) {
         int year = Integer.parseInt(dateTime.substring(0, 4));

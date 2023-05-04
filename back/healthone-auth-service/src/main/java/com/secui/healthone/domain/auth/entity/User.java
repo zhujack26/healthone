@@ -2,38 +2,50 @@ package com.secui.healthone.domain.auth.entity;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
-@Entity
+
 @Getter
-@Setter
-@Builder
+@NoArgsConstructor
+@Entity
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userNo;
+    private Long id;
 
     @Column(nullable = false)
-    private String userId;
+    private String name;
 
     @Column(nullable = false)
-    private String userNickname;
+    private String email;
 
-    @Column(nullable = false)
-    private String userPlatformType;
+    @Column
+    private String picture;
 
-    @Column(nullable = false)
-    private String userEmail;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
+    private Role role;
 
-    private String userProfilePicture;
+    @Builder
+    public User(String name, String email, String picture, Role role){
+        this.name = name;
+        this.email = email;
+        this.picture = picture;
+        this.role = role;
+    }
 
-    @Column(nullable = false)
-    private LocalDateTime userCreatetime;
+    public User update(String name, String picture){
+        this.name = name;
+        this.picture = picture;
 
-    @Column(nullable = false)
-    private boolean userActive;
+        return this;
+    }
+
+    public String getRoleKey(){
+        return this.role.getKey();
+    }
+
 }

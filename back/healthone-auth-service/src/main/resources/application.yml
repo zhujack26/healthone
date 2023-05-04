@@ -1,24 +1,31 @@
+
 spring:
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: 58897711690-so0gklgir6entir8bsdiic8v8c22cih2.apps.googleusercontent.com
-            client-secret: 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
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          google:
+#            client-name: Google
+#            client-id: 785216230516-1h8hoagkginolldjirvtgiebidmqe38i.apps.googleusercontent.com
+#            client-secret: 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
+#            authorization-grant-type: authorization_code
+#            scope : email
+
+
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3307/healthone
     username: root
     password: ssafy
   jpa:
-    hibernate:
-      ddl-auto: create
+#    hibernate:
+#      ddl-auto: create
     show-sql: true
     properties:
       hibernate:
         format_sql: true
-
+  server:
+    port: 80
 springboot:
   jwt:
     secret: 8q2ht89sbguniuqt9ieg

@@ -259,12 +259,15 @@ fun TopBar() {
                 Divider(color = AppColors.black, thickness = 1.dp)
                 DrawerButton(
                     text = "심박 수 측정",
+                    icon = R.drawable.ic_heart,
                     onClick = {
                         navController.navigate(PageRoutes.HeartRate.route)
                     }
                 )
+                Divider(color = AppColors.black, thickness = 1.dp)
                 DrawerButton(
                     text = "건강상태",
+                    icon = R.drawable.ic_heart,
                     onClick = {
                         navController.navigate(PageRoutes.HealthStatus.route)
                     }

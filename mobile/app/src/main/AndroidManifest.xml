@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <!--  브로드 캐스트 리시버를 위한 권한 설정  -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
@@ -28,20 +29,10 @@
             android:name=".util.HealthOneRetrofitInstance"
             android:exported="true"
             />
-
-        <!-- 브로드 캐스트 리시버 등록-->
-        <receiver
-            android:name=".reciever.ScreenStateReceiver"
-            android:enabled="true"
-            android:exported="true"
-            />
-        <!-- 브로드 캐스트 리시버를 관리할 서비스 등록 -->
+        <!-- 서비스 등록 -->
         <service
-            android:name=".service.ScreenService"
-            android:stopWithTask="false"
-            android:enabled="true"
-            android:exported="true"
-            />
+            android:name=".service.MyService"
+            android:stopWithTask="false" />
 
         <activity
             android:name=".MainActivity"

@@ -19,6 +19,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -33,20 +34,24 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.Scope
 import com.secui.healthone.repository.GoogleSignInRepository
+import com.secui.healthone.ui.login.PolicyDialog
+import com.secui.healthone.ui.login.TermsDialog
 
 
 @Composable
 fun LoginPage(navController: NavController) {
     val termsOfServiceText = "이용약관"
     val privacyPolicyText = "개인정보 처리방침"
-    val agreementText = "로그인시 $termsOfServiceText 과 $privacyPolicyText 에 동의하게 됩니다."
-
+    val agreementText = "로그인시 ${termsOfServiceText}과 ${privacyPolicyText}에 동의하게 됩니다."
+    val showTermsDialog = remember { mutableStateOf(false) }
+    val showPolicyDialog = remember { mutableStateOf(false) }
     val annotatedText = remember {
         AnnotatedString.Builder(agreementText).apply {
             addStyle(SpanStyle(textDecoration = TextDecoration.Underline), agreementText.indexOf(termsOfServiceText), agreementText.indexOf(termsOfServiceText) + termsOfServiceText.length)
+            addStringAnnotation("dialog", termsOfServiceText, agreementText.indexOf(termsOfServiceText), agreementText.indexOf(termsOfServiceText) + termsOfServiceText.length)
+
             addStyle(SpanStyle(textDecoration = TextDecoration.Underline), agreementText.indexOf(privacyPolicyText), agreementText.indexOf(privacyPolicyText) + privacyPolicyText.length)
-            addStringAnnotation("URL", "https://www.example.com", agreementText.indexOf(termsOfServiceText), agreementText.indexOf(termsOfServiceText) + termsOfServiceText.length)
-            addStringAnnotation("URL", "https://www.example.com", agreementText.indexOf(privacyPolicyText), agreementText.indexOf(privacyPolicyText) + privacyPolicyText.length)
+            addStringAnnotation("dialog", privacyPolicyText, agreementText.indexOf(privacyPolicyText), agreementText.indexOf(privacyPolicyText) + privacyPolicyText.length)
         }
     }.toAnnotatedString()
 
@@ -122,11 +127,25 @@ fun LoginPage(navController: NavController) {
                 color = Color.Black
             ),
             onClick = { offset ->
-                annotatedText.getStringAnnotations("URL", offset, offset).firstOrNull()?.let { annotation ->
-                    navController.navigate("webView")
+                annotatedText.getStringAnnotations("dialog", offset, offset).firstOrNull()?.let { annotation ->
+                    when (annotation.item) {
+                        termsOfServiceText -> showTermsDialog.value = true
+                        privacyPolicyText -> showPolicyDialog.value = true
+                    }
                 }
             }
         )
+        if (showTermsDialog.value) {
+            TermsDialog(
+                onConfirm = { showTermsDialog.value = false },
+            )
+        }
+
+        if (showPolicyDialog.value) {
+            PolicyDialog(
+                onConfirm = { showPolicyDialog.value = false },
+            )
+        }
         Spacer(modifier = Modifier.height(16.dp))
     }
 }

@@ -1,93 +1,22 @@
 package com.secui.healthone.ui.common
 
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.secui.healthone.R
-import com.secui.healthone.compose.MealPlanPage
-import com.secui.healthone.compose.OverViewPage
-import com.secui.healthone.compose.*
-import com.secui.healthone.compose.Challenge.PopularDetailPage
-import com.secui.healthone.compose.MealPlan.ExerciseInputPage
-import com.secui.healthone.compose.MealPlan.MealInputPage
-import com.secui.healthone.compose.healthstatus.HealthHelpPage
-import com.secui.healthone.compose.healthstatus.HealthInputPage
-import com.secui.healthone.compose.healthstatus.HealthStatusPage
-import com.secui.healthone.compose.sleep.SleepPage
 import com.secui.healthone.util.PageRoutes
-
-
-@Composable
-fun DrawerButton(text: String, icon: Int? = null, onClick: () -> Unit) {
-    val textColor = AppColors.black
-    TextButton(
-        onClick = onClick,
-        modifier = Modifier
-            .fillMaxWidth()
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 16.dp)) {
-            if (icon != null) {
-                Icon(
-                    painter = painterResource(id = icon),
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-            }
-            if (text == "박싸피") {
-                Column(horizontalAlignment = Alignment.Start) {
-                    Box(modifier = Modifier.padding(5.dp)) {
-                        Image(
-                            painter = painterResource(id = R.drawable.onboarding_first),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .padding(4.dp)
-                                .size(48.dp)
-                                .background(AppColors.white)
-                                .clip(shape = CircleShape),
-                            contentScale = ContentScale.Crop
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Text(
-                        text,
-                        fontSize = 20.sp,
-                        color = textColor,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-            } else {
-                Text(
-                    text,
-                    fontSize = 20.sp,
-                    color = textColor,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-        }
-    }
-}
 
 @Composable
 fun TopBar() {
@@ -135,64 +64,7 @@ fun TopBar() {
                     }
                 )
             }
-            Column {
-                NavHost(navController, startDestination = PageRoutes.OverView.route) {
-                    composable(PageRoutes.OverView.route) {
-                        OverViewPage(navController = navController)
-                    }
-                    composable(PageRoutes.MealPlan.route) {
-                        MealPlanPage(navController = navController) // 식단 화면
-                    }
-                    composable(PageRoutes.HeartRate.route) {
-                        HeartRatePage(navController = navController) // 심박수 측정
-                    }
-                    composable(PageRoutes.Challenge.route) {
-                        ChallengePage(navController = navController) // 챌린지
-                    }
-                    composable(PageRoutes.Alert.route) {
-                        AlertPage(navController = navController) /// 알림
-                    }
-                    composable(PageRoutes.HeartMeasure.route) {
-                        HeartMeasurePage(navController)
-                    }
-                    composable(PageRoutes.MealInput.route) {
-                        MealInputPage(navController)
-                    }
-                    composable(PageRoutes.ExerciseInput.route) {
-                        ExerciseInputPage(navController)
-                    }
-                    composable(PageRoutes.Sleep.route) {
-                        SleepPage(navController, sleepRecords = mutableListOf())
-                    }
-                    composable(PageRoutes.My.route) {
-                        MyPage(navController = navController)
-                    }
-                    composable(PageRoutes.Walking.route) {
-                        WalkingPage(navController)
-                    }
-                    composable(PageRoutes.WalkingDetail.route) {
-                        WalkingDetailPage(navController)
-                    }
-                    composable(PageRoutes.PopularDetail.route) {
-                        PopularDetailPage(navController)
-                    }
-                    composable(PageRoutes.Setting.route) {
-                        SettingPage(navController = navController)
-                    }
-                    composable(PageRoutes.AlarmSetting.route) {
-                        AlarmSettingPage()
-                    }
-                    composable(PageRoutes.HealthStatus.route){
-                        HealthStatusPage(navController = navController)
-                    }
-                    composable(PageRoutes.HealthStatusInput.route){
-                        HealthInputPage(navController = navController)
-                    }
-                    composable(PageRoutes.HealthHelp.route){
-                        HealthHelpPage(navController = navController)
-                    }
-                }
-            }
+            TopBarNavigation(navController)
         }
         if (menuOpen.value) {
             Box(
@@ -207,7 +79,7 @@ fun TopBar() {
                     .offset(x = menuOffset.value) // 애니메이션 값을 적용
                     .width(200.dp)
                     .fillMaxHeight()
-                    .background(colorResource(id = R.color.white))
+                    .background(AppColors.white)
                     .align(Alignment.TopEnd)
             ) {
                 DrawerButton(

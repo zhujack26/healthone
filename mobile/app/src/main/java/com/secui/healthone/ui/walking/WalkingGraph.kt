@@ -11,7 +11,7 @@ import com.secui.healthone.ui.common.AppColors
 
 @Composable
 fun WalkingGraph(navController:NavController) {
-    val stepsData = listOf(1000, 500, 750, 300, 1200, 800, 100, 0, 900, 400, 600, 0, 1000, 500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    val stepsData = listOf(1000, 1500, 750, 300, 1200, 800, 100, 0, 900, 400, 600, 0, 1000, 500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     Column {
         WalkingDetailGraph(stepsData)
     }

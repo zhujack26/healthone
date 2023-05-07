@@ -7,12 +7,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.runtime.*
 import androidx.compose.ui.text.style.TextAlign
-import android.icu.util.Calendar
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.secui.healthone.ui.mealplanpage.DatePickerDialog
+import java.util.Calendar
 
 @Composable
 fun ExerciseInputDate() {

@@ -45,7 +45,7 @@ fun HealthStatusPage(navController: NavHostController) {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    DateComponent()
+                    DateComponent{}
                 }
             }
         }

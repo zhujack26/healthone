@@ -11,23 +11,12 @@ data class FoodData(
 
 
 data class MealData(
-    @SerializedName("no")
     val no: Int,
-    @SerializedName("userNo")
     val userNo: Int,
-    @SerializedName("food")
-    val food: Food?,
-    @SerializedName("customfood")
-    val customFood: CustomFood?,
-    @SerializedName("createTime")
+    val name: String,
     val createTime: String,
-    @SerializedName("mealType")
     val mealType: String,
-    @SerializedName("portion")
-    val portion: Int,
-    @SerializedName("gram")
     val gram: Int,
-    @SerializedName("kcal")
     val kcal: Int
 )
 
@@ -55,13 +44,13 @@ data class CustomFood(
     @SerializedName("gram")
     val gram: Int
 )
-data class MealResponse(
+data class MealResponse<T>(
     @SerializedName("timestamp")
     val timestamp: String,
     @SerializedName("message")
     val message: String,
     @SerializedName("data")
-    val data: List<MealData>,
+    val data: T,
     @SerializedName("success")
     val success: Boolean
 )

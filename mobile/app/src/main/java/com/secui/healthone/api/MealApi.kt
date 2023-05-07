@@ -2,6 +2,7 @@ package com.secui.healthone.api
 
 import com.secui.healthone.data.MealPlan.FoodResponse
 import com.secui.healthone.data.MealPlan.Meal
+import com.secui.healthone.data.MealPlan.MealData
 import com.secui.healthone.data.MealPlan.MealResponse
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -22,23 +23,23 @@ interface MealApi {
     suspend fun getMealList(
         @Query("date") date: String,
         @Query("userno") userNo: Int
-    ): retrofit2.Response<MealResponse>
+    ): Response<MealResponse<List<MealData>>>
 
 
     companion object {
         private const val BASE_URL = "http://a80d3a967a5514702bfe8ba3e8b52871-1335940738.ap-northeast-2.elb.amazonaws.com/"
 
         fun create(): MealApi {
-            val logging = HttpLoggingInterceptor().apply { setLevel(HttpLoggingInterceptor.Level.BODY) }
+            val logger = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
 
             val client = OkHttpClient.Builder()
-                .addInterceptor(logging)
+                .addInterceptor(logger)
                 .build()
 
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(MealApi::class.java)
         }

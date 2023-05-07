@@ -36,10 +36,13 @@ fun DateComponent(onDateChanged: (Calendar) -> Unit) {
     ) {
         // 이전 날짜로 가는 화살표
         IconButton(onClick = {
-            selectedDate.value = (selectedDate.value.clone() as Calendar).apply { add(Calendar.DAY_OF_MONTH, -1) }
+            selectedDate.value =
+                (selectedDate.value.clone() as Calendar).apply { add(Calendar.DAY_OF_MONTH, -1) }
+            onDateChanged(selectedDate.value) // 이 줄을 추가하세요
         }) {
             Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Previous Date")
         }
+
 
         // 달력 아이콘과 날짜를 가운데에 배치
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -50,28 +53,34 @@ fun DateComponent(onDateChanged: (Calendar) -> Unit) {
 
             // 선택된 날짜 표시
             Text(
-                text = "${selectedDate.value.get(Calendar.YEAR)}.${selectedDate.value.get(Calendar.MONTH) + 1}.${selectedDate.value.get(Calendar.DAY_OF_MONTH)}",
+                text = "${selectedDate.value.get(Calendar.YEAR)}.${selectedDate.value.get(Calendar.MONTH) + 1}.${
+                    selectedDate.value.get(
+                        Calendar.DAY_OF_MONTH
+                    )
+                }",
                 textAlign = TextAlign.Center
             )
         }
 
         // 다음 날짜로 가는 화살표
         IconButton(onClick = {
-            selectedDate.value = (selectedDate.value.clone() as Calendar).apply { add(Calendar.DAY_OF_MONTH, 1) }
+            selectedDate.value =
+                (selectedDate.value.clone() as Calendar).apply { add(Calendar.DAY_OF_MONTH, 1) }
+            onDateChanged(selectedDate.value) // 이 줄을 추가하세요
         }) {
-            Icon(imageVector = Icons.Filled .ArrowForward, contentDescription = "Next Date")
+            Icon(imageVector = Icons.Filled.ArrowForward, contentDescription = "Next Date")
         }
-    }
 
-    DatePickerDialog(
-        showDialog = showDialog,
-        initialDate = initialDate,
-        onDateSelected = { newDate ->
-            onDateChanged(newDate)
-            showDialog = false
-        },
-        onDismissRequest = {
-            showDialog = false
-        }
-    )
+        DatePickerDialog(
+            showDialog = showDialog,
+            initialDate = initialDate,
+            onDateSelected = { newDate ->
+                onDateChanged(newDate)
+                showDialog = false
+            },
+            onDismissRequest = {
+                showDialog = false
+            }
+        )
+    }
 }

@@ -27,7 +27,7 @@ fun MealCard(mealDataList: List<MealData>, name: String) {
             Spacer(modifier = Modifier.height(8.dp))
 
             mealDataList.forEach { mealData ->
-                val foodName = mealData.food?.name ?: mealData.customFood?.name ?: "Unknown"
+                val foodName = mealData.name
                 val kcal = mealData.kcal
                 val gram = mealData.gram
 

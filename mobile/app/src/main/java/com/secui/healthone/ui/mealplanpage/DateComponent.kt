@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Alignment
-import android.icu.util.Calendar
+import java.util.Calendar
 import com.secui.healthone.ui.common.AppColors
 
 @Composable

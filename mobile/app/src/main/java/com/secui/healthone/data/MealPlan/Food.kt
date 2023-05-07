@@ -39,8 +39,11 @@ data class Food(
     @SerializedName("kcal")
     val kcal: Int,
     @SerializedName("gram")
-    val gram: Int
+    val gram: Int,
+    var isChecked: Boolean = false,
+    var inputGrams: Int
 )
+
 
 data class CustomFood(
     @SerializedName("no")

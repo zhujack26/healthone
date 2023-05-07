@@ -7,7 +7,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.runtime.*
 import androidx.compose.ui.text.style.TextAlign
-import android.icu.util.Calendar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Alignment
@@ -15,12 +14,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.secui.healthone.ui.common.AppColors
 import com.secui.healthone.ui.mealplanpage.DatePickerDialog
-
+import java.time.LocalDateTime
+import java.util.Calendar
+import java.time.ZoneId
 @Composable
-fun MealInputDate() {
+fun MealInputDate(onIntervalAndDateSelected: (String, LocalDateTime) -> Unit) { // 파라미터 타입 변경
     var showDialog by remember { mutableStateOf(false) }
     val initialDate = Calendar.getInstance()
     val selectedDate = remember { mutableStateOf(initialDate) }
+    var selectedInterval by remember { mutableStateOf("") }
 
     Row(
         modifier = Modifier
@@ -58,7 +60,10 @@ fun MealInputDate() {
         Spacer(modifier = Modifier.width(8.dp))
 
         // 시간 입력 컴포넌트 추가
-        MealInputTime()
+        MealInputTime { newInterval ->
+            selectedInterval = newInterval
+            onIntervalAndDateSelected(selectedInterval, selectedDate.value.toLocalDateTime())
+        }
     }
 
     DatePickerDialog(
@@ -67,10 +72,14 @@ fun MealInputDate() {
         onDateSelected = { newDate ->
             // 날짜 선택 이벤트 처리
             selectedDate.value = newDate
+            onIntervalAndDateSelected(selectedInterval, selectedDate.value.toLocalDateTime())
             showDialog = false
         },
         onDismissRequest = {
             showDialog = false
         }
     )
+}
+fun Calendar.toLocalDateTime(): LocalDateTime {
+    return LocalDateTime.ofInstant(this.toInstant(), ZoneId.systemDefault())
 }

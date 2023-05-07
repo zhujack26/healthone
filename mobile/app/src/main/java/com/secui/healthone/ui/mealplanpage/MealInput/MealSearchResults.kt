@@ -5,6 +5,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.RadioButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -19,15 +22,20 @@ fun MealSearchResults(
     selectedFoodId: Int?,
     onFoodSelected: (Int) -> Unit
 ) {
+    val rememberedSearchResults = remember { mutableStateOf(searchResults) }
+    rememberedSearchResults.value = searchResults
+
     Column {
-        searchResults.forEach { food ->
+        rememberedSearchResults.value.forEach { food ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 RadioButton(
                     selected = selectedFoodId == food.no,
-                    onClick = { onFoodSelected(food.no) }
+                    onClick = {
+                        onFoodSelected(food.no)
+                    }
                 )
                 Text(
                     text = food.name,

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -22,7 +23,8 @@ import com.secui.healthone.util.FitAPIConfig
 import com.secui.healthone.util.FitWalkManager
 import com.secui.healthone.viewmodel.WalkViewModel
 import retrofit2.Response
-
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 
 @Composable
 fun WalkingPage(
@@ -48,6 +50,8 @@ fun WalkingPage(
     }
     val todayDistance = distanceValue.value
     val viewModel: WalkViewModel = viewModel()
+    val walkDataList by viewModel.getPastWeekWalkData().observeAsState(emptyList())
+    val steps = walkDataList + todaySteps
     val walkData = WalkData(
         userNo = 1, // 실제 사용자 번호로
         stepCount = todaySteps,
@@ -74,7 +78,6 @@ fun WalkingPage(
         }
     }
 
-    val steps = listOf(1000, 2000, 1500, 1800, 3500, 2700, 3200)
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()

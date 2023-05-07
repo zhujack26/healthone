@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -27,7 +28,12 @@ import androidx.compose.ui.unit.sp
 import com.secui.healthone.R
 
 @Composable
-fun DrawerButton(text: String, icon: Int? = null, onClick: () -> Unit) {
+fun DrawerButton(
+    text: String,
+    icon: Int? = null,
+    iconColor: Color? = null,
+    onClick: () -> Unit
+) {
     val textColor = AppColors.black
     TextButton(
         onClick = onClick,
@@ -39,7 +45,8 @@ fun DrawerButton(text: String, icon: Int? = null, onClick: () -> Unit) {
                 Icon(
                     painter = painterResource(id = icon),
                     contentDescription = null,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(24.dp),
+                    tint = iconColor ?: Color.Black
                 )
                 Spacer(modifier = Modifier.width(8.dp))
             }
@@ -63,7 +70,7 @@ fun DrawerButton(text: String, icon: Int? = null, onClick: () -> Unit) {
                         text,
                         fontSize = 20.sp,
                         color = textColor,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
                     )
                 }
             } else {
@@ -71,7 +78,8 @@ fun DrawerButton(text: String, icon: Int? = null, onClick: () -> Unit) {
                     text,
                     fontSize = 20.sp,
                     color = textColor,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.weight(1f)
                 )
             }
         }

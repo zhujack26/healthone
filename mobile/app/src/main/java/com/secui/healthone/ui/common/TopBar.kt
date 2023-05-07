@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
@@ -33,7 +34,6 @@ fun TopBar() {
                     title = {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
@@ -43,9 +43,12 @@ fun TopBar() {
                                     .size(60.dp)
                                     .clickable { navController.navigate(PageRoutes.OverView.route) }
                             )
-                            Spacer(modifier = Modifier.weight(1f))
-                            Text(currentTitle.value, textAlign = TextAlign.Center)
-                            Spacer(modifier = Modifier.weight(1f))
+                            Spacer(modifier = Modifier.width(80.dp))
+                            Text(
+                                currentTitle.value,
+                                color = AppColors.black,
+                                fontWeight = FontWeight.Bold
+                            )
                         }
                     },
                     backgroundColor = AppColors.white,
@@ -56,7 +59,8 @@ fun TopBar() {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_bell),
                                 contentDescription = "Alert",
-                                modifier = Modifier.size(24.dp)
+                                modifier = Modifier.size(24.dp),
+                                tint = AppColors.black
                             )
                         }
                         IconButton(onClick = {
@@ -65,7 +69,8 @@ fun TopBar() {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_topbar_toggle),
                                 contentDescription = "Menu",
-                                modifier = Modifier.size(24.dp)
+                                modifier = Modifier.size(24.dp),
+                                tint = AppColors.black
                             )
                         }
                     }
@@ -99,6 +104,7 @@ fun TopBar() {
                 DrawerButton(
                     text = "메인",
                     icon = R.drawable.ic_home,
+                    iconColor = AppColors.black,
                     onClick = {
                         currentTitle.value = "메인"
                         navController.navigate(PageRoutes.OverView.route)
@@ -108,6 +114,7 @@ fun TopBar() {
                 DrawerButton(
                     text = "심박수",
                     icon = R.drawable.ic_heart,
+                    iconColor = Color.Unspecified,
                     onClick = {
                         currentTitle.value = "심박수"
                         navController.navigate(PageRoutes.HeartRate.route)
@@ -117,6 +124,7 @@ fun TopBar() {
                 DrawerButton(
                     text = "식단",
                     icon = R.drawable.ic_food,
+                    iconColor = AppColors.green600,
                     onClick = {
                         currentTitle.value = "식단"
                         navController.navigate(PageRoutes.MealPlan.route)
@@ -126,6 +134,7 @@ fun TopBar() {
                 DrawerButton(
                     text = "수면",
                     icon = R.drawable.ic_sleep,
+                    iconColor = AppColors.mono900,
                     onClick = {
                         currentTitle.value = "수면"
                         navController.navigate(PageRoutes.Sleep.route)
@@ -135,6 +144,7 @@ fun TopBar() {
                 DrawerButton(
                     text = "걸음수",
                     icon = R.drawable.ic_walking,
+                    iconColor = AppColors.blue900,
                     onClick = {
                         currentTitle.value = "걸음수"
                         navController.navigate(PageRoutes.Walking.route)
@@ -144,6 +154,7 @@ fun TopBar() {
                 DrawerButton(
                     text = "심박 수 측정",
                     icon = R.drawable.ic_heart,
+                    iconColor = Color.Unspecified,
                     onClick = {
                         currentTitle.value = "심박 수 측정"
                         navController.navigate(PageRoutes.HeartRate.route)
@@ -153,6 +164,7 @@ fun TopBar() {
                 DrawerButton(
                     text = "건강상태",
                     icon = R.drawable.ic_heart,
+                    iconColor = Color.Unspecified,
                     onClick = {
                         currentTitle.value = "건강상태"
                         navController.navigate(PageRoutes.HealthStatus.route)
@@ -162,6 +174,7 @@ fun TopBar() {
                 DrawerButton(
                     text = "챌린지",
                     icon = R.drawable.ic_fire,
+                    iconColor = AppColors.red900,
                     onClick = {
                         currentTitle.value = "챌린지"
                         navController.navigate(PageRoutes.Challenge.route)
@@ -171,6 +184,7 @@ fun TopBar() {
                 DrawerButton(
                     text = "설정",
                     icon = R.drawable.ic_setting,
+                    iconColor = Color.Unspecified,
                     onClick = {
                         currentTitle.value = "설정"
                         navController.navigate(PageRoutes.Setting.route)

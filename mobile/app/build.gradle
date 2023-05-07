@@ -82,5 +82,7 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp-urlconnection:4.9.1"
 
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
+    implementation "androidx.compose.runtime:runtime-livedata:$compose_ui_version"
+
 }
 

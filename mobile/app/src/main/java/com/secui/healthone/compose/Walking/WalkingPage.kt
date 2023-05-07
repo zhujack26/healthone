@@ -36,13 +36,22 @@ fun WalkingPage(
             FitAPIConfig.getGoogleSignInAccount(context = context)
         )
     }
-
     val todaySteps = walkValue.value
+
+
+    // 걷은 거리
+    val distanceValue: State<Float> = remember {
+        FitWalkManager.readDistanceData(
+            context,
+            FitAPIConfig.getGoogleSignInAccount(context = context)
+        )
+    }
+    val todayDistance = distanceValue.value
     val viewModel: WalkViewModel = viewModel()
     val walkData = WalkData(
         userNo = 1, // 실제 사용자 번호로
-        stepCount = 200,
-        distance = 1.23, // 구글 Fit API에서 distance 값을 가져오거나 빈 값 사용
+        stepCount = todaySteps,
+        distance = todayDistance.toDouble(), // 구글 Fit API에서 distance 값을 가져오거나 빈 값 사용
     )
     fun handleResponse(response: Response<List<WalkData>>) {
         if (response.isSuccessful && response.body() != null) {

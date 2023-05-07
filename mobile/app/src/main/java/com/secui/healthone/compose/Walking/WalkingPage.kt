@@ -21,6 +21,8 @@ import com.secui.healthone.ui.walking.*
 import com.secui.healthone.util.FitAPIConfig
 import com.secui.healthone.util.FitWalkManager
 import com.secui.healthone.viewmodel.WalkViewModel
+import retrofit2.Response
+
 
 @Composable
 fun WalkingPage(
@@ -28,7 +30,6 @@ fun WalkingPage(
     highestSteps: Int = 5000,
     totalSteps: Int = 10000){
     val context = LocalContext.current
-    val thisActivity = LocalContext.current as Activity
     val walkValue: State<Int> = remember {
         FitWalkManager.readWalkSteps(
             context,
@@ -39,17 +40,31 @@ fun WalkingPage(
     val todaySteps = walkValue.value
     val viewModel: WalkViewModel = viewModel()
     val walkData = WalkData(
-        userNo = 0, // 실제 사용자 번호로
-        stepCount = todaySteps,
-        distance = 0f, // 구글 Fit API에서 distance 값을 가져오거나 빈 값 사용
+        userNo = 1, // 실제 사용자 번호로
+        stepCount = 200,
+        distance = 1.23, // 구글 Fit API에서 distance 값을 가져오거나 빈 값 사용
     )
-    LaunchedEffect(viewModel) {
-        try {
-            viewModel.postWalkData(walkData)
-        } catch (e: Exception) {
-            Log.e("WalkingPage", "Error posting walk data: ${e.message}")
+    fun handleResponse(response: Response<List<WalkData>>) {
+        if (response.isSuccessful && response.body() != null) {
+            Log.d("WalkingPage", "postWalkData response: ${response.body()}")
+        } else {
+            val errorBody = response.errorBody()?.string() ?: "Unknown error"
+            Log.e("WalkingPage", "postWalkData error: $errorBody")
+            throw Exception("Error posting walk data: $errorBody")
         }
     }
+    LaunchedEffect(viewModel) {
+        try {
+            Log.d("WalkingPage", "Posting walk data: $walkData")
+            val response = viewModel.postWalkData(walkData)
+            handleResponse(response)
+            Log.d("WalkingPage", "Walk data posted successfully")
+        } catch (e: Exception) {
+            Log.e("WalkingPage", "Error posting walk data: ${e.message}")
+            Log.d("WalkingPage", "Error posting walk data: ${e.message}")
+        }
+    }
+
     val steps = listOf(1000, 2000, 1500, 1800, 3500, 2700, 3200)
     LazyColumn(
         modifier = Modifier

@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.secui.healthone.R
@@ -23,22 +24,28 @@ fun TopBar() {
     val navController = rememberNavController()
     val menuOpen = remember { mutableStateOf(false) } // 메뉴 상태를 기억하는 변수
     val menuOffset = animateDpAsState(if (menuOpen.value) 0.dp else 200.dp) // 애니메이션 상태
+    val currentTitle = remember { mutableStateOf("메인") } // 현재 타이틀을 저장하는 변수
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
             Column {
                 TopAppBar(
                     title = {
-                        Box(
-                            modifier = Modifier
-                                .size(60.dp)
-                                .clickable { navController.navigate(PageRoutes.OverView.route) }
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_topbar_logo),
                                 contentDescription = "logo",
-                                modifier = Modifier.size(60.dp)
+                                modifier = Modifier
+                                    .size(60.dp)
+                                    .clickable { navController.navigate(PageRoutes.OverView.route) }
                             )
+                            Spacer(modifier = Modifier.weight(1f))
+                            Text(currentTitle.value, textAlign = TextAlign.Center)
+                            Spacer(modifier = Modifier.weight(1f))
                         }
                     },
                     backgroundColor = AppColors.white,
@@ -93,6 +100,7 @@ fun TopBar() {
                     text = "메인",
                     icon = R.drawable.ic_home,
                     onClick = {
+                        currentTitle.value = "메인"
                         navController.navigate(PageRoutes.OverView.route)
                     }
                 )
@@ -101,6 +109,7 @@ fun TopBar() {
                     text = "심박수",
                     icon = R.drawable.ic_heart,
                     onClick = {
+                        currentTitle.value = "심박수"
                         navController.navigate(PageRoutes.HeartRate.route)
                     }
                 )
@@ -109,6 +118,7 @@ fun TopBar() {
                     text = "식단",
                     icon = R.drawable.ic_food,
                     onClick = {
+                        currentTitle.value = "식단"
                         navController.navigate(PageRoutes.MealPlan.route)
                     }
                 )
@@ -117,6 +127,7 @@ fun TopBar() {
                     text = "수면",
                     icon = R.drawable.ic_sleep,
                     onClick = {
+                        currentTitle.value = "수면"
                         navController.navigate(PageRoutes.Sleep.route)
                     }
                 )
@@ -125,6 +136,7 @@ fun TopBar() {
                     text = "걸음수",
                     icon = R.drawable.ic_walking,
                     onClick = {
+                        currentTitle.value = "걸음수"
                         navController.navigate(PageRoutes.Walking.route)
                     }
                 )
@@ -133,6 +145,7 @@ fun TopBar() {
                     text = "심박 수 측정",
                     icon = R.drawable.ic_heart,
                     onClick = {
+                        currentTitle.value = "심박 수 측정"
                         navController.navigate(PageRoutes.HeartRate.route)
                     }
                 )
@@ -141,6 +154,7 @@ fun TopBar() {
                     text = "건강상태",
                     icon = R.drawable.ic_heart,
                     onClick = {
+                        currentTitle.value = "건강상태"
                         navController.navigate(PageRoutes.HealthStatus.route)
                     }
                 )
@@ -149,6 +163,7 @@ fun TopBar() {
                     text = "챌린지",
                     icon = R.drawable.ic_fire,
                     onClick = {
+                        currentTitle.value = "챌린지"
                         navController.navigate(PageRoutes.Challenge.route)
                     }
                 )
@@ -157,6 +172,7 @@ fun TopBar() {
                     text = "설정",
                     icon = R.drawable.ic_setting,
                     onClick = {
+                        currentTitle.value = "설정"
                         navController.navigate(PageRoutes.Setting.route)
                     }
                 )

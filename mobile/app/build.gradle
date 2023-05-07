@@ -81,5 +81,6 @@ dependencies {
     // 쿠키.., 레트로핏 응답 시간 설정
     implementation "com.squareup.okhttp3:okhttp-urlconnection:4.9.1"
 
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
 }
 

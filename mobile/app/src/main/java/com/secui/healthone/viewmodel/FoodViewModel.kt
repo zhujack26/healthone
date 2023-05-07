@@ -86,14 +86,17 @@ class MealViewModel : ViewModel() {
 
     fun getMealList(date: String, userNo: Int) {
         viewModelScope.launch {
-            val response = mealApi.getMealList(date, userNo)
+            val inputFormatter = DateTimeFormatter.ofPattern("yyyy-M-d'T'HH:mm:ss")
+            val outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") //
+            val formattedDate = LocalDateTime.parse(date, inputFormatter).format(outputFormatter)
+            val response = mealApi.getMealList(formattedDate, userNo)
             Log.d("MealViewModel", "getMealList response: $response")
             if (response.isSuccessful) {
-                mealDataList.value = response.body()?.data ?: emptyList()
+                mealDataList.value = response.body()?.data?: emptyList()
                 Log.d("MealViewModel", "mealDataList: ${mealDataList.value}")
             } else {
                 // handle the error case
-                Log.e("MealViewModel", "Error getting meal list: ${response.errorBody()?.string()}") // 이 라인을 수정하세요
+                Log.e("MealViewModel", "Error getting meal list: ${response.errorBody()?.string()}")
             }
         }
     }

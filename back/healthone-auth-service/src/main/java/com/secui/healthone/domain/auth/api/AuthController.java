@@ -9,6 +9,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.secui.healthone.domain.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileReader;
 import java.net.URLDecoder;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,31 +31,24 @@ import java.net.URLDecoder;
 @Slf4j
 public class AuthController {
 
-    @GetMapping
-    public ResponseEntity test(){
-        return ResponseEntity.ok().body("hello");
-    }
-    @PostMapping("/login")
-    public void signInOrUp(@RequestBody String authCode) throws Exception{
-        log.info("authCode = {} ",authCode);
-        log.info("들어왔습니다");
-        // Exchange auth code for access token
-        JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-        GoogleAuthorizationCodeTokenRequest tokenRequest = new GoogleAuthorizationCodeTokenRequest(
-                new NetHttpTransport(),
-                jsonFactory,
-                "https://oauth2.googleapis.com/token",
-                "785216230516-1h8hoagkginolldjirvtgiebidmqe38i.apps.googleusercontent.com",
-                "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",
-                URLDecoder.decode(authCode),
-                "http://localhost" // This should match the redirect_uri in your Android app
-        );
-        GoogleTokenResponse tokenResponse = tokenRequest.execute();
-        GoogleIdToken idToken = tokenResponse.parseIdToken();
-        GoogleIdToken.Payload payload = idToken.getPayload();
-        String userId = payload.getSubject();
-        log.info("IDTOKEN = {}",userId);
-        log.info("EMail= {}",payload.getEmail());
+    private final AuthService authService;
 
+    @PostMapping("/login")
+    public ResponseEntity<Map<String,String>> signInOrUp(@RequestBody String authCode) throws Exception{
+        log.info("authCode = {} ",authCode);
+        try {
+            Map<String, String> token = authService.isSignUp(authCode);
+            log.info("Token generated = {} ",token.entrySet());
+            return ResponseEntity.ok().body(token);
+        }catch (Exception e){
+            e.getStackTrace();
+            return ResponseEntity.badRequest().body(null);
+        }
     }
+
+    // 토큰 검증
+
+
+    // 토큰 재발급
+
 }

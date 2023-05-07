@@ -44,7 +44,7 @@ fun SleepPage(navController: NavHostController, modifier: Modifier = Modifier, s
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                DateComponent()
+                DateComponent{}
             }
         }
 

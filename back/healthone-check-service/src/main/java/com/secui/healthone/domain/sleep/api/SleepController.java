@@ -59,7 +59,8 @@ public class SleepController {
     @Parameter(name = "date", description = "수면 세부 정보 조회 날짜", example = "2023-05-03T00:00:00")
     @GetMapping
     public RestApiResponse<List<SleepResDto>> getSleepData(@RequestParam String date) {
-        List<SleepResDto> sleepList = sleepService.getSleepData(date);
+        Integer userNo = 1;
+        List<SleepResDto> sleepList = sleepService.getSleepData(date, userNo);
         return new RestApiResponse<>("수면 세부 정보 조회 성공" , sleepList);
     }
 

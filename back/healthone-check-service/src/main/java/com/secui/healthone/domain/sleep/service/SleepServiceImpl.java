@@ -6,6 +6,7 @@ import com.secui.healthone.domain.sleep.dto.SleepResDto;
 import com.secui.healthone.domain.sleep.dto.SleepUpdateDto;
 import com.secui.healthone.domain.sleep.entity.Sleep;
 import com.secui.healthone.domain.sleep.repository.SleepRepository;
+import com.secui.healthone.global.util.StringDateTrans;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -24,12 +25,13 @@ public class SleepServiceImpl implements SleepService {
 
     // 수면날짜 데이터 가져오기
     @Override
-    public List<SleepResDto> getSleepData(String date) {
+    public List<SleepResDto> getSleepData(String date, Integer userNo) {
         //        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
 //        Optional<User> optionalUser = userRepository.findByUserEmail(userEmail);
 //        Optional<User> optionalUser = userRepository.findById(1);
 //        User user = optionalUser.orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
-        return SleepDtoMapper.INSTANCE.entityToResDto(sleepRepository.findAllByUserNoAndCreateTimeLike(1, date));
+        StringDateTrans dateTrans = new StringDateTrans(date);
+        return SleepDtoMapper.INSTANCE.entityToResDto(sleepRepository.findByCreateTimeBetweenAndUserNo(dateTrans.getStartDateTime(), dateTrans.getEndDateTime(), userNo));
     }
 
     // 수면 정보 추가하기

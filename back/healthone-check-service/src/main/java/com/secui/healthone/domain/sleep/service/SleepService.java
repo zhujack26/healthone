@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface SleepService {
 
-    List<SleepResDto> getSleepData(String date);
+    List<SleepResDto> getSleepData(String date, Integer userN);
 
     SleepResDto addSleepInfo(SleepInsertDto sleepInfoReqDto);
 

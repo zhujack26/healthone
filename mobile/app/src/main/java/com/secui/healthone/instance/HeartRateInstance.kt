@@ -1,17 +1,16 @@
-package com.secui.healthone.util
+package com.secui.healthone.instance
 
 import androidx.appcompat.app.AppCompatActivity
-import com.secui.healthone.service.HealthOneNetworkService
+import com.secui.healthone.service.HeartRateService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
-import java.net.CookieManager
 import java.util.concurrent.TimeUnit
 
-class HealthOneRetrofitInstance : AppCompatActivity() {
+class HeartRateInstance : AppCompatActivity() {
 
     object RetrofitInstance {
 //        private val retrofit by lazy {
@@ -49,19 +48,20 @@ class HealthOneRetrofitInstance : AppCompatActivity() {
 
         private val retrofit by lazy {
             Retrofit.Builder()
-                .baseUrl(SERVER_URL)
+                .baseUrl(URL)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
-        val api : HealthOneNetworkService by lazy {
-            retrofit.create(HealthOneNetworkService::class.java)
+        val api : HeartRateService by lazy {
+            retrofit.create(HeartRateService::class.java)
         }
     }
 
     companion object {
         const val hyoURL = "http://192.168.31.33:8080/"
         const val SERVER_URL = "http://a80d3a967a5514702bfe8ba3e8b52871-1335940738.ap-northeast-2.elb.amazonaws.com:8080/";
+        const val URL = "http://check.apihealthone.com/"
     }
 
 

@@ -71,8 +71,7 @@ public class SleepController {
     @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "수면 정보 등록 객체")
     @PostMapping
     public RestApiResponse<?> addSleepInfo(@RequestBody SleepInsertDto sleepInsertDto) {
-        sleepService.addSleepInfo(sleepInsertDto);
-        return new RestApiResponse<>("수면 정보 등록 성공" , null);
+        return new RestApiResponse<>("수면 정보 등록 성공" , sleepService.addSleepInfo(sleepInsertDto));
     }
 
     @Operation(summary = "수면 정보 수정", description = "수면 정보 수정 API", tags = {"Sleep"})

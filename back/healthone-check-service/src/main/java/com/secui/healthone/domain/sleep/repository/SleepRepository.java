@@ -10,7 +10,9 @@ import java.util.Optional;
 
 public interface SleepRepository extends JpaRepository<Sleep, Integer> {
 //    List<Sleep> findAllByUserAndSleepCreatetimeLike(User user, String date);
-    List<Sleep> findAllByUserNoAndCreatetimeLike(int userNo, String date);
+    List<Sleep> findAllByUserNoAndCreateTimeLike(int userNo, String date);
 
-    Slice<Sleep> findAllByUserNoOrderByCreatetimeDesc(Integer userNo, Pageable pageable);
+    Slice<Sleep> findAllByUserNoOrderByCreateTimeDesc(Integer userNo, Pageable pageable);
+
+    Sleep save(Sleep sleep);
 }

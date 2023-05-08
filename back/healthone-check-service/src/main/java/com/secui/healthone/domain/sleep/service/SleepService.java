@@ -12,7 +12,7 @@ public interface SleepService {
 
     List<SleepResDto> getSleepData(String date);
 
-    void addSleepInfo(SleepInsertDto sleepInfoReqDto);
+    SleepResDto addSleepInfo(SleepInsertDto sleepInfoReqDto);
 
     void updateSleepInfo(SleepUpdateDto sleepInfoReqDto);
 

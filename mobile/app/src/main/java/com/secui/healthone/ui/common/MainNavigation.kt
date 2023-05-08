@@ -8,8 +8,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.secui.healthone.compose.AlarmSettingPage
 import com.secui.healthone.compose.AlertPage
-import com.secui.healthone.compose.Challenge.PopularDetailPage
+import com.secui.healthone.compose.challenge.PopularDetailPage
 import com.secui.healthone.compose.ChallengePage
+import com.secui.healthone.compose.challenge.*
 import com.secui.healthone.compose.HeartMeasurePage
 import com.secui.healthone.compose.HeartRatePage
 import com.secui.healthone.compose.MealPlan.ExerciseInputPage

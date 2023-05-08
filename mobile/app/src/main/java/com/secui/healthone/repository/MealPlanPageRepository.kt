@@ -1,8 +1,9 @@
 package com.secui.healthone.repository
 
 import kotlinx.coroutines.delay
+import java.util.Calendar
 
-suspend fun fetchCaloriesData(): CaloriesData {
+suspend fun fetchCaloriesData(selectedDate: Calendar): CaloriesData {
     // 이 부분에 실제 API 호출을 처리하는 코드를 작성합니다.
     //예시
     var Calorie1 = 3400 // 섭취

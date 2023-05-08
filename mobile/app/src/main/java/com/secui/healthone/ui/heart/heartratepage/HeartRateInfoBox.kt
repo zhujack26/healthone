@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -17,12 +18,17 @@ import androidx.navigation.NavHostController
 import com.secui.healthone.R;
 import com.secui.healthone.ui.common.AppColors
 import com.secui.healthone.util.PageRoutes
+import com.secui.healthone.util.PreferenceUtil
 
 @Composable
 fun HeartRateInfoBox(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ){
+
+    val context = LocalContext.current;
+    val prefs: PreferenceUtil = PreferenceUtil(context);
+
     Card(
         elevation = 4.dp,
         shape = RoundedCornerShape(4.dp),
@@ -37,18 +43,14 @@ fun HeartRateInfoBox(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Spacer(modifier = Modifier.height(4.dp))
-
             // 날짜
             Text(text = HeartRateInfoBoxText.heartRateDateText,
                 fontSize = 18.sp,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight());
-
             Spacer(modifier = Modifier.height(24.dp))
-
             // bpm text
             Row(modifier = Modifier
                 .wrapContentWidth()
@@ -56,7 +58,7 @@ fun HeartRateInfoBox(
                 verticalAlignment = Alignment.Bottom,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Text(text = HeartRateInfoBoxText.heartRateValue,
+                Text(text = prefs.getString("current_heart_bpm", "-"),
                     fontSize = 24.sp) // value
                 Spacer(modifier = Modifier.width(8.dp));
                 Text(text = HeartRateInfoBoxText.heartRateUnit,
@@ -64,12 +66,9 @@ fun HeartRateInfoBox(
             }
 
             Spacer(modifier = Modifier.height(16.dp))
-
             // bpm graph
             HeartBpmGraph();
-
             Spacer(modifier = Modifier.height(32.dp))
-
             // bpm btn
             Button(colors = ButtonDefaults
                 .outlinedButtonColors(
@@ -88,13 +87,9 @@ fun HeartRateInfoBox(
                     color = AppColors.white
                 )
             }
-
             Spacer(modifier = Modifier.height(16.dp))
-
         }
     }
-    
-
 }
 
 class HeartRateInfoBoxText {

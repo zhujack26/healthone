@@ -14,4 +14,6 @@ public interface SleepDtoMapper {
 
     Sleep insertDtoToEntity(SleepInsertDto sleepInsertDto);
 
+    SleepResDto entityToResDto(Sleep sleep);
+
 }

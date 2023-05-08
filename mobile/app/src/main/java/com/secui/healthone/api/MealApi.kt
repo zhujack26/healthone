@@ -35,7 +35,7 @@ interface MealApi {
 
 
     companion object {
-        private const val BASE_URL = "http://a80d3a967a5514702bfe8ba3e8b52871-1335940738.ap-northeast-2.elb.amazonaws.com/"
+        private const val BASE_URL = "http://meal.apihealthone.com/"
 
         fun create(): MealApi {
             val logger = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
@@ -63,7 +63,7 @@ interface FoodApi {
     ): retrofit2.Response<FoodResponse>
 
     companion object {
-        private const val BASE_URL = "http://a80d3a967a5514702bfe8ba3e8b52871-1335940738.ap-northeast-2.elb.amazonaws.com/"
+        private const val BASE_URL = "http://meal.apihealthone.com/"
 
         fun create(): FoodApi {
             return Retrofit.Builder()

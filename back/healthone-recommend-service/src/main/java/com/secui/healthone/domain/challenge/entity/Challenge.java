@@ -22,14 +22,14 @@ public class Challenge {
     private String introduce;
     @Column(name = "challenge_total_work_count") // 챌린지 총 운동 횟수
     private String totalWorkCount;
-    @Column(name = "challenge_times") // 챌린지 총 운동 횟수
-    private Integer times;
     @Column(name = "challenge_total_period") // 챌린지 총 기간
     private String totalPeriod;
     @Column(name = "challenge_level") // 챌린지 난이도
     private ChallengeLevel level;
     @Column(name = "challenge_avg_work_time") // 평균 운동 시간
     private Integer avgWorkTime;
+    @Column(name = "challenge_sport_equipment_check") // 필요 운동기구 여부
+    private boolean sportEquipmentCheck;
     @Column(name = "challenge_equipment") // 필요 운동 기구
     private String equipment;
     @Column(name = "challenge_program_type") // 프로그램 유형
@@ -40,6 +40,6 @@ public class Challenge {
     private String youtubeLink;
     @Column(name = "challenge_thumbnail_link") // 썸네일 이미지 링크
     private String thumbnailLink;
-    @Column(name = "challenge_participants_num") // 썸네일 이미지 링크
-    private Integer participantsNum;
+    @Column(name = "challenge_participants") // 챌린지 참가자 수
+    private Integer participants;
 }

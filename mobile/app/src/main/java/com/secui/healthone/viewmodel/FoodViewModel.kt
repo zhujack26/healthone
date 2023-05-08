@@ -15,6 +15,7 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonPrimitive
 import com.google.gson.JsonSerializer
 import com.secui.healthone.api.FoodApi
+import retrofit2.Response
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -27,13 +28,16 @@ class FoodViewModel : ViewModel() {
     var currentPage = 1
     var totalResults = 0
     var searchTerm = ""
+    private val mealViewModel = MealViewModel()
 
     suspend fun addMeal(meal: Meal) {
         Log.d("FoodViewModel", "addMeal called with meal: $meal")
         val gson = GsonBuilder()
-            .registerTypeAdapter(LocalDateTime::class.java, JsonSerializer<LocalDateTime> { src, _, _ ->
-                JsonPrimitive(src.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
-            })
+            .registerTypeAdapter(
+                LocalDateTime::class.java,
+                JsonSerializer<LocalDateTime> { src, _, _ ->
+                    JsonPrimitive(src.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
+                })
             .create()
         val mealJson = gson.toJson(meal)
         try {
@@ -42,15 +46,15 @@ class FoodViewModel : ViewModel() {
             if (response.isSuccessful) {
                 Log.d("FoodViewModel", "Request URL: ${response}")
             } else {
-                Log.e("FoodViewModel", "Request failed with code: ${response.code()} and message: ${response.message()}")
+                Log.e(
+                    "FoodViewModel",
+                    "Request failed with code: ${response.code()} and message: ${response.message()}"
+                )
             }
         } catch (e: Exception) {
             Log.e("FoodViewModel", "Error occurred while sending request: ", e)
         }
     }
-
-
-
 
     fun searchFood(query: String, page: Int = 1, size: Int = 20) {
         searchTerm = query
@@ -69,36 +73,51 @@ class FoodViewModel : ViewModel() {
         }
     }
 
-
-
     fun loadNextPage() {
         if (hasMoreResults.value == true) {
             searchFood(searchTerm, currentPage + 1)
         }
     }
-}
 
+    class MealViewModel : ViewModel() {
+        private val mealApi = MealApi.create()
+        val mealDataList = MutableLiveData<List<MealData>>()
 
-
-class MealViewModel : ViewModel() {
-    private val mealApi = MealApi.create()
-    val mealDataList = MutableLiveData<List<MealData>>()
-
-    fun getMealList(date: String, userNo: Int) {
-        viewModelScope.launch {
-            val inputFormatter = DateTimeFormatter.ofPattern("yyyy-M-d'T'HH:mm:ss")
-            val outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") //
-            val formattedDate = LocalDateTime.parse(date, inputFormatter).format(outputFormatter)
-            val response = mealApi.getMealList(formattedDate, userNo)
-            Log.d("MealViewModel", "getMealList response: $response")
-            if (response.isSuccessful) {
-                mealDataList.value = response.body()?.data?: emptyList()
-                Log.d("MealViewModel", "mealDataList: ${mealDataList.value}")
-            } else {
-                // handle the error case
-                Log.e("MealViewModel", "Error getting meal list: ${response.errorBody()?.string()}")
+        fun getMealList(date: String, userNo: Int) {
+            viewModelScope.launch {
+                val inputFormatter = DateTimeFormatter.ofPattern("yyyy-M-d'T'HH:mm:ss")
+                val outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                val formattedDate =
+                    LocalDateTime.parse(date, inputFormatter).format(outputFormatter)
+                val response = mealApi.getMealList(formattedDate, userNo)
+                Log.d("MealViewModel", "getMealList response: $response")
+                if (response.isSuccessful) {
+                    mealDataList.value = response.body()?.data ?: emptyList()
+                    Log.d("MealViewModel", "mealDataList: ${mealDataList.value}")
+                } else {
+                    // handle the error case
+                    Log.e(
+                        "MealViewModel",
+                        "Error getting meal list: ${response.errorBody()?.string()}"
+                    )
+                }
             }
         }
+        fun deleteMeal(mealNo: Int, date: String, userNo: Int) {
+            viewModelScope.launch {
+                try {
+                    val response: Response<Unit> = mealApi.deleteMeal(mealNo)
+                    if (response.isSuccessful) {
+                        // 요청이 성공한 경우 처리할 코드를 여기에 작성하세요.
+                        getMealList(date, userNo)
+                    } else {
+                        // 오류 처리 코드를 여기에 작성하세요.
+                    }
+                } catch (e: Exception) {
+                    // 네트워크 오류 처리 코드를 여기에 작성하세요.
+                }
+            }
+        }
+
     }
 }
-

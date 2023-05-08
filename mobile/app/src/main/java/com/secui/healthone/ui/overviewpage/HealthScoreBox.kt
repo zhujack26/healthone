@@ -2,6 +2,7 @@ package com.secui.healthone.ui.overviewpage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -15,6 +16,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.secui.healthone.R
+import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.util.PageRoutes
 
 
 @Composable
@@ -26,8 +29,9 @@ fun HealthScoreBox(
         elevation = 4.dp,
         shape = RoundedCornerShape(4.dp),
         modifier = Modifier
-            .background(colorResource(id = R.color.white))
+            .background(AppColors.white)
             .padding(16.dp)
+            .clickable { navController.navigate(PageRoutes.HealthStatus.route) }
     ) {
 
         Column(modifier= Modifier

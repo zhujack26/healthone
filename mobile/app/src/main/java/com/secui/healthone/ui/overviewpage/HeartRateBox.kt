@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -17,19 +18,28 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.secui.healthone.R
+import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.util.BoxTool
 import com.secui.healthone.util.PageRoutes
+import com.secui.healthone.util.PreferenceUtil
 
 @Composable
 fun HeartRateBox(
     navController:NavHostController,
+    bpmValue:Int = 0,
     modifier: Modifier = Modifier
 ){
+
+    val context = LocalContext.current;
+    val prefs: PreferenceUtil = PreferenceUtil(context);
+    val displayBpmValue:String = BoxTool.getBpmDisplayString(bpmValue);
+
 
     Card(
         elevation = 4.dp,
         shape = RoundedCornerShape(4.dp),
         modifier = Modifier
-            .background(colorResource(id = R.color.white))
+            .background(AppColors.white)
             .padding(16.dp).clickable {
               navController.navigate(PageRoutes.HeartRate.route);
             },
@@ -66,7 +76,8 @@ fun HeartRateBox(
                         .height(36.dp)
                 )
                 Spacer(modifier = Modifier.width(16.dp));
-                Text(text = "99 bpm", fontSize = 20.sp);
+                Text(text = "${prefs.getString("current_heart_bpm", "-")} bpm",
+                    fontSize = 20.sp);
             }
             Spacer(modifier = Modifier.height(16.dp))
 

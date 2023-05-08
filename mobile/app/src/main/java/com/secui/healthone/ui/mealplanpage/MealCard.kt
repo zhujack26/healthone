@@ -10,65 +10,59 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberImagePainter
 import com.secui.healthone.data.MealPlan.Meal
-import android.graphics.drawable.ColorDrawable
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.unit.sp
+import com.secui.healthone.data.MealPlan.MealData
+
 
 @Composable
-fun MealCard(mealList: List<Meal>, name: String) {
+fun MealCard(mealDataList: List<MealData>, name: String) {
     Card {
         Column(modifier = Modifier.padding(8.dp)) {
             Text(text = name, modifier = Modifier.align(Alignment.Start))
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            mealList.forEach { meal ->
-                Row {
-                    val painter = rememberImagePainter(
-                        data = meal.imageUrl,
-                        builder = {
-                            crossfade(true)
-                            placeholder(ColorDrawable(Color.Gray.toArgb()))
-                        }
-                    )
+            mealDataList.forEach { mealData ->
+                val foodName = mealData.name
+                val kcal = mealData.kcal
+                val gram = mealData.gram
 
-                    Image(
-                        painter = painter,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .height(100.dp)
-                            .width(100.dp)
-                            .background(Color.Gray),
-                        contentScale = ContentScale.FillBounds
-                    )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(
+                        modifier = Modifier.weight(1f),
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text(text = foodName)
+                        Text(text = "${gram}g", fontSize = 12.sp)
+                    }
 
                     Spacer(modifier = Modifier.width(16.dp))
 
-                    Column(modifier = Modifier.weight(1f).align(Alignment.CenterVertically)) {
-                        Text(text = meal.description)
+                    Column(
+                        modifier = Modifier.weight(1f),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.End
+                    ) {
+                        Text(text = "${kcal} kcal")
                     }
 
-                    Column(
-                        modifier = Modifier.weight(1f).align(Alignment.CenterVertically)
+                    Spacer(modifier = Modifier.width(16.dp))
+
+                    Box(
+                        modifier = Modifier
+                            .size(40.dp, 20.dp)
+                            .background(Color.White, shape = RoundedCornerShape(percent = 50))
+                            .border(BorderStroke(1.dp, Color.Gray), shape = RoundedCornerShape(percent = 50))
+                            .clickable { /* 수정 기능 */ }
                     ) {
-                        Spacer(modifier = Modifier.weight(1f))
-                        Box(
-                            modifier = Modifier
-                                .size(40.dp, 20.dp)
-                                .background(Color.White, shape = RoundedCornerShape(percent = 50))
-                                .border(BorderStroke(1.dp, Color.Gray), shape = RoundedCornerShape(percent = 50))
-                                .align(Alignment.CenterHorizontally)
-                                .clickable { /* 수정 기능 */ }
-                        ) {
-                            Text("수정", color = Color.Black, modifier = Modifier.align(Alignment.Center))
-                        }
-                        Text(text = "${meal.calories} kcal")
+                        Text("수정", color = Color.Black, modifier = Modifier.align(Alignment.Center))
                     }
                 }
 

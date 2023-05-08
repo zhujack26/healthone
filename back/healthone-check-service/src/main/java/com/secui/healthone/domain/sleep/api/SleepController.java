@@ -57,7 +57,7 @@ public class SleepController {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class))),  })
     @SecurityRequirement(name = "bearerAuth")
     @Parameter(name = "date", description = "수면 세부 정보 조회 날짜", example = "2023-05-03T00:00:00")
-    @GetMapping
+    @GetMapping("/detail")
     public RestApiResponse<List<SleepResDto>> getSleepData(@RequestParam String date) {
         Integer userNo = 1;
         List<SleepResDto> sleepList = sleepService.getSleepData(date, userNo);

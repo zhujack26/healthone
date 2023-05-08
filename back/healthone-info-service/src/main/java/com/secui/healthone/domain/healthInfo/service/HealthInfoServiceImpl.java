@@ -1,0 +1,67 @@
+package com.secui.healthone.domain.healthInfo.service;
+
+import com.secui.healthone.domain.healthInfo.dto.GetHealthInfoReqDto;
+import com.secui.healthone.domain.healthInfo.dto.HealthInfoDto;
+import com.secui.healthone.domain.healthInfo.dto.HealthInfoDtoMapper;
+import com.secui.healthone.domain.healthInfo.entity.HealthInfo;
+import com.secui.healthone.domain.healthInfo.repository.HealthInfoRepository;
+import com.secui.healthone.domain.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class HealthInfoServiceImpl implements HealthInfoService {
+
+    private final HealthInfoRepository healthInfoRepository;
+    private final UserRepository userRepository;
+
+    @Override
+    public HealthInfoDto getHealthInfo(GetHealthInfoReqDto getHealthInfoReqDto) {
+//        userRepository.findById(getHealthInfoReqDto.getUserNo()).orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
+        HealthInfo healthInfo = healthInfoRepository.findByUserNo(getHealthInfoReqDto.getUserNo()).orElseThrow();
+        return HealthInfoDtoMapper.INSTANCE.entityToDto(healthInfo);
+    }
+
+    @Override
+    public void addHealthInfo(HealthInfoDto healthInfoDto) {
+        HealthInfo healthInfo = HealthInfoDtoMapper.INSTANCE.dtoToEntity(healthInfoDto);
+        healthInfoRepository.save(healthInfo);
+    }
+
+    @Override
+    public void updateHealthInfo(HealthInfoDto healthInfoDto) {
+//        userRepository.findById(healthInfoDto.getUserNo()).orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
+        HealthInfo healthInfo = healthInfoRepository.findById(healthInfoDto.getNo()).orElseThrow();
+        if (healthInfoDto.getHeight() != null) {
+            healthInfo.setHeight(healthInfoDto.getHeight());
+        }
+        if (healthInfoDto.getBirthdate() != null) {
+            healthInfo.setBirthdate(healthInfoDto.getBirthdate());
+        }
+        if (healthInfoDto.getSleepTime() != null) {
+            healthInfo.setSleepTime(healthInfoDto.getSleepTime());
+        }
+        if (healthInfoDto.getSleepGoal() != null) {
+            healthInfo.setSleepGoal(healthInfoDto.getSleepGoal());
+        }
+        if (healthInfoDto.getWeight() != null) {
+            healthInfo.setWeight(healthInfoDto.getWeight());
+        }
+        if (healthInfoDto.getStepGoal() != null) {
+            healthInfo.setStepGoal(healthInfoDto.getStepGoal());
+        }
+        if (healthInfoDto.getWorkRate() != null) {
+            healthInfo.setWorkRate(healthInfoDto.getWorkRate());
+        }
+        if (healthInfoDto.getWakeUpTime() != null) {
+            healthInfo.setWakeUpTime(healthInfoDto.getWakeUpTime());
+        }
+        healthInfoRepository.save(healthInfo);
+    }
+
+    @Override
+    public void deleteHealthInfo(String no) {
+        healthInfoRepository.deleteById(Integer.parseInt(no));
+    }
+}

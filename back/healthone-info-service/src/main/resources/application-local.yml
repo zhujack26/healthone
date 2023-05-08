@@ -27,7 +27,7 @@ spring:
         show_sql: true
         use_sql_comments: true
     defer-datasource-initialization: true
-
+  
 # cors 설정
 cors:
   allowed-origins: 'http://localhost:3000'

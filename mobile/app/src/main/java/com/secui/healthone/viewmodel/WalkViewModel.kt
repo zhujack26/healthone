@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.secui.healthone.data.ApiResponse
 import com.secui.healthone.data.WalkData
 import com.secui.healthone.util.RetrofitClient
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +25,7 @@ class WalkViewModel : ViewModel() {
         return walkData
     }
 
-    suspend fun postWalkData(walkData: WalkData): Response<List<WalkData>> {
+    suspend fun postWalkData(walkData: WalkData): Response<ApiResponse<List<WalkData>>> {
         return withContext(Dispatchers.IO) {
             RetrofitClient.instance.postWalkData(walkData)
         }

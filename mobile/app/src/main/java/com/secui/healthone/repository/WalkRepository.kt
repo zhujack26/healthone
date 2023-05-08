@@ -1,5 +1,8 @@
+<<<<<<< HEAD
+=======
 import com.secui.healthone.data.ApiResponse
 import com.secui.healthone.data.WalkData
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
 import com.secui.healthone.util.RetrofitClient
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -16,9 +19,13 @@ class WalkRepository {
         for (date in dateList) {
             val response = walkApiService.getWalkData(dateTime = date)
             if (response.isSuccessful && response.body() != null) {
+<<<<<<< HEAD
+                walkDataList.addAll(response.body()!!)
+=======
                 val apiResponse = response.body()!!
                 val stepsList = apiResponse.data.map { it.stepCount }
                 walkDataList.addAll(stepsList)
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
             } else {
                 // 오류 처리
             }

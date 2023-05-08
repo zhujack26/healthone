@@ -19,7 +19,11 @@ import com.secui.healthone.data.MealPlan.MealData
 
 
 @Composable
+<<<<<<< HEAD
+fun MealCard(mealDataList: List<MealData>, name: String) {
+=======
 fun MealCard(mealDataList: List<MealData>, name: String, onDelete: (Int) -> Unit) {
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
     Card {
         Column(modifier = Modifier.padding(8.dp)) {
             Text(text = name, modifier = Modifier.align(Alignment.Start))
@@ -60,9 +64,15 @@ fun MealCard(mealDataList: List<MealData>, name: String, onDelete: (Int) -> Unit
                             .size(40.dp, 20.dp)
                             .background(Color.White, shape = RoundedCornerShape(percent = 50))
                             .border(BorderStroke(1.dp, Color.Gray), shape = RoundedCornerShape(percent = 50))
+<<<<<<< HEAD
+                            .clickable { /* 수정 기능 */ }
+                    ) {
+                        Text("수정", color = Color.Black, modifier = Modifier.align(Alignment.Center))
+=======
                             .clickable { onDelete(mealData.no) }
                     ) {
                         Text("삭제", color = Color.Black, modifier = Modifier.align(Alignment.Center))
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
                     }
                 }
 

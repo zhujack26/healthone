@@ -28,16 +28,25 @@ class FoodViewModel : ViewModel() {
     var currentPage = 1
     var totalResults = 0
     var searchTerm = ""
+<<<<<<< HEAD
+=======
     private val mealViewModel = MealViewModel()
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
 
     suspend fun addMeal(meal: Meal) {
         Log.d("FoodViewModel", "addMeal called with meal: $meal")
         val gson = GsonBuilder()
+<<<<<<< HEAD
+            .registerTypeAdapter(LocalDateTime::class.java, JsonSerializer<LocalDateTime> { src, _, _ ->
+                JsonPrimitive(src.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
+            })
+=======
             .registerTypeAdapter(
                 LocalDateTime::class.java,
                 JsonSerializer<LocalDateTime> { src, _, _ ->
                     JsonPrimitive(src.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 })
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
             .create()
         val mealJson = gson.toJson(meal)
         try {
@@ -46,16 +55,26 @@ class FoodViewModel : ViewModel() {
             if (response.isSuccessful) {
                 Log.d("FoodViewModel", "Request URL: ${response}")
             } else {
+<<<<<<< HEAD
+                Log.e("FoodViewModel", "Request failed with code: ${response.code()} and message: ${response.message()}")
+=======
                 Log.e(
                     "FoodViewModel",
                     "Request failed with code: ${response.code()} and message: ${response.message()}"
                 )
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
             }
         } catch (e: Exception) {
             Log.e("FoodViewModel", "Error occurred while sending request: ", e)
         }
     }
 
+<<<<<<< HEAD
+
+
+
+=======
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
     fun searchFood(query: String, page: Int = 1, size: Int = 20) {
         searchTerm = query
         viewModelScope.launch {
@@ -73,11 +92,44 @@ class FoodViewModel : ViewModel() {
         }
     }
 
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
     fun loadNextPage() {
         if (hasMoreResults.value == true) {
             searchFood(searchTerm, currentPage + 1)
         }
     }
+<<<<<<< HEAD
+}
+
+
+
+class MealViewModel : ViewModel() {
+    private val mealApi = MealApi.create()
+    val mealDataList = MutableLiveData<List<MealData>>()
+
+    fun getMealList(date: String, userNo: Int) {
+        viewModelScope.launch {
+            val inputFormatter = DateTimeFormatter.ofPattern("yyyy-M-d'T'HH:mm:ss")
+            val outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") //
+            val formattedDate = LocalDateTime.parse(date, inputFormatter).format(outputFormatter)
+            val response = mealApi.getMealList(formattedDate, userNo)
+            Log.d("MealViewModel", "getMealList response: $response")
+            if (response.isSuccessful) {
+                mealDataList.value = response.body()?.data?: emptyList()
+                Log.d("MealViewModel", "mealDataList: ${mealDataList.value}")
+            } else {
+                // handle the error case
+                Log.e("MealViewModel", "Error getting meal list: ${response.errorBody()?.string()}")
+            }
+        }
+    }
+}
+
+=======
 
     class MealViewModel : ViewModel() {
         private val mealApi = MealApi.create()
@@ -121,3 +173,4 @@ class FoodViewModel : ViewModel() {
 
     }
 }
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef

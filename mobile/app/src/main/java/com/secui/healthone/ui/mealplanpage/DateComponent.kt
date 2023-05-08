@@ -22,10 +22,14 @@ import java.util.Calendar
 import com.secui.healthone.ui.common.AppColors
 
 @Composable
+<<<<<<< HEAD
+fun DateComponent(onDateChanged: (Calendar) -> Unit) {
+=======
 fun DateComponent(
     selectedDate: MutableState<Calendar>,
     onDateChanged: (Calendar) -> Unit
 ) {
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
     var showDialog by remember { mutableStateOf(false) }
     val selectedYear by rememberSaveable { mutableStateOf(selectedDate.value.get(Calendar.YEAR)) }
     val selectedMonth by rememberSaveable { mutableStateOf(selectedDate.value.get(Calendar.MONTH)) }
@@ -43,10 +47,15 @@ fun DateComponent(
         IconButton(onClick = {
             selectedDate.value =
                 (selectedDate.value.clone() as Calendar).apply { add(Calendar.DAY_OF_MONTH, -1) }
+<<<<<<< HEAD
+            onDateChanged(selectedDate.value) // 이 줄을 추가하세요
+=======
             onDateChanged(selectedDate.value)
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
         }) {
             Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Previous Date")
         }
+
 
         // 달력 아이콘과 날짜를 가운데에 배치
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -70,14 +79,22 @@ fun DateComponent(
         IconButton(onClick = {
             selectedDate.value =
                 (selectedDate.value.clone() as Calendar).apply { add(Calendar.DAY_OF_MONTH, 1) }
+<<<<<<< HEAD
+            onDateChanged(selectedDate.value) // 이 줄을 추가하세요
+=======
             onDateChanged(selectedDate.value)
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
         }) {
             Icon(imageVector = Icons.Filled.ArrowForward, contentDescription = "Next Date")
         }
 
         DatePickerDialog(
             showDialog = showDialog,
+<<<<<<< HEAD
+            initialDate = initialDate,
+=======
             initialDate = selectedDate.value,
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
             onDateSelected = { newDate ->
                 onDateChanged(newDate)
                 showDialog = false
@@ -87,4 +104,8 @@ fun DateComponent(
             }
         )
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef

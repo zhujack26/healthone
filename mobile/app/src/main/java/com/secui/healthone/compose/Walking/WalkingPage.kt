@@ -50,7 +50,6 @@ fun WalkingPage(
     val todayDistance = distanceValue.value
     val viewModel: WalkViewModel = viewModel()
     val walkDataList by viewModel.getPastWeekWalkData().observeAsState(emptyList())
-
     val steps = walkDataList + todaySteps
     val walkData = WalkData(
         userNo = 1, // 실제 사용자 번호로

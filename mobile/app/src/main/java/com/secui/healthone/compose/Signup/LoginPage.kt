@@ -141,7 +141,7 @@ private fun sendAuthCodeToServer(authCode: String?) {
     }
     CoroutineScope(Dispatchers.IO).launch {
         try {
-            val urlString = "http://192.168.31.33:8080/test"
+            val urlString = "http://192.168.219.100/auth/login"
             val url = URL(urlString)
             val connection = url.openConnection() as HttpURLConnection
             connection.requestMethod = "POST"

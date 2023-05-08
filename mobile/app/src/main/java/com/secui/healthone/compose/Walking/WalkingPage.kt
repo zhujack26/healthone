@@ -1,6 +1,5 @@
 package com.secui.healthone.compose
 
-import android.app.Activity
 import android.util.Log
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -25,6 +23,7 @@ import com.secui.healthone.viewmodel.WalkViewModel
 import retrofit2.Response
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import com.secui.healthone.data.ApiResponse
 
 @Composable
 fun WalkingPage(
@@ -51,15 +50,17 @@ fun WalkingPage(
     val todayDistance = distanceValue.value
     val viewModel: WalkViewModel = viewModel()
     val walkDataList by viewModel.getPastWeekWalkData().observeAsState(emptyList())
+
     val steps = walkDataList + todaySteps
     val walkData = WalkData(
         userNo = 1, // 실제 사용자 번호로
         stepCount = todaySteps,
         distance = todayDistance.toDouble(), // 구글 Fit API에서 distance 값을 가져오거나 빈 값 사용
     )
-    fun handleResponse(response: Response<List<WalkData>>) {
+    fun handleResponse(response: Response<ApiResponse<List<WalkData>>>) {
         if (response.isSuccessful && response.body() != null) {
-            Log.d("WalkingPage", "postWalkData response: ${response.body()}")
+            val apiResponse = response.body()!!
+            Log.d("WalkingPage", "postWalkData response: ${apiResponse.data}")
         } else {
             val errorBody = response.errorBody()?.string() ?: "Unknown error"
             Log.e("WalkingPage", "postWalkData error: $errorBody")

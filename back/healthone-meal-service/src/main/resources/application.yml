@@ -5,6 +5,10 @@ server:
       charset: UTF-8
       force: true
 
+springdoc:
+  swagger-ui:
+    path: /meal/
+
 spring:
   profiles:
     active: server

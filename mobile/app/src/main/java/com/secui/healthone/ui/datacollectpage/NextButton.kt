@@ -14,6 +14,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.secui.healthone.R
 import com.secui.healthone.util.PageRoutes
@@ -31,6 +32,7 @@ fun NextButton(navController: NavController) {
     ) {
         Text(
             text = "다음",
+            fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             color = colorResource(id = R.color.mono400)
         )

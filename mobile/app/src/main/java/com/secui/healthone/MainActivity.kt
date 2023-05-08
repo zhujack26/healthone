@@ -1,7 +1,6 @@
 package com.secui.healthone
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
 import androidx.activity.ComponentActivity
@@ -12,9 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.secui.healthone.compose.DataCollectFirstPage
-import com.secui.healthone.compose.DataCollectSecondPage
-import com.secui.healthone.compose.LoginPage
+import com.secui.healthone.compose.signup.*
 import com.secui.healthone.compose.OverViewPage
 import com.secui.healthone.ui.common.TopBar
 import com.secui.healthone.util.PageRoutes
@@ -55,7 +52,7 @@ class MainActivity : ComponentActivity() {
                     LoginPage(navController)
                 }
                 composable(PageRoutes.OverView.route) {
-                    Column() {
+                    Column {
                         TopBar()
                         OverViewPage(navController)
                     }

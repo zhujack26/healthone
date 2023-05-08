@@ -1,4 +1,4 @@
-package com.secui.healthone.compose
+package com.secui.healthone.compose.signup
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
@@ -30,7 +30,6 @@ fun DataCollectFirstPage(navController: NavController) {
                 Spacer(modifier = Modifier.width(16.dp))
                 Index(number = 2, filled = false)
             }
-
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = "건강 분석에 필요한 설정",
@@ -112,14 +111,23 @@ fun DataCollectSecondPage(navController: NavController) {
             )
             Spacer(modifier = Modifier.height(32.dp))
             // 목표 운동량 컴포넌트
-//            ExcersiseAmount()
-//            Spacer(modifier = Modifier.height(32.dp))
+            Column(modifier = Modifier
+                .padding(16.dp)) {
+                Text(
+                    text = "활동량",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                ExcersiseAmount()
+            }
+            Spacer(modifier = Modifier.height(32.dp))
             // 목표 걸음수 컴포넌트
             Column(modifier = Modifier
                 .padding(16.dp)) {
                 Text(
                     text = "일일 걸음수",
-                    fontSize = 12.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -131,7 +139,7 @@ fun DataCollectSecondPage(navController: NavController) {
                 .padding(16.dp)) {
                 Text(
                     text = "수면",
-                    fontSize = 12.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                 )
                 Spacer(modifier = Modifier.height(8.dp))

@@ -12,6 +12,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -25,6 +26,7 @@ import com.secui.healthone.data.MealPlan.Food
 import com.secui.healthone.ui.mealplanpage.MealInput.MealInputDate
 import com.secui.healthone.ui.mealplanpage.MealInput.SearchBar
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.secui.healthone.ui.common.AppColors
@@ -33,6 +35,7 @@ import com.secui.healthone.util.PageRoutes
 import com.secui.healthone.viewmodel.FoodViewModel
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.text.input.KeyboardType
 import com.secui.healthone.data.MealPlan.Meal
 import com.secui.healthone.data.MealPlan.MealType
@@ -46,7 +49,7 @@ fun MealInputPage(navController: NavController) {
     var showWarning by remember { mutableStateOf(false) }
     var searchTerm by remember { mutableStateOf("") }
     var selectedFoodId by remember { mutableStateOf(-1) }
-    var selectedDate by remember { mutableStateOf(LocalDateTime.now().withNano(0)) }
+    val selectedDate = remember { mutableStateOf(LocalDateTime.now().withNano(0)) }
     val hasMoreResults by viewModel.hasMoreResults.observeAsState(false)
     val onSearchTermChanged: (String) -> Unit = { newTerm ->
         searchTerm = newTerm
@@ -62,7 +65,7 @@ fun MealInputPage(navController: NavController) {
     }
     val lazyListState = rememberLazyListState()
     val dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
-    val selectedDateString = selectedDate.format(dateTimeFormatter)
+    val selectedDateString by remember { derivedStateOf { selectedDate.value.format(dateTimeFormatter) } }
 
 
     LazyColumn(
@@ -95,10 +98,13 @@ fun MealInputPage(navController: NavController) {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    MealInputDate { interval, date ->
-                        selectedInterval = interval
-                        selectedDate = date
+                    key(selectedDate) {
+                        MealInputDate { interval, date ->
+                            selectedInterval = interval
+                            selectedDate.value = date
+                        }
                     }
+
                 }
             }
         }
@@ -148,6 +154,7 @@ fun MealInputPage(navController: NavController) {
                     Text("기본 칼로리: ${food.kcal} kcal")
                     Text("기본 그램수: ${food.gram} g")
 
+                    // 그램 입력 부분이 잘못되었다면 여기를 수정해주세요
                     var inputGrams by remember { mutableStateOf("") }
                     OutlinedTextField(
                         value = inputGrams,
@@ -159,16 +166,16 @@ fun MealInputPage(navController: NavController) {
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                     )
 
+                    // 새로운 칼로리 계산 부분이 잘못되었다면 여기를 수정해주세요
                     val newCalories = if (food.inputGrams != 0) {
                         food.kcal.toDouble() / food.gram * food.inputGrams
                     } else {
                         0.0
                     }
-                    Text("새로운 칼로리: %.2f kcal".format(newCalories))
+                    Text(text = "새로운 칼로리: %.2f kcal".format(newCalories))
                 }
             }
         }
-
         item {
             Button(
                 onClick = {

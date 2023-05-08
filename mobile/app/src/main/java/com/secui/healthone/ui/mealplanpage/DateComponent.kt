@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -21,10 +22,14 @@ import java.util.Calendar
 import com.secui.healthone.ui.common.AppColors
 
 @Composable
-fun DateComponent(onDateChanged: (Calendar) -> Unit) {
+fun DateComponent(
+    selectedDate: MutableState<Calendar>,
+    onDateChanged: (Calendar) -> Unit
+) {
     var showDialog by remember { mutableStateOf(false) }
-    val initialDate = Calendar.getInstance()
-    val selectedDate = remember { mutableStateOf(initialDate) }
+    val selectedYear by rememberSaveable { mutableStateOf(selectedDate.value.get(Calendar.YEAR)) }
+    val selectedMonth by rememberSaveable { mutableStateOf(selectedDate.value.get(Calendar.MONTH)) }
+    val selectedDay by rememberSaveable { mutableStateOf(selectedDate.value.get(Calendar.DAY_OF_MONTH)) }
 
     Row(
         modifier = Modifier
@@ -38,11 +43,10 @@ fun DateComponent(onDateChanged: (Calendar) -> Unit) {
         IconButton(onClick = {
             selectedDate.value =
                 (selectedDate.value.clone() as Calendar).apply { add(Calendar.DAY_OF_MONTH, -1) }
-            onDateChanged(selectedDate.value) // 이 줄을 추가하세요
+            onDateChanged(selectedDate.value)
         }) {
             Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Previous Date")
         }
-
 
         // 달력 아이콘과 날짜를 가운데에 배치
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -66,14 +70,14 @@ fun DateComponent(onDateChanged: (Calendar) -> Unit) {
         IconButton(onClick = {
             selectedDate.value =
                 (selectedDate.value.clone() as Calendar).apply { add(Calendar.DAY_OF_MONTH, 1) }
-            onDateChanged(selectedDate.value) // 이 줄을 추가하세요
+            onDateChanged(selectedDate.value)
         }) {
             Icon(imageVector = Icons.Filled.ArrowForward, contentDescription = "Next Date")
         }
 
         DatePickerDialog(
             showDialog = showDialog,
-            initialDate = initialDate,
+            initialDate = selectedDate.value,
             onDateSelected = { newDate ->
                 onDateChanged(newDate)
                 showDialog = false

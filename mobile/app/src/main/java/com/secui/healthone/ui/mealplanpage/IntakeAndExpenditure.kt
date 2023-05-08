@@ -19,15 +19,27 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.secui.healthone.data.MealPlan.Exercise
+<<<<<<< HEAD
 import com.secui.healthone.data.MealPlan.Meal
 import com.secui.healthone.ui.common.AppColors
 import com.secui.healthone.util.PageRoutes
 import com.secui.healthone.viewmodel.MealViewModel
+=======
+import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.util.PageRoutes
+import com.secui.healthone.viewmodel.FoodViewModel
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
 import java.util.Calendar
 
 @Composable
 fun IntakeAndExpenditure(navController: NavController, selectedDate: Calendar) {
+<<<<<<< HEAD
     val viewModel: MealViewModel = viewModel()
+=======
+    val mealViewModel: FoodViewModel.MealViewModel = viewModel()
+    val foodViewModel: FoodViewModel = viewModel()
+    val viewModel: FoodViewModel.MealViewModel = viewModel()
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
     val mealDataList by viewModel.mealDataList.observeAsState(emptyList())
 
     // API 요청 (userNo 및 날짜를 알맞게 설정해야 함)
@@ -69,7 +81,13 @@ fun IntakeAndExpenditure(navController: NavController, selectedDate: Calendar) {
         when (selectedIndex) {
             0 -> {
                 mealGroups.forEach { (name, mealList) ->
+<<<<<<< HEAD
                     MealCard(mealList, name)
+=======
+                    MealCard(mealDataList = mealList, name = name) { mealNo ->
+                        mealViewModel.deleteMeal(mealNo, dateString, 1)
+                    }
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
                 }
                 Button(
                     onClick = { navController.navigate(PageRoutes.MealInput.route)},

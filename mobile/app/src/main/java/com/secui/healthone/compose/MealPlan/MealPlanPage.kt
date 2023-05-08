@@ -1,5 +1,6 @@
 package com.secui.healthone.compose
 
+import android.util.Log
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
@@ -16,7 +17,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+<<<<<<< HEAD
 import java.util.Calendar
+=======
+import com.secui.healthone.data.MealPlan.CalorieStatus
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
 
 @Composable
 fun MealPlanPage(
@@ -28,9 +36,18 @@ fun MealPlanPage(
     val initialDate = Calendar.getInstance()
     val selectedDate = remember { mutableStateOf(initialDate) }
 
+<<<<<<< HEAD
     LaunchedEffect(selectedDate.value) {
         scope.launch {
             caloriesData = fetchCaloriesData(selectedDate.value)
+=======
+    LaunchedEffect(key1 = selectedDate.value) {
+        scope.launch {
+            val formattedDate = formatDate(selectedDate.value)
+            caloriesData = fetchCaloriesData(formattedDate)
+            // Log the API response
+            Log.d("MealPlanPage", "API Response: $caloriesData")
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
         }
     }
 
@@ -55,9 +72,19 @@ fun MealPlanPage(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+<<<<<<< HEAD
                         DateComponent { newDate ->
                             selectedDate.value = newDate
                         }
+=======
+                        DateComponent(
+                            selectedDate = selectedDate,
+                            onDateChanged = { newDate ->
+                                selectedDate.value = newDate
+                            }
+                        )
+
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
                     }
                 }
             }
@@ -91,11 +118,22 @@ fun MealPlanPage(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+                        val calorieStatusPair = remember {
+                            Pair(updatedTotalCalories, updatedRecommendedCalories)
+                        }
+
+                        // Create the CalorieStatus object outside of the remember function
+                        val calorieStatusData = CalorieStatus(
+                            totalCalories = updatedTotalCalories,
+                            recommendedCalories = updatedRecommendedCalories
+                        )
+
                         CircularGraph(
                             intakeCalories = updatedIntakeCalories,
                             burnedCalories = updatedBurnedCalories,
                             totalCalories = updatedTotalCalories,
                             recommendedCalories = updatedRecommendedCalories,
+                            calorieStatusData = remember(updatedTotalCalories, updatedRecommendedCalories) { calorieStatusData },
                             modifier = Modifier.padding(bottom = 1.dp)
                         )
                     }
@@ -121,6 +159,17 @@ fun MealPlanPage(
             }
         }
     } else {
+<<<<<<< HEAD
         // 로딩 인디케이터
     }
 }
+=======
+        //로딩화면
+    }
+}
+
+fun formatDate(calendar: Calendar): String {
+    val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    return sdf.format(calendar.time)
+}
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef

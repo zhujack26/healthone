@@ -10,7 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+<<<<<<< HEAD
 import com.secui.healthone.data.Sleep.SleepRecord
+=======
+import com.secui.healthone.repository.Sleep.SleepRecord
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
 
 @Composable
 fun CustomSleepGoal(

@@ -1,7 +1,10 @@
 package com.secui.healthone.ui.heart.heartmeasurepage
 
 import android.content.Context
+<<<<<<< HEAD
 import android.util.Log
+=======
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -32,7 +35,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+<<<<<<< HEAD
 import androidx.compose.ui.platform.LocalLifecycleOwner
+=======
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -41,6 +47,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.getSystemService
+<<<<<<< HEAD
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
@@ -56,6 +63,15 @@ import com.secui.healthone.viewmodel.HeartRateViewModel
 
 typealias fxType1 = () -> MutableState<Boolean>
 typealias fxType2 = () -> Boolean;
+=======
+import androidx.navigation.NavHostController
+import com.secui.healthone.R;
+import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.util.PageRoutes
+import com.secui.healthone.util.PreferenceUtil
+
+
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
 @Composable
 fun HeartMeasureItem(
     navHostController: NavHostController,
@@ -67,6 +83,7 @@ fun HeartMeasureItem(
     val context:Context = LocalContext.current; // 현재 Context
     val prefs: PreferenceUtil = PreferenceUtil(context);
 
+<<<<<<< HEAD
 
     //
     val mOwner = LocalLifecycleOwner.current
@@ -80,6 +97,8 @@ fun HeartMeasureItem(
 
     }
 
+=======
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
     Column(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
@@ -127,8 +146,12 @@ fun HeartMeasureItem(
             onValueChange = { newText ->
                 setDisplayBpmValue(
                     context, newText, focusManager,
+<<<<<<< HEAD
                     text, prefs, navHostController,
                     writeHeartRate
+=======
+                    text, prefs, navHostController
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
                 );
             },
             colors = TextFieldDefaults.textFieldColors(
@@ -173,15 +196,22 @@ fun HeartMeasureItem(
     }
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
 fun setDisplayBpmValue(
     context:Context,
     newText: String,
     focusManager: FocusManager,
     text: MutableState<String>,
     prefs:PreferenceUtil,
+<<<<<<< HEAD
     navHostController:NavHostController,
     func:fxType1
+=======
+    navHostController:NavHostController
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
 ) {
     var realValue:String = getRealText(newText);
     val transInt = transToInt(realValue);
@@ -195,9 +225,13 @@ fun setDisplayBpmValue(
         focusManager.clearFocus()
         if(!realValue.isEmpty()) {
             prefs.setString("current_heart_bpm", transInt.toString())
+<<<<<<< HEAD
             val result = func();
             Log.d("RESPONSE::::", "${result.value}");
 
+=======
+            navHostController.popBackStack();
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
         };
     }
     text.value = realValue;
@@ -246,6 +280,7 @@ class HeartMeasureItemText {
     companion object {
         const val HeartMeasureUnit = "bpm"
     }
+<<<<<<< HEAD
 }
 
 fun writeHeartRate(context: Context, prefs:PreferenceUtil, mOwner:LifecycleOwner, moveFunc:fxType2):MutableState<Boolean>{
@@ -265,4 +300,6 @@ fun writeHeartRate(context: Context, prefs:PreferenceUtil, mOwner:LifecycleOwner
     });
 
     return writeResult
+=======
+>>>>>>> 48ed6455598a786f90b976d86faa3b9addc1deef
 }

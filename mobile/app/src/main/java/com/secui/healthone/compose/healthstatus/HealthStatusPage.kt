@@ -15,6 +15,8 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,9 +29,12 @@ import com.secui.healthone.ui.HealthStatus.HealthStatusItem
 import com.secui.healthone.ui.common.AppColors
 import com.secui.healthone.ui.mealplanpage.DateComponent
 import com.secui.healthone.util.PageRoutes
+import java.util.Calendar
 
 @Composable
 fun HealthStatusPage(navController: NavHostController) {
+    val initialDate = Calendar.getInstance()
+    val selectedDate = remember { mutableStateOf(initialDate) }
     LazyColumn(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -45,7 +50,13 @@ fun HealthStatusPage(navController: NavHostController) {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    DateComponent{}
+                    DateComponent(
+                        selectedDate = selectedDate,
+                        onDateChanged = { newDate ->
+                            selectedDate.value = newDate
+                        }
+                    )
+
                 }
             }
         }

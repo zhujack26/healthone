@@ -1,5 +1,6 @@
 package com.secui.healthone.domain.sleep.dto;
 
+import com.secui.healthone.domain.sleep.entity.Sleep;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -20,4 +21,13 @@ public class SleepResDto {
     private String startSleepTime;
     @Schema(description = "수면 기상 시간")
     private String endSleepTime;
+
+    @Builder
+    public SleepResDto (Sleep entity) {
+        this.no = entity.getNo();
+        this.userNo = entity.getUserNo();
+        this.createTime = String.valueOf(entity.getCreatetime());
+        this.startSleepTime = String.valueOf(entity.getStartSleepTime());
+        this.endSleepTime = String.valueOf(entity.getEndSleepTime());
+    }
 }

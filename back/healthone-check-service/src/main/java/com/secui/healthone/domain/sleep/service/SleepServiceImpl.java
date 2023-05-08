@@ -6,9 +6,9 @@ import com.secui.healthone.domain.sleep.dto.SleepResDto;
 import com.secui.healthone.domain.sleep.dto.SleepUpdateDto;
 import com.secui.healthone.domain.sleep.entity.Sleep;
 import com.secui.healthone.domain.sleep.repository.SleepRepository;
-import com.secui.healthone.global.error.errorcode.CustomErrorCode;
-import com.secui.healthone.global.error.exception.RestApiException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -77,6 +77,11 @@ public class SleepServiceImpl implements SleepService {
     @Override
     public void deleteSleepInfo(Integer no) {
         sleepRepository.deleteById(no);
+    }
+
+    @Override
+    public Slice<SleepResDto> getSleepDataList(Integer userNo, Pageable pageable) {
+        return sleepRepository.findAllByUserNoOrderByCreatetimeDesc(userNo, pageable).map(SleepResDto::new);
     }
 
     public LocalDateTime typeConverter(String dateTime) {

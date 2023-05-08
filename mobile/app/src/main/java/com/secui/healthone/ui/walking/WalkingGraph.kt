@@ -10,10 +10,9 @@ import androidx.navigation.NavController
 import com.secui.healthone.ui.common.AppColors
 
 @Composable
-fun WalkingGraph(navController:NavController) {
-    val stepsData = listOf(1000, 1000, 750, 300, 1200, 800, 100, 0, 900, 400, 600, 0, 1000, 500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+fun WalkingGraph(navController: NavController, hourlyStepsData: List<Int>) {
     Column {
-        WalkingDetailGraph(stepsData)
+        WalkingDetailGraph(hourlyStepsData)
     }
 }
 @Composable

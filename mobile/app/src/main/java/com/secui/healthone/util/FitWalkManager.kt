@@ -76,5 +76,52 @@ class FitWalkManager {
 
             return distanceValue
         }
+        fun readHourlyWalkSteps(
+            context: Context,
+            account: GoogleSignInAccount
+        ): MutableState<List<Int>> {
+            val hourlyStepsValue = mutableStateOf(emptyList<Int>())
+
+            val cal = Calendar.getInstance()
+            val now = Date()
+            cal.time = now
+            val endTime = cal.timeInMillis
+            cal.add(Calendar.DAY_OF_YEAR, -1)
+            val startTime = cal.timeInMillis
+
+            val readRequest = DataReadRequest.Builder()
+                .aggregate(DataType.TYPE_STEP_COUNT_DELTA, DataType.AGGREGATE_STEP_COUNT_DELTA)
+                .bucketByTime(1, TimeUnit.HOURS)
+                .setTimeRange(startTime, endTime, TimeUnit.MILLISECONDS)
+                .build()
+
+            Fitness.getHistoryClient(context, account)
+                .readData(readRequest)
+                .addOnSuccessListener { response ->
+                    val buckets = response.buckets
+                    val hourlySteps = mutableListOf<Int>()
+
+                    for (bucket in buckets) {
+                        val dataSets = bucket.dataSets
+                        var steps = 0
+                        for (dataSet in dataSets) {
+                            for (dp in dataSet.dataPoints) {
+                                for (field in dp.dataType.fields) {
+                                    val value = dp.getValue(field)
+                                    steps += value.asInt()
+                                }
+                            }
+                        }
+                        hourlySteps.add(steps)
+                    }
+
+                    hourlyStepsValue.value = hourlySteps
+                }
+                .addOnFailureListener { e ->
+                    Log.e(TAG, "Failed to read hourly steps data", e)
+                }
+
+            return hourlyStepsValue
+        }
     }
 }

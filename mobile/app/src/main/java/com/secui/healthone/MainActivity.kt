@@ -42,7 +42,7 @@ class MainActivity : ComponentActivity() {
 //            val viewModel = HealthOneViewModel(repository);
 //
 //            viewModel.getFoodInfo(1);
-//            viewModel.foodResponse.observe(mOwner, Observer{
+//            viewModel.foodResponse.observe(mOwner, Observer
 //
 //            })
 

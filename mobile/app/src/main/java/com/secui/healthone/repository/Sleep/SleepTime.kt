@@ -1,3 +1,3 @@
-package com.secui.healthone.data.Sleep
+package com.secui.healthone.repository.Sleep
 
 data class SleepTime(val hour: Int, val minute: Int)

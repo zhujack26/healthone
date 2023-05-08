@@ -30,6 +30,7 @@ import com.secui.healthone.ui.HealthStatus.HealthInputItem
 import com.secui.healthone.ui.common.AppColors
 import com.secui.healthone.ui.mealplanpage.DateComponent
 import com.secui.healthone.util.PageRoutes
+import java.util.Calendar
 
 @Composable
 fun HealthInputPage(navController: NavHostController) {
@@ -42,6 +43,8 @@ fun HealthInputPage(navController: NavHostController) {
     val fastingBloodGlucoseValueState = remember { mutableStateOf("") }
     val hdlCholesterolValueState = remember { mutableStateOf("") }
     val triglyceridesValueState = remember { mutableStateOf("") }
+    val initialDate = Calendar.getInstance()
+    val selectedDate = remember { mutableStateOf(initialDate) }
     LazyColumn(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -57,7 +60,12 @@ fun HealthInputPage(navController: NavHostController) {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    DateComponent {}
+                    DateComponent(
+                        selectedDate = selectedDate,
+                        onDateChanged = { newDate ->
+                            selectedDate.value = newDate
+                        }
+                    )
                 }
             }
         }

@@ -25,7 +25,7 @@ import com.secui.healthone.viewmodel.FoodViewModel
 import java.util.Calendar
 
 @Composable
-fun IntakeAndExpenditure(navController: NavController, selectedDate: Calendar) {
+fun IntakeAndExpenditure(navController: NavController, selectedDate: Calendar, onRefreshGraph: () -> Unit) {
     val mealViewModel: FoodViewModel.MealViewModel = viewModel()
     val foodViewModel: FoodViewModel = viewModel()
     val viewModel: FoodViewModel.MealViewModel = viewModel()
@@ -34,7 +34,6 @@ fun IntakeAndExpenditure(navController: NavController, selectedDate: Calendar) {
     // API 요청 (userNo 및 날짜를 알맞게 설정해야 함)
     val dateString = "${selectedDate.get(Calendar.YEAR)}-${selectedDate.get(Calendar.MONTH) + 1}-${selectedDate.get(Calendar.DAY_OF_MONTH)}T00:00:00"
     viewModel.getMealList(dateString, 1) // userNo를 적절한 값으로 설정해야 함
-
 
     val exercises = listOf(
         Exercise(1,"Running", 30, 200),
@@ -71,7 +70,7 @@ fun IntakeAndExpenditure(navController: NavController, selectedDate: Calendar) {
             0 -> {
                 mealGroups.forEach { (name, mealList) ->
                     MealCard(mealDataList = mealList, name = name) { mealNo ->
-                        mealViewModel.deleteMeal(mealNo, dateString, 1)
+                        mealViewModel.deleteMeal(mealNo, dateString, 1, onRefreshGraph)
                     }
                 }
                 Button(

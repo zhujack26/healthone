@@ -31,11 +31,13 @@ fun MealPlanPage(
     var caloriesData by remember { mutableStateOf<CaloriesData?>(null) }
     val initialDate = Calendar.getInstance()
     val selectedDate = remember { mutableStateOf(initialDate) }
+    var refreshGraph by remember { mutableStateOf(false) }
 
-    LaunchedEffect(key1 = selectedDate.value) {
+    LaunchedEffect(key1 = selectedDate.value, key2 = refreshGraph) {
         scope.launch {
             val formattedDate = formatDate(selectedDate.value)
             caloriesData = fetchCaloriesData(formattedDate)
+            refreshGraph = false
             // Log the API response
             Log.d("MealPlanPage", "API Response: $caloriesData")
         }
@@ -137,7 +139,9 @@ fun MealPlanPage(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        IntakeAndExpenditure(navController, selectedDate = selectedDate.value)
+                        IntakeAndExpenditure(navController, selectedDate = selectedDate.value){
+                            refreshGraph = true
+                        }
                     }
                 }
             }

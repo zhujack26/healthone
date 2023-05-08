@@ -1,4 +1,4 @@
-package com.secui.healthone.compose
+package com.secui.healthone.compose.signup
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

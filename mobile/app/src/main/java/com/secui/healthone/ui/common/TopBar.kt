@@ -1,114 +1,51 @@
 package com.secui.healthone.ui.common
 
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.secui.healthone.R
-import com.secui.healthone.compose.MealPlanPage
-import com.secui.healthone.compose.OverViewPage
-import com.secui.healthone.compose.*
-import com.secui.healthone.compose.challenge.PopularDetailPage
-import com.secui.healthone.compose.MealPlan.ExerciseInputPage
-import com.secui.healthone.compose.MealPlan.MealInputPage
-import com.secui.healthone.compose.healthstatus.HealthHelpPage
-import com.secui.healthone.compose.healthstatus.HealthInputPage
-import com.secui.healthone.compose.healthstatus.HealthStatusPage
-import com.secui.healthone.compose.sleep.SleepPage
 import com.secui.healthone.util.PageRoutes
-
-
-@Composable
-fun DrawerButton(text: String, icon: Int? = null, onClick: () -> Unit) {
-    val textColor = AppColors.black
-    TextButton(
-        onClick = onClick,
-        modifier = Modifier
-            .fillMaxWidth()
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 16.dp)) {
-            if (icon != null) {
-                Icon(
-                    painter = painterResource(id = icon),
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-            }
-            if (text == "박싸피") {
-                Column(horizontalAlignment = Alignment.Start) {
-                    Box(modifier = Modifier.padding(5.dp)) {
-                        Image(
-                            painter = painterResource(id = R.drawable.onboarding_first),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .padding(4.dp)
-                                .size(48.dp)
-                                .background(AppColors.white)
-                                .clip(shape = CircleShape),
-                            contentScale = ContentScale.Crop
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Text(
-                        text,
-                        fontSize = 20.sp,
-                        color = textColor,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-            } else {
-                Text(
-                    text,
-                    fontSize = 20.sp,
-                    color = textColor,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-        }
-    }
-}
 
 @Composable
 fun TopBar() {
     val navController = rememberNavController()
     val menuOpen = remember { mutableStateOf(false) } // 메뉴 상태를 기억하는 변수
     val menuOffset = animateDpAsState(if (menuOpen.value) 0.dp else 200.dp) // 애니메이션 상태
+    val currentTitle = remember { mutableStateOf("메인") } // 현재 타이틀을 저장하는 변수
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
             Column {
                 TopAppBar(
                     title = {
-                        Box(
-                            modifier = Modifier
-                                .size(60.dp)
-                                .clickable { navController.navigate(PageRoutes.OverView.route) }
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_topbar_logo),
                                 contentDescription = "logo",
-                                modifier = Modifier.size(60.dp)
+                                modifier = Modifier
+                                    .size(60.dp)
+                                    .clickable { navController.navigate(PageRoutes.OverView.route) }
+                            )
+                            Spacer(modifier = Modifier.width(80.dp))
+                            Text(
+                                currentTitle.value,
+                                color = AppColors.black,
+                                fontWeight = FontWeight.Bold
                             )
                         }
                     },
@@ -120,7 +57,8 @@ fun TopBar() {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_bell),
                                 contentDescription = "Alert",
-                                modifier = Modifier.size(24.dp)
+                                modifier = Modifier.size(24.dp),
+                                tint = AppColors.black
                             )
                         }
                         IconButton(onClick = {
@@ -129,70 +67,14 @@ fun TopBar() {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_topbar_toggle),
                                 contentDescription = "Menu",
-                                modifier = Modifier.size(24.dp)
+                                modifier = Modifier.size(24.dp),
+                                tint = AppColors.black
                             )
                         }
                     }
                 )
             }
-            Column {
-                NavHost(navController, startDestination = PageRoutes.OverView.route) {
-                    composable(PageRoutes.OverView.route) {
-                        OverViewPage(navController = navController)
-                    }
-                    composable(PageRoutes.MealPlan.route) {
-                        MealPlanPage(navController = navController) // 식단 화면
-                    }
-                    composable(PageRoutes.HeartRate.route) {
-                        HeartRatePage(navController = navController) // 심박수 측정
-                    }
-                    composable(PageRoutes.Challenge.route) {
-                        ChallengePage(navController = navController) // 챌린지
-                    }
-                    composable(PageRoutes.Alert.route) {
-                        AlertPage(navController = navController) /// 알림
-                    }
-                    composable(PageRoutes.HeartMeasure.route) {
-                        HeartMeasurePage(navController)
-                    }
-                    composable(PageRoutes.MealInput.route) {
-                        MealInputPage(navController)
-                    }
-                    composable(PageRoutes.ExerciseInput.route) {
-                        ExerciseInputPage(navController)
-                    }
-                    composable(PageRoutes.Sleep.route) {
-                        SleepPage(navController, sleepRecords = mutableListOf())
-                    }
-                    composable(PageRoutes.My.route) {
-                        MyPage(navController = navController)
-                    }
-                    composable(PageRoutes.Walking.route) {
-                        WalkingPage(navController)
-                    }
-                    composable(PageRoutes.WalkingDetail.route) {
-                        WalkingDetailPage(navController)
-                    }
-                    composable(PageRoutes.PopularDetail.route) {
-                        PopularDetailPage(navController)
-                    }
-                    composable(PageRoutes.Setting.route) {
-                        SettingPage(navController = navController)
-                    }
-                    composable(PageRoutes.AlarmSetting.route) {
-                        AlarmSettingPage()
-                    }
-                    composable(PageRoutes.HealthStatus.route){
-                        HealthStatusPage(navController = navController)
-                    }
-                    composable(PageRoutes.HealthStatusInput.route){
-                        HealthInputPage(navController = navController)
-                    }
-                    composable(PageRoutes.HealthHelp.route){
-                        HealthHelpPage(navController = navController)
-                    }
-                }
-            }
+            TopBarNavigation(navController)
         }
         if (menuOpen.value) {
             Box(
@@ -207,7 +89,7 @@ fun TopBar() {
                     .offset(x = menuOffset.value) // 애니메이션 값을 적용
                     .width(200.dp)
                     .fillMaxHeight()
-                    .background(colorResource(id = R.color.white))
+                    .background(AppColors.white)
                     .align(Alignment.TopEnd)
             ) {
                 DrawerButton(
@@ -220,7 +102,9 @@ fun TopBar() {
                 DrawerButton(
                     text = "메인",
                     icon = R.drawable.ic_home,
+                    iconColor = AppColors.black,
                     onClick = {
+                        currentTitle.value = "메인"
                         navController.navigate(PageRoutes.OverView.route)
                     }
                 )
@@ -228,7 +112,9 @@ fun TopBar() {
                 DrawerButton(
                     text = "심박수",
                     icon = R.drawable.ic_heart,
+                    iconColor = Color.Unspecified,
                     onClick = {
+                        currentTitle.value = "심박수"
                         navController.navigate(PageRoutes.HeartRate.route)
                     }
                 )
@@ -236,7 +122,9 @@ fun TopBar() {
                 DrawerButton(
                     text = "식단",
                     icon = R.drawable.ic_food,
+                    iconColor = AppColors.green600,
                     onClick = {
+                        currentTitle.value = "식단"
                         navController.navigate(PageRoutes.MealPlan.route)
                     }
                 )
@@ -244,7 +132,9 @@ fun TopBar() {
                 DrawerButton(
                     text = "수면",
                     icon = R.drawable.ic_sleep,
+                    iconColor = AppColors.mono900,
                     onClick = {
+                        currentTitle.value = "수면"
                         navController.navigate(PageRoutes.Sleep.route)
                     }
                 )
@@ -252,20 +142,29 @@ fun TopBar() {
                 DrawerButton(
                     text = "걸음수",
                     icon = R.drawable.ic_walking,
+                    iconColor = AppColors.blue900,
                     onClick = {
+                        currentTitle.value = "걸음수"
                         navController.navigate(PageRoutes.Walking.route)
                     }
                 )
                 Divider(color = AppColors.black, thickness = 1.dp)
                 DrawerButton(
                     text = "심박 수 측정",
+                    icon = R.drawable.ic_heart,
+                    iconColor = Color.Unspecified,
                     onClick = {
+                        currentTitle.value = "심박 수 측정"
                         navController.navigate(PageRoutes.HeartRate.route)
                     }
                 )
+                Divider(color = AppColors.black, thickness = 1.dp)
                 DrawerButton(
                     text = "건강상태",
+                    icon = R.drawable.ic_heart,
+                    iconColor = Color.Unspecified,
                     onClick = {
+                        currentTitle.value = "건강상태"
                         navController.navigate(PageRoutes.HealthStatus.route)
                     }
                 )
@@ -273,7 +172,9 @@ fun TopBar() {
                 DrawerButton(
                     text = "챌린지",
                     icon = R.drawable.ic_fire,
+                    iconColor = AppColors.red900,
                     onClick = {
+                        currentTitle.value = "챌린지"
                         navController.navigate(PageRoutes.Challenge.route)
                     }
                 )
@@ -281,7 +182,9 @@ fun TopBar() {
                 DrawerButton(
                     text = "설정",
                     icon = R.drawable.ic_setting,
+                    iconColor = Color.Unspecified,
                     onClick = {
+                        currentTitle.value = "설정"
                         navController.navigate(PageRoutes.Setting.route)
                     }
                 )

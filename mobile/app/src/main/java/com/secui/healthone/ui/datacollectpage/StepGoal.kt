@@ -23,6 +23,7 @@ import com.secui.healthone.ui.common.AppColors
 @Composable
 fun StepGoal() {
     val stepCount = remember { mutableStateOf(6000) }
+    val textColor = AppColors.black
     Card(
         elevation = 4.dp,
         shape = RoundedCornerShape(8.dp),
@@ -30,15 +31,14 @@ fun StepGoal() {
     ) {
         Row(
             horizontalArrangement = Arrangement.SpaceAround,
-
             modifier = Modifier.fillMaxWidth()
-                .padding(24.dp)
+                .padding(32.dp)
         ) {
             Text(
                 text = "-",
                 fontWeight = FontWeight.Bold,
-                fontSize = 24.sp,
-                color = Color.Black,
+                fontSize = 28.sp,
+                color = textColor,
                 modifier = Modifier
                     .clickable {
                         if (stepCount.value > 0) {
@@ -52,7 +52,7 @@ fun StepGoal() {
                         style = SpanStyle(
                             fontWeight = FontWeight.Bold,
                             fontSize = 28.sp,
-                            color = Color.Black
+                            color = textColor,
                         )
                     ) {
                         append("${stepCount.value}")
@@ -61,7 +61,7 @@ fun StepGoal() {
                         style = SpanStyle(
                             fontWeight = FontWeight.Bold,
                             fontSize = 16.sp,
-                            color = Color.Black
+                            color = textColor,
                         )
                     ) {
                         append("걸음")
@@ -71,8 +71,8 @@ fun StepGoal() {
             Text(
                 text = "+",
                 fontWeight = FontWeight.Bold,
-                fontSize = 24.sp,
-                color = Color.Black,
+                fontSize = 28.sp,
+                color = textColor,
                 modifier = Modifier
                     .clickable { stepCount.value += 500 }
             )

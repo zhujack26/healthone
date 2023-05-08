@@ -46,7 +46,7 @@ fun GuideDetail(navController: NavController) {
             delay(500)
             fifthText = true
         }
-
+        Spacer(modifier = Modifier.height(48.dp))
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
@@ -70,7 +70,7 @@ fun GuideDetail(navController: NavController) {
                 )
             }
         }
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(48.dp))
         Column() {
             if (thirdText) {
                 Row() {
@@ -89,7 +89,7 @@ fun GuideDetail(navController: NavController) {
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(24.dp))
             if (fourthText) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -110,23 +110,28 @@ fun GuideDetail(navController: NavController) {
                     )
                 }
             }
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(48.dp))
             if (fifthText) {
-                Box(
-                    modifier = Modifier
-                        .width(280.dp)
-                        .height(56.dp)
-                        .clip(RoundedCornerShape(32.dp))
-                        .background(colorResource(id = R.color.mono200))
-                        .clickable { navController.navigate(PageRoutes.OverView.route) },
-                    contentAlignment = Alignment.Center
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
-                        text = "시작하기",
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = colorResource(id = R.color.mono400)
-                    )
+                    Box(
+                        modifier = Modifier
+                            .width(280.dp)
+                            .height(56.dp)
+                            .clip(RoundedCornerShape(32.dp))
+                            .background(colorResource(id = R.color.mono200))
+                            .clickable { navController.navigate(PageRoutes.OverView.route) },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "시작하기",
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = colorResource(id = R.color.mono400)
+                        )
+                    }
                 }
             }
         }

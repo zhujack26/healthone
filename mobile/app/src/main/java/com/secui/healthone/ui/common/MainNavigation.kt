@@ -19,7 +19,6 @@ import com.secui.healthone.compose.MealPlanPage
 import com.secui.healthone.compose.MyPage
 import com.secui.healthone.compose.OverViewPage
 import com.secui.healthone.compose.SettingPage
-import com.secui.healthone.compose.WalkingDetailPage
 import com.secui.healthone.compose.WalkingPage
 import com.secui.healthone.compose.healthstatus.HealthHelpPage
 import com.secui.healthone.compose.healthstatus.HealthInputPage
@@ -63,9 +62,6 @@ fun TopBarNavigation(navController: NavHostController) {
             }
             composable(PageRoutes.Walking.route) {
                 WalkingPage(navController)
-            }
-            composable(PageRoutes.WalkingDetail.route) {
-                WalkingDetailPage(navController)
             }
             composable(PageRoutes.PopularDetail.route) {
                 PopularDetailPage(navController)

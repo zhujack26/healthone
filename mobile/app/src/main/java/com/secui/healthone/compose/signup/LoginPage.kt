@@ -18,6 +18,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,6 +37,7 @@ import com.google.android.gms.common.api.Scope
 import com.secui.healthone.repository.GoogleSignInRepository
 import com.secui.healthone.ui.login.PolicyDialog
 import com.secui.healthone.ui.login.TermsDialog
+import com.secui.healthone.util.PageRoutes
 
 
 @Composable
@@ -103,21 +105,24 @@ fun LoginPage(navController: NavController) {
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = "간편하게 가입하고 로그인하세요",
-            modifier = Modifier.padding(8.dp),
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Bold
-        )
-
-        Image(
-            painter = painterResource(R.drawable.login_google_logo),
-            contentDescription = "Login Button",
-            modifier = Modifier
-                .padding(16.dp)
-                .size(48.dp)
-                .clickable(onClick = { repository.signInWithGoogle(navController, launcher, googleSignInClient) })
-        )
+        Button(onClick = { navController.navigate(PageRoutes.DataCollectFirst.route) }) {
+          Text(text = "START")  
+        }
+//        Text(
+//            text = "간편하게 가입하고 로그인하세요",
+//            modifier = Modifier.padding(8.dp),
+//            textAlign = TextAlign.Center,
+//            fontWeight = FontWeight.Bold
+//        )
+//
+//        Image(
+//            painter = painterResource(R.drawable.login_google_logo),
+//            contentDescription = "Login Button",
+//            modifier = Modifier
+//                .padding(16.dp)
+//                .size(48.dp)
+//                .clickable(onClick = { repository.signInWithGoogle(navController, launcher, googleSignInClient) })
+//        )
         ClickableText(
             text = annotatedText,
             modifier = Modifier.padding(8.dp),

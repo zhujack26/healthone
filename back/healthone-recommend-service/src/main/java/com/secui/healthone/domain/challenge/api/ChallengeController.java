@@ -26,7 +26,16 @@ public class ChallengeController {
     private final ChallengeService challengeService;
 
     // 인기 있는 운동 챌린지 반환, 많이 찾는 운동 컨텐츠 반환, 전체 챌린지 참여 인원, 회원이 지금까지 참여한 챌린지 횟수
-
+    @Operation(summary = "챌린지 메인페이지 정보 조회", description = "챌린지 메인페이지 정보를 반환한다.", tags = {"Challenge"})
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "챌린지 메인페이지 데이터 반환 성공", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ChallengeResDto.class)),
+            @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
+    @Parameter(name = "no", description = "챌린지 식별번호", example = "1")
+    @GetMapping
+    public RestApiResponse<ChallengeResDto> getChallengeMainPageData () {
+        Integer userNo = 1;
+        return new RestApiResponse<>("챌린지 메인페이지 데이터 반환 성공", challengeService.getChallenge(userNo));
+    }
 
     // 세부 챌린지 정보 반환
     @Operation(summary = "챌린지 세부 정보 조회", description = "챌린지 세부 정보를 반환한다.", tags = {"Challenge"})

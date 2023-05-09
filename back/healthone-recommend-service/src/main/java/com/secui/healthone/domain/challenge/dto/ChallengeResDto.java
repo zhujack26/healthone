@@ -11,6 +11,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@Builder
 @Schema(description = "챌린지 응답 DTO")
 public class ChallengeResDto {
     private Integer no;
@@ -28,6 +29,7 @@ public class ChallengeResDto {
     private String thumbnailLink;
     private Integer participants;
     private Integer hits;
+    private boolean participantsCheck;
 
     @Builder
     public ChallengeResDto(Challenge entity){
@@ -46,5 +48,26 @@ public class ChallengeResDto {
         this.thumbnailLink = entity.getThumbnailLink();
         this.participants = entity.getParticipants();
         this.hits = entity.getHits();
+    }
+
+    public ChallengeResDto getDetailInfoDto(Challenge entity, boolean participantsCheck){
+        return ChallengeResDto.builder()
+                .no(entity.getNo())
+                .name(entity.getName())
+                .introduce(entity.getIntroduce())
+                .totalWorkCount(entity.getTotalWorkCount())
+                .totalPeriod(entity.getTotalPeriod())
+                .level(entity.getLevel())
+                .avgWorkTime(entity.getAvgWorkTime())
+                .sportEquipmentCheck(entity.isSportEquipmentCheck())
+                .equipment(entity.getEquipment())
+                .programType(entity.getProgramType())
+                .recommendWeek(entity.getRecommendWeek())
+                .youtubeLink(entity.getYoutubeLink())
+                .thumbnailLink(entity.getThumbnailLink())
+                .participants(entity.getParticipants())
+                .hits(entity.getHits())
+                .participantsCheck(participantsCheck)
+                .build();
     }
 }

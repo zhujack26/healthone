@@ -67,7 +67,7 @@ fun WalkingPage(
     val stepGoal = 6000f // 목표 걸음수 설정
     val achievementRate = if (todaySteps > stepGoal) 1f else todaySteps / stepGoal // 달성률 계산
 
-
+    // YouTube API에 대한 Retrofit 인스턴스 생성
     val retrofit = Retrofit.Builder()
         .baseUrl("https://www.googleapis.com/youtube/v3/") // YouTube API base URL
         .addConverterFactory(GsonConverterFactory.create())
@@ -81,7 +81,8 @@ fun WalkingPage(
     val walkDataListState = remember { mutableStateOf<List<Int>>(emptyList()) }
 
     LaunchedEffect(Unit) {
-        walkDataListState.value = viewModel.getPastWeekWalkData().value
+        val pastWeekWalkData = viewModel.getPastWeekWalkData().value
+        walkDataListState.value = List(7) { index -> pastWeekWalkData.getOrNull(index) ?: 0 }
     }
     val videos = contentViewModel.videos.value
     LaunchedEffect(Unit) {

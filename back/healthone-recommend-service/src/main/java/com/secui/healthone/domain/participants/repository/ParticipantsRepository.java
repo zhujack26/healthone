@@ -12,4 +12,10 @@ public interface ParticipantsRepository extends JpaRepository<Participants, Inte
     // 회원 챌린지 참가 횟수 출력
     Integer countByUserNoEquals(Integer userNo);
 
+    // 챌린지 참가
+    Participants save(Participants participants);
+
+    // 챌린지 참가 취소
+    void delete(Participants participants);
+
 }

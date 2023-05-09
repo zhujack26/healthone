@@ -31,7 +31,6 @@ public class ChallengeController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "챌린지 메인페이지 데이터 반환 성공", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ChallengeResDto.class)),
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
-    @Parameter(name = "no", description = "챌린지 식별번호", example = "1")
     @GetMapping
     public RestApiResponse<ChallengeMainResDto> getChallengeMainPageData () {
         Integer userNo = 1;

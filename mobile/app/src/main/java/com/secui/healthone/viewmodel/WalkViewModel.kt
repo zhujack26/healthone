@@ -2,6 +2,8 @@ package com.secui.healthone.viewmodel
 
 import WalkRepository
 import android.util.Log
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,8 +19,8 @@ class WalkViewModel : ViewModel() {
 
     private val walkRepository = WalkRepository()
 
-    fun getPastWeekWalkData(): MutableLiveData<List<Int>> {
-        val walkData = MutableLiveData<List<Int>>()
+    fun getPastWeekWalkData(): MutableState<List<Int>> {
+        val walkData = mutableStateOf<List<Int>>(emptyList())
         viewModelScope.launch {
             walkData.value = walkRepository.getPastWeekWalkData()
         }

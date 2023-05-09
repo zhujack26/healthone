@@ -30,7 +30,7 @@ fun LineGraph(steps: List<Int>) {
         Canvas(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(180.dp)
                 .padding(16.dp)
         ) {
             val maxValue = steps.maxOrNull() ?: 1
@@ -52,7 +52,9 @@ fun LineGraph(steps: List<Int>) {
             }
         }
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             val dateFormatter = DateTimeFormatter.ofPattern("M/d")

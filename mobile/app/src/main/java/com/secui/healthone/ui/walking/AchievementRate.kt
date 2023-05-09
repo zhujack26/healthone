@@ -33,6 +33,7 @@ fun AchievementRate(percentage: Float, navController: NavController) {
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
+            Spacer(modifier = Modifier.width(48.dp))
             Box(
                 modifier = Modifier
                     .clickable { navController.navigate(PageRoutes.WalkingDetail.route) }
@@ -55,19 +56,33 @@ fun AchievementRate(percentage: Float, navController: NavController) {
 @Composable
 fun ProgressBar(percentage: Float) {
     val filledWidth = (percentage * 100).toInt()
+    val displayText = "${filledWidth}%"
 
     Box(
         modifier = Modifier
             .height(24.dp)
             .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
-            .background(color = AppColors.mono200)
+            .clip(RoundedCornerShape(12.dp)),
     ) {
         Box(
             modifier = Modifier
                 .fillMaxHeight()
-                .width(filledWidth.dp)
+                .fillMaxWidth()
+                .background(color = AppColors.mono200)
+        )
+
+        Box(
+            modifier = Modifier
+                .fillMaxHeight()
+                .fillMaxWidth(fraction = percentage)
                 .background(color = AppColors.green600)
+        )
+
+        Text(
+            text = displayText,
+            color = Color.Black,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.align(Alignment.Center)
         )
     }
 }

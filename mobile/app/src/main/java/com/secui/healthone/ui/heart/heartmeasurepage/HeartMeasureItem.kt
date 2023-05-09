@@ -1,18 +1,14 @@
 package com.secui.healthone.ui.heart.heartmeasurepage
 
 import android.content.Context
-import android.view.inputmethod.InputMethodManager
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldColors
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,32 +16,35 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat.getSystemService
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
 import com.secui.healthone.R;
+import com.secui.healthone.data.heart.HeartWrite
+import com.secui.healthone.repository.HeartRateRepository
 import com.secui.healthone.ui.common.AppColors
-import com.secui.healthone.util.PageRoutes
 import com.secui.healthone.util.PreferenceUtil
+import com.secui.healthone.viewmodel.HeartRateViewModel
 
 
+
+typealias fxType1 = () -> MutableState<Boolean>
+typealias fxType2 = () -> Boolean;
 @Composable
 fun HeartMeasureItem(
     navHostController: NavHostController,
@@ -56,6 +55,19 @@ fun HeartMeasureItem(
     val focusManager = LocalFocusManager.current; // 포커즈 닫기를 위한 관리용 매니저
     val context:Context = LocalContext.current; // 현재 Context
     val prefs: PreferenceUtil = PreferenceUtil(context);
+
+
+    //
+    val mOwner = LocalLifecycleOwner.current
+
+    val moveFx:fxType2 = {
+        navHostController.popBackStack()
+    }
+
+    val writeHeartRate: fxType1 = {
+        writeHeartRate(prefs = prefs, context = context, mOwner = mOwner, moveFunc=moveFx);
+
+    }
 
     Column(modifier = Modifier
         .fillMaxWidth()
@@ -104,7 +116,8 @@ fun HeartMeasureItem(
             onValueChange = { newText ->
                 setDisplayBpmValue(
                     context, newText, focusManager,
-                    text, prefs, navHostController
+                    text, prefs, navHostController,
+                    writeHeartRate
                 );
             },
             colors = TextFieldDefaults.textFieldColors(
@@ -149,13 +162,15 @@ fun HeartMeasureItem(
     }
 }
 
+
 fun setDisplayBpmValue(
     context:Context,
     newText: String,
     focusManager: FocusManager,
     text: MutableState<String>,
     prefs:PreferenceUtil,
-    navHostController:NavHostController
+    navHostController:NavHostController,
+    func:fxType1
 ) {
     var realValue:String = getRealText(newText);
     val transInt = transToInt(realValue);
@@ -169,7 +184,9 @@ fun setDisplayBpmValue(
         focusManager.clearFocus()
         if(!realValue.isEmpty()) {
             prefs.setString("current_heart_bpm", transInt.toString())
-            navHostController.popBackStack();
+            val result = func();
+            Log.d("RESPONSE::::", "${result.value}");
+
         };
     }
     text.value = realValue;
@@ -218,4 +235,23 @@ class HeartMeasureItemText {
     companion object {
         const val HeartMeasureUnit = "bpm"
     }
+}
+
+fun writeHeartRate(context: Context, prefs:PreferenceUtil, mOwner:LifecycleOwner, moveFunc:fxType2):MutableState<Boolean>{
+    val repository = HeartRateRepository()
+    val viewModel = HeartRateViewModel(repository)
+    val writeResult:MutableState<Boolean> =  mutableStateOf(false);
+
+    val bpmValue = prefs.getString("current_heart_bpm", "0");
+    viewModel.writeHeartRate(HeartWrite(count = bpmValue.toInt()));
+    viewModel.heartWriteRespone.observe(mOwner, Observer {
+        writeResult.value = it;
+        if(it){
+            Toast.makeText(context, "심박수 기록에 성공하였습니다", Toast.LENGTH_SHORT).show();
+            moveFunc();
+        }
+
+    });
+
+    return writeResult
 }

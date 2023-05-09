@@ -1,6 +1,7 @@
 package com.secui.healthone
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
 import androidx.activity.ComponentActivity
@@ -37,14 +38,6 @@ class MainActivity : ComponentActivity() {
             val jwtToken = sharedPreferences.getString("jwt_token", null)
             val navController = rememberNavController()
             val mOwner = LocalLifecycleOwner.current
-
-//            val repository = HealthOneRepository();
-//            val viewModel = HealthOneViewModel(repository);
-//
-//            viewModel.getFoodInfo(1);
-//            viewModel.foodResponse.observe(mOwner, Observer
-//
-//            })
 
             NavHost(navController, startDestination = if (jwtToken != null) PageRoutes.Login.route else PageRoutes.OverView.route) {
 

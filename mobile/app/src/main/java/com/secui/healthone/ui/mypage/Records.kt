@@ -43,7 +43,7 @@ fun Records(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     RecordItem(
-                        icon = painterResource(R.drawable.ic_walking),
+                        icon = painterResource(R.drawable.ic_walking_svg),
                         value = totalSteps,
                         label = "걸음수",
                     )
@@ -81,7 +81,7 @@ fun Records(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     RecordItem(
-                        icon = painterResource(R.drawable.ic_walking),
+                        icon = painterResource(R.drawable.ic_walking_svg),
                         value = bestSteps,
                         label = "걸음수"
                     )

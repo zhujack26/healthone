@@ -40,7 +40,7 @@ fun WalkingPage(
     val todaySteps = walkValue.value
 
 
-    // 걷은 거리
+    // 걸은 거리
     val distanceValue: State<Float> = remember {
         FitWalkManager.readDistanceData(
             context,

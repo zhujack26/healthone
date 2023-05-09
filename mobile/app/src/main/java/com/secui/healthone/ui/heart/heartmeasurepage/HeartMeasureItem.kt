@@ -2,6 +2,10 @@ package com.secui.healthone.ui.heart.heartmeasurepage
 
 import android.content.Context
 import android.util.Log
+<<<<<<< HEAD
+import android.view.inputmethod.InputMethodManager
+=======
+>>>>>>> 3edb1a49e4e48cd47aa875fd65138e4308d8ce9a
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -25,12 +29,20 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalLifecycleOwner
+<<<<<<< HEAD
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+=======
+>>>>>>> 3edb1a49e4e48cd47aa875fd65138e4308d8ce9a
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+<<<<<<< HEAD
+import androidx.core.content.ContextCompat.getSystemService
+=======
+>>>>>>> 3edb1a49e4e48cd47aa875fd65138e4308d8ce9a
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController

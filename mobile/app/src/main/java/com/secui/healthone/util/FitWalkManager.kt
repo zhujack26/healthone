@@ -23,12 +23,12 @@ import kotlin.math.max
 class FitWalkManager {
     companion object {
         // 일일 걸음수
-        fun readWalkSteps(context:Context, account:GoogleSignInAccount):MutableState<Int>{
+        fun readWalkSteps(context: Context, account: GoogleSignInAccount): MutableState<Int> {
             val walkValue = mutableStateOf(0)
             Fitness.getHistoryClient(context, account)
                 .readDailyTotal(DataType.TYPE_STEP_COUNT_DELTA)
                 .addOnSuccessListener { result ->
-                    val totalSteps:Int =
+                    val totalSteps: Int =
                         result.dataPoints.firstOrNull()?.getValue(Field.FIELD_STEPS)?.asInt() ?: 0
                     walkValue.value = totalSteps;
                 }
@@ -38,6 +38,7 @@ class FitWalkManager {
 
             return walkValue;
         }
+
         //일일 거리
         fun readDistanceData(context: Context, account: GoogleSignInAccount): MutableState<Float> {
             val distanceValue = mutableStateOf(0f)
@@ -80,77 +81,82 @@ class FitWalkManager {
 
             return distanceValue
         }
-    }
-    //누적 일일 최고 걸음 수
-    fun readMaxDailySteps(context: Context, account: GoogleSignInAccount): MutableState<Int> {
-        val maxSteps = mutableStateOf(0)
 
-        val startTime = LocalDate.now().atStartOfDay(ZoneId.systemDefault())
-        val endTime = LocalDateTime.now().atZone(ZoneId.systemDefault())
+        //누적 일일 최고 걸음 수
+        fun readMaxDailySteps(context: Context, account: GoogleSignInAccount): MutableState<Int> {
+            val maxSteps = mutableStateOf(0)
 
-        val datasource = DataSource.Builder()
-            .setAppPackageName("com.google.android.gms")
-            .setDataType(DataType.TYPE_STEP_COUNT_DELTA)
-            .setType(DataSource.TYPE_DERIVED)
-            .setStreamName("estimated_steps")
-            .build()
+            val startTime = LocalDate.now().atStartOfDay(ZoneId.systemDefault())
+            val endTime = LocalDateTime.now().atZone(ZoneId.systemDefault())
 
-        val request = DataReadRequest.Builder()
-            .aggregate(datasource)
-            .bucketByTime(1, TimeUnit.DAYS)
-            .setTimeRange(startTime.toEpochSecond(), endTime.toEpochSecond(), TimeUnit.SECONDS)
-            .build()
+            val datasource = DataSource.Builder()
+                .setAppPackageName("com.google.android.gms")
+                .setDataType(DataType.TYPE_STEP_COUNT_DELTA)
+                .setType(DataSource.TYPE_DERIVED)
+                .setStreamName("estimated_steps")
+                .build()
 
-        Fitness.getHistoryClient(context, account)
-            .readData(request)
-            .addOnSuccessListener { response ->
-                for (bucket in response.buckets) {
-                    val totalSteps = bucket.dataSets
-                        .flatMap { it.dataPoints }
-                        .sumOf { it.getValue(Field.FIELD_STEPS).asInt() }
-                    maxSteps.value = max(maxSteps.value, totalSteps)
+            val request = DataReadRequest.Builder()
+                .aggregate(datasource)
+                .bucketByTime(1, TimeUnit.DAYS)
+                .setTimeRange(startTime.toEpochSecond(), endTime.toEpochSecond(), TimeUnit.SECONDS)
+                .build()
+
+            Fitness.getHistoryClient(context, account)
+                .readData(request)
+                .addOnSuccessListener { response ->
+                    for (bucket in response.buckets) {
+                        val totalSteps = bucket.dataSets
+                            .flatMap { it.dataPoints }
+                            .sumOf { it.getValue(Field.FIELD_STEPS).asInt() }
+                        maxSteps.value = max(maxSteps.value, totalSteps)
+                    }
                 }
+                .addOnFailureListener { e ->
+                    Log.e(TAG, "Failed to read steps data", e)
+                }
+
+            return maxSteps
+        }
+
+        //누적 총 걸음수
+        fun readTotalSteps(context: Context, account: GoogleSignInAccount): MutableState<Int> {
+            val totalSteps = mutableStateOf(0)
+
+            val endTime = Calendar.getInstance().timeInMillis
+            val startCalendar = Calendar.getInstance().apply {
+                clear()
+                set(2000, Calendar.JANUARY, 1)
             }
-            .addOnFailureListener { e ->
-                Log.e(TAG, "Failed to read steps data", e)
-            }
+            val startTime = startCalendar.timeInMillis
 
-        return maxSteps
-    }
+            val readRequest = DataReadRequest.Builder()
+                .aggregate(DataType.TYPE_STEP_COUNT_DELTA, DataType.AGGREGATE_STEP_COUNT_DELTA)
+                .bucketByTime(1, TimeUnit.DAYS)
+                .setTimeRange(startTime, endTime, TimeUnit.MILLISECONDS)
+                .build()
 
-    //누적 총 걸음수
-    fun readTotalSteps(context: Context, account: GoogleSignInAccount): MutableState<Int> {
-        val totalSteps = mutableStateOf(0)
-
-        val endTime = Calendar.getInstance().timeInMillis
-        val startTime = 0L  // Set start time to zero to get all historical data
-
-        val readRequest = DataReadRequest.Builder()
-            .aggregate(DataType.TYPE_STEP_COUNT_DELTA, DataType.AGGREGATE_STEP_COUNT_DELTA)
-            .bucketByTime(1, TimeUnit.DAYS)
-            .setTimeRange(startTime, endTime, TimeUnit.MILLISECONDS)
-            .build()
-
-        Fitness.getHistoryClient(context, account)
-            .readData(readRequest)
-            .addOnSuccessListener { response ->
-                val buckets = response.buckets
-                for (bucket in buckets) {
-                    val dataSets = bucket.dataSets
-                    for (dataSet in dataSets) {
-                        for (dp in dataSet.dataPoints) {
-                            for (field in dp.dataType.fields) {
-                                val value = dp.getValue(field).asInt()
-                                totalSteps.value += value
+            Fitness.getHistoryClient(context, account)
+                .readData(readRequest)
+                .addOnSuccessListener { response ->
+                    val buckets = response.buckets
+                    for (bucket in buckets) {
+                        val dataSets = bucket.dataSets
+                        for (dataSet in dataSets) {
+                            for (dp in dataSet.dataPoints) {
+                                for (field in dp.dataType.fields) {
+                                    val value = dp.getValue(field).asInt()
+                                    totalSteps.value += value
+                                }
                             }
                         }
                     }
                 }
-            }
-            .addOnFailureListener { e ->
-                Log.e(TAG, "Failed to read steps data", e)
-            }
+                .addOnFailureListener { e ->
+                    Log.e(TAG, "Failed to read steps data", e)
+                }
 
-        return totalSteps
+            return totalSteps
+        }
     }
 }

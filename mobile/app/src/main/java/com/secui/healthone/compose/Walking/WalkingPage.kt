@@ -28,26 +28,39 @@ import com.secui.healthone.data.ApiResponse
 @Composable
 fun WalkingPage(
     navController: NavController,
-    highestSteps: Int = 5000,
-    totalSteps: Int = 10000){
+){
     val context = LocalContext.current
+    val account = FitAPIConfig.getGoogleSignInAccount(context = context)
+
+    // 오늘 걸음수
     val walkValue: State<Int> = remember {
-        FitWalkManager.readWalkSteps(
-            context,
-            FitAPIConfig.getGoogleSignInAccount(context = context)
-        )
+        FitWalkManager.readWalkSteps(context, account)
     }
     val todaySteps = walkValue.value
 
-
     // 걸은 거리
     val distanceValue: State<Float> = remember {
-        FitWalkManager.readDistanceData(
-            context,
-            FitAPIConfig.getGoogleSignInAccount(context = context)
-        )
+        FitWalkManager.readDistanceData(context, account)
     }
     val todayDistance = distanceValue.value
+
+    // 최고 걸음수
+    val highestStepsValue: State<Int> = remember {
+        FitWalkManager.readMaxDailySteps(context, account)
+    }
+    val highestSteps = highestStepsValue.value
+
+    // 총 걸음수
+    val totalStepsValue: State<Int> = remember {
+        FitWalkManager.readTotalSteps(context, account)
+    }
+    val totalSteps = totalStepsValue.value
+
+    // 걸음 목표 달성률
+    val stepGoal = 6000f // 목표 걸음수 설정
+    val achievementRate = if (todaySteps > stepGoal) 1f else todaySteps / stepGoal // 달성률 계산
+
+
     val viewModel: WalkViewModel = viewModel()
     val walkDataList by viewModel.getPastWeekWalkData().observeAsState(emptyList())
 
@@ -88,7 +101,7 @@ fun WalkingPage(
             LineGraph(steps = steps)
             Spacer(modifier = Modifier.height(16.dp))
             AchievementRate(
-                percentage = 0.47f, navController
+                percentage = achievementRate, navController
             )
             Spacer(modifier = Modifier.height(16.dp))
             WalkingType(todaySteps = todaySteps, highestSteps = highestSteps, totalSteps = totalSteps)

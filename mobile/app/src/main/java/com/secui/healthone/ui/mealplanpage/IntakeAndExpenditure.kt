@@ -18,9 +18,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.secui.healthone.data.MealPlan.Exercise
 import com.secui.healthone.ui.common.AppColors
 import com.secui.healthone.util.PageRoutes
+import com.secui.healthone.viewmodel.ExerciseViewModel
 import com.secui.healthone.viewmodel.FoodViewModel
 import java.util.Calendar
 
@@ -30,20 +30,16 @@ fun IntakeAndExpenditure(navController: NavController, selectedDate: Calendar, o
     val foodViewModel: FoodViewModel = viewModel()
     val viewModel: FoodViewModel.MealViewModel = viewModel()
     val mealDataList by viewModel.mealDataList.observeAsState(emptyList())
-
+    val exerciseViewModel: ExerciseViewModel = viewModel()
     // API 요청 (userNo 및 날짜를 알맞게 설정해야 함)
     val dateString = "${selectedDate.get(Calendar.YEAR)}-${selectedDate.get(Calendar.MONTH) + 1}-${selectedDate.get(Calendar.DAY_OF_MONTH)}T00:00:00"
-    viewModel.getMealList(dateString, 1) // userNo를 적절한 값으로 설정해야 함
-
-    val exercises = listOf(
-        Exercise(1,"Running", 30, 200),
-        Exercise(2, "Yoga", 60, 250)
-    )
-
+     // userNo를 적절한 값으로 설정해야 함
+    val ExerciseDataList by exerciseViewModel.exerciseDataList.observeAsState(emptyList())
     val mealGroups = mealDataList.groupBy { it.mealType }
-
     var selectedIndex by remember { mutableStateOf(0) }
 
+    viewModel.getMealList(dateString, 1)
+    exerciseViewModel.getExerciseList(dateString)
     Column {
         Row(modifier = Modifier.fillMaxWidth()) {
             Box(
@@ -84,7 +80,9 @@ fun IntakeAndExpenditure(navController: NavController, selectedDate: Calendar, o
                 }
             }
             1 -> {
-                exercises.forEach { exercise -> ExerciseCard(exercise) }
+                ExerciseDataList.forEach { exercise -> ExerciseCard(exercise) {
+                    exerciseViewModel.deleteExercise(exercise.no,dateString, onRefreshGraph)
+                } }
                 Button(
                     onClick = { navController.navigate(PageRoutes.ExerciseInput.route) },
                     colors = ButtonDefaults.buttonColors(backgroundColor = AppColors.green200),

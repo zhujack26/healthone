@@ -1,5 +1,6 @@
 package com.secui.healthone.domain.challenge.api;
 
+import com.secui.healthone.domain.challenge.dto.ChallengeMainResDto;
 import com.secui.healthone.domain.challenge.dto.ChallengeResDto;
 import com.secui.healthone.domain.challenge.service.ChallengeService;
 import com.secui.healthone.global.response.RestApiResponse;
@@ -32,9 +33,9 @@ public class ChallengeController {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @Parameter(name = "no", description = "챌린지 식별번호", example = "1")
     @GetMapping
-    public RestApiResponse<ChallengeResDto> getChallengeMainPageData () {
+    public RestApiResponse<ChallengeMainResDto> getChallengeMainPageData () {
         Integer userNo = 1;
-        return new RestApiResponse<>("챌린지 메인페이지 데이터 반환 성공", challengeService.getChallenge(userNo));
+        return new RestApiResponse<>("챌린지 메인페이지 데이터 반환 성공", challengeService.getChallengeMainPageData(userNo));
     }
 
     // 세부 챌린지 정보 반환

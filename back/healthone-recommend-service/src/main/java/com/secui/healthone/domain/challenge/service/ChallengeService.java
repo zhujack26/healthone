@@ -26,12 +26,14 @@ public class ChallengeService {
     public ChallengeMainResDto getChallengeMainPageData(Integer userNo) {
         List<Challenge> getPopularList = challengeRepository.findTop7ByOrderByParticipantsDesc();
         List<Challenge> getFrequentlyList = challengeRepository.findTop7ByOrderByHitsDesc();
+        Integer totalChallengeParticipantsCount = participantsRepository.countDistinctByUserNo();
+        Integer userChallengeParticipantsCount = participantsRepository.countByUserNoEquals(userNo);
 
         return ChallengeMainResDto.builder()
                 .popularChallengeList(getPopularList.stream().map(ChallengeResDto::new).collect(Collectors.toList()))
                 .frequentlyChallengeList(getFrequentlyList.stream().map(ChallengeResDto::new).collect(Collectors.toList()))
-                .totalChallengeParticipantsCount(1)
-                .userChallengeParticipantsCount(1)
+                .totalChallengeParticipantsCount(totalChallengeParticipantsCount)
+                .userChallengeParticipantsCount(userChallengeParticipantsCount)
                 .build();
     }
     

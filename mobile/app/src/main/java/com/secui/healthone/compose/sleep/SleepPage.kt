@@ -19,18 +19,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.secui.healthone.data.Sleep.SleepRecord
+import com.secui.healthone.repository.Sleep.SleepRecord
 import com.secui.healthone.ui.datacollectpage.SleepGoal
 import com.secui.healthone.ui.mealplanpage.DateComponent
 import com.secui.healthone.ui.mealplanpage.TimeIntervalSelector
 import com.secui.healthone.ui.sleep.CustomSleepGoal
 import com.secui.healthone.ui.sleep.SleepRecords
+import java.util.Calendar
 
 
 @Composable
 fun SleepPage(navController: NavHostController, modifier: Modifier = Modifier, sleepRecords: MutableList<SleepRecord>) {
     val selectedSleepTime = remember { mutableStateOf("") }
     val selectedWakeTime = remember { mutableStateOf("") }
+    val initialDate = Calendar.getInstance()
+    val selectedDate = remember { mutableStateOf(initialDate) }
 
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -44,7 +47,12 @@ fun SleepPage(navController: NavHostController, modifier: Modifier = Modifier, s
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                DateComponent{}
+                DateComponent(
+                    selectedDate = selectedDate,
+                    onDateChanged = { newDate ->
+                        selectedDate.value = newDate
+                    }
+                )
             }
         }
 

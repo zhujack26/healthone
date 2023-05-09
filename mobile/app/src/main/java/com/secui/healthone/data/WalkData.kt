@@ -5,3 +5,4 @@ data class WalkData(
     val stepCount: Int,
     val distance: Double
 )
+

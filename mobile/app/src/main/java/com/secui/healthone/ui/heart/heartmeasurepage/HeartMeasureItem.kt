@@ -2,18 +2,17 @@ package com.secui.healthone.ui.heart.heartmeasurepage
 
 import android.content.Context
 import android.util.Log
+<<<<<<< HEAD
 import android.view.inputmethod.InputMethodManager
+=======
+>>>>>>> 3edb1a49e4e48cd47aa875fd65138e4308d8ce9a
 import android.widget.Toast
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldColors
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,26 +20,29 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalLifecycleOwner
+<<<<<<< HEAD
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+=======
+>>>>>>> 3edb1a49e4e48cd47aa875fd65138e4308d8ce9a
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+<<<<<<< HEAD
 import androidx.core.content.ContextCompat.getSystemService
+=======
+>>>>>>> 3edb1a49e4e48cd47aa875fd65138e4308d8ce9a
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
@@ -48,7 +50,6 @@ import com.secui.healthone.R;
 import com.secui.healthone.data.heart.HeartWrite
 import com.secui.healthone.repository.HeartRateRepository
 import com.secui.healthone.ui.common.AppColors
-import com.secui.healthone.util.PageRoutes
 import com.secui.healthone.util.PreferenceUtil
 import com.secui.healthone.viewmodel.HeartRateViewModel
 

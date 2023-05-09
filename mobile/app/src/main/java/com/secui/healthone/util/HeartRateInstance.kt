@@ -1,4 +1,4 @@
-package com.secui.healthone.util
+package com.secui.healthone.instance
 
 import androidx.appcompat.app.AppCompatActivity
 import com.secui.healthone.service.HeartRateService

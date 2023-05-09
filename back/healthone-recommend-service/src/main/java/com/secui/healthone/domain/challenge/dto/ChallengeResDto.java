@@ -27,6 +27,7 @@ public class ChallengeResDto {
     private String youtubeLink;
     private String thumbnailLink;
     private Integer participants;
+    private Integer hits;
 
     @Builder
     public ChallengeResDto(Challenge entity){
@@ -44,5 +45,6 @@ public class ChallengeResDto {
         this.youtubeLink = entity.getYoutubeLink();
         this.thumbnailLink = entity.getThumbnailLink();
         this.participants = entity.getParticipants();
+        this.hits = entity.getHits();
     }
 }

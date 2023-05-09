@@ -42,4 +42,6 @@ public class Challenge {
     private String thumbnailLink;
     @Column(name = "challenge_participants") // 챌린지 참가자 수
     private Integer participants;
+    @Column(name = "challenge_hits") // 챌린지 조회수
+    private Integer hits;
 }

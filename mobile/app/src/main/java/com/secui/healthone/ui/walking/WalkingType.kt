@@ -21,9 +21,9 @@ fun WalkingType(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        WalkingStatItem(icon = R.drawable.ic_walking, value = todaySteps, label = "오늘 걸음 수")
-        WalkingStatItem(icon = R.drawable.ic_walking, value = highestSteps, label = "최고 걸음 수")
-        WalkingStatItem(icon = R.drawable.ic_walking, value = totalSteps, label = "총 걸음 수")
+        WalkingStatItem(icon = R.drawable.ic_walking_svg, value = todaySteps, label = "오늘 걸음 수")
+        WalkingStatItem(icon = R.drawable.ic_walking_svg, value = highestSteps, label = "최고 걸음 수")
+        WalkingStatItem(icon = R.drawable.ic_walking_svg, value = totalSteps, label = "총 걸음 수")
     }
 }
 

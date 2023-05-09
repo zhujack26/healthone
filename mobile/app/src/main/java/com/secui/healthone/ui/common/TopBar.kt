@@ -141,7 +141,7 @@ fun TopBar() {
                 Divider(color = AppColors.black, thickness = 1.dp)
                 DrawerButton(
                     text = "걸음수",
-                    icon = R.drawable.ic_walking,
+                    icon = R.drawable.ic_walking_svg,
                     iconColor = AppColors.blue900,
                     onClick = {
                         currentTitle.value = "걸음수"

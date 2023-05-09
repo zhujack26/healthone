@@ -3,12 +3,16 @@ package com.secui.healthone.compose.MealPlan
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
@@ -36,7 +40,9 @@ import com.secui.healthone.viewmodel.FoodViewModel
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import com.secui.healthone.data.MealPlan.Meal
 import com.secui.healthone.data.MealPlan.MealType
 import kotlinx.coroutines.launch
@@ -190,13 +196,29 @@ fun MealInputPage(navController: NavController) {
         }
 
         item {
-            Button(
-                onClick = onDirectInputButtonClick,
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth(0.8f)
-                    .padding(vertical = 16.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
-                Text("직접 추가")
+                // 원 모양의 버튼 배경에 플러스 아이콘을 포함
+                Button(
+                    onClick = onDirectInputButtonClick,
+                    shape = CircleShape,
+                    modifier = Modifier.size(48.dp),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = AppColors.green200)
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Add,
+                        contentDescription = "Add",
+                        tint = Color.White
+                    )
+                }
+
+                // "추가하기" 텍스트
+                Text("직접 추가하기", textAlign = TextAlign.Center, color = AppColors.green200)
             }
         }
 

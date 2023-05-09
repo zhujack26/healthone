@@ -12,6 +12,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,14 +23,20 @@ import coil.compose.rememberImagePainter
 import com.secui.healthone.data.Video
 
 @Composable
-fun Contents(video: Video) {
+fun Contents(video: Video, isFirst: Boolean = true) {
+    val context = LocalContext.current
     Card(
         modifier = Modifier
             .size(180.dp)
-            .padding(10.dp)
+            .padding(
+                if (isFirst) 0.dp else 16.dp, // 첫 번째 카드는 왼쪽에 붙이기
+                top = 16.dp,
+                end = 16.dp,
+                bottom = 16.dp
+            )
             .clickable {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=${video.id}"))
-                LocalContext.current.startActivity(intent)
+                context.startActivity(intent)
             },
         shape = MaterialTheme.shapes.medium
     ) {
@@ -42,13 +49,6 @@ fun Contents(video: Video) {
                 contentDescription = "Thumbnail of ${video.title}",
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
-            )
-            Text(
-                text = video.title,
-                style = MaterialTheme.typography.h6,
-                color = Color.White,
-                modifier = Modifier.padding(8.dp),
-                maxLines = 2
             )
         }
     }

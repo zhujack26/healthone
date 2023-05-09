@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
@@ -23,7 +24,13 @@ import com.secui.healthone.viewmodel.WalkViewModel
 import retrofit2.Response
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import com.secui.healthone.compose.factory.YouTubeViewModelFactory
 import com.secui.healthone.data.ApiResponse
+import com.secui.healthone.service.YouTubeService
+import com.secui.healthone.viewmodel.ContentViewModel
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 @Composable
 fun WalkingPage(
@@ -61,11 +68,27 @@ fun WalkingPage(
     val achievementRate = if (todaySteps > stepGoal) 1f else todaySteps / stepGoal // 달성률 계산
 
 
-    val viewModel: WalkViewModel = viewModel()
-    val walkDataList by viewModel.getPastWeekWalkData().observeAsState(emptyList())
-    val videos by viewModel.videos.observeAsState(emptyList())
+    val retrofit = Retrofit.Builder()
+        .baseUrl("https://www.googleapis.com/youtube/v3/") // YouTube API base URL
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
 
-    val steps = walkDataList + todaySteps
+    val youtubeService = retrofit.create(YouTubeService::class.java)
+    val factory = YouTubeViewModelFactory(youtubeService)
+
+    val contentViewModel: ContentViewModel = viewModel(factory = factory)
+    val viewModel: WalkViewModel = viewModel()
+    val walkDataListState = remember { mutableStateOf<List<Int>>(emptyList()) }
+
+    LaunchedEffect(Unit) {
+        walkDataListState.value = viewModel.getPastWeekWalkData().value
+    }
+    val videos = contentViewModel.videos.value
+    LaunchedEffect(Unit) {
+        contentViewModel.searchVideos()
+    }
+    val steps = walkDataListState.value + todaySteps
+
     val walkData = WalkData(
         userNo = 1, // 실제 사용자 번호로
         stepCount = todaySteps,
@@ -81,7 +104,7 @@ fun WalkingPage(
             throw Exception("Error posting walk data: $errorBody")
         }
     }
-    LaunchedEffect(viewModel) {
+    LaunchedEffect(Unit) {
         try {
             Log.d("WalkingPage", "Posting walk data: $walkData")
             val response = viewModel.postWalkData(walkData)
@@ -106,9 +129,9 @@ fun WalkingPage(
             )
             Spacer(modifier = Modifier.height(16.dp))
             WalkingType(todaySteps = todaySteps, highestSteps = highestSteps, totalSteps = totalSteps)
+            Spacer(modifier = Modifier.height(16.dp))
             WalkingContent(videos = videos)
 
         }
     }
 }
-

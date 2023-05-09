@@ -1,21 +1,20 @@
 package com.secui.healthone.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.secui.healthone.data.YouTubeSearchResponse
 import com.secui.healthone.data.Video
 import com.secui.healthone.service.YouTubeService
 import kotlinx.coroutines.launch
-import retrofit2.Response
 
 class ContentViewModel(private val youTubeService: YouTubeService) : ViewModel() {
 
     val videos = mutableStateOf<List<Video>>(emptyList())
 
-    init {
+    fun searchVideos() {
         viewModelScope.launch {
-            val response = youTubeService.searchVideos(query = "walking")
+            val response = youTubeService.searchVideos(query = "걷기")
             if (response.isSuccessful) {
                 val searchResponse = response.body()
                 videos.value = searchResponse?.items?.map {
@@ -25,6 +24,11 @@ class ContentViewModel(private val youTubeService: YouTubeService) : ViewModel()
                         thumbnailUrl = it.snippet.thumbnails.default.url
                     )
                 } ?: emptyList()
+            } else {
+                Log.e("ContentViewModel", "Error fetching videos: ${response.message()}")
+                // Log error body
+                val errorBody = response.errorBody()?.string() ?: "No error body"
+                Log.e("ContentViewModel", "Error body: $errorBody")
             }
         }
     }

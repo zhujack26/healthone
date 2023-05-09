@@ -15,12 +15,18 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberImagePainter
+import com.secui.healthone.viewmodel.ContentViewModel
 
 @Composable
 fun WalkingContent() {
+    val viewModel: ContentViewModel = viewModel()
+    val videos = viewModel.videos.value
+
     LazyRow {
-        item {
+        items(videos) { video ->
+            Contents(video)
         }
     }
 }

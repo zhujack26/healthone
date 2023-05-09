@@ -63,6 +63,7 @@ fun WalkingPage(
 
     val viewModel: WalkViewModel = viewModel()
     val walkDataList by viewModel.getPastWeekWalkData().observeAsState(emptyList())
+    val videos by viewModel.videos.observeAsState(emptyList())
 
     val steps = walkDataList + todaySteps
     val walkData = WalkData(
@@ -105,7 +106,7 @@ fun WalkingPage(
             )
             Spacer(modifier = Modifier.height(16.dp))
             WalkingType(todaySteps = todaySteps, highestSteps = highestSteps, totalSteps = totalSteps)
-            WalkingContent()
+            WalkingContent(videos = videos)
 
         }
     }

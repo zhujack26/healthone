@@ -95,11 +95,8 @@ class GoogleSignInRepository (
                 if (cookies.isNotEmpty()) {
                     val cookieString = cookies.joinToString("; ") { "${it.name}=${it.value}" }
                     connection.setRequestProperty("Cookie", cookieString)
-
-                    // Log the cookie.
                     Log.d("check", "Cookie: $cookieString")
                 }
-
                 val postData = URLEncoder.encode(authCode, "UTF-8")
                 DataOutputStream(connection.outputStream).use { outputStream ->
                     Log.d("check", "check5")
@@ -116,7 +113,6 @@ class GoogleSignInRepository (
                     sharedPreferences.edit().putString("access_token", accessTokenResponse).apply()
 
                     BufferedReader(InputStreamReader(connection.inputStream)).use { reader ->
-                        //서버로부터 받은 응답을 읽기 위해 BufferedReader와 InputStreamReader를 사용
                         val response = reader.readText()
 //                        val jsonResponse = JSONObject(response)
 //                        accessToken = jsonResponse.getString("accessToken")
@@ -165,7 +161,7 @@ class GoogleSignInRepository (
                     }
                     HttpURLConnection.HTTP_FORBIDDEN -> {
                         Log.d("check", "Forbidden, move to login page")
-                        navController.navigate(PageRoutes.Login.route)
+                        navController.navigate(PageRoutes.DataCollectSecond.route)
                     }
                     else -> {
                         Log.e("check", "Error. Response code : $responseCode")

@@ -22,6 +22,7 @@ import java.net.URL
 import java.net.URLEncoder
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
+import kotlinx.coroutines.delay
 import java.net.CookieHandler
 import java.net.CookieManager
 import java.net.HttpCookie
@@ -114,8 +115,7 @@ class GoogleSignInRepository (
                             Log.d("check", "Set-Cookie: $cookie")
                             // Extract 'refreshtoken' from the Set-Cookie headers
                             if (cookie.startsWith("refreshtoken=")) {
-                                val refreshToken = cookie.substringAfter("refreshtoken=").substringBefore(";")
-                                // Add the refresh token to the cookie store
+//                                val refreshToken = cookie.substringAfter("refreshtoken=").substringBefore(";")
                                 val cookieManager = CookieHandler.getDefault() as CookieManager
                                 val cookieStore = cookieManager.getCookieStore()
 //                                val cookieDomain = URI.create(urlString)
@@ -177,10 +177,12 @@ class GoogleSignInRepository (
                     }
                     HttpURLConnection.HTTP_UNAUTHORIZED -> {
                         Log.d("check", "Unauthorized")
+                        delay(1000)
+                        makeRequest(navController)
                         val newAccessToken = connection.getHeaderField("Authorization")
                         if (newAccessToken != null) {
                             sharedPreferences.edit().putString("access_token", newAccessToken).apply()
-                            makeRequest(navController)
+
                         } else {
                             Log.e("check", "new access token fail.")
                         }
@@ -205,4 +207,3 @@ class GoogleSignInRepository (
         return sharedPreferences.getString("access_token", "") ?: ""
     }
 }
-

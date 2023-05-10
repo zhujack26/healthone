@@ -15,16 +15,22 @@ import com.secui.healthone.data.MealPlan.Meal
 import androidx.compose.foundation.background
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.unit.sp
+import com.secui.healthone.data.MealPlan.MealData
+
 
 @Composable
-fun MealCard(mealList: List<Meal>, name: String) {
+fun MealCard(mealDataList: List<MealData>, name: String, onDelete: (Int) -> Unit) {
     Card {
         Column(modifier = Modifier.padding(8.dp)) {
             Text(text = name, modifier = Modifier.align(Alignment.Start))
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            mealList.forEach { meal ->
+            mealDataList.forEach { mealData ->
+                val foodName = mealData.name
+                val kcal = mealData.kcal
+                val gram = mealData.gram
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
@@ -33,8 +39,8 @@ fun MealCard(mealList: List<Meal>, name: String) {
                         modifier = Modifier.weight(1f),
                         verticalArrangement = Arrangement.Center
                     ) {
-                        Text(text = meal.description)
-                        Text(text = "Small text", fontSize = 12.sp)
+                        Text(text = foodName)
+                        Text(text = "${gram}g", fontSize = 12.sp)
                     }
 
                     Spacer(modifier = Modifier.width(16.dp))
@@ -44,7 +50,7 @@ fun MealCard(mealList: List<Meal>, name: String) {
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.End
                     ) {
-                        Text(text = "${meal.calories} kcal")
+                        Text(text = "${kcal} kcal")
                     }
 
                     Spacer(modifier = Modifier.width(16.dp))
@@ -54,9 +60,9 @@ fun MealCard(mealList: List<Meal>, name: String) {
                             .size(40.dp, 20.dp)
                             .background(Color.White, shape = RoundedCornerShape(percent = 50))
                             .border(BorderStroke(1.dp, Color.Gray), shape = RoundedCornerShape(percent = 50))
-                            .clickable { /* 수정 기능 */ }
+                            .clickable { onDelete(mealData.no) }
                     ) {
-                        Text("수정", color = Color.Black, modifier = Modifier.align(Alignment.Center))
+                        Text("삭제", color = Color.Black, modifier = Modifier.align(Alignment.Center))
                     }
                 }
 

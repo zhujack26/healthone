@@ -36,6 +36,7 @@ fun NextSecondButton(navController: NavController) {
     ) {
         Text(
             text = "다음",
+            fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             color = colorResource(id = R.color.mono400)
         )

@@ -1,37 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>  <!-- 구글 핏 API 사용을 위한 권한 설정 -->
-    <uses-permission android:name="android.permission.BODY_SENSORS"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 브로드 캐스트 리시버를 위한 권한 설정 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" /> <!-- 구글 핏 API 사용을 위한 권한 설정 -->
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+    <uses-permission android:name="android.permission.BODY_SENSORS" /> <!-- 걸은 거리를 가져오기 위한 GPS 권한 설정 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.Healthone"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <!-- 레트로핏 통신을 위한 객체 생성용 액티비티 추가 -->
+        <activity
+            android:name=".instance.HeartRateInstance"
+            android:exported="true" />
+        <!--  메인 액티비티 -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Healthone">
+        </activity>
+        <!-- 스플래쉬 화면 -->
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Healthone"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- 화면 on/off를 체킹하기 위한 리시버 등록 -->
+        <receiver
+            android:name=".reciever.ScreenReceiver"
+            android:exported="true"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.SCREEN_ON"/>
+                <action android:name="android.intent.action.SCREEN_OFF"/>
+            </intent-filter>
+        </receiver>
+
+        <!-- 브로드캐스트 리시버를 생성하고 백그라운드에서 돌아가게 해줄 서비스 -->
+        <service
+            android:name=".service.ScreenService"
+            android:exported="true"
+            android:stopWithTask="false"/>
+
+        <!-- 파이어베이스와 연동하여 알림 기능을 구현하기 위한 서비스 추가 -->
+        <!-- 서비스를 추가하고 인텐트 필터를 설정한다. -->
+        <service android:name=".service.MyFirebaseMessagingService"
+            android:exported="true"
+            android:stopWithTask="false"
+            >
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
     </application>
-
 </manifest>
-

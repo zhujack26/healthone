@@ -13,11 +13,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.secui.healthone.data.MealPlan.Exercise
+import com.secui.healthone.data.MealPlan.ExerciseList
 import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.viewmodel.ExerciseViewModel
 
 @Composable
-fun ExerciseCard(exercise: Exercise) {
+fun ExerciseCard(exercise: ExerciseList, onDelete: (Int) -> Unit) {
+    val exerciseNo = exercise.no
+
     Card {
         Column(modifier = Modifier.padding(8.dp)) {
             Spacer(modifier = Modifier.height(8.dp))
@@ -31,7 +34,7 @@ fun ExerciseCard(exercise: Exercise) {
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(text = exercise.name)
-                    Text(text = exercise.time.toString(), fontSize = 12.sp)
+                    Text(text = "${exercise.workTime}분", fontSize = 12.sp)
                 }
 
                 Spacer(modifier = Modifier.width(16.dp))
@@ -41,7 +44,7 @@ fun ExerciseCard(exercise: Exercise) {
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.End
                 ) {
-                    Text(text = "${exercise.caloriesBurned} kcal")
+                    Text(text = "${exercise.consumeCalorie} kcal")
                 }
 
                 Spacer(modifier = Modifier.width(16.dp))
@@ -51,9 +54,9 @@ fun ExerciseCard(exercise: Exercise) {
                         .size(40.dp, 20.dp)
                         .background(AppColors.mono50, shape = RoundedCornerShape(percent = 50))
                         .border(BorderStroke(1.dp, AppColors.mono500), shape = RoundedCornerShape(percent = 50))
-                        .clickable { /* 운동 기록하기 액션 */ }
+                        .clickable { onDelete(exerciseNo) }
                 ) {
-                    Text("수정", color = AppColors.mono700, modifier = Modifier.align(Alignment.Center))
+                    Text("삭제", color = AppColors.mono700, modifier = Modifier.align(Alignment.Center))
                 }
             }
         }

@@ -1,6 +1,5 @@
 package com.secui.healthone.ui.heart.heartratepage
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -8,16 +7,16 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.secui.healthone.R;
+import com.secui.healthone.data.heart.HeartRead
 
 @Composable
 fun HeartRateRecordList(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    heartList:MutableList<HeartRead> = mutableListOf()
 ) {
+
     Text(text = HeartRateRecordListText.heartRateRecordListTitle,
         fontSize = 20.sp,
         modifier = Modifier
@@ -36,9 +35,9 @@ fun HeartRateRecordList(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-        repeat(16){
-            HeartRateRecordItem()
+        var idx=  0;
+        repeat(heartList.size){
+            HeartRateRecordItem(heartRate = heartList.get(idx++));
             Spacer(modifier = Modifier.height(8.dp))
         }
     }

@@ -53,15 +53,14 @@ fun HeartRateBox(
             horizontalAlignment = Alignment.CenterHorizontally,
         )
         {
-            Spacer(modifier = Modifier.height(16.dp))
             Text(text = "심박 수",
                 fontSize = 16.sp,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight(),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Left
             );
-            Spacer(modifier = Modifier.height(16.dp));
+            Spacer(modifier = Modifier.height(16.dp))
             Row(modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight(),

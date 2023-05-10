@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             val mOwner = LocalLifecycleOwner.current
 
-            NavHost(navController, startDestination = if (jwtToken == null) PageRoutes.Login.route else PageRoutes.OverView.route) {
+            NavHost(navController, startDestination = if (jwtToken != null) PageRoutes.Login.route else PageRoutes.OverView.route) {
 
                 composable(PageRoutes.Login.route) {
                     LoginPage(navController)

@@ -28,7 +28,7 @@ import androidx.navigation.NavHostController
 import com.secui.healthone.ui.HealthStatus.HealthStatusItem
 import com.secui.healthone.ui.common.AppColors
 import com.secui.healthone.ui.mealplanpage.DateComponent
-import com.secui.healthone.util.PageRoutes
+import com.secui.healthone.constant.PageRoutes
 import java.util.Calendar
 
 @Composable

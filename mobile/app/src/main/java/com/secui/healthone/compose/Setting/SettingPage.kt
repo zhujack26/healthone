@@ -15,7 +15,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import com.secui.healthone.ui.setting.*
-import com.secui.healthone.util.PageRoutes
+import com.secui.healthone.constant.PageRoutes
 
 @Composable
 fun SettingPage(navController: NavController) {

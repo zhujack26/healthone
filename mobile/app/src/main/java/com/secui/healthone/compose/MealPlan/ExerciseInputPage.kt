@@ -9,7 +9,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -33,12 +32,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.secui.healthone.data.MealPlan.AddExercise
 import com.secui.healthone.data.MealPlan.ExerciseSearch
-import com.secui.healthone.data.MealPlan.Meal
-import com.secui.healthone.data.MealPlan.MealType
 import com.secui.healthone.ui.common.AppColors
 import com.secui.healthone.ui.mealplanpage.ExerciseInput.ExerciseSearchResults
 import com.secui.healthone.ui.mealplanpage.MealInput.SearchBar
-import com.secui.healthone.util.PageRoutes
+import com.secui.healthone.constant.PageRoutes
 import com.secui.healthone.viewmodel.ExerciseViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime

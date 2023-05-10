@@ -1,7 +1,5 @@
 package com.secui.healthone.compose.healthstatus
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,7 +27,7 @@ import androidx.navigation.NavHostController
 import com.secui.healthone.ui.HealthStatus.HealthInputItem
 import com.secui.healthone.ui.common.AppColors
 import com.secui.healthone.ui.mealplanpage.DateComponent
-import com.secui.healthone.util.PageRoutes
+import com.secui.healthone.constant.PageRoutes
 import java.util.Calendar
 
 @Composable

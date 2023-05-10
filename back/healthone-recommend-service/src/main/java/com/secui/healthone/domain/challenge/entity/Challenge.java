@@ -25,6 +25,7 @@ public class Challenge {
     @Column(name = "challenge_total_period") // 챌린지 총 기간
     private String totalPeriod;
     @Column(name = "challenge_level") // 챌린지 난이도
+    @Enumerated(EnumType.STRING)
     private ChallengeLevel level;
     @Column(name = "challenge_avg_work_time") // 평균 운동 시간
     private Integer avgWorkTime;

@@ -45,7 +45,7 @@ fun HeartRatePage(
             (rememberScrollState()))
     {
 
-        HeartGraphBox();
+        HeartGraphBox(heartList = heartList.value);
         Spacer(modifier = Modifier.height(16.dp))
         HeartRateInfoBox(navController);
         Spacer(modifier = Modifier.height(16.dp))

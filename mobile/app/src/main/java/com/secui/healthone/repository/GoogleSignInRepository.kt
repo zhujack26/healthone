@@ -22,6 +22,10 @@ import java.net.URL
 import java.net.URLEncoder
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
+import java.net.CookieHandler
+import java.net.CookieManager
+import java.net.CookiePolicy
+import java.net.HttpCookie
 
 
 class GoogleSignInRepository (
@@ -38,6 +42,15 @@ class GoogleSignInRepository (
         EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
     )
+
+    private val cookieManager = CookieManager().apply {
+        setCookiePolicy(CookiePolicy.ACCEPT_ALL)
+    }
+
+    init {
+        CookieHandler.setDefault(cookieManager)
+    }
+
     private var accessToken: String? = null
     fun handleSignInResult(navController: NavController, task: Task<GoogleSignInAccount>) {
         try {
@@ -74,6 +87,15 @@ class GoogleSignInRepository (
                 val urlString = "https://back.apihealthone.com/auth/login"
                 val url = URL(urlString)
                 val connection = url.openConnection() as HttpURLConnection
+
+                // 쿠키 설정
+                val cookieHandler = CookieHandler.getDefault() as CookieManager
+                val cookieList = cookieHandler.cookieStore.get(url.toURI())
+                if (cookieList.isNotEmpty()) {
+                    val cookies = cookieList.joinToString("; ") { it.name + "=" + it.value }
+                    connection.setRequestProperty("Cookie", cookies)
+                }
+
                 connection.requestMethod = "POST"
                 Log.d("check", "check2")
                 connection.doOutput = true
@@ -90,6 +112,13 @@ class GoogleSignInRepository (
                 val responseCode = connection.responseCode
                 Log.d("check", "Response code : $responseCode")
 
+                val headers = connection.headerFields
+                val cookies = headers["Set-Cookie"]
+                if (cookies != null) {
+                    cookies.forEach { cookie ->
+                        cookieHandler.cookieStore.add(url.toURI(), HttpCookie.parse(cookie)[0])
+                    }
+                }
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     val accessTokenResponse = connection.getHeaderField("Authorization")
                     Log.d("check", "Received accessToken: $accessTokenResponse")

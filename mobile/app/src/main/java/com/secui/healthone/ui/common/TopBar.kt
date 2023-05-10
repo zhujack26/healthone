@@ -41,7 +41,7 @@ fun TopBar() {
                                     .size(60.dp)
                                     .clickable { navController.navigate(PageRoutes.OverView.route) }
                             )
-                            Spacer(modifier = Modifier.width(80.dp))
+                            Spacer(modifier = Modifier.width(88.dp))
                             Text(
                                 currentTitle.value,
                                 color = AppColors.black,

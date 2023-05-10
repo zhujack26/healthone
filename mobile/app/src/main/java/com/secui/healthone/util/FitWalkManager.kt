@@ -126,12 +126,19 @@ class FitWalkManager {
             val endTime = Calendar.getInstance().timeInMillis
             val startCalendar = Calendar.getInstance().apply {
                 clear()
-                set(2000, Calendar.JANUARY, 1)
+                set(2020, Calendar.JANUARY, 1)
             }
             val startTime = startCalendar.timeInMillis
 
+            val datasource = DataSource.Builder()
+                .setAppPackageName("com.google.android.gms")
+                .setDataType(DataType.TYPE_STEP_COUNT_DELTA)
+                .setType(DataSource.TYPE_DERIVED)
+                .setStreamName("estimated_steps")
+                .build()
+
             val readRequest = DataReadRequest.Builder()
-                .aggregate(DataType.TYPE_STEP_COUNT_DELTA, DataType.AGGREGATE_STEP_COUNT_DELTA)
+                .aggregate(datasource)
                 .bucketByTime(1, TimeUnit.DAYS)
                 .setTimeRange(startTime, endTime, TimeUnit.MILLISECONDS)
                 .build()
@@ -155,7 +162,6 @@ class FitWalkManager {
                 .addOnFailureListener { e ->
                     Log.e(TAG, "Failed to read steps data", e)
                 }
-
             return totalSteps
         }
     }

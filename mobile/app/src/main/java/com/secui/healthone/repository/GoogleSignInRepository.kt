@@ -24,8 +24,7 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import java.net.CookieHandler
 import java.net.CookieManager
-import java.net.CookiePolicy
-import java.net.HttpCookie
+
 
 
 class GoogleSignInRepository (
@@ -42,12 +41,8 @@ class GoogleSignInRepository (
         EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
     )
-
-    private val cookieManager = CookieManager().apply {
-        setCookiePolicy(CookiePolicy.ACCEPT_ALL)
-    }
-
     init {
+        val cookieManager = CookieManager()
         CookieHandler.setDefault(cookieManager)
     }
 
@@ -88,20 +83,23 @@ class GoogleSignInRepository (
                 val url = URL(urlString)
                 val connection = url.openConnection() as HttpURLConnection
 
-                // 쿠키 설정
-                val cookieHandler = CookieHandler.getDefault() as CookieManager
-                val cookieList = cookieHandler.cookieStore.get(url.toURI())
-                if (cookieList.isNotEmpty()) {
-                    val cookies = cookieList.joinToString("; ") { it.name + "=" + it.value }
-                    connection.setRequestProperty("Cookie", cookies)
-                }
-
                 connection.requestMethod = "POST"
                 Log.d("check", "check2")
                 connection.doOutput = true
                 Log.d("check", "check3")
                 connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
                 Log.d("check", "check4")
+
+                val cookieManager = CookieHandler.getDefault() as CookieManager
+                val cookies = cookieManager.getCookieStore().cookies
+                if (cookies.isNotEmpty()) {
+                    val cookieString = cookies.joinToString("; ") { "${it.name}=${it.value}" }
+                    connection.setRequestProperty("Cookie", cookieString)
+
+                    // Log the cookie.
+                    Log.d("check", "Cookie: $cookieString")
+                }
+
                 val postData = URLEncoder.encode(authCode, "UTF-8")
                 DataOutputStream(connection.outputStream).use { outputStream ->
                     Log.d("check", "check5")
@@ -112,13 +110,6 @@ class GoogleSignInRepository (
                 val responseCode = connection.responseCode
                 Log.d("check", "Response code : $responseCode")
 
-                val headers = connection.headerFields
-                val cookies = headers["Set-Cookie"]
-                if (cookies != null) {
-                    cookies.forEach { cookie ->
-                        cookieHandler.cookieStore.add(url.toURI(), HttpCookie.parse(cookie)[0])
-                    }
-                }
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     val accessTokenResponse = connection.getHeaderField("Authorization")
                     Log.d("check", "Received accessToken: $accessTokenResponse")

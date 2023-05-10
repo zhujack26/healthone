@@ -24,6 +24,8 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import java.net.CookieHandler
 import java.net.CookieManager
+import java.net.HttpCookie
+import java.net.URI
 
 class GoogleSignInRepository (
     private val context: Context,
@@ -110,6 +112,20 @@ class GoogleSignInRepository (
                     if (setCookieHeaders != null) {
                         for (cookie in setCookieHeaders) {
                             Log.d("check", "Set-Cookie: $cookie")
+                            // Extract 'refreshtoken' from the Set-Cookie headers
+                            if (cookie.startsWith("refreshtoken=")) {
+                                val refreshToken = cookie.substringAfter("refreshtoken=").substringBefore(";")
+                                // Add the refresh token to the cookie store
+                                val cookieManager = CookieHandler.getDefault() as CookieManager
+                                val cookieStore = cookieManager.getCookieStore()
+//                                val cookieDomain = URI.create(urlString)
+//                                val httpCookie = HttpCookie("refreshtoken", refreshToken)
+//                                httpCookie.path = "/"
+//                                httpCookie.version = 0
+//                                cookieStore.add(cookieDomain, httpCookie)
+//                                Log.d("check", "Stored refresh token: $refreshToken")
+                                Log.d("check", "Cookie: $cookieStore")
+                            }
                         }
                     }
                     val accessTokenResponse = connection.getHeaderField("Authorization")

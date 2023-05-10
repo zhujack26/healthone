@@ -37,11 +37,7 @@ fun NicknameInput() {
         Spacer(modifier = Modifier.width(32.dp))
         TextField(
             value = textState,
-            onValueChange = { newText ->
-                if (isValidNickname(newText)) {
-                    setTextState(newText)
-                }
-            },
+            onValueChange = setTextState,
             visualTransformation = VisualTransformation.None,
             maxLines = 1,
             textStyle = TextStyle(
@@ -61,9 +57,4 @@ fun NicknameInput() {
             )
         )
     }
-}
-
-private fun isValidNickname(nickname: String): Boolean {
-    val regex = "^[가-힣a-zA-Z0-9]{2,7}$".toRegex()
-    return regex.matches(nickname)
 }

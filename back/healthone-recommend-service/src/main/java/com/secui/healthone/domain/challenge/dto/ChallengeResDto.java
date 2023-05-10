@@ -32,6 +32,28 @@ public class ChallengeResDto {
     private boolean participantsCheck;
 
     @Builder
+    public ChallengeResDto(Integer no, String name, String introduce, String totalWorkCount, String totalPeriod, ChallengeLevel level, Integer avgWorkTime,
+                           boolean sportEquipmentCheck, String equipment, String programType, String recommendWeek, String youtubeLink,
+                           String thumbnailLink, Integer participants, Integer hits, boolean participantsCheck) {
+        this.no = no;
+        this.name = name;
+        this.introduce = introduce;
+        this.totalWorkCount = totalWorkCount;
+        this.totalPeriod = totalPeriod;
+        this.level = level;
+        this.avgWorkTime = avgWorkTime;
+        this.sportEquipmentCheck = sportEquipmentCheck;
+        this.equipment = equipment;
+        this.programType = programType;
+        this.recommendWeek = recommendWeek;
+        this.youtubeLink = youtubeLink;
+        this.thumbnailLink = thumbnailLink;
+        this.participants = participants;
+        this.hits = hits;
+        this.participantsCheck = participantsCheck;
+    }
+
+    @Builder
     public ChallengeResDto(Challenge entity){
         this.no = entity.getNo();
         this.name = entity.getName();

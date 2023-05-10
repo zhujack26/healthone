@@ -43,7 +43,7 @@ public class ChallengeController {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ChallengeResDto.class)),
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @Parameter(name = "no", description = "챌린지 식별번호", example = "1")
-    @GetMapping
+    @GetMapping("/detail")
     public RestApiResponse<ChallengeResDto> getChallengeData (@RequestParam("no") Integer no) {
         log.info("no : {}", no);
         return new RestApiResponse<>("챌린지 데이터 반환 성공", challengeService.getChallenge(no));

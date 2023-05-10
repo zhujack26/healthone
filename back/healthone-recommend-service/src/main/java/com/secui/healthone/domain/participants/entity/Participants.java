@@ -21,7 +21,6 @@ public class Participants {
     private Integer no;
     @Column(name = "user_no")
     private Integer userNo; // 유저 식별번호
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "challenge_no")
-    private Challenge challenge; // 챌린지
+    @Column(name = "challenge_no")
+    private Integer challengeNo; // 챌린지
 }

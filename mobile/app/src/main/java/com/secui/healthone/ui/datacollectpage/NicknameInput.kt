@@ -31,10 +31,10 @@ fun NicknameInput() {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Text(
             text = "닉네임",
-            fontSize = 12.sp,
+            fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
         )
-        Spacer(modifier = Modifier.width(32.dp))
+        Spacer(modifier = Modifier.width(40.dp))
         TextField(
             value = textState,
             onValueChange = setTextState,

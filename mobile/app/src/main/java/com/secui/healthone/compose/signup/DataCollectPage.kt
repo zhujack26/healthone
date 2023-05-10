@@ -50,7 +50,7 @@ fun DataCollectFirstPage(navController: NavController) {
             ) {
                 Text(
                     text = "프로필 사진",
-                    fontSize = 12.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                 )
                 PhotoPicker()

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 
 @Composable
@@ -143,7 +144,8 @@ fun DataCollectSecondPage(navController: NavController) {
                     fontWeight = FontWeight.Bold,
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                SleepGoal()
+                val context = LocalContext.current
+                SleepGoal(context)
             }
             Spacer(modifier = Modifier.height(32.dp))
             // 완료버튼 컴포넌트

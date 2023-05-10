@@ -96,6 +96,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.0'
 
+    implementation "androidx.datastore:datastore-preferences:1.0.0-alpha08"
     // fire-base 사용을 위한 종속성 추가
     // Import the Firebase BoM
     implementation 'com.google.firebase:firebase-core:9.6.1'

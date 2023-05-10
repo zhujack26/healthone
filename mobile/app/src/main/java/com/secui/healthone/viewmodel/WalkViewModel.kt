@@ -19,12 +19,8 @@ class WalkViewModel : ViewModel() {
 
     private val walkRepository = WalkRepository()
 
-    fun getPastWeekWalkData(): MutableState<List<Int>> {
-        val walkData = mutableStateOf<List<Int>>(emptyList())
-        viewModelScope.launch {
-            walkData.value = walkRepository.getPastWeekWalkData()
-        }
-        return walkData
+    suspend fun getPastWeekWalkData(): List<Int> {
+        return walkRepository.getPastWeekWalkData()
     }
 
     suspend fun postWalkData(walkData: WalkData): Response<ApiResponse<List<WalkData>>> {
@@ -33,3 +29,19 @@ class WalkViewModel : ViewModel() {
         }
     }
 }
+
+//private val walkRepository = WalkRepository()
+//
+//    fun getPastWeekWalkData(): MutableState<List<Int>> {
+//        val walkData = mutableStateOf<List<Int>>(emptyList())
+//        viewModelScope.launch {
+//            walkData.value = walkRepository.getPastWeekWalkData()
+//        }
+//        return walkData
+//    }
+//
+//    suspend fun postWalkData(walkData: WalkData): Response<ApiResponse<List<WalkData>>> {
+//        return withContext(Dispatchers.IO) {
+//            RetrofitClient.instance.postWalkData(walkData)
+//        }
+//    }

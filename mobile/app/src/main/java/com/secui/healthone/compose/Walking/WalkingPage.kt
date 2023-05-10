@@ -28,6 +28,7 @@ import androidx.compose.runtime.mutableStateOf
 import com.secui.healthone.compose.factory.YouTubeViewModelFactory
 import com.secui.healthone.data.ApiResponse
 import com.secui.healthone.service.YouTubeService
+import com.secui.healthone.util.PreferencesManager
 import com.secui.healthone.viewmodel.ContentViewModel
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -36,7 +37,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 fun WalkingPage(
     navController: NavController,
 ){
+
     val context = LocalContext.current
+    //test
+//    val preferencesManager = PreferencesManager(context)
+//    val sleepTime = preferencesManager.getSleepTime()
+//    val wakeTime = preferencesManager.getWakeTime()
+//    Log.d("Sleeptime", "Sleep time : ${sleepTime}")
+//    Log.d("waketime", "wake time : ${wakeTime}")
     val account = FitAPIConfig.getGoogleSignInAccount(context = context)
 
     // 오늘 걸음수
@@ -81,7 +89,7 @@ fun WalkingPage(
     val walkDataListState = remember { mutableStateOf<List<Int>>(emptyList()) }
 
     LaunchedEffect(Unit) {
-        val pastWeekWalkData = viewModel.getPastWeekWalkData().value
+        val pastWeekWalkData = viewModel.getPastWeekWalkData()
         walkDataListState.value = List(7) { index -> pastWeekWalkData.getOrNull(index) ?: 0 }
     }
     val videos = contentViewModel.videos.value
@@ -112,7 +120,6 @@ fun WalkingPage(
             handleResponse(response)
             Log.d("WalkingPage", "Walk data posted successfully")
         } catch (e: Exception) {
-            Log.e("WalkingPage", "Error posting walk data: ${e.message}")
             Log.d("WalkingPage", "Error posting walk data: ${e.message}")
         }
     }
@@ -123,7 +130,7 @@ fun WalkingPage(
             .padding(16.dp),
     ) {
         item {
-            LineGraph(steps = steps)
+            LineGraph(steps = walkDataListState.value)
             Spacer(modifier = Modifier.height(16.dp))
             AchievementRate(
                 percentage = achievementRate, navController

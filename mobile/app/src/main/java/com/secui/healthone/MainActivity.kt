@@ -23,6 +23,7 @@ import com.secui.healthone.util.PageRoutes
 import com.secui.healthone.util.PreferenceUtil
 
 class MainActivity : ComponentActivity() {
+
     lateinit var prefs:PreferenceUtil;
     override fun onResume() {
         super.onResume()
@@ -32,7 +33,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        FirebaseMessaging.getInstance().token.addOnSuccessListener {
+        val addOnSuccessListener = FirebaseMessaging.getInstance().token.addOnSuccessListener {
             Log.d("TOKEN", it)
         }
 

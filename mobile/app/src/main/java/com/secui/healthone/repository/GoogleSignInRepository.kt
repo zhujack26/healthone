@@ -13,6 +13,7 @@ import com.secui.healthone.util.PageRoutes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.DataOutputStream
 import java.io.InputStreamReader
@@ -24,8 +25,8 @@ class GoogleSignInRepository (
     private val context: Context,
     private val gso: GoogleSignInOptions,
     private val googleSignInClient: GoogleSignInClient
-){
-    //authCode2
+) {
+    private var accessToken: String? = null
     fun handleSignInResult(navController: NavController, task: Task<GoogleSignInAccount>) {
         try {
             val account = task.getResult(ApiException::class.java)
@@ -39,21 +40,6 @@ class GoogleSignInRepository (
         }
     }
 
-//idToken2
-//fun handleSignInResult(navController: NavController, task: Task<GoogleSignInAccount>) {
-//    try {
-//        val account = task.getResult(ApiException::class.java)
-//        val idToken = account.idToken
-//        Log.d("check", "ID Token: $idToken") // ID 토큰 값 확인
-////        sendIdTokenToServer(idToken)
-//        navController.navigate("datacollect1")
-//        Log.d("check", "check")
-//    } catch (e: Exception) {
-//        Log.e("check", "Error2", e)
-//    }
-//}
-
-
     fun signInWithGoogle(
         navController: NavController,
         launcher: androidx.activity.result.ActivityResultLauncher<Intent>,
@@ -63,7 +49,6 @@ class GoogleSignInRepository (
         launcher.launch(signInIntent)
     }
 
-    //authCode3
     fun sendAuthCodeToServer(authCode: String?) {
         if (authCode == null) {
             Log.e("check", "authCode is null")
@@ -72,19 +57,10 @@ class GoogleSignInRepository (
             Log.d("check", "authCode is not null")
         }
 
-//idToken3
-//fun sendIdTokenToServer(idToken: String?) {
-//    if (idToken == null) {
-//        Log.e("check", "idToken is null")
-//        return
-//    }
-//    else if (idToken != null) {
-//        Log.d("check", "idToken is not null")
-//    }
-
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val urlString = "http://192.168.31.33:8080/test"
+//                val urlString = "https://back.apihealthone.com/auth/login"
                 val url = URL(urlString)
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "POST"
@@ -104,9 +80,16 @@ class GoogleSignInRepository (
                 Log.d("check", "Response code : $responseCode")
 
                 if (responseCode == HttpURLConnection.HTTP_OK) {
+                    val accessTokenResponse = connection.getHeaderField("accessToken")
+                    Log.d("check", "Received accessToken: $accessTokenResponse")
+
                     BufferedReader(InputStreamReader(connection.inputStream)).use { reader ->
+                        //서버로부터 받은 응답을 읽기 위해 BufferedReader와 InputStreamReader를 사용
                         val response = reader.readText()
+                        val jsonResponse = JSONObject(response)
+                        accessToken = jsonResponse.getString("accessToken")
                         Log.d("check", "Signed in as: $response")
+//                        Log.d("check", "Signed in as: $accessToken")
                     }
                 } else {
                     Log.e("check", "Error. Response code : $responseCode")
@@ -118,5 +101,4 @@ class GoogleSignInRepository (
             }
         }
     }
-
 }

@@ -7,7 +7,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.Image
 import androidx.compose.material.Text
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -56,9 +55,7 @@ fun LoginPage(navController: NavController) {
     }.toAnnotatedString()
 
     val context = LocalContext.current
-    //authCode->idToken 전환시 총 세부분의 코드 변경 요망
 
-    //authCode1
     val gso = remember {
         GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestScopes(Scope(Scopes.EMAIL))
@@ -66,13 +63,7 @@ fun LoginPage(navController: NavController) {
             .requestEmail()
             .build()
     }
-    //idToken1
-//    val gso = remember {
-//        GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//            .requestIdToken(context.getString(R.string.server_client_id))
-//            .requestEmail()
-//            .build()
-//    }
+
     val googleSignInClient = remember { GoogleSignIn.getClient(context, gso) }
     val repository = GoogleSignInRepository(context, gso, googleSignInClient)
     val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) { result ->

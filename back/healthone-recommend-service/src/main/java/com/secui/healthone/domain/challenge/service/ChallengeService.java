@@ -39,7 +39,8 @@ public class ChallengeService {
     
     // 세부 페이지 반환
     public ChallengeResDto getChallenge(Integer no) {
-//        Challenge result = challengeRepository.findByNo(no).orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
-        return new ChallengeResDto(challengeRepository.findByNo(no).orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100)));
+        Challenge result = challengeRepository.findByNo(no).orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
+        result.setHits(result.getHits() + 1);
+        return new ChallengeResDto(result);
     }
 }

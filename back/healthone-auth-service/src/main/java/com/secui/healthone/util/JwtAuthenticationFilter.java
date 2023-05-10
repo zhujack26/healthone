@@ -1,9 +1,14 @@
 package com.secui.healthone.util;
 
+import com.secui.healthone.domain.auth.entity.Role;
 import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseCookie;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -11,13 +16,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 
 @Slf4j
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
-
     private final CookieUtil cookieUtil;
     private final RedisUtil redisUtil;
     @Override
@@ -29,10 +34,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 if (redisUtil.getData(token) != null){
                     throw new JwtException("BLACKLIST ACCESSS TOKEN");
                 }
+                log.info("Auth Success!!");
+                Authentication auth =getAuthentication(tokenService.getEmail(token), Role.MEMBER.toString());
+                SecurityContextHolder.getContext().setAuthentication(auth);
             }else{
                 throw new JwtException("ACCESS TOKEN EXPIRED");
             }
-        }catch(JwtException e){
+        }catch(JwtException a){
+            a.printStackTrace();
             // token reissue
             String refreshtoken = cookieUtil.getRefreshTokenCookie(request);
             String email ="";
@@ -44,6 +53,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     throw new JwtException("EXPIRED");
                 }
             }catch(Exception j){
+               j.printStackTrace();
                log.error("REFRESH TOKEN EXPIRED");
                response.sendError(HttpServletResponse.SC_FORBIDDEN);
             }
@@ -51,14 +61,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String newrefreshtoken = tokenService.generateToken(email,role,"REFRESH");
             ResponseCookie cookie = cookieUtil.getCookie(newrefreshtoken,tokenService.refreshPeriod);
             response.setContentType("application/json;charset=UTF-8");
-            response.setHeader("Authorization","Bearer " + accesstoken);
+            response.setHeader("Authorization",accesstoken);
             response.setHeader("Set-Cookie",cookie.toString());
+            Authentication auth =getAuthentication(email,role);
+            SecurityContextHolder.getContext().setAuthentication(auth);
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
         }catch(Exception e){
+            e.printStackTrace();
             // Return UNAUTHORIZED
             log.error("BAD REQUEST");
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         }
         filterChain.doFilter(request, response);
     }
+
+
+    public Authentication getAuthentication(String email, String role){
+        log.info("Auth Email, Role = {} , {}",email,role);
+        return new UsernamePasswordAuthenticationToken(email, "", Collections.singleton((new SimpleGrantedAuthority(role))));
+    }
+
 }

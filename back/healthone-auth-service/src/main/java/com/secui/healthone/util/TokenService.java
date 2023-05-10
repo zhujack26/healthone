@@ -20,16 +20,16 @@ import java.util.Date;
 @Service
 public class TokenService {
 
-    @Value("${springboot.jwt.secret}")
-    private String secretKey;
-    public static long accessPeriod = 1000L * 60L * 60L * 24L * 2L;
+//    @Value("${springboot.jwt.secret}")
+    private String secretKey = "tset";
+    public static long accessPeriod = 1000L* 5L;
     public static long refreshPeriod = 1000L * 60L * 60L * 24L * 30L;
 
 
-//    @PostConstruct
-//    protected void init() {
-//        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
-//    }
+    @PostConstruct
+    protected void init() {
+        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+    }
 
     public String generateToken(String email, String role, String tokentype){
         Claims claims = Jwts.claims()

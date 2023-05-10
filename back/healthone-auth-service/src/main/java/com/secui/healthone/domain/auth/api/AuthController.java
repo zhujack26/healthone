@@ -43,10 +43,10 @@ public class AuthController {
                     .header("Authorization",token.get("accesstoken"))
                     .build();
         }catch (IOException e){
-            e.getStackTrace();
+            e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }catch (Exception e){
-            e.getStackTrace();
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
@@ -54,6 +54,7 @@ public class AuthController {
     // 토큰 검증
     @PostMapping("/verify")
     public ResponseEntity verifyToken(@RequestHeader("Authorization") String Authorization){
+        log.info("Authorization = {}",Authorization);
         return ResponseEntity.ok().build();
     }
 

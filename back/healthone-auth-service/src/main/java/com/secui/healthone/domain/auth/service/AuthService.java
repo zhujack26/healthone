@@ -55,6 +55,7 @@ public class AuthService {
                     User.builder()
                             .email(email)
                             .role(Role.MEMBER)
+                            .name("temp")
                             .build());
             // 회원가입이 안되 있을 경우 회원가입
         }

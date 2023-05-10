@@ -14,21 +14,37 @@ import lombok.ToString;
 @Builder
 @Schema(description = "챌린지 응답 DTO")
 public class ChallengeResDto {
+    @Schema(description = "챌린지 식별번호")
     private Integer no;
+    @Schema(description = "챌린지 이름")
     private String name;
+    @Schema(description = "챌린지 소개")
     private String introduce;
+    @Schema(description = "총 운동횟수")
     private String totalWorkCount;
+    @Schema(description = "총 기간(주)")
     private String totalPeriod;
+    @Schema(description = "챌린지 난이도")
     private ChallengeLevel level;
+    @Schema(description = "평균 운동시간(분)")
     private Integer avgWorkTime;
+    @Schema(description = "필요 운동기구 여부")
     private boolean sportEquipmentCheck;
+    @Schema(description = "운동 기구 정보")
     private String equipment;
+    @Schema(description = "프로그램 유형")
     private String programType;
+    @Schema(description = "주간 추천 운동 요일")
     private String recommendWeek;
+    @Schema(description = "유튜브 운동 영상 링크")
     private String youtubeLink;
+    @Schema(description = "썸네일 링크")
     private String thumbnailLink;
+    @Schema(description = "챌린지 참여자수")
     private Integer participants;
+    @Schema(description = "챌린지 조회수")
     private Integer hits;
+    @Schema(description = "회원 챌린지 참가 여부")
     private boolean participantsCheck;
 
     @Builder

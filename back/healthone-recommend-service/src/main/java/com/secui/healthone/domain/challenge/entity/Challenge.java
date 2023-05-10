@@ -30,7 +30,7 @@ public class Challenge {
     private Integer avgWorkTime;
     @Column(name = "challenge_sport_equipment_check") // 필요 운동기구 여부
     private boolean sportEquipmentCheck;
-    @Column(name = "challenge_equipment") // 필요 운동 기구
+    @Column(name = "challenge_sport_equipment") // 필요 운동 기구
     private String equipment;
     @Column(name = "challenge_program_type") // 프로그램 유형
     private String programType;

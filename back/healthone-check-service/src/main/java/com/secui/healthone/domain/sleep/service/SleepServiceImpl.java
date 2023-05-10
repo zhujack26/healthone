@@ -16,6 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static com.secui.healthone.global.util.StringDateTrans.stringDateTrans7Days;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +36,8 @@ public class SleepServiceImpl implements SleepService {
         StringDateTrans dateTrans = new StringDateTrans(date);
         return SleepDtoMapper.INSTANCE.entityToResDto(sleepRepository.findByCreateTimeBetweenAndUserNo(dateTrans.getStartDateTime(), dateTrans.getEndDateTime(), userNo));
     }
+
+
 
     // 수면 정보 추가하기
     @Override
@@ -82,14 +87,24 @@ public class SleepServiceImpl implements SleepService {
         sleepRepository.save(sleep);
     }
 
+    // 수면정보 삭제하기
     @Override
     public void deleteSleepInfo(Integer no) {
         sleepRepository.deleteById(no);
     }
 
-    @Override
-    public Slice<SleepResDto> getSleepDataList(Integer userNo, Pageable pageable) {
-        return sleepRepository.findAllByUserNoOrderByCreateTimeDesc(userNo, pageable).map(SleepResDto::new);
+    // 수면 리스트 (이전)
+//    @Override
+//    public Slice<SleepResDto> getSleepDataList(Integer userNo, Pageable pageable) {
+//        return sleepRepository.findAllByUserNoOrderByCreateTimeDesc(userNo, pageable).map(SleepResDto::new);
+//    }
+
+    // 수면 7일치 데이터 반환
+    public List<SleepResDto> getSleepDataList(Integer userNo, String date) {
+        StringDateTrans stringDateTrans = stringDateTrans7Days(date);
+        return sleepRepository.findByCreateTimeBetweenAndUserNoOrderByCreateTimeDesc(
+                stringDateTrans.getStartDateTime(), stringDateTrans.getEndDateTime(),  userNo)
+                .stream().map(SleepResDto::new).collect(Collectors.toList());
     }
 
     public LocalDateTime typeConverter(String dateTime) {

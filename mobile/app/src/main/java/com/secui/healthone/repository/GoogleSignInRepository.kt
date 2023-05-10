@@ -84,7 +84,7 @@ class GoogleSignInRepository (
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val urlString = "https://back.apihealthone.com/auth/login"
+                val urlString = "http://192.168.31.33/auth/login"
                 val url = URL(urlString)
                 val connection = url.openConnection() as HttpURLConnection
 

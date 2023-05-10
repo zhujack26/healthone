@@ -25,8 +25,6 @@ import androidx.security.crypto.MasterKeys
 import java.net.CookieHandler
 import java.net.CookieManager
 
-
-
 class GoogleSignInRepository (
     private val context: Context,
     private val gso: GoogleSignInOptions,
@@ -108,6 +106,12 @@ class GoogleSignInRepository (
                 Log.d("check", "Response code : $responseCode")
 
                 if (responseCode == HttpURLConnection.HTTP_OK) {
+                    val setCookieHeaders = connection.getHeaderFields()["Set-Cookie"]
+                    if (setCookieHeaders != null) {
+                        for (cookie in setCookieHeaders) {
+                            Log.d("check", "Set-Cookie: $cookie")
+                        }
+                    }
                     val accessTokenResponse = connection.getHeaderField("Authorization")
                     Log.d("check", "Received accessToken: $accessTokenResponse")
                     sharedPreferences.edit().putString("access_token", accessTokenResponse).apply()
@@ -144,6 +148,12 @@ class GoogleSignInRepository (
 
                 when (responseCode) {
                     HttpURLConnection.HTTP_OK -> {
+                        val setCookieHeaders = connection.getHeaderFields()["Set-Cookie"]
+                        if (setCookieHeaders != null) {
+                            for (cookie in setCookieHeaders) {
+                                Log.d("check", "Set-Cookie: $cookie")
+                            }
+                        }
                         BufferedReader(InputStreamReader(connection.inputStream)).use { reader ->
                             val response = reader.readText()
                             Log.d("check", "Response: $response")

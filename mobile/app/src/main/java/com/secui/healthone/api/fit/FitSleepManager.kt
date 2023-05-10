@@ -1,4 +1,4 @@
-package com.secui.healthone.util
+package com.secui.healthone.api.fit
 
 import android.content.Context
 import android.util.Log
@@ -10,12 +10,11 @@ import com.google.android.gms.fitness.Fitness
 import com.google.android.gms.fitness.FitnessActivities
 import com.google.android.gms.fitness.FitnessOptions
 import com.google.android.gms.fitness.data.DataType
-import com.google.android.gms.fitness.data.Field
 import com.google.android.gms.fitness.data.Session
 import com.google.android.gms.fitness.request.SessionInsertRequest
 import com.google.android.gms.fitness.request.SessionReadRequest
 import com.google.android.gms.tasks.Task
-import com.secui.healthone.util.FitAPIConfig.Companion.MY_TAG
+import com.secui.healthone.api.fit.FitAPIConfig.Companion.MY_TAG
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.concurrent.TimeUnit

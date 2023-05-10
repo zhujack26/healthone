@@ -1,4 +1,4 @@
-package com.secui.healthone.util
+package com.secui.healthone.api.fit
 
 import android.content.Context
 import android.util.Log

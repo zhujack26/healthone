@@ -1,4 +1,4 @@
-package com.secui.healthone.util
+package com.secui.healthone.constant
 
 sealed class PageRoutes(val route:String){
 

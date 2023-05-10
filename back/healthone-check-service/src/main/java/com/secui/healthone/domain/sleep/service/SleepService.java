@@ -18,5 +18,6 @@ public interface SleepService {
 
     void deleteSleepInfo(Integer no);
 
-    Slice<SleepResDto> getSleepDataList(Integer userNo, Pageable pageable);
+//    Slice<SleepResDto> getSleepDataList(Integer userNo, Pageable pageable);
+    List<SleepResDto> getSleepDataList(Integer userNo, String date);
 }

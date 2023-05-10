@@ -25,7 +25,7 @@ public class TestController {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }) })
     @GetMapping
     public RestApiResponse<String> testServer(){
-        return new RestApiResponse<>("Meal Server is running", null);
+        return new RestApiResponse<>("Check Server is running", null);
     }
 
     @Operation(summary = "서버 에러 응답", description = "서버 에러 응답 API", tags = {"Test"})

@@ -9,7 +9,6 @@ import com.secui.healthone.global.error.response.ErrorResponse;
 import com.secui.healthone.global.response.RestApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -19,9 +18,6 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springdoc.api.annotations.ParameterObject;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,19 +30,31 @@ import java.util.List;
 public class SleepController {
     private final SleepService sleepService;
 
+//    @Operation(summary = "수면정보 리스트 조회", description = "회원의 수면정보를 최신순으로 출력한다", tags = {"Sleep"})
+//    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = {
+//            @Content(mediaType = "application/json", schema = @Schema(implementation = HeartRateResDto.class)),
+//            @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
+//    @Parameter(in = ParameterIn.QUERY, description = "페이지 번호 (0..N)", name = "page", example = "0",
+//            content = @Content(schema = @Schema(type = "Integer", defaultValue = "0")))
+//    @Parameter(in = ParameterIn.QUERY, description = "페이지 크기", name = "size", example = "7",
+//            content = @Content(schema = @Schema(type = "Integer", defaultValue = "7")))
+//    @SecurityRequirement(name = "bearerAuth")
+//    @GetMapping("/list")
+//    public RestApiResponse<Slice<SleepResDto>> getSleepDataList(@ParameterObject Pageable pageable) {
+//        Integer userNo = 1;
+//        return new RestApiResponse<>(pageable.getPageNumber()+"페이지 수면정보 리스트 조회 완료", sleepService.getSleepDataList(userNo, pageable));
+//    }
+
     @Operation(summary = "수면정보 리스트 조회", description = "회원의 수면정보를 최신순으로 출력한다", tags = {"Sleep"})
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = HeartRateResDto.class)),
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
-    @Parameter(in = ParameterIn.QUERY, description = "페이지 번호 (0..N)", name = "page", example = "0",
-            content = @Content(schema = @Schema(type = "Integer", defaultValue = "0")))
-    @Parameter(in = ParameterIn.QUERY, description = "페이지 크기", name = "size", example = "7",
-            content = @Content(schema = @Schema(type = "Integer", defaultValue = "7")))
+    @Parameter(name = "date", description = "수면 리스트 정보 날짜 조회(이날로부터 일주일 데이터 반환)", example = "2023-05-10T00:00:00")
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/list")
-    public RestApiResponse<Slice<SleepResDto>> getSleepDataList(@ParameterObject Pageable pageable) {
+    public RestApiResponse<List<SleepResDto>> getSleepDataList(@RequestParam("date") String date) {
         Integer userNo = 1;
-        return new RestApiResponse<>(pageable.getPageNumber()+"페이지 수면정보 리스트 조회 완료", sleepService.getSleepDataList(userNo, pageable));
+        return new RestApiResponse<>(date + "날짜부터 수면정보 리스트 조회 완료", sleepService.getSleepDataList(userNo, date));
     }
 
     @Operation(summary = "수면 세부 정보 조회", description = "수면 세부 정보 조회 조회 API", tags = {"Sleep"})

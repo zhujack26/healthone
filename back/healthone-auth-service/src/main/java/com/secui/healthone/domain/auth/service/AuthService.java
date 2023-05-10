@@ -7,45 +7,30 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.nimbusds.jose.jwk.gen.RSAKeyGenerator;
-import com.secui.healthone.domain.auth.config.KeyPairConfig;
 import com.secui.healthone.domain.auth.entity.Role;
 import com.secui.healthone.domain.auth.entity.User;
+import com.secui.healthone.domain.auth.repository.RedisRepository;
 import com.secui.healthone.domain.auth.repository.UserRepository;
-import com.secui.healthone.global.config.security.jwt.TokenService;
+import com.secui.healthone.util.RedisUtil;
+import com.secui.healthone.util.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLDecoder;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class AuthService {
 
-//    @Autowired
-//    private JwtTokenProvider jwtTokenProvider;
-
-
     private final UserRepository userRepository;
-
     private final TokenService tokenService;
-
-    private final KeyPairConfig keyPairConfig;
+    private final RedisUtil redisUtil;
+    private final RedisRepository redisRepository;
 
     public Map<String, String> isSignUp(String authCode) throws IOException {
         // Exchange auth code for access token
@@ -62,30 +47,33 @@ public class AuthService {
         GoogleTokenResponse tokenResponse = tokenRequest.execute();
         GoogleIdToken idToken = tokenResponse.parseIdToken();
         GoogleIdToken.Payload payload = idToken.getPayload();
-        String userId = payload.getEmail();
-        log.info("EMail= {}", userId);
+        String email = payload.getEmail();
+        log.info("EMail= {}", email);
         // 회원가입이 되있는지 확인
-//        if (true) {
-//            // 회원가입이 안되 있을 경우 회원가입
-//        }
-        // 회원가입이 되있을 경우 토큰 생성 후 return
-        KeyPair keyPair = keyPairConfig.keyPair();
-        // OpenSSL을 통해서 비대칭키 세트를 발급받아서 그 키로 claim을 만들어야함
-//        PublicKey publicKey = keyPair.getPublic();
-//        PrivateKey privateKey = keyPair.getPrivate();
-        String refreshtoken = "";
-        String accesstoken = "";
-        try {
-            refreshtoken = tokenService.generateToken(userId, Role.MEMBER.toString(), "REFRESH", privateKey);
-            accesstoken = tokenService.generateToken(userId, Role.MEMBER.toString(), "ACCESS", privateKey);
-        }catch (Exception e){
-            e.getStackTrace();
+        if (userRepository.findByEmail(email).isEmpty()) {
+            userRepository.save(
+                    User.builder()
+                            .email(email)
+                            .role(Role.MEMBER)
+                            .build());
+            // 회원가입이 안되 있을 경우 회원가입
         }
+        // 회원가입이 되있을 경우 토큰 생성 후 return
+        String refreshtoken = tokenService.generateToken(email, Role.MEMBER.toString(), "REFRESH");
+        String accesstoken = tokenService.generateToken(email, Role.MEMBER.toString(), "ACCESS");
+        redisUtil.setDataExpire(email,refreshtoken,tokenService.refreshPeriod);
         log.info("Refresh Token = {},Access Token = {}", refreshtoken, accesstoken);
         Map<String, String> token = new HashMap<>();
         token.put("refreshtoken", refreshtoken);
         token.put("accesstoken", accesstoken);
         return token;
+    }
+
+
+    public boolean logout(String accesstoken,String refreshtoken) throws Exception{
+        redisRepository.deleteById(refreshtoken);
+        redisUtil.setDataExpire(tokenService.getEmail(accesstoken),accesstoken,tokenService.accessPeriod);
+        return true;
     }
 }
 

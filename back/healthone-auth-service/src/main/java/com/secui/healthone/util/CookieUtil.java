@@ -1,4 +1,5 @@
-package com.secui.healthone;
+package com.secui.healthone.util;
+import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
@@ -27,8 +28,7 @@ public class CookieUtil {
                 return cookie.getValue();
             }
         }
-//        throw new JwtException("RefreshToken is invaild");
-        return null;
+        throw new JwtException("RefreshToken is invaild");
     }
 
 }

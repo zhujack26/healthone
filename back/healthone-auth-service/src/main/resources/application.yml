@@ -1,17 +1,10 @@
 server:
   port: 80
 spring:
-#  security:
-#    oauth2:
-#      client:
-#        registration:
-#          google:
-#            client-name: Google
-#            client-id: 785216230516-1h8hoagkginolldjirvtgiebidmqe38i.apps.googleusercontent.com
-#            client-secret: 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
-#            authorization-grant-type: authorization_code
-#            scope : email
-
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: ssafy
 
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
@@ -25,6 +18,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
 springboot:
   jwt:
     secret: 8q2ht89sbguniuqt9ieg

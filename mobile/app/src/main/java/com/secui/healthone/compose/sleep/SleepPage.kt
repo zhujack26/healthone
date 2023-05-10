@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -19,8 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.secui.healthone.repository.Sleep.SleepRecord
-import com.secui.healthone.ui.datacollectpage.SleepGoal
+import com.secui.healthone.data.Sleep.SleepRecord
 import com.secui.healthone.ui.mealplanpage.DateComponent
 import com.secui.healthone.ui.mealplanpage.TimeIntervalSelector
 import com.secui.healthone.ui.sleep.CustomSleepGoal

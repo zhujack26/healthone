@@ -8,22 +8,39 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import com.secui.healthone.repository.Sleep.SleepRecord
+import com.secui.healthone.api.SleepApi
+import com.secui.healthone.data.Sleep.SleepRecord
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 @Composable
 fun SleepRecords(selectedSleepTime: MutableState<String>, selectedWakeTime: MutableState<String>) {
     val sleepRecords = remember { mutableStateListOf<SleepRecord>() }
     val showInputFields = remember { mutableStateOf(sleepRecords.isEmpty()) }
+    val sleepApiService = remember { SleepApi.create() }
 
     fun saveSleepRecord() {
         if (selectedSleepTime.value.isNotEmpty() && selectedWakeTime.value.isNotEmpty()) {
-            sleepRecords.add(SleepRecord(selectedSleepTime.value, selectedWakeTime.value))
+            val sleepRecord = SleepRecord(
+                userNo = 1,
+                createTime = "2023-05-10T12:44:45.394Z",
+                startSleepTime = selectedSleepTime.value,
+                endSleepTime = selectedWakeTime.value
+            )
+            sleepRecords.add(sleepRecord)
             selectedSleepTime.value = ""
             selectedWakeTime.value = ""
             showInputFields.value = false
+
+            CoroutineScope(Dispatchers.IO).launch {
+                val response = sleepApiService.postSleepRecord(sleepRecord)
+                // handle response if needed
+            }
         }
     }
+
 
     Column {
         if (showInputFields.value) {
@@ -37,7 +54,7 @@ fun SleepRecords(selectedSleepTime: MutableState<String>, selectedWakeTime: Muta
         }
 
         sleepRecords.forEach { sleepRecord ->
-            Text("취침 시간: ${sleepRecord.sleepTime}, 기상 시간: ${sleepRecord.wakeTime}")
+            Text("취침 시간: ${sleepRecord.startSleepTime}, 기상 시간: ${sleepRecord.endSleepTime}")
         }
     }
 }

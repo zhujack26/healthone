@@ -45,7 +45,7 @@ class GoogleSignInRepository (
             val authCode = account.serverAuthCode
             Log.d("check", "Auth Code: $authCode")
             sendAuthCodeToServer(authCode, navController)
-            navController.navigate(PageRoutes.DataCollectFirst.route)
+//            navController.navigate(PageRoutes.DataCollectFirst.route)
             Log.d("check", "check")
         } catch (e: Exception) {
             Log.e("check", "Error2", e)
@@ -71,8 +71,7 @@ class GoogleSignInRepository (
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val urlString = "http://192.168.31.33/auth/verify"
-//                val urlString = "https://back.apihealthone.com/auth/login"
+                val urlString = "https://back.apihealthone.com/auth/login"
                 val url = URL(urlString)
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "POST"
@@ -104,7 +103,6 @@ class GoogleSignInRepository (
                         Log.d("check", "Signed in as: $response")
 //                        Log.d("check", "Signed in as: $accessToken")
                     }
-                    makeRequest(navController)
                 } else {
                     Log.e("check", "Error. Response code : $responseCode")
                 }
@@ -118,7 +116,7 @@ class GoogleSignInRepository (
     fun makeRequest(navController: NavController) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val urlString = "http://192.168.31.33/auth/login"
+                val urlString = "http://192.168.31.33/auth/verify"
                 val url = URL(urlString)
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "POST"

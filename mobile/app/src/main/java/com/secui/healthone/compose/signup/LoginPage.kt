@@ -17,6 +17,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -107,7 +108,13 @@ fun LoginPage(navController: NavController) {
             modifier = Modifier
                 .padding(16.dp)
                 .size(48.dp)
-                .clickable(onClick = { repository.signInWithGoogle(navController, launcher, googleSignInClient) })
+                .clickable(onClick = {
+                    repository.signInWithGoogle(
+                        navController,
+                        launcher,
+                        googleSignInClient
+                    )
+                })
         )
         ClickableText(
             text = annotatedText,
@@ -138,6 +145,8 @@ fun LoginPage(navController: NavController) {
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
+        Button(onClick = { repository.makeRequest(navController) }) {
+        }
     }
 }
 

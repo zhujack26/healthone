@@ -20,19 +20,31 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKeys
+
 
 class GoogleSignInRepository (
     private val context: Context,
     private val gso: GoogleSignInOptions,
     private val googleSignInClient: GoogleSignInClient
 ) {
+    private val keyGenParameterSpec = MasterKeys.AES256_GCM_SPEC
+    private val masterKeyAlias = MasterKeys.getOrCreate(keyGenParameterSpec)
+    private val sharedPreferences = EncryptedSharedPreferences.create(
+        "secret_shared_prefs",
+        masterKeyAlias,
+        context,
+        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+    )
     private var accessToken: String? = null
     fun handleSignInResult(navController: NavController, task: Task<GoogleSignInAccount>) {
         try {
             val account = task.getResult(ApiException::class.java)
             val authCode = account.serverAuthCode
-            Log.d("check", "Auth Code: $authCode") //authCode 값 확인
-            sendAuthCodeToServer(authCode)
+            Log.d("check", "Auth Code: $authCode")
+            sendAuthCodeToServer(authCode, navController)
             navController.navigate(PageRoutes.DataCollectFirst.route)
             Log.d("check", "check")
         } catch (e: Exception) {
@@ -49,7 +61,7 @@ class GoogleSignInRepository (
         launcher.launch(signInIntent)
     }
 
-    fun sendAuthCodeToServer(authCode: String?) {
+    fun sendAuthCodeToServer(authCode: String?, navController: NavController) {
         if (authCode == null) {
             Log.e("check", "authCode is null")
             return
@@ -59,7 +71,7 @@ class GoogleSignInRepository (
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val urlString = "http://192.168.31.33:8080/test"
+                val urlString = "http://192.168.31.33/auth/verify"
 //                val urlString = "https://back.apihealthone.com/auth/login"
                 val url = URL(urlString)
                 val connection = url.openConnection() as HttpURLConnection
@@ -73,24 +85,26 @@ class GoogleSignInRepository (
                 DataOutputStream(connection.outputStream).use { outputStream ->
                     Log.d("check", "check5")
                     outputStream.writeBytes(authCode)
-                    Log.d("check", "check, $postData")
+                    Log.d("check", "check6, $postData")
                     outputStream.flush()
                 }
                 val responseCode = connection.responseCode
                 Log.d("check", "Response code : $responseCode")
 
                 if (responseCode == HttpURLConnection.HTTP_OK) {
-                    val accessTokenResponse = connection.getHeaderField("accessToken")
+                    val accessTokenResponse = connection.getHeaderField("Authorization")
                     Log.d("check", "Received accessToken: $accessTokenResponse")
+                    sharedPreferences.edit().putString("access_token", accessTokenResponse).apply()
 
                     BufferedReader(InputStreamReader(connection.inputStream)).use { reader ->
                         //서버로부터 받은 응답을 읽기 위해 BufferedReader와 InputStreamReader를 사용
                         val response = reader.readText()
-                        val jsonResponse = JSONObject(response)
-                        accessToken = jsonResponse.getString("accessToken")
+//                        val jsonResponse = JSONObject(response)
+//                        accessToken = jsonResponse.getString("accessToken")
                         Log.d("check", "Signed in as: $response")
 //                        Log.d("check", "Signed in as: $accessToken")
                     }
+                    makeRequest(navController)
                 } else {
                     Log.e("check", "Error. Response code : $responseCode")
                 }
@@ -101,4 +115,54 @@ class GoogleSignInRepository (
             }
         }
     }
+    fun makeRequest(navController: NavController) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val urlString = "http://192.168.31.33/auth/login"
+                val url = URL(urlString)
+                val connection = url.openConnection() as HttpURLConnection
+                connection.requestMethod = "POST"
+                connection.setRequestProperty("Authorization", "Bearer ${getAccessToken()}")
+                Log.d("check", "Authorization: Bearer ${getAccessToken()}")
+
+                val responseCode = connection.responseCode
+                Log.d("check", "Response code : $responseCode")
+
+                when (responseCode) {
+                    HttpURLConnection.HTTP_OK -> {
+                        BufferedReader(InputStreamReader(connection.inputStream)).use { reader ->
+                            val response = reader.readText()
+                            Log.d("check", "Response: $response")
+                        }
+                    }
+                    HttpURLConnection.HTTP_UNAUTHORIZED -> {
+                        Log.d("check", "Unauthorized")
+                        val newAccessToken = connection.getHeaderField("Authorization")
+                        if (newAccessToken != null) {
+                            sharedPreferences.edit().putString("access_token", newAccessToken).apply()
+                            makeRequest(navController)
+                        } else {
+                            Log.e("check", "new access token fail.")
+                        }
+                    }
+                    HttpURLConnection.HTTP_FORBIDDEN -> {
+                        Log.d("check", "Forbidden, move to login page")
+                        navController.navigate(PageRoutes.Login.route)
+                    }
+                    else -> {
+                        Log.e("check", "Error. Response code : $responseCode")
+                    }
+                }
+
+                connection.disconnect()
+            } catch (e: Exception) {
+                Log.e("check", "exception", e)
+            }
+        }
+    }
+
+    private fun getAccessToken(): String {
+        return sharedPreferences.getString("access_token", "") ?: ""
+    }
 }
+

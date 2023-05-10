@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.secui.healthone.R
 import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.util.BoxTool
 import com.secui.healthone.util.PageRoutes
 
 
@@ -26,6 +27,9 @@ fun SleepCheckBox(
     sleepValue:Int = 0,
     modifier: Modifier=Modifier
 ){
+
+    val sleepDisplayValue = BoxTool.getSleepDisplayString(sleepValue);
+
     Card(
         elevation = 4.dp,
         shape = RoundedCornerShape(4.dp),
@@ -56,7 +60,7 @@ fun SleepCheckBox(
                 .wrapContentHeight(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "${calcSleepValue(sleepValue)}", fontSize = 20.sp);
+                Text(text = "${sleepDisplayValue}", fontSize = 20.sp);
                 Image(painter = painterResource(
                     id = R.drawable.ic_sleep),
                     contentDescription = "수면 아이콘",
@@ -65,18 +69,4 @@ fun SleepCheckBox(
             }
         }
     }
-}
-
-fun calcSleepValue(sleepValue:Int):String{
-    val hour = sleepValue/60;
-    val min = sleepValue%60;
-
-    if(hour > 0){
-        return "${hour}시간 ${min}분"
-    }else if(hour == 0 && min >= 0){
-        return "${min}분"
-    }else {
-        return "잘못된 값";
-    }
-
 }

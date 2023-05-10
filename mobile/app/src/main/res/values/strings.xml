@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">healthone</string>
     <string name="server_client_id">916070350515-1v5q67qk3nako5tiknkg1ndfcffl4vh6.apps.googleusercontent.com</string>
+    <string name="reject_permission">권한 설정이 거부 되었습니다.</string>
+    <string name="total_health_box_title">일일 활동</string>
+    <string name="heart_measure_guide">심박수를 입력 해주세요!</string>
+    <string name="heart_input_label">심박수 입력</string>
+    <string name="heart_measure_item_title">심박수 기록하기</string>
+    <string name="less_bpm_guide">최소 심박수는 20 입니다</string>
+    <string name="over_bpm_guide">최대 심박수는 220 입니다</string>
+    <string name="err_bpm_guide">유효 하지 않은 값 입니다</string>
 </resources>

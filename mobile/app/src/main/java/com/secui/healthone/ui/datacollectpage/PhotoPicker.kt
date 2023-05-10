@@ -28,8 +28,6 @@ fun PhotoPicker() {
         photoUri = uri
     }
     val imageColor = AppColors.white
-
-
         Spacer(modifier = Modifier.width(64.dp))
         if (photoUri != null) {
             val painter = rememberAsyncImagePainter(

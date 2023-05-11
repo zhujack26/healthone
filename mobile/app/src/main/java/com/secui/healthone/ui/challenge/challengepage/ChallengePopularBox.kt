@@ -19,12 +19,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.secui.healthone.data.ChallengeInfo
 import com.secui.healthone.ui.common.AppColors
 
 @Composable
 fun ChallengePopularBox(
     navController: NavHostController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    challengeList:MutableList<ChallengeInfo>
 ){
 
     Column(
@@ -45,9 +47,9 @@ fun ChallengePopularBox(
             .padding(8.dp)
             .horizontalScroll(rememberScrollState())
         ) {
-
-            repeat(8){
-                ChallengePopularItem(navController);
+            var idx = 0;
+            repeat(challengeList.size){
+                ChallengePopularItem(navController, idx=idx, challengeInfo = challengeList[idx++]);
             }
         }
     }

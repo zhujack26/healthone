@@ -66,6 +66,7 @@ fun LoginPage(navController: NavController) {
             .requestEmail()
             .build()
     }
+
     //idToken1
 //    val gso = remember {
 //        GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -73,6 +74,7 @@ fun LoginPage(navController: NavController) {
 //            .requestEmail()
 //            .build()
 //    }
+
     val googleSignInClient = remember { GoogleSignIn.getClient(context, gso) }
     val repository = GoogleSignInRepository(context, gso, googleSignInClient)
     val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) { result ->

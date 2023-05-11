@@ -32,20 +32,25 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.secui.healthone.R
+import com.secui.healthone.data.ChallengeInfo
 import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.viewmodel.ChallenegeViewModel
 
 @Composable
 fun PopularDetailItem(
     modifier: Modifier = Modifier
 ) {
-    val openDialog = remember { mutableStateOf(false) }
-    val context = LocalContext.current;
+    val challnegeInfo =  ChallenegeViewModel.currentChallenge.value;
+    val isEmpthyChallenge = challnegeInfo == null;
 
+    val openDialog = remember { mutableStateOf(false) }
     // 다이얼로그
-    if(openDialog.value){
-        ToolsDialog(openDialog)
+    if(openDialog.value &&
+        !isEmpthyChallenge &&
+        challnegeInfo?.sportEquipmentCheck == true){
+        ToolsDialog(openDialog, equipment = challnegeInfo?.equipment.toString())
     }
-    
+
     Image(
         painter = painterResource(id = R.drawable.recommand_sample1),
         contentDescription = "운동 추천" ,
@@ -54,6 +59,7 @@ fun PopularDetailItem(
             .height(196.dp),
         contentScale = ContentScale.Crop
     )
+
     Spacer(modifier = Modifier.height(16.dp))
 
     // introduce
@@ -61,17 +67,20 @@ fun PopularDetailItem(
         .fillMaxWidth()
         .wrapContentHeight()
         .padding(16.dp),
-        horizontalAlignment = Alignment.Start,
-    )
-    {
+        horizontalAlignment = Alignment.Start
+    ){
         Text(
-            text = PopularDetailItemText.challengeName,
+            text = if(isEmpthyChallenge)
+                        "이름 없음"
+                    else challnegeInfo?.name.toString(),
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = PopularDetailItemText.challengeDescription,
+            text = if(isEmpthyChallenge)
+                        "..."
+                    else challnegeInfo?.introduce.toString(),
             fontSize = 16.sp,
             color = AppColors.mono700
         )
@@ -106,7 +115,9 @@ fun PopularDetailItem(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = PopularDetailItemText.totalTimeValue,
+                    text = if(isEmpthyChallenge)
+                                0.toString()
+                            else challnegeInfo?.totalWorkCount.toString(),
                     fontSize = 16.sp
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -123,7 +134,9 @@ fun PopularDetailItem(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = PopularDetailItemText.totalPeriodValue,
+                    text = if(isEmpthyChallenge)
+                                0.toString()
+                            else challnegeInfo?.totalPeriod.toString(),
                     fontSize = 16.sp
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -140,15 +153,15 @@ fun PopularDetailItem(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = PopularDetailItemText.levelValue,
+                    text = PopularDetailItemText.levelText,
                     fontSize = 16.sp
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = PopularDetailItemText.levelText,
+                    text = if(isEmpthyChallenge) "-"
+                    else challnegeInfo?.level.toString(),
                     fontSize = 16.sp
                 )
-
             }
         }
         Spacer(modifier = Modifier.height(64.dp))
@@ -170,13 +183,16 @@ fun PopularDetailItem(
                     fontSize = 16.sp
                 ) // category
                 Text(
-                    text = PopularDetailItemText.averageValue,
+                    text =
+                    if(isEmpthyChallenge)
+                        "-"
+                    else challnegeInfo?.avgWorkTime.toString(),
                     fontSize = 16.sp
                 ) // value
 
             }
             Spacer(modifier = Modifier.height(16.dp))
-            // 운동 기고
+            // 운동 기구
             Row(modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight(),
@@ -193,21 +209,26 @@ fun PopularDetailItem(
                    verticalAlignment = Alignment.CenterVertically,
                ) {
                    Text(
-                       text = PopularDetailItemText.isToolNeed,
+                       text = if(isEmpthyChallenge) "없음"
+                                else if(challnegeInfo?.sportEquipmentCheck == true) "필요"
+                                else "불필요",
                        fontSize = 16.sp
                    ) // value
                    Spacer(modifier = Modifier.width(4.dp))
-                   Image(
-                       painter = painterResource(id = R.drawable.ic_info),
-                       contentDescription = "운동기구 타입 아이콘",
-                       modifier= Modifier
-                           .width(16.dp)
-                           .height(16.dp)
-                           .clickable {
-                               openDialog.value = true;
-                           },
-                       contentScale = ContentScale.Fit,
-                   )
+                   if(challnegeInfo?.sportEquipmentCheck == true){
+                       Image(
+                           painter = painterResource(id = R.drawable.ic_info),
+                           contentDescription = "운동기구 타입 아이콘",
+                           modifier= Modifier
+                               .width(16.dp)
+                               .height(16.dp)
+                               .clickable {
+                                   openDialog.value = true;
+                               },
+                           contentScale = ContentScale.Fit,
+                       )
+                   }
+
                }
 
             }
@@ -224,7 +245,8 @@ fun PopularDetailItem(
                     fontSize = 16.sp
                 ) // category
                 Text(
-                    text = PopularDetailItemText.progammeTypeValue,
+                    text = if(isEmpthyChallenge) "-"
+                            else challnegeInfo?.programType.toString(),
                     fontSize = 16.sp
                 ) // value
             }
@@ -242,7 +264,8 @@ fun PopularDetailItem(
                     fontSize = 16.sp
                 ) // category
                 Text(
-                    text = PopularDetailItemText.recommendDayValue,
+                    text = if(isEmpthyChallenge) "-"
+                            else challnegeInfo?.recommendWeek.toString(),
                     fontSize = 16.sp
                 ) // value
             }
@@ -284,46 +307,26 @@ fun PopularDetailItem(
 
 class PopularDetailItemText {
     companion object {
-        const val challengeName = "특색 있는 운동, 요가 챌린지"
-        const val challengeDescription = " 지루한 운동은 이제 그만, 요가를 통해 심신의 안정과 운동효과까지 모두 누려보세요. 이 코스만 따라하면 당신도 아름다운 몸매를 만드실 수 있어요. 도전해보세요!"
-
         const val challengeOverViewText = "프로그램 개요" // not to data
-
-        const val totalTimeValue = "8"
         const val totalTimesText = "총 운동 횟수"
-
-        const val totalPeriodValue = "2"
         const val totalPeriodText = "총 기간(주)"
-
-        const val levelValue = "쉬움"
         const val levelText = "난이도"
-
         const val averageText = "평균 운동 시간"
-        const val averageValue = "20분"
-
         const val toolsText = "운동 기구"
-        const val isToolNeed = "필요"
-
         const val progammeType = "프로그램 유형"
-        const val progammeTypeValue = "체중 감량"
-
         const val needToolText = "필요한 운동 기구"
         const val needToolValue = "요가매트, 짐볼, 풀업 바, 트레드밀"
         const val toolOkBtnText = "확인"
-
         const val recommendDay = "추천 운동 요일"
-        const val recommendDayValue = "월, 수, 금"
-
         const val recommendGuideText = "상기 일정에 맞추어 운동에 도전해보세요"
-
         const val seeVideoBtnText = "운동 영상 보러가기"
     }
 }
 
-// temp
 
+// 필요 운동 도구 알람창
 @Composable
-fun ToolsDialog(openDialog:MutableState<Boolean>) {
+fun ToolsDialog(openDialog:MutableState<Boolean>, equipment:String) {
     Dialog(onDismissRequest = { openDialog.value = false }) {
         Surface(modifier = Modifier
             .wrapContentWidth()
@@ -331,18 +334,17 @@ fun ToolsDialog(openDialog:MutableState<Boolean>) {
             shape = RoundedCornerShape(12.dp),
             color = AppColors.white
         ) {
-            ToolsInfoDialog(openDialog)
+            ToolsInfoDialog(openDialog, equipment=equipment)
         }
     }
 }
 
 @Composable
-fun ToolsInfoDialog(openDialog:MutableState<Boolean>){
+fun ToolsInfoDialog(openDialog:MutableState<Boolean>, equipment:String){
     Column(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
         .padding(16.dp)
-
     ) {
         Text(
             text = PopularDetailItemText.needToolText,
@@ -351,7 +353,7 @@ fun ToolsInfoDialog(openDialog:MutableState<Boolean>){
         )
         Spacer(modifier = Modifier.height(32.dp))
         Text(
-            text = PopularDetailItemText.needToolValue,
+            text = equipment,
             fontSize = 16.sp,
             color = AppColors.mono700,
             modifier = Modifier

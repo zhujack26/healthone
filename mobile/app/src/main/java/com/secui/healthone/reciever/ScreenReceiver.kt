@@ -31,8 +31,8 @@ class ScreenReceiver : BroadcastReceiver() {
                 // selectAll
                 dbHelper.saveScore(context=context, recordSleepTime = result);
             }
-            val list = dbHelper.selectAll(context=context);
-            Log.i(LOG, "${list.toString()}")
+//            val list = dbHelper.selectAll(context=context);
+//            Log.i(LOG, "${list.toString()}")
 
         } else if (intent?.action == Intent.ACTION_SCREEN_OFF) {
             // 스크린 OFF
@@ -135,6 +135,9 @@ class ScreenReceiver : BroadcastReceiver() {
         // 이전이면 음수, 같으면 0, 이후면 양수를 반환
         val sleepSleepGap = userSleepLDT.compareTo(targetSleepLDT); // 수면시간, 설정 수면시간 사이의 차이!
         val sleepWakeGap = userSleepLDT.compareTo(targetWakeLDT); // 수면시간과, 기상시간 사이의 차이! 밤샜는가, 여부!
+
+        Log.i(LOG, "ssg : $sleepSleepGap")
+        Log.i(LOG, "swg : $sleepWakeGap")
 
         // 수면시간 사이에만 비교한다
         val isSleepIn =  if (sleepSleepGap < 0) false // 취침 시간이 이르니?

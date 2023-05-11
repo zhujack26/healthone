@@ -4,14 +4,12 @@ import com.secui.healthone.domain.healthStat.dto.HealthStatDto;
 import com.secui.healthone.domain.healthStat.dto.HealthStatDtoMapper;
 import com.secui.healthone.domain.healthStat.entity.HealthStat;
 import com.secui.healthone.domain.healthStat.repository.HealthStatRepository;
-import com.secui.healthone.domain.user.repository.UserRepository;
 import com.secui.healthone.global.util.StringDateTrans;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 @Slf4j
@@ -29,10 +27,9 @@ public class HealthStatServiceImpl implements HealthStatService {
 
     @Override
     public HealthStatDto addHealthStat(HealthStatDto healthStatDto) {
-//        User user = userRepository.findById(healthStatDto.getUserNo()).orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
-        HealthStat healthStat = HealthStatDtoMapper.INSTANCE.dtoToEntity(healthStatDto);
-        healthStatRepository.save(healthStat);
-        return HealthStatDtoMapper.INSTANCE.entityToDto(healthStat);
+//        HealthStat healthStat = healthStatRepository.findByUserNoAndCreatetimeBetween(userNo, trans.getStartDateTime(), trans.getEndDateTime());
+        HealthStat result = healthStatRepository.save(HealthStatDtoMapper.INSTANCE.dtoToEntity(healthStatDto));
+        return HealthStatDtoMapper.INSTANCE.entityToDto(result);
     }
 
     @Override

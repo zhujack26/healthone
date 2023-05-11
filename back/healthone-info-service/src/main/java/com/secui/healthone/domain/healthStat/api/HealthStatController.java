@@ -29,7 +29,7 @@ public class HealthStatController {
     @Parameter(name = "Authorization", description = "회원 Access Token", required = false, example = "Bearer access_token")
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping
-    public RestApiResponse<?> getHealthStat(@RequestHeader(required = false) String Authorization, @RequestParam String date) {
+    public RestApiResponse<HealthStatDto> getHealthStat(@RequestHeader(required = false) String Authorization, @RequestParam String date) {
         Integer userNo = 1;
         HealthStatDto healthStatDto = healthStatService.getHealthStat(date, userNo);
         return new RestApiResponse<>("건강 기록 조회 성공", healthStatDto);
@@ -41,9 +41,9 @@ public class HealthStatController {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping
-    public RestApiResponse<?> addHealthStat(@RequestHeader(required = false) String Authorization, @RequestBody HealthStatDto healthStatDto) {
-        healthStatService.addHealthStat(healthStatDto);
-        return new RestApiResponse<>("건강 기록 등록 성공", null);
+    public RestApiResponse<HealthStatDto> addHealthStat(@RequestHeader(required = false) String Authorization, @RequestBody HealthStatDto healthStatDto) {
+        HealthStatDto result = healthStatService.addHealthStat(healthStatDto);
+        return new RestApiResponse<>("건강 기록 등록 성공", result);
     }
 
     @Operation(summary = "건강 기록 수정", description = "건강 기록 수정 API", tags = {"HealthStat"})

@@ -1,6 +1,6 @@
 package com.secui.healthone.domain.healthAdvice.api;
 
-import com.secui.healthone.domain.healthAdvice.dto.GetHealthAdviceReqDto;
+import com.secui.healthone.domain.healthAdvice.dto.HealthAdviceGetReqDto;
 import com.secui.healthone.domain.healthAdvice.dto.HealthAdviceDeleteReqDto;
 import com.secui.healthone.domain.healthAdvice.dto.HealthAdviceDto;
 import com.secui.healthone.domain.healthAdvice.service.HealthAdviceService;
@@ -20,9 +20,9 @@ public class HealthAdviceController {
     private final HealthAdviceService healthAdviceService;
 
     @GetMapping
-    public RestApiResponse<List<HealthAdviceDto>> getHealthAdvice(@RequestBody GetHealthAdviceReqDto getHealthAdviceReqDto) {
-        List<HealthAdviceDto> healthAdviceResDtoList = healthAdviceService.getHealthAdvice(getHealthAdviceReqDto);
-        return new RestApiResponse<>("회원 건강 조언 조회 성공", healthAdviceResDtoList);
+    public RestApiResponse<HealthAdviceDto> getHealthAdvice(@RequestBody HealthAdviceGetReqDto healthAdviceGetReqDto) {
+        HealthAdviceDto healthAdviceResDto = healthAdviceService.getHealthAdvice(healthAdviceGetReqDto);
+        return new RestApiResponse<>("회원 건강 조언 조회 성공", healthAdviceResDto);
     }
 
     @DeleteMapping

@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class HealthInfoDeleteReqDto {
+public class HealthInfoGetReqDto {
     private int userNo;
 }

@@ -30,7 +30,7 @@ fun TotalHealthBox(
 ){
 
     val stepDisplayValue = BoxTool.getDisplayString(value = stepValue); // 걸음 수
-    val sleepDisplayValue = BoxTool.getSleepDisplayString(value = sleepValue); // bpm 값
+    val sleepDisplayValue = BoxTool.getSleepDisplayString(value = sleepValue); // 수면 값
     val calDisplayValue = BoxTool.getDisplayString(value = calValue); // 칼로리
 
     Card(

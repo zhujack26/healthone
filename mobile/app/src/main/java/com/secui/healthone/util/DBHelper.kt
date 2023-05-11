@@ -35,8 +35,38 @@ class DBHelper: SQLiteOpenHelper {
     }
 
     data class TimeDBLog(val idx:Int, val recordSleepTime:Int, val recTimeLog:String);
+
+
+    fun getTotalSleeTime(
+        context: Context,
+        time: LocalDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"))
+    ):Long{
+        val dbHelper = DBHelper(context = context)
+        val endDate = time.toLocalDate().atStartOfDay()
+        val startDate = endDate.minusDays(1).plusSeconds(1)
+        val args = arrayOf(startDate.toString(), endDate.toString())
+        val query = """
+            SELECT SUM(record_sleep_time) AS total_sleep_time
+            FROM sleep_record
+            WHERE rec_time_log BETWEEN ? AND ?
+        """.trimIndent()
+
+        var totalSleepTime:Long = 0L
+        val cursor: Cursor = dbHelper.readableDatabase.rawQuery(query, args)
+        if (cursor.moveToFirst()) {
+            val sleepCursor = cursor.getColumnIndex("total_sleep_time")
+            totalSleepTime = cursor.getLong(sleepCursor)
+        }
+        cursor.close()
+        dbHelper.close()
+        return totalSleepTime
+    }
+
     // db 출력
-    fun selectAll(context: Context, time: LocalDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"))): MutableList<TimeDBLog> {
+    fun selectAll(
+        context: Context,
+        time: LocalDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"))
+    ):MutableList<TimeDBLog> {
 
         val dbHelper = DBHelper(context = context)
         val query = """

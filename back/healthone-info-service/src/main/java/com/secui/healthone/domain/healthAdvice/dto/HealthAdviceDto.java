@@ -14,8 +14,6 @@ import java.time.LocalDateTime;
 @Builder
 @Schema(description = "건강 조언 DTO")
 public class HealthAdviceDto {
-    @Schema(description = "건강 조언 식별번호")
-    private Integer no;
     @Schema(description = "건강 조언 유저 식별번호")
     private Integer userNo;
     @Schema(description = "기록한 시간")

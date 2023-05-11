@@ -36,19 +36,32 @@ class GoogleSignInRepository (
     private val googleSignInClient: GoogleSignInClient
 ) {
     private val cookieJar = object : CookieJar {
-        private val cookieStore = HashMap<HttpUrl, List<Cookie>>()
+//        private val cookieStore = HashMap<HttpUrl, List<Cookie>>()
+//
+//        override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
+//            Log.d("Cookie", "Saving cookies for $url")
+//            cookieStore[url] = cookies
+//        }
+//
+//        override fun loadForRequest(url: HttpUrl): List<Cookie> {
+//            val cookies = cookieStore[url] ?: ArrayList()
+//            Log.d("Cookie", "Loading cookies for $url: $cookies")
+//            return cookies
+//        }
+        private var cookies: List<Cookie>
+
+        init {
+            val actualCookies = ArrayList<Cookie>()
+            cookies = actualCookies
+        }
 
         override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
-            Log.d("Cookie", "Saving cookies for $url")
-            cookieStore[url] = cookies
+            this.cookies = cookies
         }
 
         override fun loadForRequest(url: HttpUrl): List<Cookie> {
-            val cookies = cookieStore[url] ?: ArrayList()
-            Log.d("Cookie", "Loading cookies for $url: $cookies")
             return cookies
         }
-
     }
     private val client = OkHttpClient.Builder()
         .cookieJar(cookieJar)
@@ -66,7 +79,7 @@ class GoogleSignInRepository (
 
     // Retrofit
     private val retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.31.33/")
+        .baseUrl("http://192.168.219.100/")
         .client(client)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
@@ -186,7 +199,7 @@ class GoogleSignInRepository (
         return sharedPreferences.getString("access_token", "") ?: ""
     }
     private fun getCookies(): List<Cookie> {
-        val url = "http://192.168.31.33/".toHttpUrlOrNull()!!
+        val url = "http://192.168.219.100/".toHttpUrlOrNull()!!
         if (url != null) {
             return cookieJar.loadForRequest(url)
         } else {

@@ -17,4 +17,6 @@ public interface MealRepository extends JpaRepository<Meal, Integer> {
     List<Meal> findByCreateTimeBetweenAndUserNo(LocalDateTime startDateTime, LocalDateTime endDateTime, Integer userNo);
 
     void deleteAllByNo(Integer no);
+
+    Meal save(Meal meal);
 }

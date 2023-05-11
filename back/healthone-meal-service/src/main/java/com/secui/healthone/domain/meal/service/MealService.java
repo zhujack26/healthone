@@ -30,8 +30,6 @@ import java.util.stream.Collectors;
 public class MealService {
 
     private final MealRepository mealRepository;
-    private final FoodRepository foodRepository;
-    private final CustomFoodRepository customFoodRepository;
 
     // 식사 조회
     public MealResDto getMeal(Integer no) {
@@ -47,22 +45,20 @@ public class MealService {
         return result.stream().map(MealResDto::new).collect(Collectors.toList());
     }
 
-    // 식사 등록, 수정
+    // 식사 등록
     @Transactional
     public MealResDto insertMeal(MealReqDto requestDto) {
-//        Food food = null;
-//        CustomFood customFood = null;
-//        if (requestDto.getFoodNo() != null){
-//            food= foodRepository.findById(requestDto.getFoodNo())
-//                    .orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
-//        } else if (requestDto.getCustomfoodNo()!= null){
-//            customFood = customFoodRepository.findAllByNoAndUserNo(requestDto.getCustomfoodNo(), requestDto.getUserNo())
-//                    .orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
-//        }
-//        mealRepository.save(requestDto.toEntity(food,customFood));
-//        return new MealResDto(requestDto.toEntity(food,customFood));
-        mealRepository.save(requestDto.toEntity());
-        return new MealResDto(requestDto.toEntity());
+        Meal result = mealRepository.save(requestDto.toEntity());
+        return new MealResDto(result);
+    }
+
+    // 식사 수정
+    @Transactional
+    public MealResDto modifyMeal(MealReqDto requestDto) {
+        Meal meal = mealRepository.findMealByNo(requestDto.getNo())
+                .orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
+        meal.update(meal);
+        return new MealResDto(meal);
     }
 
     // 식사 삭제

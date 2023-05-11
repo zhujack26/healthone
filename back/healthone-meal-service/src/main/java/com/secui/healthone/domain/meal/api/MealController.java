@@ -72,7 +72,7 @@ public class MealController {
     @PatchMapping
     public RestApiResponse<MealResDto> updateMeal(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "식사 수정 객체")  @RequestBody MealReqDto requestDto) {
-        return new RestApiResponse<>("식사 수정 성공", mealService.insertMeal(requestDto));
+        return new RestApiResponse<>("식사 수정 성공", mealService.modifyMeal(requestDto));
     }
 
     @Operation(summary = "식사 삭제", description = "식사 삭제 API", tags = {"Meal"})

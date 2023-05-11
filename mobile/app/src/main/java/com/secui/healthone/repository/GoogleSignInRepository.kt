@@ -13,25 +13,47 @@ import com.secui.healthone.util.PageRoutes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.BufferedReader
-import java.io.DataOutputStream
-import java.io.InputStreamReader
-import java.net.HttpURLConnection
-import java.net.URL
-import java.net.URLEncoder
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
+import com.secui.healthone.api.LoginApi
 import kotlinx.coroutines.delay
+import okhttp3.Cookie
+import okhttp3.CookieJar
+import okhttp3.HttpUrl
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.net.CookieHandler
 import java.net.CookieManager
-import java.net.HttpCookie
-import java.net.URI
 
 class GoogleSignInRepository (
     private val context: Context,
     private val gso: GoogleSignInOptions,
     private val googleSignInClient: GoogleSignInClient
 ) {
+    // Retrofit
+    private val retrofit = Retrofit.Builder()
+        .baseUrl("http://192.168.31.33/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+    // API
+    private val loginApi = retrofit.create(LoginApi::class.java)
+
+    private val cookieJar = object : CookieJar {
+        private val cookieStore = HashMap<HttpUrl, List<Cookie>>()
+
+        override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
+            cookieStore[url] = cookies
+        }
+
+        override fun loadForRequest(url: HttpUrl): List<Cookie> {
+            return cookieStore[url] ?: ArrayList()
+        }
+    }
+    private val client = OkHttpClient.Builder()
+        .cookieJar(cookieJar)
+        .build()
 
     private val keyGenParameterSpec = MasterKeys.AES256_GCM_SPEC
     private val masterKeyAlias = MasterKeys.getOrCreate(keyGenParameterSpec)
@@ -80,119 +102,66 @@ class GoogleSignInRepository (
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val urlString = "http://192.168.31.33/auth/login"
-                val url = URL(urlString)
-                val connection = url.openConnection() as HttpURLConnection
+                val response = loginApi.sendAuthCodeToServer(authCode)
 
-                connection.requestMethod = "POST"
-                Log.d("check", "check2")
-                connection.doOutput = true
-                Log.d("check", "check3")
-                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
-                Log.d("check", "check4")
-
-                val postData = URLEncoder.encode(authCode, "UTF-8")
-                DataOutputStream(connection.outputStream).use { outputStream ->
-                    Log.d("check", "check5")
-                    outputStream.writeBytes(authCode)
-                    Log.d("check", "check6, $postData")
-                    outputStream.flush()
-                }
-                val responseCode = connection.responseCode
-                Log.d("check", "Response code : $responseCode")
-
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    val setCookieHeaders = connection.getHeaderFields()["Set-Cookie"]
-                    if (setCookieHeaders != null) {
-                        val cookieManager = CookieHandler.getDefault() as CookieManager
-                        for (cookieStr in setCookieHeaders) {
-                            val httpCookie = HttpCookie.parse(cookieStr)[0]
-                            val cookieDomain = URI.create(urlString)
-                            cookieManager.getCookieStore().add(cookieDomain, httpCookie)
-                        }
-                    }
-                    val accessTokenResponse = connection.getHeaderField("Authorization")
-                    Log.d("check", "Received accessToken: $accessTokenResponse")
-                    sharedPreferences.edit().putString("access_token", accessTokenResponse).apply()
-
-                    BufferedReader(InputStreamReader(connection.inputStream)).use { reader ->
-                        val response = reader.readText()
-//                        val jsonResponse = JSONObject(response)
-//                        accessToken = jsonResponse.getString("accessToken")
-                        Log.d("check", "Signed in as: $response")
-//                        Log.d("check", "Signed in as: $accessToken")
+                if (response.isSuccessful) {
+                    val accessTokenResponse = response.headers().get("Authorization")
+                    if (accessTokenResponse != null) {
+                        sharedPreferences.edit().putString("access_token", accessTokenResponse).apply()
+                        Log.d("check", "Received accessToken: $accessTokenResponse")
                     }
                 } else {
-                    Log.e("check", "Error. Response code : $responseCode")
+                    Log.e("check", "Error. Response code : ${response.code()}")
                 }
 
-                connection.disconnect()
             } catch (e: Exception) {
-                Log.e("check", "exception", e)
+                Log.e("check", "Error", e)
             }
         }
     }
-    fun makeRequest(navController: NavController) {
+
+    fun makeRequest(navController: NavController, retryCount: Int = 0) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val urlString = "http://192.168.31.33/auth/verify"
-                val url = URL(urlString)
-                val connection = url.openConnection() as HttpURLConnection
-                connection.requestMethod = "POST"
-                connection.setRequestProperty("Authorization", "Bearer ${getAccessToken()}")
-                Log.d("check", "Authorization: Bearer ${getAccessToken()}")
-                connection.setRequestProperty("Cookie", getCookies(urlString))
-                Log.d("check", "Cookie: Bearer ${getCookies(urlString)}")
-                val responseCode = connection.responseCode
-                Log.d("check", "Response code : $responseCode")
+                val response = loginApi.verifyAuth("Bearer ${getAccessToken()}")
 
-                when (responseCode) {
-                    HttpURLConnection.HTTP_OK -> {
-                        val setCookieHeaders = connection.getHeaderFields()["Set-Cookie"]
-                        if (setCookieHeaders != null) {
-                            for (cookie in setCookieHeaders) {
-                                Log.d("check", "Set-Cookie: $cookie")
+                Log.d("check", "Response code : ${response.code()}")
+
+                when (response.code()) {
+                    200 -> {
+                        val responseBody = response.body()
+                        Log.d("check", "Response: $responseBody")
+                    }
+                    401 -> {
+                        Log.d("check", "Unauthorized")
+                        if (retryCount < 3) {
+                            delay(1000)
+                            makeRequest(navController, retryCount + 1)
+                            val newAccessToken = response.headers().get("Authorization")
+                            if (newAccessToken != null) {
+                                sharedPreferences.edit().putString("access_token", newAccessToken)
+                                    .apply()
+                            } else {
+                                Log.e("check", "new access token fail.")
                             }
                         }
-                        BufferedReader(InputStreamReader(connection.inputStream)).use { reader ->
-                            val response = reader.readText()
-                            Log.d("check", "Response: $response")
-                        }
                     }
-                    HttpURLConnection.HTTP_UNAUTHORIZED -> {
-                        Log.d("check", "Unauthorized")
-                        delay(1000)
-                        makeRequest(navController)
-                        val newAccessToken = connection.getHeaderField("Authorization")
-                        if (newAccessToken != null) {
-                            sharedPreferences.edit().putString("access_token", newAccessToken).apply()
-
-                        } else {
-                            Log.e("check", "new access token fail.")
-                        }
-                    }
-                    HttpURLConnection.HTTP_FORBIDDEN -> {
+                    403 -> {
                         Log.d("check", "Forbidden, move to login page")
                         navController.navigate(PageRoutes.DataCollectSecond.route)
                     }
                     else -> {
-                        Log.e("check", "Error. Response code : $responseCode")
+                        Log.e("check", "Error. Response code : ${response.code()}")
                     }
                 }
-
-                connection.disconnect()
             } catch (e: Exception) {
                 Log.e("check", "exception", e)
             }
         }
     }
 
+
     private fun getAccessToken(): String {
         return sharedPreferences.getString("access_token", "") ?: ""
-    }
-    private fun getCookies(urlString: String): String {
-        val cookieManager = CookieHandler.getDefault() as CookieManager
-        val cookies = cookieManager.getCookieStore().get(URI.create(urlString))
-        return cookies.joinToString("; ") { "${it.name}=${it.value}" }
     }
 }

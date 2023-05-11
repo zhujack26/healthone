@@ -57,7 +57,7 @@ public class MealService {
     public MealResDto modifyMeal(MealReqDto requestDto) {
         Meal meal = mealRepository.findMealByNo(requestDto.getNo())
                 .orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
-        meal.update(meal);
+        meal.update(requestDto.toEntity());
         return new MealResDto(meal);
     }
 

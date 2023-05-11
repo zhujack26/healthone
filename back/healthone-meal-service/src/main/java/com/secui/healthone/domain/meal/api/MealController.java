@@ -81,9 +81,9 @@ public class MealController {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @DeleteMapping
-    public RestApiResponse<Void> updateMeal(
+    public RestApiResponse<Integer> updateMeal(
             @Parameter(name = "no", description = "식사 식별번호", example = "1") @RequestParam("no") Integer no) {
         mealService.deleteMeal(no);
-        return new RestApiResponse<>("식사 삭제 성공", null);
+        return new RestApiResponse<>("식사 삭제 성공", no);
     }
 }

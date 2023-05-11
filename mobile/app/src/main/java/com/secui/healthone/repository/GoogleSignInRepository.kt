@@ -13,7 +13,6 @@ import com.secui.healthone.util.PageRoutes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.DataOutputStream
 import java.io.InputStreamReader
@@ -33,6 +32,7 @@ class GoogleSignInRepository (
     private val gso: GoogleSignInOptions,
     private val googleSignInClient: GoogleSignInClient
 ) {
+
     private val keyGenParameterSpec = MasterKeys.AES256_GCM_SPEC
     private val masterKeyAlias = MasterKeys.getOrCreate(keyGenParameterSpec)
     private val sharedPreferences = EncryptedSharedPreferences.create(
@@ -91,13 +91,6 @@ class GoogleSignInRepository (
                 connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
                 Log.d("check", "check4")
 
-                val cookieManager = CookieHandler.getDefault() as CookieManager
-                val cookies = cookieManager.getCookieStore().cookies
-                if (cookies.isNotEmpty()) {
-                    val cookieString = cookies.joinToString("; ") { "${it.name}=${it.value}" }
-                    connection.setRequestProperty("Cookie", cookieString)
-                    Log.d("check", "Cookie: $cookieString")
-                }
                 val postData = URLEncoder.encode(authCode, "UTF-8")
                 DataOutputStream(connection.outputStream).use { outputStream ->
                     Log.d("check", "check5")
@@ -111,21 +104,11 @@ class GoogleSignInRepository (
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     val setCookieHeaders = connection.getHeaderFields()["Set-Cookie"]
                     if (setCookieHeaders != null) {
-                        for (cookie in setCookieHeaders) {
-                            Log.d("check", "Set-Cookie: $cookie")
-                            // Extract 'refreshtoken' from the Set-Cookie headers
-                            if (cookie.startsWith("refreshtoken=")) {
-//                                val refreshToken = cookie.substringAfter("refreshtoken=").substringBefore(";")
-                                val cookieManager = CookieHandler.getDefault() as CookieManager
-                                val cookieStore = cookieManager.getCookieStore()
-//                                val cookieDomain = URI.create(urlString)
-//                                val httpCookie = HttpCookie("refreshtoken", refreshToken)
-//                                httpCookie.path = "/"
-//                                httpCookie.version = 0
-//                                cookieStore.add(cookieDomain, httpCookie)
-//                                Log.d("check", "Stored refresh token: $refreshToken")
-                                Log.d("check", "Cookie: $cookieStore")
-                            }
+                        val cookieManager = CookieHandler.getDefault() as CookieManager
+                        for (cookieStr in setCookieHeaders) {
+                            val httpCookie = HttpCookie.parse(cookieStr)[0]
+                            val cookieDomain = URI.create(urlString)
+                            cookieManager.getCookieStore().add(cookieDomain, httpCookie)
                         }
                     }
                     val accessTokenResponse = connection.getHeaderField("Authorization")
@@ -158,7 +141,8 @@ class GoogleSignInRepository (
                 connection.requestMethod = "POST"
                 connection.setRequestProperty("Authorization", "Bearer ${getAccessToken()}")
                 Log.d("check", "Authorization: Bearer ${getAccessToken()}")
-
+                connection.setRequestProperty("Cookie", getCookies(urlString))
+                Log.d("check", "Cookie: Bearer ${getCookies(urlString)}")
                 val responseCode = connection.responseCode
                 Log.d("check", "Response code : $responseCode")
 
@@ -205,5 +189,10 @@ class GoogleSignInRepository (
 
     private fun getAccessToken(): String {
         return sharedPreferences.getString("access_token", "") ?: ""
+    }
+    private fun getCookies(urlString: String): String {
+        val cookieManager = CookieHandler.getDefault() as CookieManager
+        val cookies = cookieManager.getCookieStore().get(URI.create(urlString))
+        return cookies.joinToString("; ") { "${it.name}=${it.value}" }
     }
 }

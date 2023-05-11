@@ -26,8 +26,8 @@ public class HealthAdviceDto {
     private AdviceType bmi;
     @Schema(description = "체지방률 조언")
     private AdviceType fatPercentage;
-//    @Schema(description = "허리둘레 조언")
-//    private AdviceType waistMeasurement;
+    @Schema(description = "허리둘레 조언")
+    private AdviceType waistMeasurement;
     @Schema(description = "공복혈당 조언")
     private AdviceType fbg;
     @Schema(description = "골격근량 조언")

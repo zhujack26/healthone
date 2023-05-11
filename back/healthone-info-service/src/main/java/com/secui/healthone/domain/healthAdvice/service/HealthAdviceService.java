@@ -39,6 +39,110 @@ public class HealthAdviceService {
     }
 
     /*
+    복부비만
+    (좋음)
+    남 = 90미만
+    여 = 85미만
+    (주의)
+    남 = 90이상
+    여 = 85이상
+     */
+    public static AdviceType getWaistMeasurementAdvice(float value, boolean gender) {
+        if (gender){
+            if (value < 90f){
+                return AdviceType.NORMAL;
+            } else {
+                return AdviceType.WARN;
+            }
+        } else {
+            if (value < 85f){
+                return AdviceType.NORMAL;
+            } else {
+                return AdviceType.WARN;
+            }
+        }
+    }
+
+    /*
+    공복혈당
+    (좋음)
+    100미만
+    (주의)
+    100~125
+    (위험)
+    126이상
+     */
+    public static AdviceType getWaterAdvice(float value) {
+        if (value < 100f){
+            return AdviceType.NORMAL;
+        } else if (value < 126f){
+            return AdviceType.WARN;
+        } else {
+            return AdviceType.DANGER;
+        }
+    }
+
+    /*
+    HDL콜레스테롤
+    (좋음)
+    60이상
+    (주의)
+    41~59
+    (위험)
+    40이하
+     */
+    public static AdviceType getHDLAdvice(float value) {
+        if (value > 60f){
+            return AdviceType.NORMAL;
+        } else if (value > 40f){
+            return AdviceType.WARN;
+        } else {
+            return AdviceType.DANGER;
+        }
+    }
+
+    /*
+    중성지방
+    (좋음)
+    150 미만
+    (주의)
+    150~199
+    (위험)
+    200이상
+     */
+    public static AdviceType getCholesterolAdvice(float value) {
+        if (value < 150f){
+            return AdviceType.NORMAL;
+        } else if (value < 200f){
+            return AdviceType.WARN;
+        } else {
+            return AdviceType.DANGER;
+        }
+    }
+
+    /*
+    혈압
+    (좋음)
+    수축기혈압 120미만
+    이완기혈압 80미만
+    (주의)
+    수축기혈압 120~139
+    이완기혈압 80~89
+    (위험)
+    수축기혈압 140이상
+    이완기혈압 90이상
+     */
+    public static AdviceType getBloodPressureAdvice(float value) {
+        if (value < 120f){
+            return AdviceType.NORMAL;
+        } else if (value < 140f){
+            return AdviceType.WARN;
+        } else {
+            return AdviceType.DANGER;
+        }
+    }
+
+    /*
     골격근
     (좋음)
     남 = 몸무게 * 0.4 이상
@@ -78,11 +182,11 @@ public class HealthAdviceService {
     public static AdviceType getFatPercentageAdvice(float value, boolean gender) {
         // 남
         if (gender){
-            if (value < 15){
+            if (value < 15f){
                 return AdviceType.DANGER;
-            } else if (value <= 18) {
+            } else if (value <= 18f) {
                 return AdviceType.NORMAL;
-            } else if (value <= 24) {
+            } else if (value <= 24f) {
                 return AdviceType.WARN;
             } else {
                 return AdviceType.DANGER;
@@ -90,11 +194,11 @@ public class HealthAdviceService {
         }
         // 여
         else {
-            if (value < 20) {
+            if (value < 20f) {
                 return AdviceType.DANGER;
-            } else if (value <= 25) {
+            } else if (value <= 25f) {
                 return AdviceType.NORMAL;
-            } else if (value <= 29) {
+            } else if (value <= 29f) {
                 return AdviceType.WARN;
             } else {
                 return AdviceType.DANGER;
@@ -118,11 +222,11 @@ public class HealthAdviceService {
     35 <= 값 = 초고도비만
      */
     public static AdviceType getBMIAdvice(float value) {
-        if (value < 18.5) {
+        if (value < 18.5f) {
             return AdviceType.DANGER;
-        } else if (value < 23) {
+        } else if (value < 23f) {
             return AdviceType.NORMAL;
-        } else if (value < 25) {
+        } else if (value < 25f) {
             return AdviceType.WARN;
         } else {
             return AdviceType.DANGER;
@@ -130,15 +234,15 @@ public class HealthAdviceService {
     }
 
     public static String getWeightAdvice(float value) {
-        if (value < 18.5) {
+        if (value < 18.5f) {
             return "저체중";
-        } else if (value < 23) {
+        } else if (value < 23f) {
             return "정상";
-        } else if (value < 25) {
+        } else if (value < 25f) {
             return "과제중";
-        } else if (value < 30) {
+        } else if (value < 30f) {
             return "비만";
-        } else if (value < 35) {
+        } else if (value < 35f) {
             return "고도비만";
         } else {
             return "초고도비만";

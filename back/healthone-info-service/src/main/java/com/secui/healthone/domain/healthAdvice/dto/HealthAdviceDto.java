@@ -14,30 +14,28 @@ import java.time.LocalDateTime;
 @Builder
 @Schema(description = "건강 조언 DTO")
 public class HealthAdviceDto {
-    @Schema(description = "건강 조언 식별번호")
-    private Integer no;
     @Schema(description = "건강 조언 유저 식별번호")
     private Integer userNo;
     @Schema(description = "기록한 시간")
     private LocalDateTime createtime;
-    @Schema(description = "신장 조언")
-    private String height;
+//    @Schema(description = "신장 조언")
+//    private String height;
     @Schema(description = "체중 조언")
     private String weight;
     @Schema(description = "BMI 조언")
-    private String bmi;
+    private AdviceType bmi;
     @Schema(description = "체지방률 조언")
-    private String fatPercentage;
+    private AdviceType fatPercentage;
     @Schema(description = "허리둘레 조언")
-    private String waistMeasurement;
+    private AdviceType waistMeasurement;
     @Schema(description = "공복혈당 조언")
-    private String fbg;
+    private AdviceType fbg;
     @Schema(description = "골격근량 조언")
-    private String skeletalMuscleMass;
+    private AdviceType skeletalMuscleMass;
     @Schema(description = "혈압 조언")
-    private String bloodPressure;
+    private AdviceType bloodPressure;
     @Schema(description = "콜레스테롤 조언")
-    private String hdlCholesterol;
+    private AdviceType hdlCholesterol;
     @Schema(description = "중성지방 조언")
-    private String tg;
+    private AdviceType tg;
 }

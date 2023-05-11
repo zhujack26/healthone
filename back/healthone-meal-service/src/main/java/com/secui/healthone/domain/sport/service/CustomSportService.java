@@ -32,11 +32,20 @@ public class CustomSportService {
         return customSportMapper.customSportToCustomSportResDto(result.orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100)));
     }
 
-    // 사용자 운동 데이터 단건 등록, 수정
+    // 사용자 운동 데이터 단건 등록
     @Transactional
     public CustomSportResDto insertCustomSport(CustomSportReqDto reqDto) {
-        customSportRepository.save(customSportMapper.customSportReqDtoToCustomSport(reqDto));
-        return customSportMapper.customSportToCustomSportResDto(customSportMapper.customSportReqDtoToCustomSport(reqDto));
+        CustomSport result = customSportRepository.save(customSportMapper.customSportReqDtoToCustomSport(reqDto));
+        return customSportMapper.customSportToCustomSportResDto(result);
+    }
+
+    // 사용자 운동 데이터 단건 수정
+    @Transactional
+    public CustomSportResDto updateCustomSport(CustomSportReqDto reqDto, Integer userNo) {
+        CustomSport result = customSportRepository.findByNoAndUserNo(reqDto.getNo(), userNo)
+                .orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
+        result.update(reqDto);
+        return customSportMapper.customSportToCustomSportResDto(result);
     }
 
     // 운동 데이터 삭제

@@ -27,24 +27,20 @@ public class SportRecordService {
         return SportRecordDtoMapper.INSTANCE.entityToResListDto(result);
     }
 
-    // 등록, 수정
+    // 등록
     @Transactional
     public SportRecordResDto insertSportRecord(SportRecordReqDto reqDto) {
-//        Sport sport = null;
-//        CustomSport customSport = null;
-//        if (reqDto.getSportNo() != null){
-//            sport = sportRepository.findById(reqDto.getSportNo())
-//                    .orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
-//            reqDto.setSportNo(sport.getNo());
-//        } else if (reqDto.getCustomSportNo()!= null){
-//            customSport = customSportRepository.findByNoAndUserNo(reqDto.getCustomSportNo(), reqDto.getUserNo())
-//                    .orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
-//            reqDto.setCustomSportNo(customSport.getNo());
-//        }
-//        sportRecordRepository.save(SportRecordDtoMapper.INSTANCE.reqDtoToEntity(reqDto, sport, customSport));
-//        return SportRecordDtoMapper.INSTANCE.entityToResDto(SportRecordDtoMapper.INSTANCE.reqDtoToEntity(reqDto, sport, customSport));
         SportRecord saveResult = sportRecordRepository.save(SportRecordDtoMapper.INSTANCE.reqDtoToEntity(reqDto));
         return SportRecordDtoMapper.INSTANCE.entityToResDto(saveResult);
+    }
+
+    // 수정
+    @Transactional
+    public SportRecordResDto updateSportRecord(SportRecordReqDto reqDto, Integer userNo) {
+        SportRecord sportRecord = sportRecordRepository.findById(reqDto.getNo())
+                .orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
+        sportRecord.update(reqDto);
+        return SportRecordDtoMapper.INSTANCE.entityToResDto(sportRecord);
     }
 
     @Transactional

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -31,9 +32,9 @@ public class SportController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "운동 데이터 검색 성공", content = {
                     @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = SportResDto.class))),
                     @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
+    @Parameter(name = "name", description = "운동 검색", example = "걷기")
     @GetMapping("/search")
-    public RestApiResponse<List<SportResDto>> searchSport (
-            @Parameter(name = "name", description = "운동 검색", example = "걷기") @RequestParam("name") String name) {
+    public RestApiResponse<List<SportResDto>> searchSport (@Valid @RequestParam(value = "name") String name) {
         return new RestApiResponse<>("운동 데이터 검색 성공", sportService.searchSport(name));
     }
 
@@ -41,9 +42,9 @@ public class SportController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "운동 데이터 조회 성공", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = SportResDto.class)),
                     @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
+    @Parameter(name = "no", description = "운동 식별번호", example = "1")
     @GetMapping
-    public RestApiResponse<SportResDto> getSportData (
-            @Parameter(name = "no", description = "운동 식별번호", example = "1") @RequestParam("no") Integer no) {
+    public RestApiResponse<SportResDto> getSportData (@Valid @RequestParam(name = "no") Integer no) {
         return new RestApiResponse<>("운동 데이터 조회 성공", sportService.getSport(no));
     }
 }

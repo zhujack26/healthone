@@ -32,7 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.secui.healthone.data.MealPlan.AddExercise
 import com.secui.healthone.data.MealPlan.ExerciseSearch
-import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.constant.AppColors
 import com.secui.healthone.ui.mealplanpage.ExerciseInput.ExerciseSearchResults
 import com.secui.healthone.ui.mealplanpage.MealInput.SearchBar
 import com.secui.healthone.constant.PageRoutes

@@ -1,6 +1,8 @@
 package com.secui.healthone.viewmodel
 
 import android.util.Log
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -62,6 +64,10 @@ class HeartRateViewModel(private val repository : HeartRateRepository) : ViewMod
     protected val exceptionHandler = CoroutineExceptionHandler{ i, exception ->
         Log.d("ERR ::::", "에러 발생.... ${exception.message}");
         Log.d("ERR ::::", "에러 발생.... ${exception.toString()}");
+    }
+
+    companion object {
+        val heartRateList:MutableState<MutableList<HeartRead>> = mutableStateOf(mutableListOf());
     }
 
 }

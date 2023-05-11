@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.secui.healthone.R
-import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.constant.AppColors
 import com.secui.healthone.constant.PageRoutes
 import com.secui.healthone.data.ChallengeInfo
 import com.secui.healthone.viewmodel.ChallenegeViewModel

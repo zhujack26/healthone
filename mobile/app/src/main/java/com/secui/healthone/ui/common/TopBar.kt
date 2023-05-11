@@ -2,7 +2,6 @@ package com.secui.healthone.ui.common
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -12,12 +11,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.secui.healthone.R
+import com.secui.healthone.constant.AppColors
 import com.secui.healthone.constant.PageRoutes
 
 @Composable
@@ -153,7 +152,7 @@ fun TopBar() {
                 Divider(color = AppColors.black, thickness = 1.dp)
                 DrawerButton(
                     text = "건강상태",
-                    icon = R.drawable.ic_heart,
+                    icon = R.drawable.ic_health_info,
                     iconColor = Color.Unspecified,
                     onClick = {
                         currentTitle.value = "건강상태"

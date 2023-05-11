@@ -14,8 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.secui.healthone.data.MealPlan.ExerciseList
-import com.secui.healthone.ui.common.AppColors
-import com.secui.healthone.viewmodel.ExerciseViewModel
+import com.secui.healthone.constant.AppColors
 
 @Composable
 fun ExerciseCard(exercise: ExerciseList, onDelete: (Int) -> Unit) {

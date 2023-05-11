@@ -37,7 +37,7 @@ import androidx.navigation.NavHostController
 import com.secui.healthone.R;
 import com.secui.healthone.data.heart.HeartWrite
 import com.secui.healthone.repository.HeartRateRepository
-import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.constant.AppColors
 import com.secui.healthone.util.PreferenceUtil
 import com.secui.healthone.viewmodel.HeartRateViewModel
 

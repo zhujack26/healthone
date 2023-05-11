@@ -19,7 +19,7 @@ import com.secui.healthone.compose.signup.GuidePage
 import com.secui.healthone.compose.signup.LoginPage
 import com.secui.healthone.service.ScreenService
 import com.secui.healthone.ui.common.TopBar
-import com.secui.healthone.util.PageRoutes
+import com.secui.healthone.constant.PageRoutes
 import com.secui.healthone.util.PreferenceUtil
 
 class MainActivity : ComponentActivity() {

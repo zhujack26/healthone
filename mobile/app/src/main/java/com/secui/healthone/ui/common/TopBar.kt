@@ -16,7 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.secui.healthone.R
-import com.secui.healthone.util.PageRoutes
+import com.secui.healthone.constant.PageRoutes
 
 @Composable
 fun TopBar() {

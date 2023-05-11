@@ -20,11 +20,11 @@ import com.secui.healthone.ui.overviewpage.HeartRateBox
 import com.secui.healthone.ui.overviewpage.SleepCheckBox
 import com.secui.healthone.ui.overviewpage.TotalHealthBox
 import com.secui.healthone.ui.overviewpage.UserWalkBox
-import com.secui.healthone.util.FitAPIConfig
-import com.secui.healthone.util.FitHeartManager
-import com.secui.healthone.util.FitNutritionManager
-import com.secui.healthone.util.FitSleepManager
-import com.secui.healthone.util.FitWalkManager
+import com.secui.healthone.api.fit.FitAPIConfig
+import com.secui.healthone.api.fit.FitHeartManager
+import com.secui.healthone.api.fit.FitNutritionManager
+import com.secui.healthone.api.fit.FitSleepManager
+import com.secui.healthone.api.fit.FitWalkManager
 
 
 lateinit var context: Context;

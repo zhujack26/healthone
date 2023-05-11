@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.secui.healthone.R
-import com.secui.healthone.util.PageRoutes
+import com.secui.healthone.constant.PageRoutes
 import kotlinx.coroutines.delay
 
 @Composable

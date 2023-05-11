@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -34,9 +35,9 @@ public class CustomFoodController {
             @ApiResponse(responseCode = "DB_100", description = "DB에 해당 데이터를 찾을 수 없음",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class))),  })
     @SecurityRequirement(name = "bearerAuth")
+    @Parameter(name = "no", description = "사용자 음식 식별번호", example = "1")
     @GetMapping
-    public RestApiResponse<CustomFoodResDto> getCustomFood(
-            @Parameter(name = "no", description = "사용자 음식 식별번호", example = "1") @RequestParam("no") Integer no) {
+    public RestApiResponse<CustomFoodResDto> getCustomFood(@Valid @RequestParam("no") Integer no) {
         Integer userNo = 1;
         return new RestApiResponse<>("사용자 음식 데이터 단건 조회 성공", customFoodService.getCustomFood(no, userNo));
     }
@@ -47,9 +48,9 @@ public class CustomFoodController {
                     @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = CustomFoodResDto.class))),
                     @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class))  }), })
     @SecurityRequirement(name = "bearerAuth")
+    @Parameter(name = "name", description = "사용자 음식 이름", example = "김밥")
     @GetMapping("/serarch")
-    public RestApiResponse<List<CustomFoodResDto>> getCustomFood(
-            @Parameter(name = "name", description = "사용자 음식 이름", example = "김밥") @RequestParam("name") String name) {
+    public RestApiResponse<List<CustomFoodResDto>> getCustomFood(@Valid @RequestParam("name") String name) {
         Integer userNo = 1;
         return new RestApiResponse<>("사용자 음식 데이터 검색 성공", customFoodService.searchCustomFood(name, userNo));
     }
@@ -59,9 +60,9 @@ public class CustomFoodController {
                     @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = CustomFoodResDto.class))),
                     @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "사용자 음식 등록 객체")
     @PostMapping
-    public RestApiResponse<CustomFoodResDto> getCustomFood(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "사용자 음식 등록 객체") @RequestBody CustomFoodReqDto requestDto) {
+    public RestApiResponse<CustomFoodResDto> getCustomFood(@Valid @RequestBody CustomFoodReqDto requestDto) {
         return new RestApiResponse<>("사용자 음식 데이터 등록 성공", customFoodService.saveCustomFood(requestDto));
     }
 
@@ -70,9 +71,9 @@ public class CustomFoodController {
                     @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = CustomFoodResDto.class))),
                     @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "식사 수정 객체")
     @PatchMapping
-    public RestApiResponse<CustomFoodResDto> modifyCustomFood(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "식사 수정 객체") @RequestBody CustomFoodReqDto requestDto) {
+    public RestApiResponse<CustomFoodResDto> modifyCustomFood(@Valid @RequestBody CustomFoodReqDto requestDto) {
         return new RestApiResponse<>("사용자 음식 데이터 수정 성공", customFoodService.updateCustomFood(requestDto));
     }
 
@@ -81,9 +82,9 @@ public class CustomFoodController {
                     @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = CustomFoodResDto.class))),
                     @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class))  }), })
     @SecurityRequirement(name = "bearerAuth")
+    @Parameter(name = "no", description = "사용자 음식 데이터 식별번호", example = "1")
     @DeleteMapping
-    public RestApiResponse<CustomFoodResDto> deleteCustomFood(
-            @Parameter(name = "no", description = "사용자 음식 데이터 식별번호", example = "1") @RequestParam Integer no) {
+    public RestApiResponse<CustomFoodResDto> deleteCustomFood(@Valid @RequestParam Integer no) {
         customFoodService.deleteCustomFood(no);
         return new RestApiResponse<>("사용자 음식 데이터 삭제 성공", null);
     }

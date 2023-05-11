@@ -4,7 +4,9 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import java.time.LocalDateTime
+import java.time.ZoneId
 
 // 기록들을 저장하고 불러오기 위한 DB 클래스
 class DBHelper: SQLiteOpenHelper {
@@ -18,11 +20,10 @@ class DBHelper: SQLiteOpenHelper {
     override fun onCreate(p0: SQLiteDatabase?) {
         // 생성 쿼리문 작성
         // 메모사항
-        // db의 level 열에는 1~6 까지의 값을 가지며 레벨 순으로 값을 비교해야해서 레벨 컬럼을 추가함
         val sql = """
             create table sleep_record(
-            	slee_record_idx integer primary key autoincrement,
-                record_sleep_time int not null,
+            	sleep_record_idx integer primary key autoincrement,
+                record_sleep_time long not null,
                 rec_time_log TIMESTAMP not null DEFAULT CURRENT_TIMESTAMP 
             );
         """.trimIndent()
@@ -35,11 +36,11 @@ class DBHelper: SQLiteOpenHelper {
 
     data class TimeDBLog(val idx:Int, val recordSleepTime:Int, val recTimeLog:String);
     // db 출력
-    fun selectAll(context: Context, time: LocalDateTime = LocalDateTime.now()): MutableList<TimeDBLog> {
+    fun selectAll(context: Context, time: LocalDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"))): MutableList<TimeDBLog> {
 
         val dbHelper = DBHelper(context = context)
         val query = """
-                            SELECT slee_record_idx, record_sleep_time, rec_time_log
+                            SELECT sleep_record_idx, record_sleep_time, rec_time_log
                             FROM sleep_record
                             WHERE rec_time_log BETWEEN ? AND ?
                         """.trimIndent()
@@ -66,7 +67,7 @@ class DBHelper: SQLiteOpenHelper {
         dbHelper.writableDatabase.close()
         return recordTimeList
     }
-    fun saveScore(context: Context, recordSleepTime: Int){
+    fun saveScore(context: Context, recordSleepTime: Long){
         // SQLite로 데이터를 삽입하는 코드
         // step 1. 데이터 베이스를 연다
         val dbHelper = DBHelper(context);
@@ -82,11 +83,12 @@ class DBHelper: SQLiteOpenHelper {
         // step 4. DBHelper를 통해 쿼리문을 실행한다.
         dbHelper.writableDatabase.execSQL(sql, values); // sql문, 값(배열) 순이다.
         // step 5. DB 사용이 끝났다면 쿼리문을 닫아 준다.
+        Log.i(DBLOG, "데이터 베이스에 수면 시간 저장 $recordSleepTime")
         dbHelper.writableDatabase.close();
     }
 
-//    companion object {
-//        var dbHelper:DBHelper? = null;
-//    }
+    companion object {
+        const val DBLOG ="DB HELPER::::"
+    }
 
 }

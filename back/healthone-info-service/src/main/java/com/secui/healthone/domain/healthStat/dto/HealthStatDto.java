@@ -20,9 +20,9 @@ public class HealthStatDto {
     private Float bmi;
     private Float bodyFatPercentage;
     private Float skeletalMuscleMass;
-    private Float tg;
-    private Float hdlCholesterol;
-    private Float fbg;
+    private Float waistMeasurement;
     private Float bloodPressure;
-    private Float waistCircumference;
+    private Float fbg;
+    private Float hdlCholesterol;
+    private Float tg;
 }

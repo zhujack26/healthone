@@ -1,11 +1,12 @@
 package com.secui.healthone.domain.healthInfo.service;
 
-import com.secui.healthone.domain.healthInfo.dto.HealthInfoGetReqDto;
 import com.secui.healthone.domain.healthInfo.dto.HealthInfoDto;
 import com.secui.healthone.domain.healthInfo.dto.HealthInfoDtoMapper;
 import com.secui.healthone.domain.healthInfo.entity.HealthInfo;
 import com.secui.healthone.domain.healthInfo.repository.HealthInfoRepository;
 import com.secui.healthone.domain.user.repository.UserRepository;
+import com.secui.healthone.global.error.errorcode.CustomErrorCode;
+import com.secui.healthone.global.error.exception.RestApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,17 +18,15 @@ public class HealthInfoServiceImpl implements HealthInfoService {
     private final UserRepository userRepository;
 
     @Override
-    public HealthInfoDto getHealthInfo(HealthInfoGetReqDto getHealthInfoReqDto) {
-//        userRepository.findById(getHealthInfoReqDto.getUserNo()).orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
-        HealthInfo healthInfo = healthInfoRepository.findByUserNo(getHealthInfoReqDto.getUserNo()).orElseThrow();
+    public HealthInfoDto getHealthInfo(Integer no, Integer userNo) {
+        HealthInfo healthInfo = healthInfoRepository.findByNoAndUserNo(no, userNo).orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
         return HealthInfoDtoMapper.INSTANCE.entityToDto(healthInfo);
     }
 
     @Override
     public HealthInfoDto addHealthInfo(HealthInfoDto healthInfoDto) {
-        HealthInfo healthInfo = HealthInfoDtoMapper.INSTANCE.dtoToEntity(healthInfoDto);
-        healthInfoRepository.save(healthInfo);
-        return HealthInfoDtoMapper.INSTANCE.entityToDto(healthInfo);
+        HealthInfo result = healthInfoRepository.save(HealthInfoDtoMapper.INSTANCE.dtoToEntity(healthInfoDto));
+        return HealthInfoDtoMapper.INSTANCE.entityToDto(result);
     }
 
     @Override

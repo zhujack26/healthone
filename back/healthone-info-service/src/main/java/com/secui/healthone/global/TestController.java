@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/test")
-@Tag(name = "Test", description = "Meal 서버 테스트 관련 컨트롤러")
+@Tag(name = "Test", description = "Info 서버 테스트 관련 컨트롤러")
 public class TestController {
 
     @Operation(summary = "서버 응답", description = "서버응답 API", tags = {"Test"})
@@ -25,7 +25,7 @@ public class TestController {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }) })
     @GetMapping
     public RestApiResponse<String> testServer(){
-        return new RestApiResponse<>("Meal Server is running", null);
+        return new RestApiResponse<>("Info Server is running", null);
     }
 
     @Operation(summary = "서버 에러 응답", description = "서버 에러 응답 API", tags = {"Test"})

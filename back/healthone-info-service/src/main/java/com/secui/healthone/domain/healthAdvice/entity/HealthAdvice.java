@@ -28,6 +28,8 @@ public class HealthAdvice {
     private String bmi;
     @Column(name = "health_advice_fat_percentage")
     private String fatPercentage;
+    @Column(name = "health_advice_waist_measurement")
+    private String waistMeasurement;
     @Column(name = "health_advice_fbg")
     private String fbg;
     @Column(name = "health_advice_skeletal_muscle_mass")

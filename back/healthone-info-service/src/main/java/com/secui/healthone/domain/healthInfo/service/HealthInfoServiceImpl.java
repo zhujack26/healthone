@@ -25,9 +25,8 @@ public class HealthInfoServiceImpl implements HealthInfoService {
 
     @Override
     public HealthInfoDto addHealthInfo(HealthInfoDto healthInfoDto) {
-        HealthInfo healthInfo = HealthInfoDtoMapper.INSTANCE.dtoToEntity(healthInfoDto);
-        healthInfoRepository.save(healthInfo);
-        return HealthInfoDtoMapper.INSTANCE.entityToDto(healthInfo);
+        HealthInfo result = healthInfoRepository.save(HealthInfoDtoMapper.INSTANCE.dtoToEntity(healthInfoDto));
+        return HealthInfoDtoMapper.INSTANCE.entityToDto(result);
     }
 
     @Override

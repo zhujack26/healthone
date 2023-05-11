@@ -1,7 +1,6 @@
 package com.secui.healthone.domain.healthInfo.api;
 
 import com.secui.healthone.domain.healthInfo.dto.HealthInfoDto;
-import com.secui.healthone.domain.healthInfo.dto.HealthInfoGetReqDto;
 import com.secui.healthone.domain.healthInfo.service.HealthInfoService;
 import com.secui.healthone.global.response.RestApiResponse;
 import io.swagger.v3.oas.annotations.Operation;

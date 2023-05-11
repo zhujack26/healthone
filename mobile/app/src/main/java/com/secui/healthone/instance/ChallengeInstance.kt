@@ -1,6 +1,6 @@
 package com.secui.healthone.instance
 
-import androidx.appcompat.app.AppCompatActivity
+import com.secui.healthone.service.ChallengeService
 import com.secui.healthone.service.HeartRateService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -10,16 +10,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-class HeartRateInstance : AppCompatActivity() {
-
+class ChallengeInstance {
     object RetrofitInstance {
-
         var builder = OkHttpClient().newBuilder()
         var okHttpClient = builder
             //.cookieJar(JavaNetCookieJar(CookieManager()))
             .connectTimeout(100, TimeUnit.SECONDS)
-            .readTimeout(100,TimeUnit.SECONDS)
-            .writeTimeout(100,TimeUnit.SECONDS)
+            .readTimeout(100, TimeUnit.SECONDS)
+            .writeTimeout(100, TimeUnit.SECONDS)
             .addInterceptor(myInterceptor())
             .build()
 
@@ -40,15 +38,12 @@ class HeartRateInstance : AppCompatActivity() {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
-        val api : HeartRateService by lazy {
-            retrofit.create(HeartRateService::class.java)
+        val api : ChallengeService by lazy {
+            retrofit.create(ChallengeService::class.java)
         }
     }
 
     companion object {
-        const val URL = "http://check.apihealthone.com/"
+        const val URL = "http://recommend.apihealthone.com/"
     }
-
-
 }
-

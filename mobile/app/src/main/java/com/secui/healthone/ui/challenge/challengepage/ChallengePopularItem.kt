@@ -25,12 +25,17 @@ import coil.compose.rememberImagePainter
 import com.secui.healthone.R
 import com.secui.healthone.ui.common.AppColors
 import com.secui.healthone.constant.PageRoutes
+import com.secui.healthone.data.ChallengeInfo
+import com.secui.healthone.viewmodel.ChallenegeViewModel
 
 @Composable
 fun ChallengePopularItem(
     navController: NavHostController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    idx:Int = 0,
+    challengeInfo: ChallengeInfo
 ){
+
     Card(
         elevation = 4.dp,
         shape = RoundedCornerShape(8.dp),
@@ -39,14 +44,15 @@ fun ChallengePopularItem(
             .wrapContentHeight()
             .background(AppColors.white)
             .padding(8.dp)
-            .clickable { }
+            .clickable {
+                ChallenegeViewModel.currentChallenge.value = challengeInfo
+                navController.navigate(PageRoutes.PopularDetail.route)
+            }
     ) {
         Column(
             modifier = Modifier
                 .width(256.dp)
                 .wrapContentHeight()
-                .clickable { navController.navigate(PageRoutes.PopularDetail.route) }
-
             )
         {
             // 이미지
@@ -60,14 +66,14 @@ fun ChallengePopularItem(
             )
             Spacer(modifier = Modifier.height(4.dp))
             // 타이틀
-            Text(text = ChallengePopularItemText.ChallangePopularTitle,
+            Text(text = challengeInfo.name,
                 fontSize = 16.sp,
                 color = colorResource(id = R.color.black),
                 modifier = Modifier.padding(16.dp, 4.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
             // 기간
-            Text(text = ChallengePopularItemText.ChallangePopularPeriod,
+            Text(text = "${challengeInfo.totalPeriod} 주",
                 fontSize = 14.sp,
                 color = colorResource(id = R.color.mono700),
                 modifier = Modifier.padding(16.dp, 4.dp)
@@ -81,7 +87,7 @@ fun ChallengePopularItem(
 class ChallengePopularItemText {
     companion object {
         const val challangeImgUrl = "https://health.chosun.com/site/data/img_dir/2019/04/29/2019042900839_0.jpg"
-        const val ChallangePopularTitle = "특색 있는 운동, 요가 챌린지"
-        const val ChallangePopularPeriod = "2주"
+//        const val ChallangePopularTitle = "특색 있는 운동, 요가 챌린지"
+//        const val ChallangePopularPeriod = "2주"
     }
 }

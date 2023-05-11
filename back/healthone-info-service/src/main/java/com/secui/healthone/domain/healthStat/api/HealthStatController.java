@@ -42,6 +42,7 @@ public class HealthStatController {
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping
     public RestApiResponse<HealthStatDto> addHealthStat(@RequestHeader(required = false) String Authorization, @RequestBody HealthStatDto healthStatDto) {
+
         HealthStatDto result = healthStatService.addHealthStat(healthStatDto);
         return new RestApiResponse<>("건강 기록 등록 성공", result);
     }

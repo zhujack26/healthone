@@ -4,12 +4,15 @@ import com.secui.healthone.domain.healthStat.dto.HealthStatDto;
 import com.secui.healthone.domain.healthStat.dto.HealthStatDtoMapper;
 import com.secui.healthone.domain.healthStat.entity.HealthStat;
 import com.secui.healthone.domain.healthStat.repository.HealthStatRepository;
+import com.secui.healthone.global.error.errorcode.CustomErrorCode;
+import com.secui.healthone.global.error.exception.RestApiException;
 import com.secui.healthone.global.util.StringDateTrans;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -21,15 +24,20 @@ public class HealthStatServiceImpl implements HealthStatService {
     @Override
     public HealthStatDto getHealthStat(String date, Integer userNo) {
         StringDateTrans trans = new StringDateTrans(date);
-        HealthStat healthStat = healthStatRepository.findByUserNoAndCreatetimeBetween(userNo, trans.getStartDateTime(), trans.getEndDateTime());
+        HealthStat healthStat = healthStatRepository.findByUserNoAndCreatetimeBetween(userNo, trans.getStartDateTime(), trans.getEndDateTime())
+                .orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
         return HealthStatDtoMapper.INSTANCE.entityToDto(healthStat);
     }
 
     @Override
     public HealthStatDto addHealthStat(HealthStatDto healthStatDto) {
-//        HealthStat healthStat = healthStatRepository.findByUserNoAndCreatetimeBetween(userNo, trans.getStartDateTime(), trans.getEndDateTime());
-        HealthStat result = healthStatRepository.save(HealthStatDtoMapper.INSTANCE.dtoToEntity(healthStatDto));
-        return HealthStatDtoMapper.INSTANCE.entityToDto(result);
+        StringDateTrans trans = new StringDateTrans(healthStatDto.getCreatetime());
+        Optional<HealthStat> healthStat = healthStatRepository.findByUserNoAndCreatetimeBetween(healthStatDto.getUserNo(), trans.getStartDateTime(), trans.getEndDateTime());
+        if(healthStat.isPresent()){
+            throw new RestApiException(CustomErrorCode.STAT_400);
+        } else {
+            return HealthStatDtoMapper.INSTANCE.entityToDto(healthStatRepository.save(HealthStatDtoMapper.INSTANCE.dtoToEntity(healthStatDto)));
+        }
     }
 
     @Override

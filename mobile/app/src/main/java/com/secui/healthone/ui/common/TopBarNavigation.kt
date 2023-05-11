@@ -54,7 +54,7 @@ fun TopBarNavigation(navController: NavHostController) {
                 ExerciseInputPage(navController)
             }
             composable(PageRoutes.Sleep.route) {
-                SleepPage(navController, sleepRecords = mutableListOf())
+                SleepPage(navController)
             }
             composable(PageRoutes.My.route) {
                 MyPage(navController = navController)

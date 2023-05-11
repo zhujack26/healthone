@@ -51,10 +51,10 @@ fun CustomSleepGoal(
         }
 
         Text(
-            text = "수면 기간 : ${sleepDuration.value}",
+            text = "수면 시간 : ${sleepDuration.value}",
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold
         )
-        SleepTimeClock(sleepTime = sleepTime.value, wakeTime = wakeTime.value)
+        SleepTimeClock(sleepRecords = sleepRecords)
     }
 }

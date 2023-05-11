@@ -34,7 +34,7 @@ class HeartRateViewModel(private val repository : HeartRateRepository) : ViewMod
             val response: Response<ResponseBody> = repository.getHeartRateList(page, size);
             val myList: MutableList<HeartRead> = mutableListOf();
 
-            response.isSuccessful
+            if(!response.isSuccessful) throw Exception();
 
             val jsonString = response.body()?.string()
             val jsonObject = JSONObject(jsonString)

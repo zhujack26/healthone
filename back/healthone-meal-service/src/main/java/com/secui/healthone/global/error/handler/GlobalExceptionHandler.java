@@ -135,6 +135,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ErrorResponse.builder()
                 .message(errorCode.getMessage())
                 .errors(validationErrorList)
+                .error("Validation Exception")
                 .build();
     }
 }

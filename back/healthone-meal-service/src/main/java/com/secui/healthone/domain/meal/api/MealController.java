@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.text.ParseException;
 import java.util.List;
 
@@ -69,9 +70,9 @@ public class MealController {
             @Content(mediaType = "application/json", schema = @Schema(implementation = MealResDto.class)),
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "식사 수정 객체")
     @PatchMapping
-    public RestApiResponse<MealResDto> updateMeal(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "식사 수정 객체")  @RequestBody MealReqDto requestDto) {
+    public RestApiResponse<MealResDto> updateMeal(@Valid @RequestBody MealReqDto requestDto) {
         return new RestApiResponse<>("식사 수정 성공", mealService.modifyMeal(requestDto));
     }
 

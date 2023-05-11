@@ -1,6 +1,6 @@
 package com.secui.healthone.domain.healthInfo.service;
 
-import com.secui.healthone.domain.healthInfo.dto.GetHealthInfoReqDto;
+import com.secui.healthone.domain.healthInfo.dto.HealthInfoGetReqDto;
 import com.secui.healthone.domain.healthInfo.dto.HealthInfoDto;
 import com.secui.healthone.domain.healthInfo.dto.HealthInfoDtoMapper;
 import com.secui.healthone.domain.healthInfo.entity.HealthInfo;
@@ -17,20 +17,21 @@ public class HealthInfoServiceImpl implements HealthInfoService {
     private final UserRepository userRepository;
 
     @Override
-    public HealthInfoDto getHealthInfo(GetHealthInfoReqDto getHealthInfoReqDto) {
+    public HealthInfoDto getHealthInfo(HealthInfoGetReqDto getHealthInfoReqDto) {
 //        userRepository.findById(getHealthInfoReqDto.getUserNo()).orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
         HealthInfo healthInfo = healthInfoRepository.findByUserNo(getHealthInfoReqDto.getUserNo()).orElseThrow();
         return HealthInfoDtoMapper.INSTANCE.entityToDto(healthInfo);
     }
 
     @Override
-    public void addHealthInfo(HealthInfoDto healthInfoDto) {
+    public HealthInfoDto addHealthInfo(HealthInfoDto healthInfoDto) {
         HealthInfo healthInfo = HealthInfoDtoMapper.INSTANCE.dtoToEntity(healthInfoDto);
         healthInfoRepository.save(healthInfo);
+        return HealthInfoDtoMapper.INSTANCE.entityToDto(healthInfo);
     }
 
     @Override
-    public void updateHealthInfo(HealthInfoDto healthInfoDto) {
+    public HealthInfoDto updateHealthInfo(HealthInfoDto healthInfoDto) {
 //        userRepository.findById(healthInfoDto.getUserNo()).orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
         HealthInfo healthInfo = healthInfoRepository.findById(healthInfoDto.getNo()).orElseThrow();
         if (healthInfoDto.getHeight() != null) {
@@ -58,6 +59,7 @@ public class HealthInfoServiceImpl implements HealthInfoService {
             healthInfo.setWakeUpTime(healthInfoDto.getWakeUpTime());
         }
         healthInfoRepository.save(healthInfo);
+        return HealthInfoDtoMapper.INSTANCE.entityToDto(healthInfo);
     }
 
     @Override

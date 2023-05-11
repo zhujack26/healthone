@@ -6,12 +6,12 @@ import com.secui.healthone.domain.healthStat.dto.HealthStatDtoMapper;
 import com.secui.healthone.domain.healthStat.entity.HealthStat;
 import com.secui.healthone.domain.healthStat.repository.HealthStatRepository;
 import com.secui.healthone.domain.user.repository.UserRepository;
+import com.secui.healthone.global.util.StringDateTrans;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -24,20 +24,21 @@ public class HealthStatServiceImpl implements HealthStatService {
 
     @Override
     public List<HealthStatDto> getHealthStat(String date) {
-        LocalDateTime dateTime = typeConverter(date);
-        List<HealthStat> healthStatList = healthStatRepository.findByUserNoAndCreatetimeBetween(1, dateTime.with(LocalTime.MIN), dateTime);
+        StringDateTrans trans = new StringDateTrans(date);
+        List<HealthStat> healthStatList = healthStatRepository.findByUserNoAndCreatetimeBetween(1, trans.getStartDateTime(), trans.getEndDateTime());
         return HealthStatDtoMapper.INSTANCE.entityListToDtoList(healthStatList);
     }
 
     @Override
-    public void addHealthStat(HealthStatDto healthStatDto) {
+    public HealthStatDto addHealthStat(HealthStatDto healthStatDto) {
 //        User user = userRepository.findById(healthStatDto.getUserNo()).orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
         HealthStat healthStat = HealthStatDtoMapper.INSTANCE.dtoToEntity(healthStatDto);
         healthStatRepository.save(healthStat);
+        return HealthStatDtoMapper.INSTANCE.entityToDto(healthStat);
     }
 
     @Override
-    public void updateHealthStat(HealthStatDto healthStatDto) {
+    public HealthStatDto updateHealthStat(HealthStatDto healthStatDto) {
 //        User user = userRepository.findById(healthStatDto.getUserNo()).orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
         HealthStat healthStat = healthStatRepository.findById(healthStatDto.getNo()).orElseThrow();
         if (healthStatDto.getCreatetime() != null) {
@@ -75,6 +76,7 @@ public class HealthStatServiceImpl implements HealthStatService {
             healthStat.setWaistCircumference(healthStatDto.getWaistCircumference());
         }
         healthStatRepository.save(healthStat);
+        return HealthStatDtoMapper.INSTANCE.entityToDto(healthStat);
     }
 
     @Override

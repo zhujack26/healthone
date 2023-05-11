@@ -17,21 +17,18 @@ public class HealthStatController {
     private final HealthStatService healthStatService;
 
     @GetMapping
-    public RestApiResponse<?> getHealthStat(@RequestParam String date) {
-        List<HealthStatDto> healthStatDtoList = healthStatService.getHealthStat(date);
-        return new RestApiResponse<>("건강 기록 조회 성공", healthStatDtoList);
+    public RestApiResponse<List<HealthStatDto>> getHealthStat(@RequestParam String date) {
+        return new RestApiResponse<>("건강 기록 조회 성공", healthStatService.getHealthStat(date));
     }
 
     @PostMapping
-    public RestApiResponse<?> addHealthStat(@RequestBody HealthStatDto healthStatDto) {
-        healthStatService.addHealthStat(healthStatDto);
-        return new RestApiResponse<>("건강 기록 등록 성공", null);
+    public RestApiResponse<HealthStatDto> addHealthStat(@RequestBody HealthStatDto healthStatDto) {
+        return new RestApiResponse<>("건강 기록 등록 성공", healthStatService.addHealthStat(healthStatDto));
     }
 
     @PatchMapping
-    public RestApiResponse<?> updateHealthStat(@RequestBody HealthStatDto healthStatDto) {
-        healthStatService.updateHealthStat(healthStatDto);
-        return new RestApiResponse<>("건강 기록 수정 성공", null);
+    public RestApiResponse<HealthStatDto> updateHealthStat(@RequestBody HealthStatDto healthStatDto) {
+        return new RestApiResponse<>("건강 기록 수정 성공", healthStatService.updateHealthStat(healthStatDto));
     }
 
     @DeleteMapping

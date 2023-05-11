@@ -16,7 +16,7 @@ public class HealthStat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "health_stat_no")
     private Integer no;
-    @Column(name = "health_stat_user_no")
+    @Column(name = "user_no")
     private Integer userNo;
     @Column(name = "health_stat_createtime")
     private LocalDateTime createtime;

@@ -20,19 +20,23 @@ public class HealthAdviceDto {
     private Integer userNo;
     @Schema(description = "기록한 시간")
     private LocalDateTime createtime;
+    @Schema(description = "신장 조언")
+    private String height;
     @Schema(description = "체중 조언")
     private String weight;
-    @Schema(description = "bmi 조언")
+    @Schema(description = "BMI 조언")
     private String bmi;
     @Schema(description = "체지방률 조언")
     private String fatPercentage;
-    @Schema(description = "공복 혈당 조언")
+    @Schema(description = "허리둘레 조언")
+    private String waistMeasurement;
+    @Schema(description = "공복혈당 조언")
     private String fbg;
     @Schema(description = "골격근량 조언")
     private String skeletalMuscleMass;
     @Schema(description = "혈압 조언")
     private String bloodPressure;
-    @Schema(description = "hdl 콜레스테롤 조언")
+    @Schema(description = "콜레스테롤 조언")
     private String hdlCholesterol;
     @Schema(description = "중성지방 조언")
     private String tg;

@@ -18,17 +18,15 @@ public class SportService {
 
     private final SportRepository sportRepository;
 
-    private final SportMapper sportMapper;
-
     // 운동데이터 검색
     public List<SportResDto> searchSport(String name) {
         List<Sport> result = sportRepository.findAllByNameContaining(name);
-        return sportMapper.sportToSportResListDto(result);
+        return SportMapper.INSTANCE.sportToSportResListDto(result);
     }
 
     // 운동 데이터 단건 조회
     public SportResDto getSport(Integer no) {
         Optional<Sport> result = sportRepository.findById(no);
-        return sportMapper.sportToSportResDto(result.orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100)));
+        return SportMapper.INSTANCE.sportToSportResDto(result.orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100)));
     }
 }

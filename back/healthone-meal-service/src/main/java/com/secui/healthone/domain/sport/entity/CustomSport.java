@@ -1,5 +1,7 @@
 package com.secui.healthone.domain.sport.entity;
 
+import com.secui.healthone.domain.sport.dto.CustomSportReqDto;
+import com.secui.healthone.domain.sport.dto.CustomSportResDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,8 +20,13 @@ public class CustomSport {
     private Integer no;
     @Column(name = "user_no") // 회원 식별번호
     private Integer userNo;
-    @Column(name = "customsport_name") // 운동 이름
+    @Column(name = "customsport_name", nullable = false) // 운동 이름
     private String name;
-    @Column(name = "customsport_consumekcal") // 시간당 소모 칼로리
+    @Column(name = "customsport_consumekcal", nullable = false) // 시간당 소모 칼로리
     private String consumeKcal;
+
+    public void update(CustomSportReqDto customSportReqDto){
+        this.name = customSportReqDto.getName();
+        this.consumeKcal = customSportReqDto.getConsumeKcal();
+    }
 }

@@ -1,5 +1,6 @@
 package com.secui.healthone.domain.sportrecord.entity;
 
+import com.secui.healthone.domain.sportrecord.dto.SportRecordReqDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,12 +22,6 @@ public class SportRecord {
     private Integer userNo;
     @Column(name = "sportrecord_name")
     private String name;
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "sport_no")
-//    private Sport sport;
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "customsport_no")
-//    private CustomSport customSport;
     @Column(name = "sportrecord_createtime")
     private LocalDateTime createTime;
     @Column(name = "sportrecord_worktime")
@@ -37,4 +32,12 @@ public class SportRecord {
     private Integer heartRate;
     @Column(name = "sportrecord_blood_pressure")
     private Integer bloodPressure;
+
+    public void update(SportRecordReqDto sportRecordReqDto){
+        this.name = sportRecordReqDto.getName();
+        this.workTime = sportRecordReqDto.getWorkTime();
+        this.consumeCalorie = sportRecordReqDto.getConsumeCalorie();
+        this.heartRate = sportRecordReqDto.getHeartRate();
+        this.bloodPressure = sportRecordReqDto.getBloodPressure();
+    }
 }

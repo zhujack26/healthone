@@ -16,25 +16,25 @@ public class HealthInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "health_info_no")
-    private int no;
+    private Integer no;
     @Column(name = "health_info_user_no")
-    private int userNo;
+    private Integer userNo;
     @Column(name = "health_info_gender")
     private boolean gender;
     @Column(name = "health_info_birthdate")
     private LocalDateTime birthdate;
     @Column(name = "health_info_height")
-    private float height;
+    private Float height;
     @Column(name = "health_info_weight")
-    private float weight;
+    private Float weight;
     @Column(name = "health_info_work_rate")
     private String workRate;
     @Column(name = "health_info_step_goal")
-    private int stepGoal;
+    private Integer stepGoal;
     @Column(name = "health_info_sleep_time")
-    private Time sleepTime;
+    private LocalDateTime sleepTime;
     @Column(name = "health_info_wake_up_time")
-    private Time wakeUpTime;
+    private LocalDateTime wakeUpTime;
     @Column(name = "health_info_sleep_goal")
-    private int sleepGoal;
+    private Integer sleepGoal;
 }

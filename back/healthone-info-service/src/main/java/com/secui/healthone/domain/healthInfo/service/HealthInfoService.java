@@ -1,11 +1,9 @@
 package com.secui.healthone.domain.healthInfo.service;
 
-import com.secui.healthone.domain.healthInfo.dto.GetHealthInfoReqDto;
-import com.secui.healthone.domain.healthInfo.dto.HealthInfoDeleteReqDto;
 import com.secui.healthone.domain.healthInfo.dto.HealthInfoDto;
 
 public interface HealthInfoService {
-    HealthInfoDto getHealthInfo(GetHealthInfoReqDto getHealthInfoReqDto);
+    HealthInfoDto getHealthInfo(Integer no, Integer userNo);
 
     void addHealthInfo(HealthInfoDto healthInfoDto);
 

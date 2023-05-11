@@ -1,8 +1,5 @@
 package com.secui.healthone.domain.healthInfo.api;
 
-import com.secui.healthone.domain.healthAdvice.dto.HealthAdviceDto;
-import com.secui.healthone.domain.healthInfo.dto.GetHealthInfoReqDto;
-import com.secui.healthone.domain.healthInfo.dto.HealthInfoDeleteReqDto;
 import com.secui.healthone.domain.healthInfo.dto.HealthInfoDto;
 import com.secui.healthone.domain.healthInfo.service.HealthInfoService;
 import com.secui.healthone.global.response.RestApiResponse;
@@ -32,8 +29,9 @@ public class HealthInfoController {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping
-    public RestApiResponse<HealthInfoDto> getHealthInfo(@RequestBody GetHealthInfoReqDto getHealthInfoReqDto) {
-        HealthInfoDto healthInfoDto = healthInfoService.getHealthInfo(getHealthInfoReqDto);
+    public RestApiResponse<HealthInfoDto> getHealthInfo(@RequestHeader(required = false) String Authorization, @RequestParam("no") Integer no) {
+        Integer userNo = 1;
+        HealthInfoDto healthInfoDto = healthInfoService.getHealthInfo(no, userNo);
         return new RestApiResponse<>("회원 헬스 정보 조회 성공", healthInfoDto);
     }
 

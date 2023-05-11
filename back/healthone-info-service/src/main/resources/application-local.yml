@@ -1,7 +1,4 @@
 # LOCAL Setting
-server:
-  port: 8083
-
 spring:
   datasource:
     url: jdbc:mariadb://host.docker.internal:3309/healthone
@@ -27,7 +24,7 @@ spring:
         show_sql: true
         use_sql_comments: true
     defer-datasource-initialization: true
-  
+
 # cors 설정
 cors:
   allowed-origins: 'http://localhost:3000'
@@ -44,7 +41,7 @@ logging:
 notification:
   mattermost:
     enabled: true
-    webhook-url: ""
+    webhook-url: "https://23232sadfscsdvdfbdghjtyjdndghcnzfcghaergfdsfdszge4r5tygdfsbyhgvr"
     channel:
     pretext:
     color:

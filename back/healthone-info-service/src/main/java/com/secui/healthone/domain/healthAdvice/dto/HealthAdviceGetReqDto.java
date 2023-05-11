@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class GetHealthAdviceReqDto {
+public class HealthAdviceGetReqDto {
     private String date;
     private int userNo;
 }

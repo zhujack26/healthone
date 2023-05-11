@@ -69,7 +69,8 @@ public class CustomSportController {
     @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "사용자 운동 수정 객체")
     @PatchMapping
     public RestApiResponse<CustomSportResDto> updateCustomSportData (@Valid @RequestBody CustomSportReqDto reqDto) {
-        return new RestApiResponse<>("사용자 운동 데이터 수정 성공", customSportService.insertCustomSport(reqDto));
+        Integer userNo = 1;
+        return new RestApiResponse<>("사용자 운동 데이터 수정 성공", customSportService.updateCustomSport(reqDto, userNo));
     }
 
     @Operation(summary = "사용자 운동 데이터 삭제", description = "사용자 운동 데이터 삭제 API", tags = {"CustomSport"})

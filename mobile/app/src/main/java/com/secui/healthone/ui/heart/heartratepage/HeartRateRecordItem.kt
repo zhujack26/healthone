@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.secui.healthone.R;
 import com.secui.healthone.data.heart.HeartRead
-import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.constant.AppColors
 import java.text.SimpleDateFormat
 import java.util.Locale
 

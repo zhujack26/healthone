@@ -21,6 +21,10 @@ import com.secui.healthone.service.ScreenService
 import com.secui.healthone.ui.common.TopBar
 import com.secui.healthone.util.PageRoutes
 import com.secui.healthone.util.PreferenceUtil
+import okhttp3.CookieJar
+
+
+
 
 class MainActivity : ComponentActivity() {
     lateinit var prefs:PreferenceUtil;

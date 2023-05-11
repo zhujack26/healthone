@@ -20,7 +20,11 @@ import kotlinx.coroutines.delay
 import okhttp3.Cookie
 import okhttp3.CookieJar
 import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
+import okhttp3.JavaNetCookieJar
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.CookieHandler
@@ -31,29 +35,42 @@ class GoogleSignInRepository (
     private val gso: GoogleSignInOptions,
     private val googleSignInClient: GoogleSignInClient
 ) {
-    // Retrofit
-    private val retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.31.33/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-
-    // API
-    private val loginApi = retrofit.create(LoginApi::class.java)
-
     private val cookieJar = object : CookieJar {
         private val cookieStore = HashMap<HttpUrl, List<Cookie>>()
 
         override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
+            Log.d("Cookie", "Saving cookies for $url")
             cookieStore[url] = cookies
         }
 
         override fun loadForRequest(url: HttpUrl): List<Cookie> {
-            return cookieStore[url] ?: ArrayList()
+            val cookies = cookieStore[url] ?: ArrayList()
+            Log.d("Cookie", "Loading cookies for $url: $cookies")
+            return cookies
         }
+
     }
     private val client = OkHttpClient.Builder()
         .cookieJar(cookieJar)
         .build()
+//        .addInterceptor { chain ->
+//            val request = chain.request()
+//            val builder = request.newBuilder()
+//            val cookies = cookieJar.loadForRequest(request.url)
+//            for (cookie in cookies) {
+//                builder.addHeader("Cookie", "${cookie.name}=${cookie.value}")
+//            }
+//            chain.proceed(builder.build())
+//        }
+//        .build()
+
+    // Retrofit
+    private val retrofit = Retrofit.Builder()
+        .baseUrl("http://192.168.31.33/")
+        .client(client)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+    private val loginApi = retrofit.create(LoginApi::class.java)
 
     private val keyGenParameterSpec = MasterKeys.AES256_GCM_SPEC
     private val masterKeyAlias = MasterKeys.getOrCreate(keyGenParameterSpec)
@@ -64,10 +81,6 @@ class GoogleSignInRepository (
         EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
     )
-    init {
-        val cookieManager = CookieManager()
-        CookieHandler.setDefault(cookieManager)
-    }
 
     private var accessToken: String? = null
     fun handleSignInResult(navController: NavController, task: Task<GoogleSignInAccount>) {
@@ -99,16 +112,23 @@ class GoogleSignInRepository (
         } else if (authCode != null) {
             Log.d("check", "authCode is not null")
         }
+        val requestBody = authCode.toRequestBody("text/plain".toMediaTypeOrNull())
+
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response = loginApi.sendAuthCodeToServer(authCode)
-
+                val response = loginApi.sendAuthCodeToServer(requestBody)
                 if (response.isSuccessful) {
                     val accessTokenResponse = response.headers().get("Authorization")
+                    Log.d("ResponseHeaders", "Headers: ${response.headers()}")
                     if (accessTokenResponse != null) {
                         sharedPreferences.edit().putString("access_token", accessTokenResponse).apply()
                         Log.d("check", "Received accessToken: $accessTokenResponse")
+                        val url = response.raw().request.url
+                        val cookies = cookieJar.loadForRequest(url)
+                        for (cookie in cookies) {
+                            Log.d("check", "Received cookie: $cookie")
+                        }
                     }
                 } else {
                     Log.e("check", "Error. Response code : ${response.code()}")
@@ -123,8 +143,9 @@ class GoogleSignInRepository (
     fun makeRequest(navController: NavController, retryCount: Int = 0) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
+                Log.d("check", "Cookies: ${getCookies()}")
+                Log.d("check", "AccessToken: ${getAccessToken()}")
                 val response = loginApi.verifyAuth("Bearer ${getAccessToken()}")
-
                 Log.d("check", "Response code : ${response.code()}")
 
                 when (response.code()) {
@@ -163,5 +184,13 @@ class GoogleSignInRepository (
 
     private fun getAccessToken(): String {
         return sharedPreferences.getString("access_token", "") ?: ""
+    }
+    private fun getCookies(): List<Cookie> {
+        val url = "http://192.168.31.33/".toHttpUrlOrNull()!!
+        if (url != null) {
+            return cookieJar.loadForRequest(url)
+        } else {
+            return emptyList()
+        }
     }
 }

@@ -109,6 +109,7 @@ dependencies {
 
     // MasterKeys와 EncryptedSharedPreferences를 사용
     implementation 'androidx.security:security-crypto:1.1.0-alpha03'
+    implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
 
 }
 // ADD THIS AT THE BOTTOM

@@ -2,6 +2,7 @@ package com.secui.healthone.ui.common
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -11,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -22,7 +24,7 @@ import com.secui.healthone.constant.PageRoutes
 fun TopBar() {
     val navController = rememberNavController()
     val menuOpen = remember { mutableStateOf(false) } // 메뉴 상태를 기억하는 변수
-    val menuOffset = animateDpAsState(if (menuOpen.value) 0.dp else 200.dp) // 애니메이션 상태
+    val menuOffset = animateDpAsState(if (menuOpen.value) 0.dp else 272.dp) // 애니메이션 상태
     val currentTitle = remember { mutableStateOf("메인") } // 현재 타이틀을 저장하는 변수
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -87,7 +89,7 @@ fun TopBar() {
             Column(
                 modifier = Modifier
                     .offset(x = menuOffset.value) // 애니메이션 값을 적용
-                    .width(200.dp)
+                    .width(272.dp)
                     .fillMaxHeight()
                     .background(AppColors.white)
                     .align(Alignment.TopEnd)
@@ -146,16 +148,6 @@ fun TopBar() {
                     onClick = {
                         currentTitle.value = "걸음수"
                         navController.navigate(PageRoutes.Walking.route)
-                    }
-                )
-                Divider(color = AppColors.black, thickness = 1.dp)
-                DrawerButton(
-                    text = "심박 수 측정",
-                    icon = R.drawable.ic_heart,
-                    iconColor = Color.Unspecified,
-                    onClick = {
-                        currentTitle.value = "심박 수 측정"
-                        navController.navigate(PageRoutes.HeartRate.route)
                     }
                 )
                 Divider(color = AppColors.black, thickness = 1.dp)

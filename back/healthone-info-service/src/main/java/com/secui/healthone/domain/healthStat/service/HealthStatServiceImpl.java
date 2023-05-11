@@ -1,6 +1,5 @@
 package com.secui.healthone.domain.healthStat.service;
 
-import com.secui.healthone.domain.healthStat.dto.HealthStatDeleteReqDto;
 import com.secui.healthone.domain.healthStat.dto.HealthStatDto;
 import com.secui.healthone.domain.healthStat.dto.HealthStatDtoMapper;
 import com.secui.healthone.domain.healthStat.entity.HealthStat;
@@ -71,16 +70,15 @@ public class HealthStatServiceImpl implements HealthStatService {
         if (healthStatDto.getBloodPressure() != null) {
             healthStat.setBloodPressure(healthStatDto.getBloodPressure());
         }
-        if (healthStatDto.getWaistCircumference() != null) {
-            healthStat.setWaistCircumference(healthStatDto.getWaistCircumference());
+        if (healthStatDto.getWaistMeasurement() != null) {
+            healthStat.setWaistMeasurement(healthStatDto.getWaistMeasurement());
         }
         healthStatRepository.save(healthStat);
     }
 
     @Override
-    public void deleteHealthStat(HealthStatDeleteReqDto healthStatDeleteReqDto) {
-//        User user = userRepository.findById(healthStatDeleteReqDto.getUserNo()).orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
-        healthStatRepository.deleteById(healthStatDeleteReqDto.getNo());
+    public void deleteHealthStat(Integer no, Integer userNo) {
+        healthStatRepository.deleteByNoAndUserNo(no, userNo);
     }
 
     public LocalDateTime typeConverter(String dateTime) {

@@ -15,29 +15,29 @@ public class HealthStat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "health_stat_no")
-    private int no;
+    private Integer no;
     @Column(name = "health_stat_user_no")
-    private int userNo;
+    private Integer userNo;
     @Column(name = "health_stat_createtime")
     private LocalDateTime createtime;
     @Column(name = "health_stat_height")
-    private float height;
+    private Float height;
     @Column(name = "health_stat_weight")
-    private float weight;
+    private Float weight;
     @Column(name = "health_stat_bmi")
-    private float bmi;
+    private Float bmi;
     @Column(name = "health_stat_body_fat_percentage")
-    private float bodyFatPercentage;
+    private Float bodyFatPercentage;
     @Column(name = "health_stat_skeletal_muscle_mass")
-    private float skeletalMuscleMass;
-    @Column(name = "health_stat_tg")
-    private float tg;
-    @Column(name = "health_stat_hdl_cholesterol")
-    private float hdlCholesterol;
-    @Column(name = "health_stat_fbg")
-    private float fbg;
+    private Float skeletalMuscleMass;
+    @Column(name = "health_stat_waist_measurement")
+    private Float waistMeasurement;
     @Column(name = "health_stat_blood_pressure")
-    private float bloodPressure;
-    @Column(name = "health_stat_waist_circumference")
-    private float waistCircumference;
+    private Float bloodPressure;
+    @Column(name = "health_stat_fbg")
+    private Float fbg;
+    @Column(name = "health_stat_hdl_cholesterol")
+    private Float hdlCholesterol;
+    @Column(name = "health_stat_tg")
+    private Float tg;
 }

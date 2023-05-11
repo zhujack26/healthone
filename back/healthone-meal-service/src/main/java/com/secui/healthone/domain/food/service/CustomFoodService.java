@@ -33,8 +33,8 @@ public class CustomFoodService {
 
     @Transactional
     public CustomFoodResDto saveCustomFood(CustomFoodReqDto requestDto) {
-        customFoodRepository.save(requestDto.toEntity());
-        return new CustomFoodResDto(requestDto.toEntity());
+        CustomFood result = customFoodRepository.save(requestDto.toEntity());
+        return new CustomFoodResDto(result);
     }
 
     @Transactional

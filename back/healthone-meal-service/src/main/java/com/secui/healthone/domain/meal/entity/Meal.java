@@ -17,29 +17,24 @@ public class Meal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "meal_no") // 식사 식별번호
     private Integer no;
-    @Column(name = "user_no") // 회원 식별번호
+    @Column(name = "user_no", nullable = false) // 회원 식별번호
     private Integer userNo;
-    @Column(name = "meal_name")
+    @Column(name = "meal_name", nullable = false)
     private String name;
-    @Column(name = "meal_createtime") // 사용자 음식 식별번호
+    @Column(name = "meal_createtime", nullable = false) // 사용자 음식 등록 날짜
     private LocalDateTime createTime;
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "meal_type")
+    @Column(name = "meal_type", nullable = false)
     private MealType mealType;
-//    @Column(name = "meal_portion") // 섭취한 인분 수
-//    private Float portion;
     @Column(name = "meal_gram") // 섭취한 gram 수
     private Float gram;
     @Column(name = "meal_kcal") // 섭취한 kcal 수
     private Integer kcal;
 
     public void update(Meal meal) {
-//        this.food = meal.getFood() == null ? this.food : meal.getFood() ;
-//        this.customfood = meal.getCustomfood() == null ? this.customfood : meal.getCustomfood();
         this.name = meal.getName();
         this.createTime = meal.getCreateTime();
         this.mealType = meal.getMealType();
-//        this.portion = meal.getPortion();
         this.gram = meal.getGram();
         this.kcal = meal.getKcal();
     }

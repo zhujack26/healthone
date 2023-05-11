@@ -1,6 +1,6 @@
 package com.secui.healthone.domain.healthAdvice.api;
 
-import com.secui.healthone.domain.healthAdvice.dto.GetHealthAdviceReqDto;
+import com.secui.healthone.domain.healthAdvice.dto.HealthAdviceGetReqDto;
 import com.secui.healthone.domain.healthAdvice.dto.HealthAdviceDeleteReqDto;
 import com.secui.healthone.domain.healthAdvice.dto.HealthAdviceDto;
 import com.secui.healthone.domain.healthAdvice.service.HealthAdviceService;
@@ -33,9 +33,9 @@ public class HealthAdviceController {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping
-    public RestApiResponse<List<HealthAdviceDto>> getHealthAdvice(@RequestBody GetHealthAdviceReqDto getHealthAdviceReqDto) {
-        List<HealthAdviceDto> healthAdviceResDtoList = healthAdviceService.getHealthAdvice(getHealthAdviceReqDto);
-        return new RestApiResponse<>("회원 건강 조언 조회 성공", healthAdviceResDtoList);
+    public RestApiResponse<HealthAdviceDto> getHealthAdvice(@RequestBody HealthAdviceGetReqDto healthAdviceGetReqDto) {
+        HealthAdviceDto healthAdviceResDto = healthAdviceService.getHealthAdvice(healthAdviceGetReqDto);
+        return new RestApiResponse<>("회원 건강 조언 조회 성공", healthAdviceResDto);
     }
 
     @Operation(summary = "회원 건강 조언 삭제", description = "회원 건강 조언 삭제 API", tags = {"HealthAdvice"})

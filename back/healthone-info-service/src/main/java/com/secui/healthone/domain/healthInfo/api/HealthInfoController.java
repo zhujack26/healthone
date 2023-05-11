@@ -1,6 +1,7 @@
 package com.secui.healthone.domain.healthInfo.api;
 
 import com.secui.healthone.domain.healthInfo.dto.HealthInfoDto;
+import com.secui.healthone.domain.healthInfo.dto.HealthInfoGetReqDto;
 import com.secui.healthone.domain.healthInfo.service.HealthInfoService;
 import com.secui.healthone.global.response.RestApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,9 +42,8 @@ public class HealthInfoController {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping
-    public RestApiResponse<?> addHealthInfo(@RequestBody HealthInfoDto healthInfoDto) {
-        healthInfoService.addHealthInfo(healthInfoDto);
-        return new RestApiResponse<>("회원 헬스 데이터 등록 성공", null);
+    public RestApiResponse<HealthInfoDto> addHealthInfo(@RequestBody HealthInfoDto healthInfoDto) {
+        return new RestApiResponse<>("회원 헬스 데이터 등록 성공", healthInfoService.addHealthInfo(healthInfoDto));
     }
 
     @Operation(summary = "회원 헬스 정보 수정", description = "회원 헬스 정보 수정 API", tags = {"HealthInfo"})
@@ -52,9 +52,8 @@ public class HealthInfoController {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @PatchMapping
-    public RestApiResponse<?> updateHealthInfo(@RequestBody HealthInfoDto healthInfoDto) {
-        healthInfoService.updateHealthInfo(healthInfoDto);
-        return new RestApiResponse<>("회원 헬스 데이터 수정 성공", null);
+    public RestApiResponse<HealthInfoDto> updateHealthInfo(@RequestBody HealthInfoDto healthInfoDto) {
+        return new RestApiResponse<>("회원 헬스 데이터 수정 성공", healthInfoService.updateHealthInfo(healthInfoDto));
     }
 
     @Operation(summary = "회원 헬스 정보 삭제", description = "회원 헬스 정보 삭제 API", tags = {"HealthInfo"})

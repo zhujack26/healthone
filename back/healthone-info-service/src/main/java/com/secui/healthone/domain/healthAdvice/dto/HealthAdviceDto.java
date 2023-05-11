@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @Builder
 @Schema(description = "건강 조언 DTO")
 public class HealthAdviceDto {
-
     @Schema(description = "건강 조언 식별번호")
     private Integer no;
     @Schema(description = "건강 조언 유저 식별번호")
@@ -41,5 +40,4 @@ public class HealthAdviceDto {
     private String hdlCholesterol;
     @Schema(description = "중성지방 조언")
     private String tg;
-
 }

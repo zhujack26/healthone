@@ -1,10 +1,10 @@
 # SERVER Setting
 spring:
   datasource:
-    url: jdbc:mariadb://host.docker.internal:3309/healthone
+    url: jdbc:mariadb://healthonedb.c2gi2aefdpge.ap-northeast-2.rds.amazonaws.com:3306/healthone
     driver-class-name: org.mariadb.jdbc.Driver
-    username: root
-    password: root
+    username: healthonedev
+    password: "!Hea1th#ne#050123"
     hikari:
       pool-name: jpa-hikari-pool
       maximum-pool-size: 5

@@ -8,9 +8,9 @@ public interface HealthStatService {
 
     List<HealthStatDto> getHealthStat(String date);
 
-    void addHealthStat(HealthStatDto healthStatDto);
+    HealthStatDto addHealthStat(HealthStatDto healthStatDto);
 
-    void updateHealthStat(HealthStatDto healthStatDto);
+    HealthStatDto updateHealthStat(HealthStatDto healthStatDto);
 
     void deleteHealthStat(Integer no, Integer userNo);
 

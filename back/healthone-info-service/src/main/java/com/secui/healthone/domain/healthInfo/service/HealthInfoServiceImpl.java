@@ -24,13 +24,14 @@ public class HealthInfoServiceImpl implements HealthInfoService {
     }
 
     @Override
-    public void addHealthInfo(HealthInfoDto healthInfoDto) {
+    public HealthInfoDto addHealthInfo(HealthInfoDto healthInfoDto) {
         HealthInfo healthInfo = HealthInfoDtoMapper.INSTANCE.dtoToEntity(healthInfoDto);
         healthInfoRepository.save(healthInfo);
+        return HealthInfoDtoMapper.INSTANCE.entityToDto(healthInfo);
     }
 
     @Override
-    public void updateHealthInfo(HealthInfoDto healthInfoDto) {
+    public HealthInfoDto updateHealthInfo(HealthInfoDto healthInfoDto) {
 //        userRepository.findById(healthInfoDto.getUserNo()).orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
         HealthInfo healthInfo = healthInfoRepository.findById(healthInfoDto.getNo()).orElseThrow();
         if (healthInfoDto.getHeight() != null) {
@@ -58,6 +59,7 @@ public class HealthInfoServiceImpl implements HealthInfoService {
             healthInfo.setWakeUpTime(healthInfoDto.getWakeUpTime());
         }
         healthInfoRepository.save(healthInfo);
+        return HealthInfoDtoMapper.INSTANCE.entityToDto(healthInfo);
     }
 
     @Override

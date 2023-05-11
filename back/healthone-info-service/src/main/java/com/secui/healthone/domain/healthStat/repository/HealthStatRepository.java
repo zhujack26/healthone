@@ -7,8 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface HealthStatRepository extends JpaRepository<HealthStat, Integer> {
-
-    List<HealthStat> findByUserNoAndCreatetimeBetween(int i, LocalDateTime startDateTime, LocalDateTime endDateTime);
+    HealthStat findByUserNoAndCreatetimeBetween(int i, LocalDateTime startDateTime, LocalDateTime endDateTime);
 
     void deleteByNoAndUserNo(Integer no, Integer userNo);
 

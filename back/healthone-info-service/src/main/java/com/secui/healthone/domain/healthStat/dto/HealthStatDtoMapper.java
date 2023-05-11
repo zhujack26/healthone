@@ -19,7 +19,7 @@ public interface HealthStatDtoMapper {
 
     HealthStatDtoMapper INSTANCE = Mappers.getMapper(HealthStatDtoMapper.class);
 
-    List<HealthStatDto> entityListToDtoList(List<HealthStat> healthStatList);
+//    List<HealthStatDto> entityListToDtoList(List<HealthStat> healthStatList);
 
     HealthStatDto entityToDto(HealthStat healthStat);
 

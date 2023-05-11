@@ -18,14 +18,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HealthStatServiceImpl implements HealthStatService {
 
-    private final UserRepository userRepository;
     private final HealthStatRepository healthStatRepository;
 
     @Override
-    public List<HealthStatDto> getHealthStat(String date) {
+    public HealthStatDto getHealthStat(String date, Integer userNo) {
         StringDateTrans trans = new StringDateTrans(date);
-        List<HealthStat> healthStatList = healthStatRepository.findByUserNoAndCreatetimeBetween(1, trans.getStartDateTime(), trans.getEndDateTime());
-        return HealthStatDtoMapper.INSTANCE.entityListToDtoList(healthStatList);
+        HealthStat healthStat = healthStatRepository.findByUserNoAndCreatetimeBetween(userNo, trans.getStartDateTime(), trans.getEndDateTime());
+        return HealthStatDtoMapper.INSTANCE.entityToDto(healthStat);
     }
 
     @Override

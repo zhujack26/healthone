@@ -4,6 +4,7 @@ import com.secui.healthone.domain.healthStat.dto.HealthStatDto;
 import com.secui.healthone.domain.healthStat.service.HealthStatService;
 import com.secui.healthone.global.response.RestApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -12,8 +13,6 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,11 +26,13 @@ public class HealthStatController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "건강 기록 조회 성공", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = HealthStatDto.class)),
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
+    @Parameter(name = "Authorization", description = "회원 Access Token", required = false, example = "Bearer access_token")
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping
     public RestApiResponse<?> getHealthStat(@RequestHeader(required = false) String Authorization, @RequestParam String date) {
-        List<HealthStatDto> healthStatDtoList = healthStatService.getHealthStat(date);
-        return new RestApiResponse<>("건강 기록 조회 성공", healthStatDtoList);
+        Integer userNo = 1;
+        HealthStatDto healthStatDto = healthStatService.getHealthStat(date, userNo);
+        return new RestApiResponse<>("건강 기록 조회 성공", healthStatDto);
     }
 
     @Operation(summary = "건강 기록 등록", description = "건강 기록 등록 API", tags = {"HealthStat"})

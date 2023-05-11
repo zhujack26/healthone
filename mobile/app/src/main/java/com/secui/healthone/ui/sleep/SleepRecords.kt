@@ -1,43 +1,44 @@
 package com.secui.healthone.ui.sleep
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import com.secui.healthone.repository.Sleep.SleepRecord
-
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.secui.healthone.viewmodel.SleepViewModel
 
 @Composable
-fun SleepRecords(selectedSleepTime: MutableState<String>, selectedWakeTime: MutableState<String>) {
-    val sleepRecords = remember { mutableStateListOf<SleepRecord>() }
-    val showInputFields = remember { mutableStateOf(sleepRecords.isEmpty()) }
-
-    fun saveSleepRecord() {
-        if (selectedSleepTime.value.isNotEmpty() && selectedWakeTime.value.isNotEmpty()) {
-            sleepRecords.add(SleepRecord(selectedSleepTime.value, selectedWakeTime.value))
-            selectedSleepTime.value = ""
-            selectedWakeTime.value = ""
-            showInputFields.value = false
-        }
-    }
+fun SleepRecords(viewModel: SleepViewModel, selectedSleepTime: MutableState<String>, selectedWakeTime: MutableState<String>) {
+    val showInputFields = remember { mutableStateOf(viewModel.sleepRecords.isEmpty()) }
 
     Column {
         if (showInputFields.value) {
-            Button(onClick = ::saveSleepRecord) {
+            Button(
+                onClick = {
+                    viewModel.saveSleepRecord(selectedSleepTime.value, selectedWakeTime.value)
+                },
+                modifier = Modifier.width(200.dp).align(Alignment.CenterHorizontally)
+            ) {
                 Text("저장")
             }
         } else {
-            Button(onClick = { showInputFields.value = true }) {
+            Button(
+                onClick = { showInputFields.value = true },
+                modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally)
+            ) {
                 Text("수면 기록 추가")
             }
         }
 
-        sleepRecords.forEach { sleepRecord ->
-            Text("취침 시간: ${sleepRecord.sleepTime}, 기상 시간: ${sleepRecord.wakeTime}")
+        viewModel.sleepRecords.forEachIndexed { index, sleepRecord ->
+            SleepRecordCard(sleepRecord = sleepRecord, index = index, viewModel = viewModel)
         }
     }
 }

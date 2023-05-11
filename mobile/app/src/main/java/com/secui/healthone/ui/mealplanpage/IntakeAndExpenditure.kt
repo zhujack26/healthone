@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.constant.AppColors
 import com.secui.healthone.constant.PageRoutes
 import com.secui.healthone.viewmodel.ExerciseViewModel
 import com.secui.healthone.viewmodel.FoodViewModel

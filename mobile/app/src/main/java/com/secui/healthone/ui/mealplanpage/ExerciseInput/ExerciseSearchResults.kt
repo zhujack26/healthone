@@ -13,8 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.secui.healthone.ui.common.AppColors
-import com.secui.healthone.data.MealPlan.ExerciseList
+import com.secui.healthone.constant.AppColors
 import com.secui.healthone.data.MealPlan.ExerciseSearch
 
 @Composable

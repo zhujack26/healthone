@@ -33,7 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.constant.AppColors
 import com.secui.healthone.ui.mealplanpage.MealInput.MealSearchResults
 import com.secui.healthone.constant.PageRoutes
 import com.secui.healthone.viewmodel.FoodViewModel

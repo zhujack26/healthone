@@ -1,6 +1,5 @@
 package com.secui.healthone.ui.overviewpage
 
-import android.graphics.ColorFilter
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -12,15 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.secui.healthone.R;
-import com.secui.healthone.ui.common.AppColors
-import com.secui.healthone.ui.common.DrawerButton
+import com.secui.healthone.constant.AppColors
 import com.secui.healthone.util.BoxTool
 
 

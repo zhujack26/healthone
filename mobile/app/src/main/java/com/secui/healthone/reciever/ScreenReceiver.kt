@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import com.secui.healthone.data.TimeDBLog
 import com.secui.healthone.util.DBHelper
 import com.secui.healthone.util.PreferenceUtil
 import java.time.Duration
@@ -27,10 +28,15 @@ class ScreenReceiver : BroadcastReceiver() {
             val result = saveUserSleepTime(PreferenceUtil(context));
             Log.i(LOG, "측정된 취침 시간 : $result");
 
-            if(result > 0){
+            if(result.recordSleepTime > 0){
                 // selectAll
                 val dbHelper = DBHelper(context);
-                dbHelper.saveScore(context=context, recordSleepTime = result);
+                dbHelper.saveScore(
+                    context=context,
+                    recordSleepTime = result.recordSleepTime,
+                    strartTime = result.startTime,
+                    endTime = result.endTime
+                );
             }
 //            val list = DBHelper(context).selectAll(context=context);
 //            Log.i(LOG, "${list.toString()}")
@@ -47,7 +53,8 @@ class ScreenReceiver : BroadcastReceiver() {
         const val LOG = "SLEEP_LOG::::"
     }
 
-    fun saveUserSleepTime(prefs:PreferenceUtil):Long{
+
+    fun saveUserSleepTime(prefs:PreferenceUtil):TimeDBLog{
         /* 변수 설명
             userWakeTime : 사용자의 기상시간 → 화면이 켜진 시간
             userSleepTime : 사용자의 취침시간 → 화면이 꺼진 시간
@@ -65,7 +72,7 @@ class ScreenReceiver : BroadcastReceiver() {
 
         if(userSleepTime.equals("X") || userWakeTime.equals("X")) {
             Log.e(ERR, "수면 측정 값에 문제 발생 : The sleep measurement value is not perfect.")
-            return 0;
+            return TimeDBLog();
         };
 
         // step 2. 목표 수면/기상 시간 설정
@@ -122,7 +129,7 @@ class ScreenReceiver : BroadcastReceiver() {
 
         Log.d(LOG, "수면시간 ${userSleepLDT.toString()} / 기상시간 ${userWakeLDT.toString()}");
         // 설정된 수면, 기상 시간과의 시간차 비교를 위해 LocalTime 객체로 바꿔준다
-        val useSleepLT = LocalTime.of(userSleepLDT.hour, userSleepLDT.minute, userSleepLDT.second);
+        val useSleepLT = LocalTime.of(userSleepLDT.hour, userSleepLDT.minute, userSleepLDT.second).plusHours(6);
 
         //Log.d(LOG,"측정된 수면 시간 : ${useSleepLT.toString()}")
 
@@ -139,11 +146,16 @@ class ScreenReceiver : BroadcastReceiver() {
         if(isSleepIn){
             val sleepGapDur = Duration.between(userSleepLDT, userWakeLDT);
             Log.i(LOG, "수면시간을 기록합니다 : ${sleepGapDur.seconds}")
-            return 0;
-            //return sleepGapDur.seconds;
+            // return TimeDBLog();
+            return TimeDBLog(
+                recordSleepTime = sleepGapDur.seconds,
+                startTime = userSleepTime,
+                endTime = userWakeTime
+            )
+            // sleepGapDur.seconds;
         }else {
             Log.d(LOG, "유효한 수면 시간이 아닙니다... DATETIME : $userSleepLDT")
-            return 0;
+            return TimeDBLog();
         }
     }
 }

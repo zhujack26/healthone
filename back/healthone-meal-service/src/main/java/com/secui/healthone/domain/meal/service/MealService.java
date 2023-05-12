@@ -32,14 +32,13 @@ public class MealService {
     private final MealRepository mealRepository;
 
     // 식사 조회
-    public MealResDto getMeal(Integer no) {
-        Optional<Meal> result = mealRepository.findMealByNo(no);
+    public MealResDto getMeal(Integer no, Integer userNo) {
+        Optional<Meal> result = mealRepository.findMealByNoAndUserNo(no, userNo);
         return result.map(MealResDto::new).orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
     }
 
     // 식사 일자별 검색
-    public List<MealResDto> getMealList(String date, Integer userNo) throws ParseException {
-        log.info("date : {}", date);
+    public List<MealResDto> getMealList(String date, Integer userNo) {
         StringDateTrans trans = new StringDateTrans(date);
         List<Meal> result = mealRepository.findByCreateTimeBetweenAndUserNo(trans.getStartDateTime(), trans.getEndDateTime(), userNo);
         return result.stream().map(MealResDto::new).collect(Collectors.toList());
@@ -55,7 +54,7 @@ public class MealService {
     // 식사 수정
     @Transactional
     public MealResDto modifyMeal(MealReqDto requestDto) {
-        Meal meal = mealRepository.findMealByNo(requestDto.getNo())
+        Meal meal = mealRepository.findMealByNoAndUserNo(requestDto.getNo(), requestDto.getUserNo())
                 .orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
         meal.update(requestDto.toEntity());
         return new MealResDto(meal);
@@ -63,10 +62,10 @@ public class MealService {
 
     // 식사 삭제
     @Transactional
-    public void deleteMeal(Integer no) {
-        Meal meal = mealRepository.findMealByNo(no)
+    public void deleteMeal(Integer no, Integer userNo) {
+        Meal meal = mealRepository.findMealByNoAndUserNo(no, userNo)
                 .orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
-        mealRepository.delete(meal);
+        mealRepository.deleteAllByNoAndUserNo(no, userNo);
     }
 
 }

@@ -23,17 +23,16 @@ public class HealthAdviceController {
 
     private final HealthAdviceService healthAdviceService;
 
-    @Operation(summary = "회원 건강 조언 조회", description = "회원 건강 조언 조회 API", tags = {"HealthAdvice"})
+    @Operation(summary = "회원 건강 조언 조회", description = "회원 건강 조언 조회 (가장 최신) API", tags = {"HealthAdvice"})
     @ApiResponses({@ApiResponse(responseCode = "200", description = "회원 건강 조언 조회 성공", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = HealthAdviceDto.class)),
             @Content(mediaType = "*/*", schema = @Schema(implementation = ErrorResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @Parameter(name = "Authorization", description = "회원 Access Token", required = false, example = "Bearer access_token")
-    @Parameter(name = "date", description = "건강 조언 조회 날짜", example = "2023-05-12T00:00:00")
     @GetMapping
-    public RestApiResponse<HealthAdviceDto> getHealthAdvice(@RequestHeader(required = false) String Authorization, @RequestParam String date) {
+    public RestApiResponse<HealthAdviceDto> getHealthAdvice(@RequestHeader(required = false) String Authorization) {
         Integer userNo = 1;
-        HealthAdviceDto healthAdviceResDto = healthAdviceService.getHealthAdvice(date, userNo);
+        HealthAdviceDto healthAdviceResDto = healthAdviceService.getHealthAdvice(userNo);
         return new RestApiResponse<>("회원 건강 조언 조회 성공", healthAdviceResDto);
     }
 

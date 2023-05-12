@@ -2,9 +2,9 @@ package com.secui.healthone.domain.healthInfo.entity;
 
 import com.secui.healthone.domain.healthInfo.dto.HealthInfoDto;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,6 +20,13 @@ public class HealthInfo {
     private Integer no;
     @Column(name = "user_no")
     private Integer userNo;
+//    @Column(name = "health_info_profile_picture")
+//    private String profilePicture;
+    @Column(name = "health_info_nickname")
+    private String nickname;
+    @Column(name = "health_info_createtime")
+    @CreationTimestamp
+    private LocalDateTime createTime;
     @Column(name = "health_info_gender")
     private Boolean gender;
     @Column(name = "health_info_birthdate")

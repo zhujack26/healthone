@@ -20,9 +20,9 @@ public class HealthInfoDto {
     private Integer userNo;
     @Schema(description = "회원 닉네임")
     @NotNull(message = "닉네임은 null 일 수 없습니다.")
-    private Integer nickname;
+    private String nickname;
     @Schema(description = "회원 가입일시")
-    private Integer createTime;
+    private LocalDateTime createTime;
     @Schema(description = "성별")
     @NotNull(message = "성별은 null 일 수 없습니다.")
     private Boolean gender;

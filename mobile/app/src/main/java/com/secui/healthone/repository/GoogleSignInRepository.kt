@@ -18,6 +18,7 @@ import androidx.security.crypto.MasterKeys
 import com.google.gson.Gson
 import com.secui.healthone.api.LoginApi
 import com.secui.healthone.constant.PageRoutes
+import com.secui.healthone.instance.HeartRateInstance
 import com.secui.healthone.util.PreferenceUtil
 import okhttp3.Cookie
 import okhttp3.CookieJar
@@ -136,6 +137,8 @@ class GoogleSignInRepository (
                         ///////// 추가된 코드 /////////
                         val refreshToken = cookieJar.getCookiesByName("refreshtoken");
                         Log.d("check","리프래쉬 토큰 꺼내보기 : $refreshToken");
+                        HeartRateInstance.accToken.value = accessTokenResponse.toString()
+                        HeartRateInstance.refreshToken.value = refreshToken.toString();
                         PreferenceUtil(context).setTokenString("refreshtoken", "$refreshToken");// 저장
                         ////////////////////////
 

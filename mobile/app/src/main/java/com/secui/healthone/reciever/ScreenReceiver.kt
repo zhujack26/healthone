@@ -129,7 +129,7 @@ class ScreenReceiver : BroadcastReceiver() {
 
         Log.d(LOG, "수면시간 ${userSleepLDT.toString()} / 기상시간 ${userWakeLDT.toString()}");
         // 설정된 수면, 기상 시간과의 시간차 비교를 위해 LocalTime 객체로 바꿔준다
-        val useSleepLT = LocalTime.of(userSleepLDT.hour, userSleepLDT.minute, userSleepLDT.second).plusHours(6);
+        val useSleepLT = LocalTime.of(userSleepLDT.hour, userSleepLDT.minute, userSleepLDT.second);
 
         //Log.d(LOG,"측정된 수면 시간 : ${useSleepLT.toString()}")
 

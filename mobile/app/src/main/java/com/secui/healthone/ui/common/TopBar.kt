@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.secui.healthone.R
 import com.secui.healthone.constant.AppColors
+import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.constant.PageRoutes
 
 @Composable
@@ -44,7 +45,7 @@ fun TopBar() {
                             )
                             Spacer(modifier = Modifier.width(88.dp))
                             Text(
-                                currentTitle.value,
+                                text = HealthOnePage.pageTitle.value,
                                 color = AppColors.mono700,
                                 fontWeight = FontWeight.Bold
                             )
@@ -105,7 +106,7 @@ fun TopBar() {
                     icon = R.drawable.ic_home,
                     iconColor = AppColors.mono700,
                     onClick = {
-                        currentTitle.value = "메인"
+                        HealthOnePage.pageTitle.value = "메인"
                         navController.navigate(PageRoutes.OverView.route)
                     }
                 )
@@ -115,7 +116,7 @@ fun TopBar() {
                     icon = R.drawable.ic_heart,
                     iconColor = Color.Unspecified,
                     onClick = {
-                        currentTitle.value = "심박수"
+                        HealthOnePage.pageTitle.value = "심박수"
                         navController.navigate(PageRoutes.HeartRate.route)
                     }
                 )
@@ -125,7 +126,7 @@ fun TopBar() {
                     icon = R.drawable.ic_food,
                     iconColor = AppColors.green600,
                     onClick = {
-                        currentTitle.value = "식단"
+                        HealthOnePage.pageTitle.value = "식단"
                         navController.navigate(PageRoutes.MealPlan.route)
                     }
                 )
@@ -135,7 +136,7 @@ fun TopBar() {
                     icon = R.drawable.ic_sleep,
                     iconColor = AppColors.mono900,
                     onClick = {
-                        currentTitle.value = "수면"
+                        HealthOnePage.pageTitle.value = "수면"
                         navController.navigate(PageRoutes.Sleep.route)
                     }
                 )
@@ -145,7 +146,7 @@ fun TopBar() {
                     icon = R.drawable.ic_walking_svg,
                     iconColor = AppColors.blue900,
                     onClick = {
-                        currentTitle.value = "걸음수"
+                        HealthOnePage.pageTitle.value = "걸음수"
                         navController.navigate(PageRoutes.Walking.route)
                     }
                 )
@@ -155,7 +156,7 @@ fun TopBar() {
                     icon = R.drawable.ic_health_info,
                     iconColor = Color.Unspecified,
                     onClick = {
-                        currentTitle.value = "건강상태"
+                        HealthOnePage.pageTitle.value = "건강상태"
                         navController.navigate(PageRoutes.HealthStatus.route)
                     }
                 )
@@ -165,7 +166,7 @@ fun TopBar() {
                     icon = R.drawable.ic_fire,
                     iconColor = AppColors.red900,
                     onClick = {
-                        currentTitle.value = "챌린지"
+                        HealthOnePage.pageTitle.value = "챌린지"
                         navController.navigate(PageRoutes.Challenge.route)
                     }
                 )
@@ -175,7 +176,7 @@ fun TopBar() {
                     icon = R.drawable.ic_setting,
                     iconColor = Color.Unspecified,
                     onClick = {
-                        currentTitle.value = "설정"
+                        HealthOnePage.pageTitle.value = "설정"
                         navController.navigate(PageRoutes.Setting.route)
                     }
                 )

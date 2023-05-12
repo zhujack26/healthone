@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.ui.heart.heartmeasurepage.HeartMeasureItem
 import com.secui.healthone.viewmodel.HeartRateViewModel
 
@@ -16,7 +17,8 @@ fun HeartMeasurePage(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ){
-
+    HealthOnePage.pageTitle.value="심박수 측정"
+    
     Column(modifier= Modifier
         .fillMaxSize()
         .verticalScroll

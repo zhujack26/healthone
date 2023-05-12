@@ -24,13 +24,13 @@ public class HealthAdviceService {
         HealthInfo healthInfo = healthInfoRepository.findById(userNo).orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
 
         StringDateTrans trans = new StringDateTrans(date);
-        HealthStat healthStat = healthStatRepository.findByUserNoAndCreatetimeBetween(userNo, trans.getStartDateTime(), trans.getEndDateTime())
+        HealthStat healthStat = healthStatRepository.findByUserNoAndCreateTimeBetween(userNo, trans.getStartDateTime(), trans.getEndDateTime())
                 .orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
         float value = (healthStat.getWeight() / (healthStat.getHeight() * healthStat.getHeight())) * 100f;
 
         return HealthAdviceDto.builder()
                 .userNo(healthStat.getUserNo())
-                .createtime(healthStat.getCreatetime())
+                .createtime(healthStat.getCreateTime())
                 .weight(getWeightAdvice(value))
                 .bmi(getBMIAdvice(value))
                 .fatPercentage(getFatPercentageAdvice(healthStat.getBodyFatPercentage(), healthInfo.isGender()))
@@ -39,7 +39,7 @@ public class HealthAdviceService {
     }
 
     /*
-    복부비만
+    복부비만 (허리둘레)
     (좋음)
     남 = 90미만
     여 = 85미만

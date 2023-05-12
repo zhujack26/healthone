@@ -54,7 +54,7 @@ public class HealthStatController {
     @SecurityRequirement(name = "bearerAuth")
     @PatchMapping
     public RestApiResponse<?> updateHealthStat(@RequestHeader(required = false) String Authorization, @RequestBody HealthStatDto healthStatDto) {
-        healthStatService.updateHealthStat(healthStatDto);
+        HealthStatDto result = healthStatService.updateHealthStat(healthStatDto);
         return new RestApiResponse<>("건강 기록 수정 성공", null);
     }
 

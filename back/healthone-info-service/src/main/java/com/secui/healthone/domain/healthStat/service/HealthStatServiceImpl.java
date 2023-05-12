@@ -10,6 +10,7 @@ import com.secui.healthone.global.util.StringDateTrans;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -24,15 +25,17 @@ public class HealthStatServiceImpl implements HealthStatService {
     @Override
     public HealthStatDto getHealthStat(String date, Integer userNo) {
         StringDateTrans trans = new StringDateTrans(date);
-        HealthStat healthStat = healthStatRepository.findByUserNoAndCreatetimeBetween(userNo, trans.getStartDateTime(), trans.getEndDateTime())
+        HealthStat healthStat = healthStatRepository.findByUserNoAndCreateTimeBetween(userNo, trans.getStartDateTime(), trans.getEndDateTime())
                 .orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
         return HealthStatDtoMapper.INSTANCE.entityToDto(healthStat);
     }
 
     @Override
+    @Transactional
     public HealthStatDto addHealthStat(HealthStatDto healthStatDto) {
-        StringDateTrans trans = new StringDateTrans(healthStatDto.getCreatetime());
-        Optional<HealthStat> healthStat = healthStatRepository.findByUserNoAndCreatetimeBetween(healthStatDto.getUserNo(), trans.getStartDateTime(), trans.getEndDateTime());
+        log.info("healthStatDto : {}", healthStatDto);
+        StringDateTrans trans = new StringDateTrans(healthStatDto.getCreateTime());
+        Optional<HealthStat> healthStat = healthStatRepository.findByUserNoAndCreateTimeBetween(healthStatDto.getUserNo(), trans.getStartDateTime(), trans.getEndDateTime());
         if(healthStat.isPresent()){
             throw new RestApiException(CustomErrorCode.STAT_400);
         } else {
@@ -41,44 +44,23 @@ public class HealthStatServiceImpl implements HealthStatService {
     }
 
     @Override
+    @Transactional
     public HealthStatDto updateHealthStat(HealthStatDto healthStatDto) {
-//        User user = userRepository.findById(healthStatDto.getUserNo()).orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
-        HealthStat healthStat = healthStatRepository.findById(healthStatDto.getNo()).orElseThrow();
-        if (healthStatDto.getCreatetime() != null) {
-            LocalDateTime createtime = typeConverter(healthStatDto.getCreatetime());
-            healthStat.setCreatetime(createtime);
-        }
-        if (healthStatDto.getHeight() != null) {
-            healthStat.setHeight(healthStatDto.getHeight());
-        }
-        if (healthStatDto.getWeight() != null) {
-            healthStat.setWeight(healthStatDto.getWeight());
-        }
-        if (healthStatDto.getBmi() != null) {
-            healthStat.setBmi(healthStatDto.getBmi());
-        }
-        if (healthStatDto.getBodyFatPercentage() != null) {
-            healthStat.setBodyFatPercentage(healthStatDto.getBodyFatPercentage());
-        }
-        if (healthStatDto.getSkeletalMuscleMass() != null) {
-            healthStat.setSkeletalMuscleMass(healthStatDto.getSkeletalMuscleMass());
-        }
-        if (healthStatDto.getTg() != null) {
-            healthStat.setTg(healthStatDto.getTg());
-        }
-        if (healthStatDto.getHdlCholesterol() != null) {
-            healthStat.setHdlCholesterol(healthStatDto.getHdlCholesterol());
-        }
-        if (healthStatDto.getFbg() != null) {
-            healthStat.setFbg(healthStatDto.getFbg());
-        }
-        if (healthStatDto.getBloodPressure() != null) {
-            healthStat.setBloodPressure(healthStatDto.getBloodPressure());
-        }
-        if (healthStatDto.getWaistMeasurement() != null) {
-            healthStat.setWaistMeasurement(healthStatDto.getWaistMeasurement());
-        }
-        healthStatRepository.save(healthStat);
+        HealthStat healthStat = healthStatRepository.findById(healthStatDto.getNo()).orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
+
+        Optional.ofNullable(healthStatDto.getCreateTime()).ifPresent(healthStat::setCreateTime);
+        Optional.ofNullable(healthStatDto.getHeight()).ifPresent(healthStat::setHeight);
+        Optional.ofNullable(healthStatDto.getWeight()).ifPresent(healthStat::setWeight);
+        Optional.ofNullable(healthStatDto.getBmi()).ifPresent(healthStat::setBmi);
+        Optional.ofNullable(healthStatDto.getBodyFatPercentage()).ifPresent(healthStat::setBodyFatPercentage);
+        Optional.ofNullable(healthStatDto.getSkeletalMuscleMass()).ifPresent(healthStat::setSkeletalMuscleMass);
+        Optional.ofNullable(healthStatDto.getTg()).ifPresent(healthStat::setTg);
+        Optional.ofNullable(healthStatDto.getHdlCholesterol()).ifPresent(healthStat::setHdlCholesterol);
+        Optional.ofNullable(healthStatDto.getFbg()).ifPresent(healthStat::setFbg);
+        Optional.ofNullable(healthStatDto.getBloodPressure()).ifPresent(healthStat::setBloodPressure);
+        Optional.ofNullable(healthStatDto.getWaistMeasurement()).ifPresent(healthStat::setWaistMeasurement);
+
+//        healthStatRepository.save(healthStat);
         return HealthStatDtoMapper.INSTANCE.entityToDto(healthStat);
     }
 

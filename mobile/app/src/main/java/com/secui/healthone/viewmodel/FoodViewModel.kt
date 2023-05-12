@@ -15,6 +15,7 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonPrimitive
 import com.google.gson.JsonSerializer
 import com.secui.healthone.api.FoodApi
+import com.secui.healthone.compose.MealPlanPage
 import retrofit2.Response
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -103,13 +104,14 @@ class FoodViewModel : ViewModel() {
                 }
             }
         }
-        fun deleteMeal(mealNo: Int, date: String, userNo: Int) {
+        fun deleteMeal(mealNo: Int, date: String, userNo: Int, onRefreshGraph: () -> Unit) {
             viewModelScope.launch {
                 try {
                     val response: Response<Unit> = mealApi.deleteMeal(mealNo)
                     if (response.isSuccessful) {
                         // 요청이 성공한 경우 처리할 코드를 여기에 작성하세요.
                         getMealList(date, userNo)
+                        onRefreshGraph() // 여기에서 콜백을 호출합니다.
                     } else {
                         // 오류 처리 코드를 여기에 작성하세요.
                     }
@@ -118,6 +120,7 @@ class FoodViewModel : ViewModel() {
                 }
             }
         }
+
 
     }
 }

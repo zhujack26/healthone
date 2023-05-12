@@ -20,7 +20,6 @@ class WalkRepository {
                 val stepsList = apiResponse.data.map { it.stepCount }
                 walkDataList.addAll(stepsList)
             } else {
-                // 오류 처리
             }
         }
         return walkDataList.reversed()

@@ -2,6 +2,7 @@ package com.secui.healthone.compose
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,10 +10,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
 import com.secui.healthone.ui.overviewpage.FoodCalorieBox
 import com.secui.healthone.ui.overviewpage.HealthScoreBox
@@ -20,16 +25,19 @@ import com.secui.healthone.ui.overviewpage.HeartRateBox
 import com.secui.healthone.ui.overviewpage.SleepCheckBox
 import com.secui.healthone.ui.overviewpage.TotalHealthBox
 import com.secui.healthone.ui.overviewpage.UserWalkBox
-import com.secui.healthone.util.FitAPIConfig
-import com.secui.healthone.util.FitHeartManager
-import com.secui.healthone.util.FitNutritionManager
-import com.secui.healthone.util.FitSleepManager
-import com.secui.healthone.util.FitWalkManager
-
+import com.secui.healthone.api.fit.FitAPIConfig
+import com.secui.healthone.api.fit.FitHeartManager
+import com.secui.healthone.api.fit.FitNutritionManager
+import com.secui.healthone.api.fit.FitSleepManager
+import com.secui.healthone.api.fit.FitWalkManager
+import com.secui.healthone.data.heart.HeartRead
+import com.secui.healthone.repository.HeartRateRepository
+import com.secui.healthone.util.DBHelper
+import com.secui.healthone.viewmodel.HeartRateViewModel
+import java.time.LocalTime
 
 lateinit var context: Context;
 lateinit var thisActivity: Activity;
-
 
 @Composable
 fun OverViewPage(
@@ -41,7 +49,11 @@ fun OverViewPage(
     // 초기값 세팅
     context = LocalContext.current;
     thisActivity = LocalContext.current as Activity;
-    // pm 
+    // pm
+    val dbHelper = DBHelper(context)
+    val totalSleepTime:Long = dbHelper.getTotalSleeTime(context);
+    Log.i("OVERVIEW::::", "총 수면 시간은 : $totalSleepTime")
+    val sleepRecValue = totalSleepTime/60;
 
     // 권한 요청
     FitAPIConfig.askFitAPIPermission(context = context, thisActivity = thisActivity)
@@ -65,11 +77,11 @@ fun OverViewPage(
         .verticalScroll
             (rememberScrollState()))
     {
-        TotalHealthBox(walkValue.value, sleepValue.value, calorieValue.value);
+        TotalHealthBox(walkValue.value, sleepRecValue.toInt(), calorieValue.value);
         UserWalkBox(navController, walkValue.value.toInt());
         HeartRateBox(navController, bpmValue.value.toInt());
         FoodCalorieBox(navController, calorieValue.value.toInt());
-        SleepCheckBox(navController, sleepValue.value.toInt());
+        SleepCheckBox(navController,sleepRecValue.toInt());
         HealthScoreBox(navController);
         Spacer(modifier = Modifier.height(64.dp));
     }

@@ -59,8 +59,9 @@ fun OverViewPage(
 
     // 더미로 fit API로 값을 보냄
     FitSleepManager.writeSleepValue(context);
-    val sleepValue = remember { FitSleepManager.readSleepValue(context) };
 
+
+    val sleepValue = remember { FitSleepManager.readSleepValue(context) };
     val calorieValue = remember { FitNutritionManager.readNutritionData(context = context) } // 칼로리 값 , 미구현!
 
 

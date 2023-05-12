@@ -1,6 +1,7 @@
 package com.secui.healthone
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -31,9 +32,4 @@ class SplashActivity: ComponentActivity() {
             finish()
         }
     }
-
-    companion object{
-        val context = this;
-    }
-
 }

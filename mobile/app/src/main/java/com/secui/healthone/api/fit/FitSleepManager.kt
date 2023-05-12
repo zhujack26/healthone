@@ -48,12 +48,12 @@ class FitSleepManager {
                 .build()
 
             // Insert the session into Fit platform
-            Log.i(MY_TAG, "Inserting the session with the SessionsClient")
+            // Log.i(MY_TAG, "Inserting the session with the SessionsClient")
 
             Fitness.getSessionsClient(context, account)
                 .insertSession(request)
                 .addOnSuccessListener {
-                    Log.i(FitAPIConfig.MY_TAG,"Session insert was successful!")
+                    // Log.i(FitAPIConfig.MY_TAG,"Session insert was successful!")
                 }
                 .addOnFailureListener { e ->
                     Log.w(FitAPIConfig.ERR_TAG, "There was a problem inserting the session", e)
@@ -61,13 +61,12 @@ class FitSleepManager {
 
             }
 
-
         fun readSleepValue(
             context:Context,
             account:GoogleSignInAccount = FitAPIConfig.getGoogleSignInAccount(context),
             timeMills:Long = LocalDateTime.now().atZone(ZoneId.systemDefault()).toEpochSecond()):MutableState<Int> { // 입력 안올 경우 자동 init
 
-            //  수명 측정 값
+            //  수면 측정 값
             val sleepValue:MutableState<Int> = mutableStateOf(-1);
 
             val endTime = LocalDateTime.now().atZone(ZoneId.systemDefault())
@@ -104,12 +103,12 @@ class FitSleepManager {
 
             sessionsClient.readSession(request)
                 .addOnSuccessListener { response ->
-                    Log.d(MY_TAG, "수면 값을 읽어옴 | ${response.sessions.toString()}")
+                    // Log.d(MY_TAG, "수면 값을 읽어옴 | ${response.sessions.toString()}")
 
                     for (session in response.sessions) {
                         val sessionStart = session.getStartTime(TimeUnit.MILLISECONDS)
                         val sessionEnd = session.getEndTime(TimeUnit.MILLISECONDS)
-                        Log.i(MY_TAG, "수면 측정 값은 $sessionStart ~ $sessionEnd")
+                        Log.i(MY_TAG, "FIT API 로부터 불러온 수면 측정 값은 $sessionStart ~ $sessionEnd")
 
                         sleepValue.value = (sessionEnd-sessionStart).toInt();
 

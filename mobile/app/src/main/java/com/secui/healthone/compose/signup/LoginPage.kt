@@ -7,7 +7,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.Image
 import androidx.compose.material.Text
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -18,6 +17,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -56,9 +56,7 @@ fun LoginPage(navController: NavController) {
     }.toAnnotatedString()
 
     val context = LocalContext.current
-    //authCode->idToken 전환시 총 세부분의 코드 변경 요망
 
-    //authCode1
     val gso = remember {
         GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestScopes(Scope(Scopes.EMAIL))
@@ -66,14 +64,6 @@ fun LoginPage(navController: NavController) {
             .requestEmail()
             .build()
     }
-
-    //idToken1
-//    val gso = remember {
-//        GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//            .requestIdToken(context.getString(R.string.server_client_id))
-//            .requestEmail()
-//            .build()
-//    }
 
     val googleSignInClient = remember { GoogleSignIn.getClient(context, gso) }
     val repository = GoogleSignInRepository(context, gso, googleSignInClient)
@@ -118,7 +108,13 @@ fun LoginPage(navController: NavController) {
             modifier = Modifier
                 .padding(16.dp)
                 .size(48.dp)
-                .clickable(onClick = { repository.signInWithGoogle(navController, launcher, googleSignInClient) })
+                .clickable(onClick = {
+                    repository.signInWithGoogle(
+                        navController,
+                        launcher,
+                        googleSignInClient
+                    )
+                })
         )
         ClickableText(
             text = annotatedText,
@@ -149,6 +145,8 @@ fun LoginPage(navController: NavController) {
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
+//        Button(onClick = { repository.makeRequest(navController) }) {
+//        }
     }
 }
 

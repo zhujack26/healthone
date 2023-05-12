@@ -2,6 +2,8 @@ package com.secui.healthone.ui.sleep
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -30,8 +32,8 @@ fun CustomSleepGoal(
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        TimePickerRow("취침 시간", sleepDate, sleepTime, sleepRecords)
-        NowPickerRow("기상 시간", wakeTime, wakeDate)
+        TimePickerRow(sleepDate, sleepTime, selectedSleepTime)
+        NowPickerRow(wakeTime, wakeDate)
 
         val sleepAngle = sleepTime.value.takeIf { it.isNotEmpty() }?.let {
             calculateAngleFromTime(it)
@@ -55,6 +57,7 @@ fun CustomSleepGoal(
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold
         )
+        Spacer(modifier = Modifier.height(16.dp))
         SleepTimeClock(sleepRecords = sleepRecords)
     }
 }

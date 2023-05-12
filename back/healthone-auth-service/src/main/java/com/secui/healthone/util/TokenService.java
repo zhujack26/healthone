@@ -31,9 +31,10 @@ public class TokenService {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String generateToken(String email, String role, String tokentype){
+    public String generateToken(String email,long userno, String role, String tokentype){
         Claims claims = Jwts.claims()
                 .setSubject(email);
+        claims.put("no",userno);
         claims.put("role", role);
         Date now = new Date();
         log.info("Expire Time = {}",new Date(now.getTime()+ (tokentype.equals("ACCESS") ? accessPeriod : refreshPeriod)));
@@ -63,8 +64,8 @@ public class TokenService {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
-    public String getPayload(String token, String className) {
-        return (String) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get(className,String.class);
+    public Object getPayload(String token, String className) {
+        return (Object) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get(className,String.class);
     }
 
     public boolean getExpiredTokenClaims(String token) throws ExpiredJwtException{

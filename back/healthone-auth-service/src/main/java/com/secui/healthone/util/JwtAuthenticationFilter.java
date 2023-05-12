@@ -45,9 +45,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String refreshtoken = cookieUtil.getRefreshTokenCookie(request);
             String email ="";
             String role = "";
+            long userno = 0;
             try{
                 email = tokenService.getEmail(refreshtoken);
-                role = tokenService.getPayload(refreshtoken,"role");
+                userno = (long) tokenService.getPayload(refreshtoken,"no");
+                role = (String) tokenService.getPayload(refreshtoken,"role");
+                log.info("email = {}, userno = {}, role = {}",email,userno,role);
                 if(redisUtil.getData(email) == null || tokenService.getExpiredTokenClaims(refreshtoken)){
                     throw new JwtException("EXPIRED");
                 }
@@ -55,8 +58,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                log.error("REFRESH TOKEN EXPIRED");
                response.sendError(HttpServletResponse.SC_FORBIDDEN);
             }
-            String accesstoken = tokenService.generateToken(email,role,"ACCESS");
-            String newrefreshtoken = tokenService.generateToken(email,role,"REFRESH");
+            String accesstoken = tokenService.generateToken(email,userno,role,"ACCESS");
+            String newrefreshtoken = tokenService.generateToken(email,userno, role,"REFRESH");
             ResponseCookie cookie = cookieUtil.getCookie(newrefreshtoken,tokenService.refreshPeriod);
             response.setContentType("application/json;charset=UTF-8");
             response.setHeader("Authorization",accesstoken);

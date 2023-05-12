@@ -7,6 +7,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -28,6 +29,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.secui.healthone.R
@@ -52,7 +54,7 @@ fun NicknameInput() {
             value = textState,
             onValueChange = { newText ->
                 setTextState(newText)
-                if (newText.isBlank() || newText.length > 8 || !newText.matches(Regex("^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,9}\$"))) {
+                if (newText.isBlank() || newText.length > 8 || !newText.matches(Regex("^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{0,9}\$"))) {
                     setShowDialog(true)
                 }
             },
@@ -95,8 +97,17 @@ fun NicknameInput() {
             title = { Text("경고") },
             text = { Text("닉네임이 유효하지 않습니다.") },
             confirmButton = {
-                Button(onClick = { setShowDialog(false) }) {
-                    Text("확인")
+                Button(
+                    onClick = { setShowDialog(false) },
+                    colors = ButtonDefaults
+                        .outlinedButtonColors(
+                            backgroundColor =
+                            AppColors.green300
+                        )
+                ) {
+                    Text("확인",
+                        fontSize = 12.sp,
+                        color = AppColors.white)
                 }
             }
         )

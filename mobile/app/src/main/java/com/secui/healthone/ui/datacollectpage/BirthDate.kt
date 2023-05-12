@@ -9,21 +9,22 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.secui.healthone.ui.common.AppColors
 
 @Composable
 fun BirthDate(
     value: String,
     onValueChange: (String) -> Unit = {},
-    keyboardActions: KeyboardActions = KeyboardActions.Default,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     pattern: String = "yyyy년 MM월 dd일"
 ) {
     val context = LocalContext.current
@@ -55,10 +56,10 @@ fun BirthDate(
     ) {
         Text(
             text = "생년월일",
-            fontSize = 12.sp,
+            fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
         )
-        Spacer(modifier = Modifier.width(20.dp))
+        Spacer(modifier = Modifier.width(28.dp))
         TextField(
             value = value,
             onValueChange = {},
@@ -68,8 +69,15 @@ fun BirthDate(
                 .width(240.dp)
                 .height(48.dp)
                 .clip(RoundedCornerShape(32.dp)),
-            keyboardOptions = keyboardOptions,
-            keyboardActions = keyboardActions,
+            colors = TextFieldDefaults.textFieldColors(
+                focusedIndicatorColor = AppColors.green200,
+                unfocusedIndicatorColor = AppColors.green200
+            ),
+            textStyle = TextStyle(
+                color = AppColors.black,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Bold
+            ),
         )
     }
 }

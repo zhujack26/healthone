@@ -16,11 +16,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.secui.healthone.data.Video
 
 @Composable
 fun ChallengeContentBox(
     navController: NavHostController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    videos:List<Video>
 ){
 
     Column(
@@ -41,9 +43,9 @@ fun ChallengeContentBox(
             .padding(8.dp)
             .horizontalScroll(rememberScrollState())
         ) {
-
-            repeat(8){
-                ChallengeContentItem(navController)
+            var idx = 0;
+            repeat(videos.size){
+                ChallengeContentItem(navController, video = videos.get(idx++));
             }
         }
     }

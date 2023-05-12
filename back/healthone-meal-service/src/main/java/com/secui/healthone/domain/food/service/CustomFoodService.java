@@ -46,7 +46,7 @@ public class CustomFoodService {
     }
 
     @Transactional
-    public void deleteCustomFood(Integer no) {
-        customFoodRepository.deleteAllByNoAndUserNo(no, 1);
+    public void deleteCustomFood(Integer no, Integer userNo) {
+        customFoodRepository.deleteAllByNoAndUserNo(no, userNo);
     }
 }

@@ -34,7 +34,7 @@ public class CalorieService {
         for (Meal meal : getMeal) {
             totalEatenKcal += meal.getKcal();
         }
-        List<SportRecord> getSportRecord = sportRecordRepository.findByCreateTimeBetweenAndUserNo(transDate.getStartDateTime(), transDate.getEndDateTime(), 1);
+        List<SportRecord> getSportRecord = sportRecordRepository.findByCreateTimeBetweenAndUserNo(transDate.getStartDateTime(), transDate.getEndDateTime(), userNo);
         Integer totalConsumeKcal = 0;
         for (SportRecord sportRecord : getSportRecord) {
             totalConsumeKcal += sportRecord.getConsumeCalorie();

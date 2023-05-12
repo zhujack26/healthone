@@ -10,8 +10,8 @@ import javax.validation.constraints.NotNull;
 @Setter
 @ToString
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Schema(description = "사용자 음식 등록, 수정 요청 DTO")
 public class CustomFoodReqDto {
     @Schema(description = "사용자 음식 식별번호")

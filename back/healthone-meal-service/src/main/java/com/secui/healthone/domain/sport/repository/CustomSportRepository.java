@@ -11,4 +11,5 @@ public interface CustomSportRepository extends JpaRepository<CustomSport, Intege
     List<CustomSport> findByUserNoAndNameContaining(Integer userNo, String name);
     Optional<CustomSport> findByNoAndUserNo(Integer userNo, Integer no);
     CustomSport save(CustomSport customSport);
+    void deleteByNoAndUserNo(Integer no, Integer userNo);
 }

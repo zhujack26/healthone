@@ -1,23 +1,23 @@
 package com.secui.healthone.domain.healthStat.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Schema(description = "건강 기록 DTO")
 public class HealthStatDto {
     private Integer no;
     private Integer userNo;
     @NotNull(message = "건강 기록 날짜는 null 일 수 없습니다.")
-    private String createtime;
+    private LocalDateTime createTime;
     @NotNull(message = "키는 null 일 수 없습니다.")
     private Float height;
     @NotNull(message = "몸무게는 null 일 수 없습니다.")

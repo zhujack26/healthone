@@ -9,6 +9,7 @@ import com.secui.healthone.global.error.errorcode.CustomErrorCode;
 import com.secui.healthone.global.error.exception.RestApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -62,7 +63,8 @@ public class HealthInfoServiceImpl implements HealthInfoService {
     }
 
     @Override
-    public void deleteHealthInfo(String no) {
-        healthInfoRepository.deleteById(Integer.parseInt(no));
+    @Transactional
+    public void deleteHealthInfo(Integer no) {
+        healthInfoRepository.deleteById(no);
     }
 }

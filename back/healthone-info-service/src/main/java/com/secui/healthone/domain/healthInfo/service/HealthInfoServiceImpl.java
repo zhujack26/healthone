@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class HealthInfoServiceImpl implements HealthInfoService {
@@ -19,47 +21,22 @@ public class HealthInfoServiceImpl implements HealthInfoService {
     private final UserRepository userRepository;
 
     @Override
-    public HealthInfoDto getHealthInfo(Integer no, Integer userNo) {
-        HealthInfo healthInfo = healthInfoRepository.findByNoAndUserNo(no, userNo).orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
+    public HealthInfoDto getHealthInfo(Integer userNo) {
+        HealthInfo healthInfo = healthInfoRepository.findByUserNo(userNo).orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
         return HealthInfoDtoMapper.INSTANCE.entityToDto(healthInfo);
     }
 
     @Override
-    public HealthInfoDto addHealthInfo(HealthInfoDto healthInfoDto) {
-        HealthInfo result = healthInfoRepository.save(HealthInfoDtoMapper.INSTANCE.dtoToEntity(healthInfoDto));
-        return HealthInfoDtoMapper.INSTANCE.entityToDto(result);
-    }
-
-    @Override
+    @Transactional
     public HealthInfoDto updateHealthInfo(HealthInfoDto healthInfoDto) {
-//        userRepository.findById(healthInfoDto.getUserNo()).orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
-        HealthInfo healthInfo = healthInfoRepository.findById(healthInfoDto.getNo()).orElseThrow();
-        if (healthInfoDto.getHeight() != null) {
-            healthInfo.setHeight(healthInfoDto.getHeight());
+        Optional<HealthInfo> healthInfo = healthInfoRepository.findByUserNo(healthInfoDto.getUserNo());
+        if(healthInfo.isEmpty()) {
+            HealthInfo result = healthInfoRepository.save(HealthInfoDtoMapper.INSTANCE.dtoToEntity(healthInfoDto));
+            return HealthInfoDtoMapper.INSTANCE.entityToDto(result);
+        } else {
+            healthInfo.get().update(healthInfoDto);
+            return HealthInfoDtoMapper.INSTANCE.entityToDto(healthInfo.get());
         }
-        if (healthInfoDto.getBirthdate() != null) {
-            healthInfo.setBirthdate(healthInfoDto.getBirthdate());
-        }
-        if (healthInfoDto.getSleepTime() != null) {
-            healthInfo.setSleepTime(healthInfoDto.getSleepTime());
-        }
-        if (healthInfoDto.getSleepGoal() != null) {
-            healthInfo.setSleepGoal(healthInfoDto.getSleepGoal());
-        }
-        if (healthInfoDto.getWeight() != null) {
-            healthInfo.setWeight(healthInfoDto.getWeight());
-        }
-        if (healthInfoDto.getStepGoal() != null) {
-            healthInfo.setStepGoal(healthInfoDto.getStepGoal());
-        }
-        if (healthInfoDto.getWorkRate() != null) {
-            healthInfo.setWorkRate(healthInfoDto.getWorkRate());
-        }
-        if (healthInfoDto.getWakeUpTime() != null) {
-            healthInfo.setWakeUpTime(healthInfoDto.getWakeUpTime());
-        }
-        healthInfoRepository.save(healthInfo);
-        return HealthInfoDtoMapper.INSTANCE.entityToDto(healthInfo);
     }
 
     @Override

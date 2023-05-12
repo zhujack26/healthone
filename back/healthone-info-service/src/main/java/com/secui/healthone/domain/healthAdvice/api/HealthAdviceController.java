@@ -2,6 +2,7 @@ package com.secui.healthone.domain.healthAdvice.api;
 
 import com.secui.healthone.domain.healthAdvice.dto.HealthAdviceDto;
 import com.secui.healthone.domain.healthAdvice.service.HealthAdviceService;
+import com.secui.healthone.global.error.response.ErrorResponse;
 import com.secui.healthone.global.response.RestApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -25,9 +26,10 @@ public class HealthAdviceController {
     @Operation(summary = "회원 건강 조언 조회", description = "회원 건강 조언 조회 API", tags = {"HealthAdvice"})
     @ApiResponses({@ApiResponse(responseCode = "200", description = "회원 건강 조언 조회 성공", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = HealthAdviceDto.class)),
-            @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
+            @Content(mediaType = "*/*", schema = @Schema(implementation = ErrorResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @Parameter(name = "Authorization", description = "회원 Access Token", required = false, example = "Bearer access_token")
+    @Parameter(name = "date", description = "건강 조언 조회 날짜", example = "2023-05-12T00:00:00")
     @GetMapping
     public RestApiResponse<HealthAdviceDto> getHealthAdvice(@RequestHeader(required = false) String Authorization, @RequestParam String date) {
         Integer userNo = 1;

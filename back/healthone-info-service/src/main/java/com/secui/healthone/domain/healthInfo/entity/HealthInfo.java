@@ -1,9 +1,10 @@
 package com.secui.healthone.domain.healthInfo.entity;
 
+import com.secui.healthone.domain.healthInfo.dto.HealthInfoDto;
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Time;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,10 +18,10 @@ public class HealthInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "health_info_no")
     private Integer no;
-    @Column(name = "health_info_user_no")
+    @Column(name = "user_no")
     private Integer userNo;
     @Column(name = "health_info_gender")
-    private boolean gender;
+    private Boolean gender;
     @Column(name = "health_info_birthdate")
     private LocalDateTime birthdate;
     @Column(name = "health_info_height")
@@ -33,8 +34,20 @@ public class HealthInfo {
     private Integer stepGoal;
     @Column(name = "health_info_sleep_time")
     private LocalDateTime sleepTime;
-    @Column(name = "health_info_wake_up_time")
+    @Column(name = "health_info_wakeup_time")
     private LocalDateTime wakeUpTime;
     @Column(name = "health_info_sleep_goal")
     private Integer sleepGoal;
+
+    public void update (HealthInfoDto healthInfoDto){
+        this.gender = healthInfoDto.getGender();
+        this.birthdate = healthInfoDto.getBirthdate();
+        this.height = healthInfoDto.getHeight();
+        this.weight = healthInfoDto.getWeight();
+        this.workRate = healthInfoDto.getWorkRate();
+        this.stepGoal = healthInfoDto.getStepGoal();
+        this.sleepTime = healthInfoDto.getSleepTime();
+        this.wakeUpTime = healthInfoDto.getWakeUpTime();
+        this.sleepGoal = healthInfoDto.getSleepGoal();
+    }
 }

@@ -6,9 +6,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum AdviceType {
-    NORMAL("정상" , "건강조언: 정상"),
-    WARN("주의", "건강조언: 주의"),
-    DANGER("위험", "건강조언: 위험");
+    정상("정상" , "건강조언: 정상"),
+    주의("주의", "건강조언: 주의"),
+    위험("위험", "건강조언: 위험");
 
     private final String name;
     private final String description;

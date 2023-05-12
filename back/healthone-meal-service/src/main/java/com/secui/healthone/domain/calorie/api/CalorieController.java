@@ -32,12 +32,28 @@ public class CalorieController {
             @Content(mediaType = "application/json", schema = @Schema(implementation = CalorieResDto.class)),
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }),
             @ApiResponse(responseCode = "DB_100", description = "DB에 해당 데이터를 찾을 수 없음",
-                    content = @Content(schema = @Schema(implementation = RestApiException.class))), })
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class))), })
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping
     public RestApiResponse<CalorieResDto> getMeal(
             @Parameter(name = "date", description = "조회 날짜", example = "2023-05-03T00:00:00") @RequestParam("date") String date) {
         Integer userNo = 1;
-        return new RestApiResponse<>(date + "날짜 섭취, 소모 칼로리 조회 성공", calorieService.getCalorie(date, userNo));
+        String mode = "day";
+        return new RestApiResponse<>(date + "날짜 섭취, 소모 칼로리 조회 성공", calorieService.getCalorie(date, userNo, mode));
+    }
+
+    @Operation(summary = "해당 날짜로부터 일주일간 섭취, 소비 칼로리 조회", description = "해당 날짜로부터 일주일간 섭취, 소비 칼로리 조회 API", tags = {"Calorie"})
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "date날짜로부터 일주일 섭취, 소모 칼로리 조회 성공", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = CalorieResDto.class)),
+            @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }),
+            @ApiResponse(responseCode = "DB_100", description = "DB에 해당 데이터를 찾을 수 없음",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class))), })
+    @SecurityRequirement(name = "bearerAuth")
+    @GetMapping("/week")
+    public RestApiResponse<CalorieResDto> getMealWeekData(
+            @Parameter(name = "date", description = "조회 날짜", example = "2023-05-03T00:00:00") @RequestParam("date") String date) {
+        Integer userNo = 1;
+        String mode = "week";
+        return new RestApiResponse<>(date + "날짜로부터 일주일 섭취, 소모 칼로리 조회 성공", calorieService.getCalorie(date, userNo, mode));
     }
 }

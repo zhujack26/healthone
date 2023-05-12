@@ -15,20 +15,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
+import com.google.gson.Gson
 import com.secui.healthone.api.LoginApi
 import kotlinx.coroutines.delay
 import okhttp3.Cookie
 import okhttp3.CookieJar
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
-import okhttp3.JavaNetCookieJar
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.net.CookieHandler
-import java.net.CookieManager
 
 class GoogleSignInRepository (
     private val context: Context,
@@ -36,18 +34,6 @@ class GoogleSignInRepository (
     private val googleSignInClient: GoogleSignInClient
 ) {
     private val cookieJar = object : CookieJar {
-//        private val cookieStore = HashMap<HttpUrl, List<Cookie>>()
-//
-//        override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
-//            Log.d("Cookie", "Saving cookies for $url")
-//            cookieStore[url] = cookies
-//        }
-//
-//        override fun loadForRequest(url: HttpUrl): List<Cookie> {
-//            val cookies = cookieStore[url] ?: ArrayList()
-//            Log.d("Cookie", "Loading cookies for $url: $cookies")
-//            return cookies
-//        }
         private var cookies: List<Cookie>
 
         init {
@@ -79,7 +65,7 @@ class GoogleSignInRepository (
 
     // Retrofit
     private val retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.219.100/")
+        .baseUrl("https://back.apihealthone.com/")
         .client(client)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
@@ -142,6 +128,12 @@ class GoogleSignInRepository (
                         for (cookie in cookies) {
                             Log.d("check", "Received cookie: $cookie")
                         }
+                        val cookiesJsonList = cookies.map { Gson().toJson(it) }
+                        sharedPreferences.edit().putStringSet("cookies", cookiesJsonList.toSet()).apply()
+                        val allEntries: Map<String, *> = sharedPreferences.getAll()
+                        for ((key, value) in allEntries) {
+                            Log.d("SharedPreferences", key + ": " + value.toString())
+                        }
                     }
                 } else {
                     Log.e("check", "Error. Response code : ${response.code()}")
@@ -175,6 +167,16 @@ class GoogleSignInRepository (
                             if (newAccessToken != null) {
                                 sharedPreferences.edit().putString("access_token", newAccessToken)
                                     .apply()
+                                val url = response.raw().request.url
+                                val cookies = cookieJar.loadForRequest(url)
+                                val cookiesJsonList = cookies.map { Gson().toJson(it) }
+                                sharedPreferences.edit().putStringSet("cookies", cookiesJsonList.toSet()).apply()
+
+                                sharedPreferences.edit().putStringSet("cookies", cookiesJsonList.toSet()).apply()
+                                val allEntries: Map<String, *> = sharedPreferences.getAll()
+                                for ((key, value) in allEntries) {
+                                    Log.d("SharedPreferences", key + ": " + value.toString())
+                                }
                             } else {
                                 Log.e("check", "new access token fail.")
                             }
@@ -199,11 +201,9 @@ class GoogleSignInRepository (
         return sharedPreferences.getString("access_token", "") ?: ""
     }
     private fun getCookies(): List<Cookie> {
-        val url = "http://192.168.219.100/".toHttpUrlOrNull()!!
-        if (url != null) {
-            return cookieJar.loadForRequest(url)
-        } else {
-            return emptyList()
-        }
+        val url = "https://back.apihealthone.com/".toHttpUrlOrNull()!!
+        val cookiesJsonList = sharedPreferences.getStringSet("cookies", emptySet()) ?: emptySet()
+        val cookies = cookiesJsonList.map { Gson().fromJson(it, Cookie::class.java) }
+        return cookies
     }
 }

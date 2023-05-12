@@ -12,7 +12,6 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import com.secui.healthone.compose.OverViewPage
 import com.secui.healthone.compose.signup.DataCollectFirstPage
@@ -24,9 +23,6 @@ import com.secui.healthone.ui.common.TopBar
 import com.secui.healthone.constant.PageRoutes
 import com.secui.healthone.util.PreferenceUtil
 import okhttp3.Cookie
-import okhttp3.CookieJar
-
-
 
 
 class MainActivity : ComponentActivity() {

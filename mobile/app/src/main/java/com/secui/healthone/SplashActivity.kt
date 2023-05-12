@@ -31,4 +31,9 @@ class SplashActivity: ComponentActivity() {
             finish()
         }
     }
+
+    companion object{
+        val context = this;
+    }
+
 }

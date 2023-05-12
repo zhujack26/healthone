@@ -1,0 +1,43 @@
+server:
+  port: 80
+spring:
+  redis:
+    host: 3.36.51.201
+    port: 6379
+    password: "!Hea1th#ne#051256"
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://healthonedb.c2gi2aefdpge.ap-northeast-2.rds.amazonaws.com:3306/healthone
+    username: healthonedev
+    password: "!Hea1th#ne#050123"
+    hikari:
+      pool-name: jpa-hikari-pool
+      maximum-pool-size: 5
+      jdbc-url: ${spring.datasource.url}
+      username: ${spring.datasource.username}
+      password: ${spring.datasource.password}
+      driver-class-name: ${spring.datasource.driver-class-name}
+      data-source-properties:
+        rewriteBatchedStatements: true
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    properties:
+      hibernate:
+        jdbc.batch_size: 1000
+        format_sql: true
+        show_sql: true
+        use_sql_comments: true
+    defer-datasource-initialization: true
+logging:
+  level:
+    root: info
+    org:
+      hibernate: info
+
+
+
+springboot:
+  jwt:
+    secret: 8q2ht89sbguniuqt9ieg

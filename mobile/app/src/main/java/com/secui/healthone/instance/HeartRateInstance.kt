@@ -46,7 +46,9 @@ class HeartRateInstance : AppCompatActivity() {
     }
 
     companion object {
-        const val URL = "http://check.apihealthone.com/"
+        // http://check.apihealthone.com/
+        const val URL = "https://back.apihealthone.com/check"
+
     }
 
 

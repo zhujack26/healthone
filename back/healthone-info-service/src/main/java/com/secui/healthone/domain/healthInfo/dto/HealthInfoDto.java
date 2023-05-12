@@ -18,6 +18,11 @@ public class HealthInfoDto {
     private Integer no;
     @Schema(description = "회원 식별번호")
     private Integer userNo;
+    @Schema(description = "회원 닉네임")
+    @NotNull(message = "닉네임은 null 일 수 없습니다.")
+    private Integer nickname;
+    @Schema(description = "회원 가입일시")
+    private Integer createTime;
     @Schema(description = "성별")
     @NotNull(message = "성별은 null 일 수 없습니다.")
     private Boolean gender;

@@ -145,56 +145,56 @@ class GoogleSignInRepository (
         }
     }
 
-    fun makeRequest(navController: NavController, retryCount: Int = 0) {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                Log.d("check", "Cookies: ${getCookies()}")
-                Log.d("check", "AccessToken: ${getAccessToken()}")
-                val response = loginApi.verifyAuth("Bearer ${getAccessToken()}")
-                Log.d("check", "Response code : ${response.code()}")
-
-                when (response.code()) {
-                    200 -> {
-                        val responseBody = response.body()
-                        Log.d("check", "Response: $responseBody")
-                    }
-                    401 -> {
-                        Log.d("check", "Unauthorized")
-                        if (retryCount < 3) {
-                            delay(1000)
-                            makeRequest(navController, retryCount + 1)
-                            val newAccessToken = response.headers().get("Authorization")
-                            if (newAccessToken != null) {
-                                sharedPreferences.edit().putString("access_token", newAccessToken)
-                                    .apply()
-                                val url = response.raw().request.url
-                                val cookies = cookieJar.loadForRequest(url)
-                                val cookiesJsonList = cookies.map { Gson().toJson(it) }
-                                sharedPreferences.edit().putStringSet("cookies", cookiesJsonList.toSet()).apply()
-
-                                sharedPreferences.edit().putStringSet("cookies", cookiesJsonList.toSet()).apply()
-                                val allEntries: Map<String, *> = sharedPreferences.getAll()
-                                for ((key, value) in allEntries) {
-                                    Log.d("SharedPreferences", key + ": " + value.toString())
-                                }
-                            } else {
-                                Log.e("check", "new access token fail.")
-                            }
-                        }
-                    }
-                    403 -> {
-                        Log.d("check", "Forbidden, move to login page")
-                        navController.navigate(PageRoutes.DataCollectSecond.route)
-                    }
-                    else -> {
-                        Log.e("check", "Error. Response code : ${response.code()}")
-                    }
-                }
-            } catch (e: Exception) {
-                Log.e("check", "exception", e)
-            }
-        }
-    }
+//    fun makeRequest(navController: NavController, retryCount: Int = 0) {
+//        CoroutineScope(Dispatchers.IO).launch {
+//            try {
+//                Log.d("check", "Cookies: ${getCookies()}")
+//                Log.d("check", "AccessToken: ${getAccessToken()}")
+//                val response = loginApi.verifyAuth("Bearer ${getAccessToken()}")
+//                Log.d("check", "Response code : ${response.code()}")
+//
+//                when (response.code()) {
+//                    200 -> {
+//                        val responseBody = response.body()
+//                        Log.d("check", "Response: $responseBody")
+//                    }
+//                    401 -> {
+//                        Log.d("check", "Unauthorized")
+//                        if (retryCount < 3) {
+//                            delay(1000)
+//                            makeRequest(navController, retryCount + 1)
+//                            val newAccessToken = response.headers().get("Authorization")
+//                            if (newAccessToken != null) {
+//                                sharedPreferences.edit().putString("access_token", newAccessToken)
+//                                    .apply()
+//                                val url = response.raw().request.url
+//                                val cookies = cookieJar.loadForRequest(url)
+//                                val cookiesJsonList = cookies.map { Gson().toJson(it) }
+//                                sharedPreferences.edit().putStringSet("cookies", cookiesJsonList.toSet()).apply()
+//
+//                                sharedPreferences.edit().putStringSet("cookies", cookiesJsonList.toSet()).apply()
+//                                val allEntries: Map<String, *> = sharedPreferences.getAll()
+//                                for ((key, value) in allEntries) {
+//                                    Log.d("SharedPreferences", key + ": " + value.toString())
+//                                }
+//                            } else {
+//                                Log.e("check", "new access token fail.")
+//                            }
+//                        }
+//                    }
+//                    403 -> {
+//                        Log.d("check", "Forbidden, move to login page")
+//                        navController.navigate(PageRoutes.DataCollectSecond.route)
+//                    }
+//                    else -> {
+//                        Log.e("check", "Error. Response code : ${response.code()}")
+//                    }
+//                }
+//            } catch (e: Exception) {
+//                Log.e("check", "exception", e)
+//            }
+//        }
+//    }
 
 
     private fun getAccessToken(): String {

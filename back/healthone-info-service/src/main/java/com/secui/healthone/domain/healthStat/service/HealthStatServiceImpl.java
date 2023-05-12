@@ -13,7 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+
+import static com.secui.healthone.global.util.StringDateTrans.stringDateTrans30Days;
 
 @Service
 @Slf4j
@@ -23,11 +26,10 @@ public class HealthStatServiceImpl implements HealthStatService {
     private final HealthStatRepository healthStatRepository;
 
     @Override
-    public HealthStatDto getHealthStat(String date, Integer userNo) {
-        StringDateTrans trans = new StringDateTrans(date);
-        HealthStat healthStat = healthStatRepository.findByUserNoAndCreateTimeBetween(userNo, trans.getStartDateTime(), trans.getEndDateTime())
-                .orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
-        return HealthStatDtoMapper.INSTANCE.entityToDto(healthStat);
+    public List<HealthStatDto> getHealthStat(String date, Integer userNo) {
+        StringDateTrans trans = stringDateTrans30Days(date);
+        List<HealthStat> healthStat = healthStatRepository.findByUserNoAndCreateTimeBetweenOrderByCreateTime(userNo, trans.getStartDateTime(), trans.getEndDateTime());
+        return HealthStatDtoMapper.INSTANCE.entityListToDtoList(healthStat);
     }
 
     @Override

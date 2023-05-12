@@ -32,5 +32,14 @@ public class StringDateTrans {
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
     }
+
+    @Builder
+    public StringDateTrans(LocalDateTime date) {
+        log.info("date: {}", date);
+        LocalDateTime startDateTime = date.with(LocalTime.MIN);
+        LocalDateTime endDateTime = date.with(LocalTime.MAX);
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+    }
 }
 

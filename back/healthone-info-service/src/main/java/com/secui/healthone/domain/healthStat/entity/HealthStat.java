@@ -1,6 +1,7 @@
 package com.secui.healthone.domain.healthStat.entity;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,6 +11,8 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@DynamicUpdate
+@Table(name = "health_stat")
 @Builder
 public class HealthStat {
     @Id
@@ -19,7 +22,7 @@ public class HealthStat {
     @Column(name = "user_no")
     private Integer userNo;
     @Column(name = "health_stat_createtime")
-    private LocalDateTime createtime;
+    private LocalDateTime createTime;
     @Column(name = "health_stat_height")
     private Float height;
     @Column(name = "health_stat_weight")

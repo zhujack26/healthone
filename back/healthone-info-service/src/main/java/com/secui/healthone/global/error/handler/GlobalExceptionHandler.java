@@ -133,8 +133,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .collect(Collectors.toList());
 
         return ErrorResponse.builder()
-                .message(errorCode.getMessage())
+                .message("필드 유효성 검증 실패")
                 .errors(validationErrorList)
+                .error("VALIDATION_ERROR")
                 .build();
     }
 }

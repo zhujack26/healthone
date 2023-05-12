@@ -45,7 +45,7 @@ public class HealthInfoController {
 //        return new RestApiResponse<>("회원 헬스 데이터 등록 성공", healthInfoService.addHealthInfo(healthInfoDto));
 //    }
 
-    @Operation(summary = "회원 헬스 정보 등록, 수정", description = "회원 헬스 정보 등록, 수정 API", tags = {"HealthInfo"})
+    @Operation(summary = "회원 헬스 정보 등록, 수정", description = "회원 헬스 정보 등록, 수정 API (처음 요청시 DB에 값을 저장함)", tags = {"HealthInfo"})
     @ApiResponses({@ApiResponse(responseCode = "200", description = "회원 헬스 데이터 등록, 수정 성공", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = HealthInfoDto.class)),
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
@@ -55,15 +55,15 @@ public class HealthInfoController {
         return new RestApiResponse<>("회원 헬스 데이터 등록, 수정 성공", healthInfoService.updateHealthInfo(healthInfoDto));
     }
 
-    @Operation(summary = "회원 헬스 정보 삭제", description = "회원 헬스 정보 삭제 API", tags = {"HealthInfo"})
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "회원 헬스 데이터 수정 성공", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = HealthInfoDto.class)),
-            @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
-    @SecurityRequirement(name = "bearerAuth")
-    @DeleteMapping
-    public RestApiResponse<Integer> deleteHealthInfo(@RequestParam Integer no) {
-        healthInfoService.deleteHealthInfo(no);
-        return new RestApiResponse<>("회원 헬스 데이터 삭제 성공", no);
-    }
+//    @Operation(summary = "회원 헬스 정보 삭제", description = "회원 헬스 정보 삭제 API", tags = {"HealthInfo"})
+//    @ApiResponses({@ApiResponse(responseCode = "200", description = "회원 헬스 데이터 수정 성공", content = {
+//            @Content(mediaType = "application/json", schema = @Schema(implementation = HealthInfoDto.class)),
+//            @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
+//    @SecurityRequirement(name = "bearerAuth")
+//    @DeleteMapping
+//    public RestApiResponse<Integer> deleteHealthInfo(@RequestParam Integer no) {
+//        healthInfoService.deleteHealthInfo(no);
+//        return new RestApiResponse<>("회원 헬스 데이터 삭제 성공", no);
+//    }
 
 }

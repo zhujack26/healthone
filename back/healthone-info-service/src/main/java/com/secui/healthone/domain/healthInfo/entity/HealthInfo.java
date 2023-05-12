@@ -49,8 +49,6 @@ public class HealthInfo {
     private Integer sleepGoal;
 
     public void update (HealthInfoDto healthInfoDto){
-        this.no = healthInfoDto.getNo();
-        this.userNo = healthInfoDto.getUserNo();
         this.gender = healthInfoDto.getGender();
         this.birthdate = healthInfoDto.getBirthdate();
         this.height = healthInfoDto.getHeight();

@@ -26,37 +26,17 @@ public class HealthInfoServiceImpl implements HealthInfoService {
         return HealthInfoDtoMapper.INSTANCE.entityToDto(healthInfo);
     }
 
-//    @Override
-//    public HealthInfoDto addHealthInfo(HealthInfoDto healthInfoDto) {
-//        Optional<HealthInfo> healthInfo = healthInfoRepository.findByUserNo(healthInfoDto.getUserNo());
-//        if(healthInfo.isPresent()){
-//            throw new RestApiException(CustomErrorCode.USER_402);
-//        } else {
-//            HealthInfo result = healthInfoRepository.save(HealthInfoDtoMapper.INSTANCE.dtoToEntity(healthInfoDto));
-//            return HealthInfoDtoMapper.INSTANCE.entityToDto(result);
-//        }
-//    }
-
     @Override
     @Transactional
     public HealthInfoDto updateHealthInfo(HealthInfoDto healthInfoDto) {
-        Optional<HealthInfo> healthInfo = healthInfoRepository.findById(healthInfoDto.getNo());
+        Optional<HealthInfo> healthInfo = healthInfoRepository.findByUserNo(healthInfoDto.getUserNo());
         if(healthInfo.isEmpty()) {
-            healthInfoRepository.save(HealthInfoDtoMapper.INSTANCE.dtoToEntity(healthInfoDto));
+            HealthInfo result = healthInfoRepository.save(HealthInfoDtoMapper.INSTANCE.dtoToEntity(healthInfoDto));
+            return HealthInfoDtoMapper.INSTANCE.entityToDto(result);
         } else {
             healthInfo.get().update(healthInfoDto);
+            return HealthInfoDtoMapper.INSTANCE.entityToDto(healthInfo.get());
         }
-        return HealthInfoDtoMapper.INSTANCE.entityToDto(healthInfo.orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100)));
-
-//        if (healthInfoDto.getHeight() != null) healthInfo.setHeight(healthInfoDto.getHeight());
-//        if (healthInfoDto.getBirthdate() != null) healthInfo.setBirthdate(healthInfoDto.getBirthdate());
-//        if (healthInfoDto.getSleepTime() != null) healthInfo.setSleepTime(healthInfoDto.getSleepTime());
-//        if (healthInfoDto.getSleepGoal() != null) healthInfo.setSleepGoal(healthInfoDto.getSleepGoal());
-//        if (healthInfoDto.getWeight() != null) healthInfo.setWeight(healthInfoDto.getWeight());
-//        if (healthInfoDto.getStepGoal() != null) healthInfo.setStepGoal(healthInfoDto.getStepGoal());
-//        if (healthInfoDto.getWorkRate() != null) healthInfo.setWorkRate(healthInfoDto.getWorkRate());
-//        if (healthInfoDto.getWakeUpTime() != null) healthInfo.setWakeUpTime(healthInfoDto.getWakeUpTime());
-//        healthInfoRepository.save(healthInfo);
     }
 
     @Override

@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.secui.healthone.util.PreferenceUtil
 import com.secui.healthone.util.PreferencesManager
 import java.text.SimpleDateFormat
 
@@ -31,6 +32,7 @@ import java.text.SimpleDateFormat
 fun SleepGoal(context: Context) {
     val context = LocalContext.current
     val preferencesManager = PreferencesManager(context)
+    val prefs = PreferenceUtil(context); // onehee9710
 
     val sleepTime = remember { mutableStateOf(preferencesManager.getSleepTime()) }
     val wakeTime = remember { mutableStateOf(preferencesManager.getWakeTime()) }
@@ -71,6 +73,12 @@ fun SleepGoal(context: Context) {
                             wakeTime.value = selectedTime
                             preferencesManager.setWakeTime(selectedTime)
                         }
+
+                        // sleepTime
+                        // wakeTime
+                        prefs.setString("setting_sleep_time", "${sleepTime.value}")
+                        prefs.setString("setting_wake_time", "${wakeTime.value}")
+
                         calculateSleepDuration(sleepTime, wakeTime, sleepDuration)
                         preferencesManager.setSleepDuration(sleepDuration.value)
                     }

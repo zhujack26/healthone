@@ -21,7 +21,7 @@ class FitHeartManager  {
                     bpmValue.value = totalBpm;
                 }
                 .addOnFailureListener { e ->
-                    Log.i(FitAPIConfig.ERR_TAG, "There was a problem getting steps.", e)
+                    // Log.i(FitAPIConfig.ERR_TAG, "There was a problem getting steps.", e)
                 }
             return bpmValue;
         }

@@ -33,8 +33,8 @@ public class HealthAdviceService {
                 .createtime(healthStat.getCreateTime())
                 .weight(getWeightAdvice(value))
                 .bmi(getBMIAdvice(value))
-                .fatPercentage(getFatPercentageAdvice(healthStat.getBodyFatPercentage(), healthInfo.isGender()))
-                .skeletalMuscleMass(getSkeletalMuscleAdvice(healthStat.getSkeletalMuscleMass(), healthStat.getWeight(), healthInfo.isGender()))
+                .fatPercentage(getFatPercentageAdvice(healthStat.getBodyFatPercentage(), healthInfo.getGender()))
+                .skeletalMuscleMass(getSkeletalMuscleAdvice(healthStat.getSkeletalMuscleMass(), healthStat.getWeight(), healthInfo.getGender()))
                 .build();
     }
 

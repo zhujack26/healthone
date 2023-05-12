@@ -29,30 +29,30 @@ public class HealthInfoController {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping
-    public RestApiResponse<HealthInfoDto> getHealthInfo(@RequestHeader(required = false) String Authorization, @RequestParam("no") Integer no) {
+    public RestApiResponse<HealthInfoDto> getHealthInfo(@RequestHeader(required = false) String Authorization) {
         Integer userNo = 1;
-        HealthInfoDto healthInfoDto = healthInfoService.getHealthInfo(no, userNo);
+        HealthInfoDto healthInfoDto = healthInfoService.getHealthInfo(userNo);
         return new RestApiResponse<>("회원 헬스 정보 조회 성공", healthInfoDto);
     }
 
-    @Operation(summary = "회원 헬스 정보 등록", description = "회원 헬스 정보 등록 API", tags = {"HealthInfo"})
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "회원 헬스 데이터 등록 성공", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = HealthInfoDto.class)),
-            @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
-    @SecurityRequirement(name = "bearerAuth")
-    @PostMapping
-    public RestApiResponse<HealthInfoDto> addHealthInfo(@RequestBody HealthInfoDto healthInfoDto) {
-        return new RestApiResponse<>("회원 헬스 데이터 등록 성공", healthInfoService.addHealthInfo(healthInfoDto));
-    }
+//    @Operation(summary = "회원 헬스 정보 등록", description = "회원 헬스 정보 등록 API", tags = {"HealthInfo"})
+//    @ApiResponses({@ApiResponse(responseCode = "200", description = "회원 헬스 데이터 등록 성공", content = {
+//            @Content(mediaType = "application/json", schema = @Schema(implementation = HealthInfoDto.class)),
+//            @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
+//    @SecurityRequirement(name = "bearerAuth")
+//    @PostMapping
+//    public RestApiResponse<HealthInfoDto> addHealthInfo(@RequestBody HealthInfoDto healthInfoDto) {
+//        return new RestApiResponse<>("회원 헬스 데이터 등록 성공", healthInfoService.addHealthInfo(healthInfoDto));
+//    }
 
-    @Operation(summary = "회원 헬스 정보 수정", description = "회원 헬스 정보 수정 API", tags = {"HealthInfo"})
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "회원 헬스 데이터 수정 성공", content = {
+    @Operation(summary = "회원 헬스 정보 등록, 수정", description = "회원 헬스 정보 등록, 수정 API", tags = {"HealthInfo"})
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "회원 헬스 데이터 등록, 수정 성공", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = HealthInfoDto.class)),
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @PatchMapping
     public RestApiResponse<HealthInfoDto> updateHealthInfo(@RequestBody HealthInfoDto healthInfoDto) {
-        return new RestApiResponse<>("회원 헬스 데이터 수정 성공", healthInfoService.updateHealthInfo(healthInfoDto));
+        return new RestApiResponse<>("회원 헬스 데이터 등록, 수정 성공", healthInfoService.updateHealthInfo(healthInfoDto));
     }
 
     @Operation(summary = "회원 헬스 정보 삭제", description = "회원 헬스 정보 삭제 API", tags = {"HealthInfo"})
@@ -61,9 +61,9 @@ public class HealthInfoController {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @DeleteMapping
-    public RestApiResponse<?> deleteHealthInfo(@RequestParam Integer no) {
+    public RestApiResponse<Integer> deleteHealthInfo(@RequestParam Integer no) {
         healthInfoService.deleteHealthInfo(no);
-        return new RestApiResponse<>("회원 헬스 데이터 삭제 성공", null);
+        return new RestApiResponse<>("회원 헬스 데이터 삭제 성공", no);
     }
 
 }

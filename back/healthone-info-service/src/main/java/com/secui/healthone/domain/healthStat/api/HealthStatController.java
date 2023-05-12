@@ -28,8 +28,9 @@ public class HealthStatController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "건강 기록 조회 성공", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = HealthStatDto.class)),
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
-    @Parameter(name = "Authorization", description = "회원 Access Token", required = false, example = "Bearer access_token")
     @SecurityRequirement(name = "bearerAuth")
+    @Parameter(name = "Authorization", description = "회원 Access Token", required = false, example = "Bearer access_token")
+    @Parameter(name = "date", description = "건강 기록 조회 날짜", example = "2023-05-03T00:00:00")
     @GetMapping
     public RestApiResponse<HealthStatDto> getHealthStat(@RequestHeader(required = false) String Authorization, @RequestParam String date) {
         Integer userNo = 1;
@@ -42,9 +43,11 @@ public class HealthStatController {
             @Content(mediaType = "application/json", schema = @Schema(implementation = HealthStatDto.class)),
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
+    @Parameter(name = "Authorization", description = "회원 Access Token", required = false, example = "Bearer access_token")
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "건강기록 등록 객체")
     @PostMapping
-    public RestApiResponse<HealthStatDto> addHealthStat(@RequestHeader(required = false) String Authorization, @Valid @RequestBody HealthStatDto healthStatDto) {
-
+    public RestApiResponse<HealthStatDto> addHealthStat(
+            @RequestHeader(required = false) String Authorization, @Valid @RequestBody HealthStatDto healthStatDto) {
         HealthStatDto result = healthStatService.addHealthStat(healthStatDto);
         return new RestApiResponse<>("건강 기록 등록 성공", result);
     }
@@ -54,6 +57,8 @@ public class HealthStatController {
             @Content(mediaType = "application/json", schema = @Schema(implementation = HealthStatDto.class)),
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
+    @Parameter(name = "Authorization", description = "회원 Access Token", required = false, example = "Bearer access_token")
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "건강기록 수정 객체")
     @PatchMapping
     public RestApiResponse<HealthStatDto> updateHealthStat(@RequestHeader(required = false) String Authorization, @Valid @RequestBody HealthStatDto healthStatDto) {
         HealthStatDto result = healthStatService.updateHealthStat(healthStatDto);
@@ -62,9 +67,11 @@ public class HealthStatController {
 
     @Operation(summary = "건강 기록 삭제", description = "건강 기록 삭제 API", tags = {"HealthStat"})
     @ApiResponses({@ApiResponse(responseCode = "200", description = "건강 기록 삭제 성공", content = {
-//            @Content(mediaType = "application/json", schema = @Schema(implementation = HealthInfoDto.class)),
+            @Content(mediaType = "application/json", schema = @Schema(implementation = Integer.class)),
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
+    @Parameter(name = "Authorization", description = "회원 Access Token", required = false, example = "Bearer access_token")
+    @Parameter(name = "no", description = "건강기록 식별번호", example = "1")
     @DeleteMapping
     public RestApiResponse<Integer> deleteHealthStat(@RequestHeader(required = false) String Authorization, @Valid @RequestParam("no") Integer no) {
         Integer userNo = 1;

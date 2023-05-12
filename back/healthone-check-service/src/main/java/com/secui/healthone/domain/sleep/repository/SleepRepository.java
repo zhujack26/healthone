@@ -19,6 +19,7 @@ public interface SleepRepository extends JpaRepository<Sleep, Integer> {
     // 해당 날짜 수면 7일 데이터 반환 날짜 오름차순
     List<Sleep> findByCreateTimeBetweenAndUserNoOrderByCreateTimeDesc(LocalDateTime startDateTime, LocalDateTime endDateTime, Integer userNo);
 //    Slice<Sleep> findAllByUserNoOrderByCreateTimeDesc(Integer userNo, Pageable pageable);
-
+    Optional<Sleep> findByNoAndUserNo(Integer no, Integer userNo);
     Sleep save(Sleep sleep);
+    void deleteByNoAndUserNo(Integer no, Integer userNo);
 }

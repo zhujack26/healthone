@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,7 +25,7 @@ public class HealthStatController {
 
     private final HealthStatService healthStatService;
 
-    @Operation(summary = "건강 기록 조회", description = "회원 헬스 정보 조회 API", tags = {"HealthStat"})
+    @Operation(summary = "건강 기록 조회 리스트", description = "회원 헬스 정보 조회 리스트 (한달) API", tags = {"HealthStat"})
     @ApiResponses({@ApiResponse(responseCode = "200", description = "건강 기록 조회 성공", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = HealthStatDto.class)),
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
@@ -32,9 +33,9 @@ public class HealthStatController {
     @Parameter(name = "Authorization", description = "회원 Access Token", required = false, example = "Bearer access_token")
     @Parameter(name = "date", description = "건강 기록 조회 날짜", example = "2023-05-03T00:00:00")
     @GetMapping
-    public RestApiResponse<HealthStatDto> getHealthStat(@RequestHeader(required = false) String Authorization, @RequestParam String date) {
+    public RestApiResponse<List<HealthStatDto>> getHealthStat(@RequestHeader(required = false) String Authorization, @RequestParam String date) {
         Integer userNo = 1;
-        HealthStatDto healthStatDto = healthStatService.getHealthStat(date, userNo);
+        List<HealthStatDto> healthStatDto = healthStatService.getHealthStat(date, userNo);
         return new RestApiResponse<>("건강 기록 조회 성공", healthStatDto);
     }
 

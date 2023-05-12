@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.MutableState
@@ -38,11 +39,9 @@ fun SleepGoal(context: Context) {
 
     Log.d("Sleeptime", "Sleep time : ${sleepTime.value}")
     Log.d("waketime", "wake time : ${wakeTime.value}")
+    val sleepEditMode = remember { mutableStateOf(false) }
+    val wakeEditMode = remember { mutableStateOf(false) }
 
-
-    val calendar = Calendar.getInstance()
-    val hour = calendar[Calendar.HOUR_OF_DAY]
-    val minute = calendar[Calendar.MINUTE]
 
     Card(
         elevation = 4.dp,
@@ -53,34 +52,32 @@ fun SleepGoal(context: Context) {
             verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-        AndroidView(
-            factory = { context ->
-                val timePicker = TimePicker(context).apply {
-                    setIs24HourView(true)
-                    setOnTimeChangedListener { _, hourOfDay, minute ->
-                        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
-                        val calendar = Calendar.getInstance().apply {
-                            set(Calendar.HOUR_OF_DAY, hourOfDay)
-                            set(Calendar.MINUTE, minute)
+            AndroidView(
+                factory = { context ->
+                    val timePicker = TimePicker(context).apply {
+                        setIs24HourView(true)
+                        setOnTimeChangedListener { _, hourOfDay, minute ->
+                            val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+                            val calendar = Calendar.getInstance().apply {
+                                set(Calendar.HOUR_OF_DAY, hourOfDay)
+                                set(Calendar.MINUTE, minute)
+                            }
+                            val selectedTime = sdf.format(calendar.time)
+                            if (sleepEditMode.value) {
+                                sleepTime.value = selectedTime
+                                preferencesManager.setSleepTime(selectedTime)
+                                sleepEditMode.value = false
+                            } else if (wakeEditMode.value) {
+                                wakeTime.value = selectedTime
+                                preferencesManager.setWakeTime(selectedTime)
+                                wakeEditMode.value = false
+                            }
+                            calculateSleepDuration(sleepTime, wakeTime, sleepDuration)
+                            preferencesManager.setSleepDuration(sleepDuration.value)
                         }
-                        val selectedTime = sdf.format(calendar.time)
-                        if (sleepTime.value.isBlank()) {
-                            sleepTime.value = selectedTime
-                            preferencesManager.setSleepTime(selectedTime)
-                        } else if (wakeTime.value.isBlank()) {
-                            wakeTime.value = selectedTime
-                            preferencesManager.setWakeTime(selectedTime)
-                        }
-                        calculateSleepDuration(sleepTime, wakeTime, sleepDuration)
-                        preferencesManager.setSleepDuration(sleepDuration.value)
                     }
-                }
-                timePicker
+                    timePicker
             },
-            update = { view ->
-                view.hour = hour
-                view.minute = minute
-            }
         )
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
@@ -93,8 +90,9 @@ fun SleepGoal(context: Context) {
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
-                IconButton(onClick = { sleepTime.value = "" }) {
-                    Icon(Icons.Default.Edit, contentDescription = "Edit")
+                IconButton(onClick = { sleepEditMode.value = true }) {
+                    Icon(Icons.Default.Edit, contentDescription = "Edit", tint = if (sleepEditMode.value)
+                        MaterialTheme.colors.secondary else MaterialTheme.colors.onSurface)
                 }
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -108,8 +106,9 @@ fun SleepGoal(context: Context) {
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
-                IconButton(onClick = { wakeTime.value = "" }) {
-                    Icon(Icons.Default.Edit, contentDescription = "Edit")
+                IconButton(onClick = { wakeEditMode.value = true }) {
+                    Icon(Icons.Default.Edit, contentDescription = "Edit", tint = if (wakeEditMode.value)
+                        MaterialTheme.colors.secondary else MaterialTheme.colors.onSurface)
                 }
             }
             Spacer(modifier = Modifier.size(16.dp))

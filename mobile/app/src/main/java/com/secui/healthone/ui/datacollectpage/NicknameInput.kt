@@ -50,7 +50,7 @@ fun NicknameInput() {
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
         )
-        Spacer(modifier = Modifier.width(28.dp))
+        Spacer(modifier = Modifier.width(32.dp))
         TextField(
             value = textState,
             onValueChange = { newText ->
@@ -71,9 +71,6 @@ fun NicknameInput() {
                 unfocusedIndicatorColor = AppColors.green200
             ),
             modifier = Modifier
-                .padding(
-                    start = 16.dp
-                )
                 .width(240.dp)
                 .height(48.dp)
                 .clip(RoundedCornerShape(32.dp))

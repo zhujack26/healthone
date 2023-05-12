@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.secui.healthone.ui.common.AppColors
@@ -60,15 +61,12 @@ fun BirthDate(
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
         )
-        Spacer(modifier = Modifier.width(16.dp))
+        Spacer(modifier = Modifier.width(20.dp))
         TextField(
             value = value,
             onValueChange = {},
             enabled = false,
             modifier = Modifier
-                .padding(
-                    start = 16.dp
-                )
                 .clickable { showDatePickerDialog() }
                 .width(240.dp)
                 .height(48.dp)
@@ -80,8 +78,10 @@ fun BirthDate(
             textStyle = TextStyle(
                 color = AppColors.black,
                 fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
             ),
+
         )
     }
 }

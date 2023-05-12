@@ -42,7 +42,7 @@ fun Height() {
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold
         )
-        Spacer(modifier = Modifier.width(44.dp))
+        Spacer(modifier = Modifier.width(48.dp))
 
         TextField(
             value = if (textState.isNotEmpty()) "$textState cm" else "",
@@ -56,9 +56,6 @@ fun Height() {
             ),
             enabled = false,
             modifier = Modifier
-                .padding(
-                    start = 16.dp
-                )
                 .width(240.dp)
                 .height(48.dp)
                 .clip(RoundedCornerShape(32.dp))

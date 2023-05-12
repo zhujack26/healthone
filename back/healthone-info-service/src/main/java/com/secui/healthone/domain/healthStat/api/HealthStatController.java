@@ -66,10 +66,10 @@ public class HealthStatController {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @DeleteMapping
-    public RestApiResponse<?> deleteHealthStat(@RequestHeader(required = false) String Authorization, @Valid @RequestParam("no") Integer no) {
+    public RestApiResponse<Integer> deleteHealthStat(@RequestHeader(required = false) String Authorization, @Valid @RequestParam("no") Integer no) {
         Integer userNo = 1;
         healthStatService.deleteHealthStat(no, userNo);
-        return new RestApiResponse<>("건강 기록 삭제 성공", null);
+        return new RestApiResponse<>("건강 기록 삭제 성공", no);
     }
 
 }

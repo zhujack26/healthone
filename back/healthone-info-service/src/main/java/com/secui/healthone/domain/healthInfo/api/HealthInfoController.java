@@ -61,7 +61,7 @@ public class HealthInfoController {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @DeleteMapping
-    public RestApiResponse<?> deleteHealthInfo(@RequestParam String no) {
+    public RestApiResponse<?> deleteHealthInfo(@RequestParam Integer no) {
         healthInfoService.deleteHealthInfo(no);
         return new RestApiResponse<>("회원 헬스 데이터 삭제 성공", null);
     }

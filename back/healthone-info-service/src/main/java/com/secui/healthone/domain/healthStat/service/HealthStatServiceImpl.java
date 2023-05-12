@@ -64,7 +64,9 @@ public class HealthStatServiceImpl implements HealthStatService {
     }
 
     @Override
+    @Transactional
     public void deleteHealthStat(Integer no, Integer userNo) {
+        HealthStat result = healthStatRepository.findById(no).orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
         healthStatRepository.deleteByNoAndUserNo(no, userNo);
     }
 

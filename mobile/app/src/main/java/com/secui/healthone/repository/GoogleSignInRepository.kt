@@ -115,7 +115,7 @@ class GoogleSignInRepository (
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response = loginApi.sendAuthCodeToServer(requestBody)
+                val response = loginApi.sendAuthCodeToServer("http://login.apihealthone.com/auth/login", requestBody)
                 if (response.isSuccessful) {
                     val accessTokenResponse = response.headers().get("Authorization")
                     Log.d("ResponseHeaders", "Headers: ${response.headers()}")

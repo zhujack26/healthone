@@ -39,9 +39,12 @@ public class HealthStatDto {
     @Schema(description = "건강 기록 : 허리둘레")
     @NotNull(message = "허리 둘레는 null 일 수 없습니다.")
     private Float waistMeasurement;
-    @Schema(description = "건강 기록 : 혈압")
-    @NotNull(message = "혈압 null 일 수 없습니다.")
-    private Float bloodPressure;
+    @Schema(description = "건강 기록 : 최저 혈압")
+    @NotNull(message = "수축기 혈압은 null 일 수 없습니다.")
+    private Float LowBloodPressure;
+    @Schema(description = "건강 기록 : 최고 혈압")
+    @NotNull(message = "이완기 혈압은 null 일 수 없습니다.")
+    private Float HighBloodPressure;
     @Schema(description = "건강 기록 : 공복혈당")
     @NotNull(message = "공복혈당 null 일 수 없습니다.")
     private Float fbg;

@@ -4,10 +4,8 @@ import com.secui.healthone.domain.healthAdvice.dto.AdviceType;
 import com.secui.healthone.domain.healthAdvice.dto.HealthAdviceDto;
 import com.secui.healthone.domain.healthInfo.entity.HealthInfo;
 import com.secui.healthone.domain.healthInfo.repository.HealthInfoRepository;
-import com.secui.healthone.domain.healthStat.entity.HealthStat;
 import com.secui.healthone.domain.healthStat.repository.HealthStatRepository;
-import com.secui.healthone.domain.user.entity.User;
-import com.secui.healthone.domain.user.repository.UserRepository;
+import com.secui.healthone.domain.healthStat.entity.HealthStat;
 import com.secui.healthone.global.error.errorcode.CustomErrorCode;
 import com.secui.healthone.global.error.exception.RestApiException;
 import com.secui.healthone.global.util.StringDateTrans;
@@ -29,12 +27,17 @@ public class HealthAdviceService {
         float value = (healthStat.getWeight() / (healthStat.getHeight() * healthStat.getHeight())) * 100f;
 
         return HealthAdviceDto.builder()
-                .userNo(healthStat.getUserNo())
-                .createtime(healthStat.getCreateTime())
-                .weight(getWeightAdvice(value))
-                .bmi(getBMIAdvice(value))
-                .fatPercentage(getFatPercentageAdvice(healthStat.getBodyFatPercentage(), healthInfo.isGender()))
-                .skeletalMuscleMass(getSkeletalMuscleAdvice(healthStat.getSkeletalMuscleMass(), healthStat.getWeight(), healthInfo.isGender()))
+                .userNo(healthStat.getUserNo()) // 회원정보
+                .createtime(healthStat.getCreateTime()) // 건강조언 날짜
+                .weight(getWeightAdvice(value)) // 체중조언
+                .bmi(getBMIAdvice(value)) // bmi조언
+                .fatPercentage(getFatPercentageAdvice(healthStat.getBodyFatPercentage(), healthInfo.getGender())) // 체지방조언
+                .skeletalMuscleMass(getSkeletalMuscleAdvice(healthStat.getSkeletalMuscleMass(), healthStat.getWeight(), healthInfo.getGender()))// 골격근량 조언
+                .bloodPressure(getBloodPressureAdvice(healthStat.getLowBloodPressure(), healthStat.getHighBloodPressure())) // 혈압 조언 (수정필요)
+                .tg(getTgAdvice(healthStat.getTg())) // 중성지방 조언
+                .hdlCholesterol(getHDLAdvice(healthStat.getHdlCholesterol())) // HDL콜레스테롤 조언 
+                .fbg(getFbgAdvice(healthStat.getFbg())) // 공복혈당 조언
+                .waistMeasurement(getWaistMeasurementAdvice(healthStat.getWaistMeasurement(), healthInfo.getGender())) // 복부비만 (허리둘레) 조언
                 .build();
     }
 
@@ -50,15 +53,15 @@ public class HealthAdviceService {
     public static AdviceType getWaistMeasurementAdvice(float value, boolean gender) {
         if (gender){
             if (value < 90f){
-                return AdviceType.NORMAL;
+                return AdviceType.정상;
             } else {
-                return AdviceType.WARN;
+                return AdviceType.주의;
             }
         } else {
             if (value < 85f){
-                return AdviceType.NORMAL;
+                return AdviceType.정상;
             } else {
-                return AdviceType.WARN;
+                return AdviceType.주의;
             }
         }
     }
@@ -72,13 +75,13 @@ public class HealthAdviceService {
     (위험)
     126이상
      */
-    public static AdviceType getWaterAdvice(float value) {
+    public static AdviceType getFbgAdvice(float value) {
         if (value < 100f){
-            return AdviceType.NORMAL;
+            return AdviceType.정상;
         } else if (value < 126f){
-            return AdviceType.WARN;
+            return AdviceType.주의;
         } else {
-            return AdviceType.DANGER;
+            return AdviceType.위험;
         }
     }
 
@@ -93,11 +96,11 @@ public class HealthAdviceService {
      */
     public static AdviceType getHDLAdvice(float value) {
         if (value > 60f){
-            return AdviceType.NORMAL;
+            return AdviceType.정상;
         } else if (value > 40f){
-            return AdviceType.WARN;
+            return AdviceType.주의;
         } else {
-            return AdviceType.DANGER;
+            return AdviceType.위험;
         }
     }
 
@@ -110,13 +113,13 @@ public class HealthAdviceService {
     (위험)
     200이상
      */
-    public static AdviceType getCholesterolAdvice(float value) {
+    public static AdviceType getTgAdvice(float value) {
         if (value < 150f){
-            return AdviceType.NORMAL;
+            return AdviceType.정상;
         } else if (value < 200f){
-            return AdviceType.WARN;
+            return AdviceType.주의;
         } else {
-            return AdviceType.DANGER;
+            return AdviceType.위험;
         }
     }
 
@@ -132,15 +135,16 @@ public class HealthAdviceService {
     수축기혈압 140이상
     이완기혈압 90이상
      */
-    public static AdviceType getBloodPressureAdvice(float value) {
-        if (value < 120f){
-            return AdviceType.NORMAL;
-        } else if (value < 140f){
-            return AdviceType.WARN;
+    public static AdviceType getBloodPressureAdvice(float low, float high) {
+        if (low < 120f && high < 80f){
+            return AdviceType.정상;
+        } else if (low < 140f && high < 90f){
+            return AdviceType.주의;
         } else {
-            return AdviceType.DANGER;
+            return AdviceType.위험;
         }
     }
+
 
     /*
     골격근
@@ -154,15 +158,15 @@ public class HealthAdviceService {
     public static AdviceType getSkeletalMuscleAdvice(float value, float weight, boolean gender) {
         if (gender) {
             if (weight * 0.4f <= value){
-                return AdviceType.NORMAL;
+                return AdviceType.정상;
             } else {
-                return AdviceType.DANGER;
+                return AdviceType.위험;
             }
         } else {
             if (weight * 0.35f <= value){
-                return AdviceType.NORMAL;
+                return AdviceType.정상;
             } else {
-                return AdviceType.DANGER;
+                return AdviceType.위험;
             }
         }
     }
@@ -183,25 +187,25 @@ public class HealthAdviceService {
         // 남
         if (gender){
             if (value < 15f){
-                return AdviceType.DANGER;
+                return AdviceType.위험;
             } else if (value <= 18f) {
-                return AdviceType.NORMAL;
+                return AdviceType.정상;
             } else if (value <= 24f) {
-                return AdviceType.WARN;
+                return AdviceType.주의;
             } else {
-                return AdviceType.DANGER;
+                return AdviceType.위험;
             }
         }
         // 여
         else {
             if (value < 20f) {
-                return AdviceType.DANGER;
+                return AdviceType.위험;
             } else if (value <= 25f) {
-                return AdviceType.NORMAL;
+                return AdviceType.정상;
             } else if (value <= 29f) {
-                return AdviceType.WARN;
+                return AdviceType.주의;
             } else {
-                return AdviceType.DANGER;
+                return AdviceType.위험;
             }
         }
     }
@@ -223,13 +227,13 @@ public class HealthAdviceService {
      */
     public static AdviceType getBMIAdvice(float value) {
         if (value < 18.5f) {
-            return AdviceType.DANGER;
+            return AdviceType.위험;
         } else if (value < 23f) {
-            return AdviceType.NORMAL;
+            return AdviceType.정상;
         } else if (value < 25f) {
-            return AdviceType.WARN;
+            return AdviceType.주의;
         } else {
-            return AdviceType.DANGER;
+            return AdviceType.위험;
         }
     }
 

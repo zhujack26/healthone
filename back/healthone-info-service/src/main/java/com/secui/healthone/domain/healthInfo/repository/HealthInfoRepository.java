@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface HealthInfoRepository extends JpaRepository<HealthInfo, Integer> {
 //    Optional<HealthInfo> findByUserNo(int userNo);
-    Optional<HealthInfo> findByNoAndUserNo(Integer no, Integer userNo);
+    Optional<HealthInfo> findByUserNo(Integer userNo);
     HealthInfo save(HealthInfo healthInfo);
 
 }

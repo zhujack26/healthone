@@ -43,7 +43,7 @@ fun OverViewPage(
     thisActivity = LocalContext.current as Activity;
     // pm
     val dbHelper = DBHelper(context)
-    val totalSleepTime:Long = dbHelper.getTotalSleeTime(context);
+    val totalSleepTime = dbHelper.getTotalSleeTime(context);
     Log.i("OVERVIEW::::", "총 수면 시간은 : $totalSleepTime")
     val sleepRecValue = totalSleepTime/60;
 
@@ -59,11 +59,8 @@ fun OverViewPage(
 
     // 더미로 fit API로 값을 보냄
     FitSleepManager.writeSleepValue(context);
-
-
     val sleepValue = remember { FitSleepManager.readSleepValue(context) };
     val calorieValue = remember { FitNutritionManager.readNutritionData(context = context) } // 칼로리 값 , 미구현!
-
 
     Column(modifier= Modifier
         .fillMaxSize()

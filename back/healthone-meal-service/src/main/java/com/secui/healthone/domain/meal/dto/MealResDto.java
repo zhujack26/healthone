@@ -1,7 +1,5 @@
 package com.secui.healthone.domain.meal.dto;
 
-import com.secui.healthone.domain.food.dto.CustomFoodResDto;
-import com.secui.healthone.domain.food.dto.FoodResponseDto;
 import com.secui.healthone.domain.meal.entity.Meal;
 import com.secui.healthone.domain.meal.entity.MealType;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,8 +11,8 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Schema(description = "식사 응답 요청 DTO")
 public class MealResDto {
     @Schema(description = "식사 식별번호")

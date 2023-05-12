@@ -21,8 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/food")
 @RequiredArgsConstructor
@@ -36,9 +34,9 @@ public class FoodController {
                     @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }),
             @ApiResponse(responseCode = "DB_100", description = "DB에 해당 데이터를 찾을 수 없음",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class))), })
+    @Parameter(name = "no", description = "음식 단일 데이터 식별번호", example = "1")
     @GetMapping
-    public RestApiResponse<FoodResponseDto> getFood(
-            @Parameter(name = "no", description = "음식 단일 데이터 식별번호", example = "1") @RequestParam("no") Integer no) {
+    public RestApiResponse<FoodResponseDto> getFood(@RequestParam("no") Integer no) {
         return new RestApiResponse<>("음식 데이터 단일 조회 성공", foodService.getFood(no));
     }
 

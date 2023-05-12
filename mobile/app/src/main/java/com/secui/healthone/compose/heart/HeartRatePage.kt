@@ -28,16 +28,18 @@ fun HeartRatePage(
     navController: NavHostController,
     modifier: Modifier=Modifier){
 
+    val heartList = HeartRateViewModel.heartRateList;
+    // heartRate 세팅
     val mOwner = LocalLifecycleOwner.current
     val repository = HeartRateRepository()
     val viewModel = HeartRateViewModel(repository)
-    val heartList:MutableState<MutableList<HeartRead>> = remember { mutableStateOf(mutableListOf()) }
 
     viewModel.getHeartRateList();
     viewModel.heartListResponse.observe(mOwner, Observer{
         //Log.d("HEART_PAGE:::", "${it.toString()}")
         heartList.value = it;
     })
+    HeartRateViewModel.heartRateList.value = heartList.value;
 
     Column(modifier= Modifier
         .fillMaxSize()
@@ -45,7 +47,7 @@ fun HeartRatePage(
             (rememberScrollState()))
     {
 
-        HeartGraphBox();
+        HeartGraphBox(heartList = heartList.value);
         Spacer(modifier = Modifier.height(16.dp))
         HeartRateInfoBox(navController);
         Spacer(modifier = Modifier.height(16.dp))

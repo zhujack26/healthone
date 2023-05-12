@@ -1,15 +1,8 @@
-package com.secui.healthone.util
+package com.secui.healthone.api.fit
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import com.google.android.gms.fitness.Fitness
-import com.google.android.gms.fitness.data.DataType
-import com.google.android.gms.fitness.data.Field
-import com.google.android.gms.fitness.request.DataReadRequest
-import com.secui.healthone.util.FitAPIConfig.Companion.MY_TAG
-import java.util.concurrent.TimeUnit
 
 class FitNutritionManager {
     companion object {

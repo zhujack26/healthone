@@ -2,7 +2,6 @@ package com.secui.healthone.ui.common
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -10,7 +9,6 @@ import com.secui.healthone.compose.AlarmSettingPage
 import com.secui.healthone.compose.AlertPage
 import com.secui.healthone.compose.challenge.PopularDetailPage
 import com.secui.healthone.compose.ChallengePage
-import com.secui.healthone.compose.challenge.*
 import com.secui.healthone.compose.HeartMeasurePage
 import com.secui.healthone.compose.HeartRatePage
 import com.secui.healthone.compose.MealPlan.ExerciseInputPage
@@ -25,7 +23,7 @@ import com.secui.healthone.compose.healthstatus.HealthHelpPage
 import com.secui.healthone.compose.healthstatus.HealthInputPage
 import com.secui.healthone.compose.healthstatus.HealthStatusPage
 import com.secui.healthone.compose.sleep.SleepPage
-import com.secui.healthone.util.PageRoutes
+import com.secui.healthone.constant.PageRoutes
 
 @Composable
 fun TopBarNavigation(navController: NavHostController) {
@@ -56,7 +54,7 @@ fun TopBarNavigation(navController: NavHostController) {
                 ExerciseInputPage(navController)
             }
             composable(PageRoutes.Sleep.route) {
-                SleepPage(navController, sleepRecords = mutableListOf())
+                SleepPage(navController)
             }
             composable(PageRoutes.My.route) {
                 MyPage(navController = navController)

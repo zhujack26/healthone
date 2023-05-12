@@ -1,4 +1,4 @@
-package com.secui.healthone.ui.common
+package com.secui.healthone.constant
 
 import androidx.compose.ui.graphics.Color
 

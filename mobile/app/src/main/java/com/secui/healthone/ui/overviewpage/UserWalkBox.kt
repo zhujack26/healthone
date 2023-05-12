@@ -17,9 +17,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.secui.healthone.R
-import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.constant.AppColors
 import com.secui.healthone.util.BoxTool
-import com.secui.healthone.util.PageRoutes
+import com.secui.healthone.constant.PageRoutes
 
 @Composable
 fun UserWalkBox(
@@ -45,40 +45,47 @@ fun UserWalkBox(
             .wrapContentHeight()
             .padding(16.dp),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.Start
         ) 
         {
             Text(text = "오늘의 걸음 수" ,
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .wrapContentWidth()
                     .wrapContentHeight(),
                 fontSize = 16.sp,
                 textAlign = TextAlign.Center
             )
             Spacer(modifier = Modifier.height(16.dp))
-            Icon(
-                modifier = Modifier.size(48.dp),
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_walking_svg),
-                contentDescription = "Some icon",
-                tint = AppColors.mono700
-            )
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Icon(
+                    modifier = Modifier.size(48.dp),
+                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_walking_svg),
+                    contentDescription = "Some icon",
+                    tint = AppColors.mono700
+                )
+                Text(text = "${displayWalkValue} / ${targetWalkNumber}" ,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight(),
+                    fontSize = 16.sp,
+                    textAlign = TextAlign.Center
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(text = "조금만 더 힘내면 오늘의 목표를 달성할 수 있어요" ,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight(),
+                    fontSize = 12.sp,
+                    textAlign = TextAlign.Center
+                )
 
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "${displayWalkValue} / ${targetWalkNumber}" ,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
-                fontSize = 16.sp,
-                textAlign = TextAlign.Center
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "조금만 더 힘내면 오늘의 목표를 달성할 수 있어요" ,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
-                fontSize = 12.sp,
-                textAlign = TextAlign.Center
-            )
+
+            }
         }
     }
 }

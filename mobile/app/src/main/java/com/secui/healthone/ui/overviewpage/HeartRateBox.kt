@@ -11,16 +11,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.secui.healthone.R
-import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.constant.AppColors
 import com.secui.healthone.util.BoxTool
-import com.secui.healthone.util.PageRoutes
+import com.secui.healthone.constant.PageRoutes
 import com.secui.healthone.util.PreferenceUtil
 
 @Composable
@@ -53,15 +52,14 @@ fun HeartRateBox(
             horizontalAlignment = Alignment.CenterHorizontally,
         )
         {
-            Spacer(modifier = Modifier.height(16.dp))
             Text(text = "심박 수",
                 fontSize = 16.sp,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight(),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Left
             );
-            Spacer(modifier = Modifier.height(16.dp));
+            Spacer(modifier = Modifier.height(16.dp))
             Row(modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight(),

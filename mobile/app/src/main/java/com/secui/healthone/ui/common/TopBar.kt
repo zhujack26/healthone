@@ -16,13 +16,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.secui.healthone.R
-import com.secui.healthone.util.PageRoutes
+import com.secui.healthone.constant.AppColors
+import com.secui.healthone.constant.PageRoutes
 
 @Composable
 fun TopBar() {
     val navController = rememberNavController()
     val menuOpen = remember { mutableStateOf(false) } // 메뉴 상태를 기억하는 변수
-    val menuOffset = animateDpAsState(if (menuOpen.value) 0.dp else 200.dp) // 애니메이션 상태
+    val menuOffset = animateDpAsState(if (menuOpen.value) 0.dp else 272.dp) // 애니메이션 상태
     val currentTitle = remember { mutableStateOf("메인") } // 현재 타이틀을 저장하는 변수
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -87,7 +88,7 @@ fun TopBar() {
             Column(
                 modifier = Modifier
                     .offset(x = menuOffset.value) // 애니메이션 값을 적용
-                    .width(200.dp)
+                    .width(272.dp)
                     .fillMaxHeight()
                     .background(AppColors.white)
                     .align(Alignment.TopEnd)
@@ -150,18 +151,8 @@ fun TopBar() {
                 )
                 Divider(color = AppColors.black, thickness = 1.dp)
                 DrawerButton(
-                    text = "심박 수 측정",
-                    icon = R.drawable.ic_heart,
-                    iconColor = Color.Unspecified,
-                    onClick = {
-                        currentTitle.value = "심박 수 측정"
-                        navController.navigate(PageRoutes.HeartRate.route)
-                    }
-                )
-                Divider(color = AppColors.black, thickness = 1.dp)
-                DrawerButton(
                     text = "건강상태",
-                    icon = R.drawable.ic_heart,
+                    icon = R.drawable.ic_health_info,
                     iconColor = Color.Unspecified,
                     onClick = {
                         currentTitle.value = "건강상태"

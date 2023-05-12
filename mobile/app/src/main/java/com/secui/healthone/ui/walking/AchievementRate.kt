@@ -12,14 +12,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.secui.healthone.ui.common.AppColors
-import com.secui.healthone.util.PageRoutes
+import com.secui.healthone.constant.AppColors
+import com.secui.healthone.constant.PageRoutes
 
 @Composable
 fun AchievementRate(percentage: Float, navController: NavController) {

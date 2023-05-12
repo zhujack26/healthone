@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 
 class PreferencesManager(context: Context) {
     private val sharedPreferences: SharedPreferences =
-        context.getSharedPreferences("HealthOne", Context.MODE_PRIVATE)
+        context.getSharedPreferences("healthone_prefs", Context.MODE_PRIVATE)
 
     fun setSleepTime(sleepTime: String) {
         sharedPreferences.edit().putString("SLEEP_TIME", sleepTime).apply()

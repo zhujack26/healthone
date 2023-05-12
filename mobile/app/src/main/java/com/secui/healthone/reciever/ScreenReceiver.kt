@@ -78,17 +78,19 @@ class ScreenReceiver : BroadcastReceiver() {
         var targetSleepLT = LocalTime.of(22, 0,0)
 
         // 사용자가 설정한 취침 시간 객체를 불러온다.
-        val setSleepTime = prefs.getString("SLEEP_TIME", "X")
-        val setWakeTime = prefs.getString("WAKE_TIME", "X")
+        val setSleepTime = prefs.getString("setting_sleep_time", "X")
+        val setWakeTime = prefs.getString("setting_wake_time", "X")
 
         // 값 자체가 유효한지 부터 판단한다.
         // 세팅 값이 없다면, 기본 값을 사용해야 한다.
         val isSetSleep = setSleepTime.equals("X")
         val isSetWake = setWakeTime.equals("X");
+//        Log.d(LOG, "GET_SETTINGS >>> setSleepTime: $setSleepTime / setWakeTime: $setWakeTime")
+//        Log.d(LOG, "GET_SETTINGS >>> isSetSleep: $isSetSleep / isSetWake: $isSetWake")
 
         // 수면 시간을 설정했다면 값을 바꿔준다.
         if(!isSetSleep){
-            Log.i(LOG, "$setSleepTime")
+            Log.i(LOG, "수면시간 : $setSleepTime")
             val hour = setSleepTime.substring(0, 2);
             val min = setSleepTime.substring(3);
 
@@ -101,9 +103,9 @@ class ScreenReceiver : BroadcastReceiver() {
 
         // 기상 시간을 설정했다면 값을 바꿔준다.
         if(!isSetWake){
-            Log.i(LOG, "$setWakeTime")
-            val hour = setSleepTime.substring(0, 2);
-            val min = setSleepTime.substring(3);
+            Log.i(LOG, "취침시간 : $setWakeTime")
+            val hour = setWakeTime.substring(0, 2);
+            val min = setWakeTime.substring(3);
 
             targetWakeLT =
                 LocalTime.of(
@@ -118,8 +120,11 @@ class ScreenReceiver : BroadcastReceiver() {
         val userSleepLDT = LocalDateTime.parse(userSleepTime);
         val userWakeLDT = LocalDateTime.parse(userWakeTime);
 
+        Log.d(LOG, "수면시간 ${userSleepLDT.toString()} / 기상시간 ${userWakeLDT.toString()}");
         // 설정된 수면, 기상 시간과의 시간차 비교를 위해 LocalTime 객체로 바꿔준다
         val useSleepLT = LocalTime.of(userSleepLDT.hour, userSleepLDT.minute, userSleepLDT.second);
+
+        //Log.d(LOG,"측정된 수면 시간 : ${useSleepLT.toString()}")
 
         // 목표 수면시간과 비교합니다.
         val sleepDur1 = Duration.between(targetSleepLT, useSleepLT);
@@ -127,14 +132,15 @@ class ScreenReceiver : BroadcastReceiver() {
         // 기상시간과 수면시간을 비교합니다.
         val sleepDur2 = Duration.between(targetWakeLT, useSleepLT) // <= 0 이어야 한다.
 
-        // + 120 했을 때 > 0 이어야 한다. (2시간 일찍 잔 것도 ok!)
         // 유효한 수면 시간인가?
-        val isSleepIn = sleepDur1.toMinutes() + 120 >= 0 || sleepDur2.toMinutes() < 0;
+        val isSleepIn = sleepDur1.toMinutes()+120 > 0 || sleepDur2.toMinutes() < 0;
+        // Log.d(LOG,"시간차이 결과 : ${sleepDur1.toMinutes()} | ${sleepDur2.toMinutes()}")
 
         if(isSleepIn){
             val sleepGapDur = Duration.between(userSleepLDT, userWakeLDT);
-            Log.i(LOG, "수면시간을 기록합니다... GAP : ${sleepGapDur.seconds}")
-            return sleepGapDur.seconds;
+            Log.i(LOG, "수면시간을 기록합니다 : ${sleepGapDur.seconds}")
+            return 0;
+            //return sleepGapDur.seconds;
         }else {
             Log.d(LOG, "유효한 수면 시간이 아닙니다... DATETIME : $userSleepLDT")
             return 0;

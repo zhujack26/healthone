@@ -59,6 +59,9 @@ dependencies {
 	testImplementation 'io.rest-assured:rest-assured:4.4.0'
 	// json mapping
 	implementation group: 'com.google.code.gson', name: 'gson', version: '2.10.1'
+
+	//JWT
+	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 }
 
 tasks.named('test') {

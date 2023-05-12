@@ -1,21 +1,17 @@
 package com.secui.healthone.domain.auth.api;
 
-//import com.secui.healthone.domain.auth.dto.SignUpRequestDto;
-//import com.secui.healthone.domain.auth.service.AuthService;
 import com.secui.healthone.util.CookieUtil;
 import com.secui.healthone.domain.auth.service.AuthService;
 import com.secui.healthone.util.HeaderUtil;
 import com.secui.healthone.util.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
@@ -28,12 +24,11 @@ import static org.springframework.http.HttpHeaders.SET_COOKIE;
 public class AuthController {
 
     private final AuthService authService;
-
     private final CookieUtil cookieUtil;
     private final TokenService tokenService;
 
     @PostMapping("/login")
-    public ResponseEntity signInOrUp(@RequestBody String authCode){
+    public ResponseEntity<?> signInOrUp(@RequestBody String authCode){
         log.info("authCode = {} ",authCode);
         try {
             Map<String, String> token = authService.isSignUp(authCode);
@@ -53,14 +48,13 @@ public class AuthController {
 
     // 토큰 검증
     @PostMapping("/verify")
-    public ResponseEntity verifyToken(@RequestHeader("Authorization") String Authorization){
+    public ResponseEntity<?> verifyToken(@RequestHeader("Authorization") String Authorization){
         log.info("Authorization = {}",Authorization);
         return ResponseEntity.ok().build();
     }
 
-
     @PostMapping("/logout")
-    public ResponseEntity logout(@RequestHeader("Authorization")String Authorization, HttpServletRequest request){
+    public ResponseEntity<?> logout(@RequestHeader("Authorization")String Authorization, HttpServletRequest request){
         String accessToken = HeaderUtil.getAccessTokenString(Authorization);
         String refreshToken = cookieUtil.getRefreshTokenCookie(request);
         return ResponseEntity.ok().build();

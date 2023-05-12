@@ -36,16 +36,16 @@ public class SportRecordService {
 
     // 수정
     @Transactional
-    public SportRecordResDto updateSportRecord(SportRecordReqDto reqDto, Integer userNo) {
-        SportRecord sportRecord = sportRecordRepository.findById(reqDto.getNo())
+    public SportRecordResDto updateSportRecord(SportRecordReqDto reqDto) {
+        SportRecord sportRecord = sportRecordRepository.findByNoAndUserNo(reqDto.getNo(), reqDto.getUserNo())
                 .orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
         sportRecord.update(reqDto);
         return SportRecordDtoMapper.INSTANCE.entityToResDto(sportRecord);
     }
 
     @Transactional
-    public void deleteSportRecord(Integer no) {
-        SportRecord sportRecord = sportRecordRepository.findById(no)
+    public void deleteSportRecord(Integer no, Integer userNo) {
+        SportRecord sportRecord = sportRecordRepository.findByNoAndUserNo(no, userNo)
                 .orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
         sportRecordRepository.delete(sportRecord);
     }

@@ -5,6 +5,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import com.secui.healthone.data.TimeDBLog
 import java.time.LocalDateTime
 import java.time.ZoneId
 
@@ -23,7 +24,9 @@ class DBHelper: SQLiteOpenHelper {
         val sql = """
             create table sleep_record(
             	sleep_record_idx integer primary key autoincrement,
-                record_sleep_time long not null,
+                record_sleep_time integer not null,
+                rec_start_time string,
+                rec_end_time string,                
                 rec_time_log TIMESTAMP not null DEFAULT CURRENT_TIMESTAMP 
             );
         """.trimIndent()
@@ -34,13 +37,12 @@ class DBHelper: SQLiteOpenHelper {
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
     }
 
-    data class TimeDBLog(val idx:Int, val recordSleepTime:Int, val recTimeLog:String);
 
 
     fun getTotalSleeTime(
         context: Context,
         time: LocalDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"))
-    ):Long{
+    ):Int{
         val dbHelper = DBHelper(context = context)
         val endDate = time.toLocalDate().atStartOfDay()
         val startDate = endDate.minusDays(1).plusSeconds(1)
@@ -51,11 +53,11 @@ class DBHelper: SQLiteOpenHelper {
             WHERE rec_time_log BETWEEN ? AND ?
         """.trimIndent()
 
-        var totalSleepTime:Long = 0L
+        var totalSleepTime = 0
         val cursor: Cursor = dbHelper.readableDatabase.rawQuery(query, args)
         if (cursor.moveToFirst()) {
             val sleepCursor = cursor.getColumnIndex("total_sleep_time")
-            totalSleepTime = cursor.getLong(sleepCursor)
+            totalSleepTime = cursor.getInt(sleepCursor)
         }
         cursor.close()
         dbHelper.close()
@@ -63,14 +65,19 @@ class DBHelper: SQLiteOpenHelper {
     }
 
     // db 출력
-    fun selectAll(
+    fun selectAllOneDay(
         context: Context,
         time: LocalDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"))
     ):MutableList<TimeDBLog> {
 
         val dbHelper = DBHelper(context = context)
         val query = """
-                            SELECT sleep_record_idx, record_sleep_time, rec_time_log
+                            SELECT 
+                            sleep_record_idx, 
+                            record_sleep_time, 
+                            rec_time_log, 
+                            rec_start_time,
+                            rec_end_time 
                             FROM sleep_record
                             WHERE rec_time_log BETWEEN ? AND ?
                         """.trimIndent()
@@ -86,30 +93,42 @@ class DBHelper: SQLiteOpenHelper {
             val srI = tableData.getColumnIndex("sleep_record_idx")
             val rstI = tableData.getColumnIndex("record_sleep_time")
             val rtI = tableData.getColumnIndex("rec_time_log")
+            val startTimeI = tableData.getColumnIndex("rec_start_time")
+            val endTimeI = tableData.getColumnIndex("rec_end_time")
+
 
             val sleepIndex = tableData.getInt(srI)
             val recordSleepTime = tableData.getInt(rstI)
             val recordTimeLog = tableData.getString(rtI)
-            val timeLog = TimeDBLog(idx = sleepIndex, recordSleepTime = recordSleepTime, recTimeLog = recordTimeLog)
+            val startTimeLog = tableData.getString(startTimeI);
+            val endTimeLog = tableData.getString(endTimeI);
+
+            val timeLog = TimeDBLog(
+                idx = sleepIndex,
+                recordSleepTime = recordSleepTime.toLong(),
+                recTimeLog = recordTimeLog,
+                startTime = startTimeLog,
+                endTime = endTimeLog
+            )
             recordTimeList.add(timeLog)
         }
 
         dbHelper.writableDatabase.close()
         return recordTimeList
     }
-    fun saveScore(context: Context, recordSleepTime: Long){
+    fun saveScore(context: Context, recordSleepTime: Long, strartTime:String, endTime:String){
         // SQLite로 데이터를 삽입하는 코드
         // step 1. 데이터 베이스를 연다
         val dbHelper = DBHelper(context);
         // step 2. 삽입 코드를 작성한다
         val sql = """
             insert into sleep_record
-            (record_sleep_time)
+            (record_sleep_time, rec_start_time, rec_end_time)
             values
-            (?)
+            (?, ?, ?)
         """.trimIndent()
         // step 3. 세팅될 값을 배열로 선언해준다
-        val values = arrayOf(recordSleepTime);
+        val values = arrayOf(recordSleepTime, strartTime, endTime);
         // step 4. DBHelper를 통해 쿼리문을 실행한다.
         dbHelper.writableDatabase.execSQL(sql, values); // sql문, 값(배열) 순이다.
         // step 5. DB 사용이 끝났다면 쿼리문을 닫아 준다.

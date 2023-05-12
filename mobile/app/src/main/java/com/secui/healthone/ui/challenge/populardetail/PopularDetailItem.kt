@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.secui.healthone.R
 import com.secui.healthone.constant.AppColors
+import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.viewmodel.ChallenegeViewModel
 
 @Composable
@@ -40,6 +41,9 @@ fun PopularDetailItem(
 ) {
     val challnegeInfo =  ChallenegeViewModel.currentChallenge.value;
     val isEmpthyChallenge = challnegeInfo == null;
+
+    HealthOnePage.pageTitle.value = if(isEmpthyChallenge) "" else challnegeInfo!!.name;
+
 
     val openDialog = remember { mutableStateOf(false) }
     // 다이얼로그

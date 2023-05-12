@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
+import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.data.heart.HeartRead
 import com.secui.healthone.repository.HeartRateRepository
 import com.secui.healthone.ui.heart.heartratepage.HeartGraphBox
@@ -27,6 +28,9 @@ import com.secui.healthone.viewmodel.HeartRateViewModel
 fun HeartRatePage(
     navController: NavHostController,
     modifier: Modifier=Modifier){
+
+    // 타이틀 값 수정
+    HealthOnePage.pageTitle.value="심박수"
 
     val heartList = HeartRateViewModel.heartRateList;
     // heartRate 세팅

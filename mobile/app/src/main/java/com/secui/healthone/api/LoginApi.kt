@@ -7,7 +7,7 @@ import retrofit2.http.*
 
 interface LoginApi {
     @POST("authlogin")
-    suspend fun sendAuthCodeToServer(@Body authCode: RequestBody): Response<ResponseBody>
+    suspend fun sendAuthCodeToServer(@Url url: String, @Body authCode: RequestBody): Response<ResponseBody>
 
     @POST("auth/verify")
     suspend fun verifyAuth(@Header("Authorization") authHeader: String): Response<ResponseBody>

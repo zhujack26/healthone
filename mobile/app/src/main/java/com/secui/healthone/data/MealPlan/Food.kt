@@ -2,13 +2,6 @@ package com.secui.healthone.data.MealPlan
 
 import com.google.gson.annotations.SerializedName
 
-data class FoodData(
-    val no: Int,
-    val name: String,
-    val kcal: Double,
-    val gram: Double
-)
-
 
 data class MealData(
     val no: Int,
@@ -33,17 +26,6 @@ data class Food(
     var inputGrams: Int
 )
 
-
-data class CustomFood(
-    @SerializedName("no")
-    val no: Int,
-    @SerializedName("name")
-    val name: String,
-    @SerializedName("kcal")
-    val kcal: Int,
-    @SerializedName("gram")
-    val gram: Int
-)
 data class MealResponse<T>(
     @SerializedName("timestamp")
     val timestamp: String,

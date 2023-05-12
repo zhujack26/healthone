@@ -10,19 +10,15 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
+import com.secui.healthone.data.Sleep.SleepRecord
 import kotlin.math.cos
 import kotlin.math.sin
 @Composable
-fun SleepTimeClock(sleepTime: String, wakeTime: String) {
-    val sleepAngle = if (sleepTime.isNotEmpty()) sleepTimeToAngle(sleepTime) else 0f
-    val wakeAngle = if (wakeTime.isNotEmpty()) sleepTimeToAngle(wakeTime) else 0f
-    val sleepDurationAngle = if (sleepTime.isNotEmpty() && wakeTime.isNotEmpty()) wakeAngle - sleepAngle else 0f
-
+fun SleepTimeClock(sleepRecords: List<SleepRecord>) {
     Canvas(modifier = Modifier.size(200.dp)) {
         val center = Offset(size.width / 2, size.height / 2)
         val radius = size.width / 2
@@ -34,21 +30,37 @@ fun SleepTimeClock(sleepTime: String, wakeTime: String) {
             radius = radius
         )
 
-        // 녹색 원 그리기 (수면 시간 표시)
-        val sweepAngleInRadians = Math.toRadians(sleepDurationAngle.toDouble())
-        val endPoint = Offset(
-            x = center.x + radius * cos(sweepAngleInRadians).toFloat(),
-            y = center.y + radius * sin(sweepAngleInRadians).toFloat()
-        )
-        drawPath(
-            color = Color.Green,
-            path = Path().apply {
-                moveTo(center.x, center.y)
-                lineTo(center.x, 0f)
-                arcTo(Rect(center.x - radius, center.y - radius, center.x + radius, center.y + radius), -90f, sleepDurationAngle, false)
-                lineTo(center.x, center.y)
-            }
-        )
+        // 수면 기록 별로 녹색 원 그리기
+        sleepRecords.forEach { sleepRecord ->
+            val sleepTime = sleepRecord.startSleepTime
+            val wakeTime = sleepRecord.endSleepTime
+            val sleepAngle = if (sleepTime.isNotEmpty()) sleepTimeToAngle(sleepTime) else 0f
+            val wakeAngle = if (wakeTime.isNotEmpty()) sleepTimeToAngle(wakeTime) else 0f
+            val sleepDurationAngle =
+                if (sleepTime.isNotEmpty() && wakeTime.isNotEmpty()) wakeAngle - sleepAngle else 0f
+
+            val sweepAngleInRadians = Math.toRadians(sleepDurationAngle.toDouble())
+            val endPoint = Offset(
+                x = center.x + radius * cos(sweepAngleInRadians).toFloat(),
+                y = center.y + radius * sin(sweepAngleInRadians).toFloat()
+            )
+            drawPath(
+                color = Color.Green,
+                path = Path().apply {
+                    moveTo(center.x, center.y)
+                    lineTo(center.x, 0f)
+                    arcTo(
+                        Rect(
+                            center.x - radius,
+                            center.y - radius,
+                            center.x + radius,
+                            center.y + radius
+                        ), -90f, sleepDurationAngle, false
+                    )
+                    lineTo(center.x, center.y)
+                }
+            )
+        }
 
         // 시간 텍스트와 점 그리기
         val textPaint = Paint().asFrameworkPaint().apply {
@@ -90,8 +102,12 @@ fun SleepTimeClock(sleepTime: String, wakeTime: String) {
     }
 }
 
-private fun sleepTimeToAngle(time: String): Float {
+
+
+private fun sleepTimeToAngle(dateTime: String): Float {
+    val time = dateTime.split(" ").last()
     val (hour, minute) = time.split(":").map { it.toIntOrNull() ?: 0 }
     val hoursInDecimal = hour + minute / 60f
     return (hoursInDecimal * 360f / 24f) - 90f
 }
+

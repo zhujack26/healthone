@@ -12,14 +12,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.secui.healthone.ui.common.AppColors
-import com.secui.healthone.util.PageRoutes
+import com.secui.healthone.constant.AppColors
+import com.secui.healthone.constant.PageRoutes
 
 @Composable
 fun AchievementRate(percentage: Float, navController: NavController) {
@@ -33,6 +32,7 @@ fun AchievementRate(percentage: Float, navController: NavController) {
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
+            Spacer(modifier = Modifier.width(48.dp))
             Box(
                 modifier = Modifier
                     .clickable { navController.navigate(PageRoutes.WalkingDetail.route) }
@@ -55,19 +55,33 @@ fun AchievementRate(percentage: Float, navController: NavController) {
 @Composable
 fun ProgressBar(percentage: Float) {
     val filledWidth = (percentage * 100).toInt()
+    val displayText = "${filledWidth}%"
 
     Box(
         modifier = Modifier
             .height(24.dp)
             .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
-            .background(color = AppColors.mono200)
+            .clip(RoundedCornerShape(12.dp)),
     ) {
         Box(
             modifier = Modifier
                 .fillMaxHeight()
-                .width(filledWidth.dp)
+                .fillMaxWidth()
+                .background(color = AppColors.mono200)
+        )
+
+        Box(
+            modifier = Modifier
+                .fillMaxHeight()
+                .fillMaxWidth(fraction = percentage)
                 .background(color = AppColors.green600)
+        )
+
+        Text(
+            text = displayText,
+            color = Color.Black,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.align(Alignment.Center)
         )
     }
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="DatePickerDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <!-- 색상 변경 -->
+        <item name="colorAccent">@color/green200</item>
+    </style>
+</resources>

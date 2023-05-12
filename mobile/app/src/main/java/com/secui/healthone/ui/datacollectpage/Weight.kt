@@ -7,8 +7,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
 import com.secui.healthone.R
+import com.secui.healthone.ui.common.AppColors
 
 @Composable
 fun Weight() {
@@ -36,10 +39,10 @@ fun Weight() {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Text(
             text = "몸무게",
-            fontSize = 12.sp,
+            fontSize = 16.sp,
             fontWeight = FontWeight.Bold
         )
-        Spacer(modifier = Modifier.width(32.dp))
+        Spacer(modifier = Modifier.width(28.dp))
 
         TextField(
             value = if (textState.isNotEmpty()) "$textState kg" else "",
@@ -53,10 +56,17 @@ fun Weight() {
             ),
             enabled = false,
             modifier = Modifier
+                .padding(
+                    start = 16.dp
+                )
                 .width(240.dp)
                 .height(48.dp)
                 .clip(RoundedCornerShape(32.dp))
                 .clickable { setDialogVisible(true) },
+            colors = TextFieldDefaults.textFieldColors(
+                focusedIndicatorColor = AppColors.green200,
+                unfocusedIndicatorColor = AppColors.green200
+            ),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text
             )
@@ -91,9 +101,16 @@ fun Weight() {
                                 // 예외 케이스 추가 : 초기 값에서 확인 버튼을 눌렀을 경우에도 값이 표시되도록 설정
                             }
                         },
+                        colors = ButtonDefaults
+                            .outlinedButtonColors(
+                                backgroundColor =
+                                AppColors.green200
+                            ),
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     ) {
-                        Text("확인")
+                        Text("확인",
+                            fontSize = 12.sp,
+                            color = AppColors.white)
                     }
                 }
             }

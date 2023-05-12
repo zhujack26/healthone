@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import com.secui.healthone.R
 import com.secui.healthone.ui.common.AppColors
 
+
 @Composable
 fun NicknameInput() {
     val (textState, setTextState) = remember { mutableStateOf("") }
@@ -49,7 +50,7 @@ fun NicknameInput() {
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
         )
-        Spacer(modifier = Modifier.width(40.dp))
+        Spacer(modifier = Modifier.width(28.dp))
         TextField(
             value = textState,
             onValueChange = { newText ->
@@ -62,7 +63,7 @@ fun NicknameInput() {
             maxLines = 1,
             textStyle = TextStyle(
                 color = AppColors.black,
-                fontSize = 12.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             ),
             colors = TextFieldDefaults.textFieldColors(
@@ -70,6 +71,9 @@ fun NicknameInput() {
                 unfocusedIndicatorColor = AppColors.green200
             ),
             modifier = Modifier
+                .padding(
+                    start = 16.dp
+                )
                 .width(240.dp)
                 .height(48.dp)
                 .clip(RoundedCornerShape(32.dp))
@@ -102,8 +106,8 @@ fun NicknameInput() {
                     colors = ButtonDefaults
                         .outlinedButtonColors(
                             backgroundColor =
-                            AppColors.green300
-                        )
+                            AppColors.green200
+                        ),
                 ) {
                     Text("확인",
                         fontSize = 12.sp,

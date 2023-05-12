@@ -2,11 +2,10 @@ package com.secui.healthone.ui.datacollectpage
 
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
+import android.view.ContextThemeWrapper
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -20,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.R
 
 @Composable
 fun BirthDate(
@@ -32,7 +32,8 @@ fun BirthDate(
     fun showDatePickerDialog() {
         val calendar = Calendar.getInstance()
 
-        val datePickerDialog = DatePickerDialog(context,
+        val datePickerDialog = DatePickerDialog(
+            ContextThemeWrapper(context, R.style.DatePickerDialogTheme),
             { _, year, month, dayOfMonth ->
                 val newDate = Calendar.getInstance().apply {
                     set(Calendar.YEAR, year)
@@ -59,12 +60,15 @@ fun BirthDate(
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
         )
-        Spacer(modifier = Modifier.width(28.dp))
+        Spacer(modifier = Modifier.width(16.dp))
         TextField(
             value = value,
             onValueChange = {},
             enabled = false,
             modifier = Modifier
+                .padding(
+                    start = 16.dp
+                )
                 .clickable { showDatePickerDialog() }
                 .width(240.dp)
                 .height(48.dp)
@@ -75,7 +79,7 @@ fun BirthDate(
             ),
             textStyle = TextStyle(
                 color = AppColors.black,
-                fontSize = 12.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             ),
         )

@@ -45,7 +45,7 @@ fun TopBar() {
                             Spacer(modifier = Modifier.width(88.dp))
                             Text(
                                 currentTitle.value,
-                                color = AppColors.black,
+                                color = AppColors.mono700,
                                 fontWeight = FontWeight.Bold
                             )
                         }
@@ -59,7 +59,7 @@ fun TopBar() {
                                 painter = painterResource(id = R.drawable.ic_bell),
                                 contentDescription = "Alert",
                                 modifier = Modifier.size(24.dp),
-                                tint = AppColors.black
+                                tint = AppColors.mono700
                             )
                         }
                         IconButton(onClick = {
@@ -69,7 +69,7 @@ fun TopBar() {
                                 painter = painterResource(id = R.drawable.ic_topbar_toggle),
                                 contentDescription = "Menu",
                                 modifier = Modifier.size(24.dp),
-                                tint = AppColors.black
+                                tint = AppColors.mono700
                             )
                         }
                     }
@@ -99,17 +99,17 @@ fun TopBar() {
                         navController.navigate(PageRoutes.My.route)
                     }
                 )
-                Divider(color = AppColors.black, thickness = 1.dp)
+                Divider(color = AppColors.mono700, thickness = 1.dp)
                 DrawerButton(
                     text = "메인",
                     icon = R.drawable.ic_home,
-                    iconColor = AppColors.black,
+                    iconColor = AppColors.mono700,
                     onClick = {
                         currentTitle.value = "메인"
                         navController.navigate(PageRoutes.OverView.route)
                     }
                 )
-                Divider(color = AppColors.black, thickness = 1.dp)
+                Divider(color = AppColors.mono700, thickness = 1.dp)
                 DrawerButton(
                     text = "심박수",
                     icon = R.drawable.ic_heart,
@@ -119,7 +119,7 @@ fun TopBar() {
                         navController.navigate(PageRoutes.HeartRate.route)
                     }
                 )
-                Divider(color = AppColors.black, thickness = 1.dp)
+                Divider(color = AppColors.mono700, thickness = 1.dp)
                 DrawerButton(
                     text = "식단",
                     icon = R.drawable.ic_food,
@@ -129,7 +129,7 @@ fun TopBar() {
                         navController.navigate(PageRoutes.MealPlan.route)
                     }
                 )
-                Divider(color = AppColors.black, thickness = 1.dp)
+                Divider(color = AppColors.mono700, thickness = 1.dp)
                 DrawerButton(
                     text = "수면",
                     icon = R.drawable.ic_sleep,
@@ -139,7 +139,7 @@ fun TopBar() {
                         navController.navigate(PageRoutes.Sleep.route)
                     }
                 )
-                Divider(color = AppColors.black, thickness = 1.dp)
+                Divider(color = AppColors.mono700, thickness = 1.dp)
                 DrawerButton(
                     text = "걸음수",
                     icon = R.drawable.ic_walking_svg,
@@ -149,7 +149,7 @@ fun TopBar() {
                         navController.navigate(PageRoutes.Walking.route)
                     }
                 )
-                Divider(color = AppColors.black, thickness = 1.dp)
+                Divider(color = AppColors.mono700, thickness = 1.dp)
                 DrawerButton(
                     text = "건강상태",
                     icon = R.drawable.ic_health_info,
@@ -159,7 +159,7 @@ fun TopBar() {
                         navController.navigate(PageRoutes.HealthStatus.route)
                     }
                 )
-                Divider(color = AppColors.black, thickness = 1.dp)
+                Divider(color = AppColors.mono700, thickness = 1.dp)
                 DrawerButton(
                     text = "챌린지",
                     icon = R.drawable.ic_fire,
@@ -169,7 +169,7 @@ fun TopBar() {
                         navController.navigate(PageRoutes.Challenge.route)
                     }
                 )
-                Divider(color = AppColors.black, thickness = 1.dp)
+                Divider(color = AppColors.mono700, thickness = 1.dp)
                 DrawerButton(
                     text = "설정",
                     icon = R.drawable.ic_setting,
@@ -179,7 +179,7 @@ fun TopBar() {
                         navController.navigate(PageRoutes.Setting.route)
                     }
                 )
-                Divider(color = AppColors.black, thickness = 1.dp)
+                Divider(color = AppColors.mono700, thickness = 1.dp)
             }
         }
 }

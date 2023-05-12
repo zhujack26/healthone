@@ -3,6 +3,7 @@ package com.secui.healthone.instance
 import android.content.Context
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.mutableStateOf
 import com.secui.healthone.SplashActivity
 import com.secui.healthone.service.HeartRateService
 import com.secui.healthone.util.PreferenceUtil
@@ -37,11 +38,6 @@ class HeartRateInstance : AppCompatActivity() {
 //            }
 //        }
 
-        val refreshToken by lazy {
-            val rfToken = prefs.getTokenString("refreshtoken", "");
-            Log.d("HEART_RATE_INSTANCE", "HEART_RATE_INSTANCE 에서 꺼내본 리프래쉬 토큰 $rfToken")
-            rfToken
-        }
 
         val cookieJar = object : CookieJar {
             private val cookieStore = HashMap<String, MutableList<Cookie>>()
@@ -55,7 +51,7 @@ class HeartRateInstance : AppCompatActivity() {
                 // Add your Refresh Token to the cookies as a new Cookie object
                 val refreshTokenCookie = Cookie.Builder()
                     .name("refreshtoken")
-                    .value(refreshToken)
+                    .value(refreshToken.value)
                     .domain(url.host)
                     .build()
 
@@ -75,10 +71,9 @@ class HeartRateInstance : AppCompatActivity() {
         class myInterceptor : Interceptor {
             @Throws(IOException::class)
             override fun intercept(chain: Interceptor.Chain) : Response = with(chain) {
-                val accToken = prefs.getTokenString("access_token", "");
-                Log.d("HEART_RATE_INSTANCE", "엑세스 토큰 꺼낸 결과 : $accToken")
+                Log.d("HEART_RATE_INSTANCE", "엑세스 토큰 꺼낸 결과 : ${accToken.value}")
                 val newRequest = request().newBuilder()
-                    .addHeader("Authorization", "Bearer $accToken")
+                    .addHeader("Authorization", "Bearer ${accToken.value}")
                     .build()
                 proceed(newRequest)
             }
@@ -99,7 +94,9 @@ class HeartRateInstance : AppCompatActivity() {
     companion object {
         // http://check.apihealthone.com/
         const val URL = "https://back.apihealthone.com/check/"
-        val prefs = PreferenceUtil(SplashActivity.context as Context);
+        // val prefs = PreferenceUtil(SplashActivity.context as Context);
+        val accToken = mutableStateOf<String>("");
+        val refreshToken = mutableStateOf<String>("")
     }
 
 

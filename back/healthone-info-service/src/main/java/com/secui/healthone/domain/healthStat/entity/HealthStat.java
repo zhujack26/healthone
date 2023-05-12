@@ -35,8 +35,10 @@ public class HealthStat {
     private Float skeletalMuscleMass;
     @Column(name = "health_stat_waist_measurement")
     private Float waistMeasurement;
-    @Column(name = "health_stat_blood_pressure")
-    private Float bloodPressure;
+    @Column(name = "health_stat_low_blood_pressure")
+    private Float lowBloodPressure;
+    @Column(name = "health_stat_high_blood_pressure")
+    private Float highBloodPressure;
     @Column(name = "health_stat_fbg")
     private Float fbg;
     @Column(name = "health_stat_hdl_cholesterol")

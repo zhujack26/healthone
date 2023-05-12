@@ -17,6 +17,7 @@ import androidx.security.crypto.MasterKey
 import androidx.security.crypto.MasterKeys
 import com.google.gson.Gson
 import com.secui.healthone.api.LoginApi
+import com.secui.healthone.constant.PageRoutes
 import okhttp3.Cookie
 import okhttp3.CookieJar
 import okhttp3.HttpUrl
@@ -87,7 +88,7 @@ class GoogleSignInRepository (
             val authCode = account.serverAuthCode
             Log.d("check", "Auth Code: $authCode")
             sendAuthCodeToServer(authCode, navController)
-//            navController.navigate(PageRoutes.DataCollectFirst.route)
+            navController.navigate(PageRoutes.DataCollectFirst.route)
             Log.d("check", "check")
         } catch (e: Exception) {
             Log.e("check", "Error2", e)

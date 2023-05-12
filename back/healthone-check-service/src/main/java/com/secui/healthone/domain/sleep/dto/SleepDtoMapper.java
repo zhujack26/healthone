@@ -11,9 +11,8 @@ public interface SleepDtoMapper {
     SleepDtoMapper INSTANCE = Mappers.getMapper(SleepDtoMapper.class);
 
     List<SleepResDto> entityToResDto(List<Sleep> sleep);
-
-    Sleep insertDtoToEntity(SleepInsertDto sleepInsertDto);
-
     SleepResDto entityToResDto(Sleep sleep);
+    Sleep insertDtoToEntity(SleepInsertDto sleepInsertDto);
+    Sleep updateDtoToEntity(SleepUpdateDto sleepUpdateDto);
 
 }

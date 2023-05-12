@@ -60,7 +60,6 @@ public class HealthStatServiceImpl implements HealthStatService {
         Optional.ofNullable(healthStatDto.getBloodPressure()).ifPresent(healthStat::setBloodPressure);
         Optional.ofNullable(healthStatDto.getWaistMeasurement()).ifPresent(healthStat::setWaistMeasurement);
 
-//        healthStatRepository.save(healthStat);
         return HealthStatDtoMapper.INSTANCE.entityToDto(healthStat);
     }
 

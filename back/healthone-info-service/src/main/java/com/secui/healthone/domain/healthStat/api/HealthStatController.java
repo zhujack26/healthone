@@ -14,6 +14,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/health-stat")
@@ -41,7 +43,7 @@ public class HealthStatController {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping
-    public RestApiResponse<HealthStatDto> addHealthStat(@RequestHeader(required = false) String Authorization, @RequestBody HealthStatDto healthStatDto) {
+    public RestApiResponse<HealthStatDto> addHealthStat(@RequestHeader(required = false) String Authorization, @Valid @RequestBody HealthStatDto healthStatDto) {
 
         HealthStatDto result = healthStatService.addHealthStat(healthStatDto);
         return new RestApiResponse<>("건강 기록 등록 성공", result);
@@ -53,9 +55,9 @@ public class HealthStatController {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @PatchMapping
-    public RestApiResponse<?> updateHealthStat(@RequestHeader(required = false) String Authorization, @RequestBody HealthStatDto healthStatDto) {
+    public RestApiResponse<HealthStatDto> updateHealthStat(@RequestHeader(required = false) String Authorization, @Valid @RequestBody HealthStatDto healthStatDto) {
         HealthStatDto result = healthStatService.updateHealthStat(healthStatDto);
-        return new RestApiResponse<>("건강 기록 수정 성공", null);
+        return new RestApiResponse<>("건강 기록 수정 성공", result);
     }
 
     @Operation(summary = "건강 기록 삭제", description = "건강 기록 삭제 API", tags = {"HealthStat"})
@@ -64,7 +66,7 @@ public class HealthStatController {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @DeleteMapping
-    public RestApiResponse<?> deleteHealthStat(@RequestHeader(required = false) String Authorization, @RequestParam("no") Integer no) {
+    public RestApiResponse<?> deleteHealthStat(@RequestHeader(required = false) String Authorization, @Valid @RequestParam("no") Integer no) {
         Integer userNo = 1;
         healthStatService.deleteHealthStat(no, userNo);
         return new RestApiResponse<>("건강 기록 삭제 성공", null);

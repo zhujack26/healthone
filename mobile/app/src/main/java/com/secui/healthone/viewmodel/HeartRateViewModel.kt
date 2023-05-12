@@ -59,7 +59,6 @@ class HeartRateViewModel(private val repository : HeartRateRepository) : ViewMod
     }
 
 
-
     // 코루틴 에러 핸들러 >> coroutine exception Handelr
     protected val exceptionHandler = CoroutineExceptionHandler{ i, exception ->
         Log.d("ERR ::::", "에러 발생.... ${exception.message}");

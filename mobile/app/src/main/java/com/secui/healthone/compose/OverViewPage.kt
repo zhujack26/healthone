@@ -36,10 +36,8 @@ import com.secui.healthone.util.DBHelper
 import com.secui.healthone.viewmodel.HeartRateViewModel
 import java.time.LocalTime
 
-
 lateinit var context: Context;
 lateinit var thisActivity: Activity;
-
 
 @Composable
 fun OverViewPage(
@@ -83,7 +81,7 @@ fun OverViewPage(
         UserWalkBox(navController, walkValue.value.toInt());
         HeartRateBox(navController, bpmValue.value.toInt());
         FoodCalorieBox(navController, calorieValue.value.toInt());
-        SleepCheckBox(navController, sleepValue.value.toInt());
+        SleepCheckBox(navController,sleepRecValue.toInt());
         HealthScoreBox(navController);
         Spacer(modifier = Modifier.height(64.dp));
     }

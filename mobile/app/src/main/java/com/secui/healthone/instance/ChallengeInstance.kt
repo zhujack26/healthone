@@ -44,6 +44,6 @@ class ChallengeInstance {
     }
 
     companion object {
-        const val URL = "http://recommend.apihealthone.com/"
+        const val URL = "http://challenge.apihealthone.com/"
     }
 }

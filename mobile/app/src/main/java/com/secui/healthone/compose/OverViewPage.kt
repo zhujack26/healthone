@@ -20,6 +20,7 @@ import com.secui.healthone.api.fit.FitHeartManager
 import com.secui.healthone.api.fit.FitNutritionManager
 import com.secui.healthone.api.fit.FitSleepManager
 import com.secui.healthone.api.fit.FitWalkManager
+import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.ui.overviewpage.FoodCalorieBox
 import com.secui.healthone.ui.overviewpage.HealthScoreBox
 import com.secui.healthone.ui.overviewpage.HeartRateBox
@@ -37,6 +38,10 @@ fun OverViewPage(
     modifier: Modifier = Modifier
         .fillMaxSize()
 ) {
+
+    // 타이틀 값 수정
+    HealthOnePage.pageTitle.value="메인"
+
     // Log.d("OVERVIEW:::", "몇번 찍할까요 ----");
     // 초기값 세팅
     context = LocalContext.current;

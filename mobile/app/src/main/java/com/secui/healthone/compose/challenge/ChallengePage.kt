@@ -22,6 +22,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.secui.healthone.compose.factory.YouTubeViewModelFactory
+import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.data.ChallengeInfo
 import com.secui.healthone.data.Video
 import com.secui.healthone.data.heart.HeartRead
@@ -43,6 +44,9 @@ fun ChallengePage(
     navController: NavHostController,
     modifier: Modifier=Modifier)
 {
+
+    HealthOnePage.pageTitle.value="Do it!, 챌린지"
+
 
     val mOwner = LocalLifecycleOwner.current
     val repository = ChallengeRepository();

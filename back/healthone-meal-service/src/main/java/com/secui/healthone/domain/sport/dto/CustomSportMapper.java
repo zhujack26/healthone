@@ -15,5 +15,4 @@ public interface CustomSportMapper {
     CustomSportResDto customSportReqDtoToCustomSportResDto(CustomSportReqDto customSportReqDto);
     List<CustomSportResDto> customSportToCustomSportResListDto(List<CustomSport> customSport);
     CustomSport customSportReqDtoToCustomSport(CustomSportReqDto customSportResDto);
-
 }

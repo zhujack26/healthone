@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Schema(description = "사용자 음식 응답 DTO")
 public class CustomFoodResDto {
     @Schema(description = "사용자 음식 식별번호")

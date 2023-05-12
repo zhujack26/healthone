@@ -59,9 +59,11 @@ public class AuthService {
                             .build());
             // 회원가입이 안되 있을 경우 회원가입
         }
+        long userno = userRepository.findByEmail(email).get().getId();
+        log.info("userno = {}",userno);
         // 회원가입이 되있을 경우 토큰 생성 후 return
-        String refreshtoken = tokenService.generateToken(email, Role.MEMBER.toString(), "REFRESH");
-        String accesstoken = tokenService.generateToken(email, Role.MEMBER.toString(), "ACCESS");
+        String refreshtoken = tokenService.generateToken(email,userno, Role.MEMBER.toString(), "REFRESH");
+        String accesstoken = tokenService.generateToken(email,userno, Role.MEMBER.toString(), "ACCESS");
         redisUtil.setDataExpire(email,refreshtoken,tokenService.refreshPeriod);
         log.info("Refresh Token = {},Access Token = {}", refreshtoken, accesstoken);
         Map<String, String> token = new HashMap<>();

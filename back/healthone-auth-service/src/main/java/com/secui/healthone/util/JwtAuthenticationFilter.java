@@ -41,7 +41,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 throw new JwtException("ACCESS TOKEN EXPIRED");
             }
         }catch(JwtException a){
-            a.printStackTrace();
             // token reissue
             String refreshtoken = cookieUtil.getRefreshTokenCookie(request);
             String email ="";
@@ -53,7 +52,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     throw new JwtException("EXPIRED");
                 }
             }catch(Exception j){
-               j.printStackTrace();
                log.error("REFRESH TOKEN EXPIRED");
                response.sendError(HttpServletResponse.SC_FORBIDDEN);
             }
@@ -67,7 +65,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(auth);
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
         }catch(Exception e){
-            e.printStackTrace();
             // Return UNAUTHORIZED
             log.error("BAD REQUEST");
             response.sendError(HttpServletResponse.SC_FORBIDDEN);

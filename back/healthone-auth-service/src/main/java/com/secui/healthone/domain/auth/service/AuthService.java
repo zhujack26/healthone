@@ -39,10 +39,10 @@ public class AuthService {
                 new NetHttpTransport(),
                 jsonFactory,
                 "https://oauth2.googleapis.com/token",
-                "785216230516-1h8hoagkginolldjirvtgiebidmqe38i.apps.googleusercontent.com",
-                "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",
+                "257241734993-6fhqboc805rprdme7eu0vusie9foioal.apps.googleusercontent.com",
+                "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",
                 URLDecoder.decode(authCode),
-                "http://localhost" // This should match the redirect_uri in your Android app
+                "https://back.apihealthone.com" // This should match the redirect_uri in your Android app
         );
         GoogleTokenResponse tokenResponse = tokenRequest.execute();
         GoogleIdToken idToken = tokenResponse.parseIdToken();

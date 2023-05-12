@@ -15,7 +15,7 @@ public class CookieUtil {
         return ResponseCookie.from("refreshtoken", refreshtoken)
                 .maxAge(time)
                 .path("/")
-                .secure(true)
+                .secure(false)
                 .sameSite("Lax")
                 .httpOnly(true)
                 .build();

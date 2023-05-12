@@ -66,7 +66,7 @@ class MainActivity : ComponentActivity() {
                 Log.d("SharedPreferences", key + ": " + value.toString())
             }
 
-            NavHost(navController, startDestination = if (hasRefreshToken(sharedPreferences)) PageRoutes.OverView.route else PageRoutes.Login.route) {
+            NavHost(navController, startDestination = if (hasRefreshToken(sharedPreferences)) PageRoutes.Login.route else PageRoutes.OverView.route) {
                 composable(PageRoutes.Login.route) {
                     LoginPage(navController)
                 }

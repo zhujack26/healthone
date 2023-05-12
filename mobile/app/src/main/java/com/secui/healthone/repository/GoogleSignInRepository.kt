@@ -9,15 +9,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.secui.healthone.constant.PageRoutes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
 import androidx.security.crypto.MasterKeys
 import com.google.gson.Gson
 import com.secui.healthone.api.LoginApi
-import kotlinx.coroutines.delay
 import okhttp3.Cookie
 import okhttp3.CookieJar
 import okhttp3.HttpUrl

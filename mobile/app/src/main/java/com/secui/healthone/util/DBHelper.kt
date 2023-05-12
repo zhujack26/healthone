@@ -36,7 +36,6 @@ class DBHelper: SQLiteOpenHelper {
 
     data class TimeDBLog(val idx:Int, val recordSleepTime:Int, val recTimeLog:String);
 
-
     fun getTotalSleeTime(
         context: Context,
         time: LocalDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"))

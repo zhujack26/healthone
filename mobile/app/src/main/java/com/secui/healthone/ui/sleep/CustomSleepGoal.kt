@@ -19,7 +19,8 @@ import com.secui.healthone.data.Sleep.SleepRecord
 fun CustomSleepGoal(
     selectedSleepTime: MutableState<String>,
     selectedWakeTime: MutableState<String>,
-    sleepRecords: MutableList<SleepRecord>
+    sleepRecords: MutableList<SleepRecord>,
+    buttonCheck: MutableState<Boolean>
 ) {
     val sleepDate = remember { mutableStateOf("") }
     val wakeDate = remember { mutableStateOf("") }
@@ -32,7 +33,7 @@ fun CustomSleepGoal(
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        TimePickerRow(sleepDate, sleepTime, selectedSleepTime)
+        TimePickerRow(sleepDate, sleepTime, selectedSleepTime, buttonCheck)
         NowPickerRow(wakeTime, wakeDate)
 
         val sleepAngle = sleepTime.value.takeIf { it.isNotEmpty() }?.let {

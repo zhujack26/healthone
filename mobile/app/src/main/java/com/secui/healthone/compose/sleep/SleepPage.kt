@@ -83,7 +83,7 @@ fun SleepPage(navController: NavHostController, modifier: Modifier = Modifier) {
         item { Spacer(modifier = Modifier.height(16.dp)) } // spacing after TimeIntervalSelector
         item {
             Card(modifier = Modifier.fillMaxWidth()) {
-                CustomSleepGoal(selectedSleepTime, selectedWakeTime, sleepViewModel.sleepRecords)
+                CustomSleepGoal(selectedSleepTime, selectedWakeTime, sleepViewModel.sleepRecords, buttonCheck)
             }
         }
         item {

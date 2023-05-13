@@ -28,8 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
 import com.secui.healthone.R
-import com.secui.healthone.ui.common.AppColors
-
+import com.secui.healthone.constant.AppColors
 @Composable
 fun Weight() {
     val (textState, setTextState) = remember {

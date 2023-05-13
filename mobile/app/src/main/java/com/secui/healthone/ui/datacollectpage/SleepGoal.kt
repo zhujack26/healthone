@@ -2,7 +2,6 @@ package com.secui.healthone.ui.datacollectpage
 
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
@@ -13,15 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import java.util.*
 import android.widget.TimePicker
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -29,7 +22,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.constant.AppColors
+import com.secui.healthone.util.PreferenceUtil
 import com.secui.healthone.util.PreferencesManager
 import java.text.SimpleDateFormat
 
@@ -37,6 +31,7 @@ import java.text.SimpleDateFormat
 fun SleepGoal(context: Context) {
     val context = LocalContext.current
     val preferencesManager = PreferencesManager(context)
+    val prefs = PreferenceUtil(context); // onehee9710
 
     val sleepTime = remember { mutableStateOf(preferencesManager.getSleepTime()) }
     val wakeTime = remember { mutableStateOf(preferencesManager.getWakeTime()) }
@@ -67,14 +62,19 @@ fun SleepGoal(context: Context) {
                             val selectedTime = sdf.format(calendar.time)
                             if (sleepEditMode.value) {
                                 sleepTime.value = selectedTime
+                                preferencesManager.setSleepTime(selectedTime)
                             } else if (wakeEditMode.value) {
                                 wakeTime.value = selectedTime
+                                preferencesManager.setWakeTime(selectedTime)
                             }
                             if (sleepEditMode.value || wakeEditMode.value) {
                                 calculateSleepDuration(sleepTime, wakeTime, sleepDuration)
+                                preferencesManager.setSleepDuration(sleepDuration.value)
                             }
                         }
                         setBackgroundColor(AppColors.green200.toArgb())
+                        prefs.setString("setting_sleep_time", "${sleepTime.value}")
+                        prefs.setString("setting_wake_time", "${wakeTime.value}")
                     }
                     timePicker
                 },

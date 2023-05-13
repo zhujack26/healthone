@@ -1,4 +1,4 @@
-package com.secui.healthone.util
+package com.secui.healthone.api.fit
 
 import android.content.Context
 import android.util.Log
@@ -21,7 +21,7 @@ class FitHeartManager  {
                     bpmValue.value = totalBpm;
                 }
                 .addOnFailureListener { e ->
-                    Log.i(FitAPIConfig.ERR_TAG, "There was a problem getting steps.", e)
+                    // Log.i(FitAPIConfig.ERR_TAG, "There was a problem getting steps.", e)
                 }
             return bpmValue;
         }

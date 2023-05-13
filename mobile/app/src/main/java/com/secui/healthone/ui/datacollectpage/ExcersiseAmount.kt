@@ -24,7 +24,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.constant.AppColors
 
 @Composable
 fun ExcersiseAmount() {

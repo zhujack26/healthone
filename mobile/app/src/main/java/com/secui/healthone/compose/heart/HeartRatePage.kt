@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
+import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.data.heart.HeartRead
 import com.secui.healthone.repository.HeartRateRepository
 import com.secui.healthone.ui.heart.heartratepage.HeartGraphBox
@@ -28,16 +29,21 @@ fun HeartRatePage(
     navController: NavHostController,
     modifier: Modifier=Modifier){
 
+    // 타이틀 값 수정
+    HealthOnePage.pageTitle.value="심박수"
+
+    val heartList = HeartRateViewModel.heartRateList;
+    // heartRate 세팅
     val mOwner = LocalLifecycleOwner.current
     val repository = HeartRateRepository()
     val viewModel = HeartRateViewModel(repository)
-    val heartList:MutableState<MutableList<HeartRead>> = remember { mutableStateOf(mutableListOf()) }
 
     viewModel.getHeartRateList();
     viewModel.heartListResponse.observe(mOwner, Observer{
         //Log.d("HEART_PAGE:::", "${it.toString()}")
         heartList.value = it;
     })
+    HeartRateViewModel.heartRateList.value = heartList.value;
 
     Column(modifier= Modifier
         .fillMaxSize()
@@ -45,7 +51,7 @@ fun HeartRatePage(
             (rememberScrollState()))
     {
 
-        HeartGraphBox();
+        HeartGraphBox(heartList = heartList.value);
         Spacer(modifier = Modifier.height(16.dp))
         HeartRateInfoBox(navController);
         Spacer(modifier = Modifier.height(16.dp))

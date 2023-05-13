@@ -1,74 +1,130 @@
 package com.secui.healthone.ui.sleep
 
+import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
-import android.widget.TimePicker
 import android.widget.Toast
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.secui.healthone.repository.Sleep.SleepRecord
-import kotlinx.coroutines.Dispatchers
+import com.secui.healthone.R
+import com.secui.healthone.data.Sleep.SleepRecord
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.Calendar
 
 @Composable
-fun TimePickerRow(label: String, timeState: MutableState<String>, sleepRecords: MutableList<SleepRecord>) {
+fun TimePickerRow(dateState: MutableState<String>, timeState: MutableState<String>, selectedTime: MutableState<String>, buttonCheck: MutableState<Boolean>) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
+    val selectedDate = Calendar.getInstance()
+    val sleepRecords = mutableListOf<SleepRecord>()
+
+    LaunchedEffect(dateState.value, timeState.value) {
+        val selectedDateTimeParts = selectedTime.value.split(" ")
+        if (selectedDateTimeParts.size == 2) {
+            dateState.value = selectedDateTimeParts[0]
+            timeState.value = selectedDateTimeParts[1]
+        }
+    }
+
+    if (buttonCheck.value) {
+        dateState.value = ""
+        timeState.value = ""
+        buttonCheck.value = false
+    }
+
     Row(verticalAlignment = Alignment.CenterVertically) {
+        Icon(painter = painterResource(id = R.drawable.baseline_hotel_24), contentDescription = "Label Icon")
         Text(
-            text = "$label: ",
+            text = "${dateState.value} ${timeState.value}",
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold
         )
-        Text(
-            text = timeState.value,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold
-        )
-        IconButton(onClick = { coroutineScope.launch { showTimePicker(context, timeState, sleepRecords) } }) {
-            Icon(Icons.Default.Edit, contentDescription = "Edit")
+        IconButton(onClick = {
+            coroutineScope.launch {
+                val datePickerResult = showDatePicker(context, selectedDate, dateState, timeState, sleepRecords, selectedTime)
+                if (datePickerResult) {
+                    val timePickerResult = showTimePicker(context, selectedDate, dateState, timeState, sleepRecords, selectedTime)
+                    if (timePickerResult) {
+                    }
+                }
+            }
+        }) {
+            Icon(painter = painterResource(id = R.drawable.baseline_schedule_24), contentDescription = "Edit")
         }
     }
 }
 
-suspend fun showTimePicker(context: Context, timeState: MutableState<String>, sleepRecords: MutableList<SleepRecord>) {
+fun showDatePicker(context: Context, selectedDate: Calendar, dateState: MutableState<String>, timeState: MutableState<String>, sleepRecords: MutableList<SleepRecord>, selectedTime: MutableState<String>): Boolean {
     val calendar = Calendar.getInstance()
 
-    val timeSetListener = TimePickerDialog.OnTimeSetListener { _: TimePicker, hourOfDay: Int, minute: Int ->
+    val previousDay = selectedDate.clone() as Calendar
+    previousDay.add(Calendar.DAY_OF_MONTH, -1)
+
+    var result = true  // 수정 필요한 부분
+
+    val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+        calendar.set(year, month, dayOfMonth)
+        val newDate = String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth)
+        dateState.value = newDate
+        selectedTime.value = "$newDate ${timeState.value}"
+    }
+
+    DatePickerDialog(context, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).apply {
+        datePicker.minDate = previousDay.timeInMillis
+        datePicker.maxDate = selectedDate.timeInMillis
+        setOnCancelListener {
+            result = false  // 수정 필요한 부분
+        }
+        show()
+    }
+
+    return result  // 수정 필요한 부분
+}
+
+fun showTimePicker(context: Context, selectedDate: Calendar, dateState: MutableState<String>, timeState: MutableState<String>, sleepRecords: MutableList<SleepRecord>, selectedTime: MutableState<String>): Boolean {
+    var result = true  // 수정 필요한 부분
+
+    val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+        selectedDate.set(Calendar.HOUR_OF_DAY, hourOfDay)
+        selectedDate.set(Calendar.MINUTE, minute)
+
         val newTime = String.format("%02d:%02d", hourOfDay, minute)
-        if (isValidTime(newTime, sleepRecords, context)) {
+        if (isValidTime(selectedDate, newTime, sleepRecords, context)) {
             timeState.value = newTime
+            selectedTime.value = "${dateState.value} $newTime"
+        } else {
+            result = false  // 수정 필요한 부분
         }
     }
 
-    val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
-    val currentMinute = calendar.get(Calendar.MINUTE)
-
-    withContext(Dispatchers.Main) {
-        TimePickerDialog(context, timeSetListener, currentHour, currentMinute, true).show()
+    TimePickerDialog(context, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, timeSetListener, selectedDate.get(Calendar.HOUR_OF_DAY), selectedDate.get(Calendar.MINUTE), true).apply {
+        window?.setBackgroundDrawableResource(android.R.color.transparent)
+        setOnCancelListener {
+            result = false  // 수정 필요한 부분
+        }
+        show()
     }
+
+    return result  // 수정 필요한 부분
 }
 
-fun isValidTime(newTime: String, sleepRecords: MutableList<SleepRecord>, context: Context): Boolean {
-    // Perform the same validation as mentioned in the previous response
-
+fun isValidTime(selectedDate: Calendar, newTime: String, sleepRecords: MutableList<SleepRecord>, context: Context): Boolean {
     // Check if the new time is in the future
     val currentTime = Calendar.getInstance()
-    val newTimeCalendar = Calendar.getInstance().apply {
+
+    val newTimeCalendar = selectedDate.apply {
         val (hour, minute) = newTime.split(":").map(String::toInt)
         set(Calendar.HOUR_OF_DAY, hour)
         set(Calendar.MINUTE, minute)
@@ -82,7 +138,7 @@ fun isValidTime(newTime: String, sleepRecords: MutableList<SleepRecord>, context
 
     // Check if the new time is overlapping with existing records
     for (record in sleepRecords) {
-        if (newTime == record.sleepTime || newTime == record.wakeTime) {
+        if (newTime == record.startSleepTime || newTime == record.endSleepTime) {
             // Show "시간이 중복됩니다" alert
             Toast.makeText(context, "시간이 중복됩니다", Toast.LENGTH_SHORT).show()
             return false

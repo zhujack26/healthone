@@ -1,10 +1,10 @@
-package com.secui.healthone.util
+package com.secui.healthone.api.fit
 
 import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
-import android.widget.Toast
+import androidx.compose.runtime.mutableStateOf
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -12,8 +12,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptionsExtension
 import com.google.android.gms.fitness.FitnessOptions
 import com.google.android.gms.fitness.data.DataType
-import com.secui.healthone.R
-
 
 
 class FitAPIConfig  {
@@ -21,22 +19,25 @@ class FitAPIConfig  {
         // 상수들
         const val GOOGLE_FIT_PERMISSION_REQUEST_CODE = 1;
         const val APP_PERMISSION_REQUEST_CODE = 2;
-        const val MY_TAG = "FIT_________"
-        const val ERR_TAG = "FIT___ERR____"
+        const val MY_TAG = "FIT ::"
+        const val ERR_TAG = "FIT ERR :: "
+        val isGetPermission = mutableStateOf<Boolean>(false);
 
         // 함수들
         fun askFitAPIPermission(context: Context, thisActivity:Activity){
             val account:GoogleSignInAccount = getGoogleSignInAccount(context)
             val fitnessOptions = getFitnessOptions()
 
-            if(!GoogleSignIn.hasPermissions(account, fitnessOptions)){ // 구글 핏 API로 부터 권한 설정
+            isGetPermission.value = GoogleSignIn.hasPermissions(account, fitnessOptions);
+
+            if(!isGetPermission.value){ // 구글 핏 API로 부터 권한 설정
                 GoogleSignIn.requestPermissions(
                     thisActivity, // your activity
                     GOOGLE_FIT_PERMISSION_REQUEST_CODE, // e.g. 1
                     account,
                     fitnessOptions)
 
-                if(GoogleSignIn.hasPermissions(account, fitnessOptions)){
+                if(isGetPermission.value){
                     requestAppPermission(context = context, thisActivity=thisActivity)
                 }
 

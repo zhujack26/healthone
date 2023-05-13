@@ -16,7 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
-import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.constant.AppColors
 
 @Composable
 fun DataCollectFirstPage(navController: NavController) {

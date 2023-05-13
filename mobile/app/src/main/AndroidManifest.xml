@@ -13,6 +13,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID"
+        tools:node="remove" />  <!-- ad-id 권한 명시 설정함 -->
 
     <application
         android:allowBackup="true"
@@ -21,8 +23,8 @@
         android:icon="@mipmap/ic_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Healthone"
         android:usesCleartextTraffic="true"
+        android:theme="@style/Theme.Healthone"
         tools:targetApi="31">
 
         <!-- 레트로핏 통신을 위한 객체 생성용 액티비티 추가 -->

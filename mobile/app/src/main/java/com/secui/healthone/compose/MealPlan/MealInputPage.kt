@@ -33,13 +33,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.constant.AppColors
 import com.secui.healthone.ui.mealplanpage.MealInput.MealSearchResults
-import com.secui.healthone.util.PageRoutes
+import com.secui.healthone.constant.PageRoutes
 import com.secui.healthone.viewmodel.FoodViewModel
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -90,9 +89,6 @@ fun MealInputPage(navController: NavController) {
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        item {
-            Spacer(modifier = Modifier.height(16.dp))
-        }
         item {
             Card(modifier = Modifier.fillMaxWidth(), elevation = 4.dp) {
                 Row(

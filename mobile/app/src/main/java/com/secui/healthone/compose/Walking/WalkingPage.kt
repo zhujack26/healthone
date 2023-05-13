@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
@@ -18,17 +17,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.secui.healthone.data.WalkData
 import com.secui.healthone.ui.walking.*
-import com.secui.healthone.util.FitAPIConfig
-import com.secui.healthone.util.FitWalkManager
+import com.secui.healthone.api.fit.FitAPIConfig
+import com.secui.healthone.api.fit.FitWalkManager
 import com.secui.healthone.viewmodel.WalkViewModel
 import retrofit2.Response
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import com.secui.healthone.compose.factory.YouTubeViewModelFactory
 import com.secui.healthone.data.ApiResponse
 import com.secui.healthone.service.YouTubeService
-import com.secui.healthone.util.PreferencesManager
 import com.secui.healthone.viewmodel.ContentViewModel
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

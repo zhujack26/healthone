@@ -19,8 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.secui.healthone.ui.common.AppColors
-
+import com.secui.healthone.constant.AppColors
 @Composable
 fun PhotoPicker() {
     var photoUri: Uri? by remember { mutableStateOf(null) }

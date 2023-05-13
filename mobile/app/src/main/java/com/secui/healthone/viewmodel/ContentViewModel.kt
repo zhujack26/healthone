@@ -12,9 +12,9 @@ class ContentViewModel(private val youTubeService: YouTubeService) : ViewModel()
 
     val videos = mutableStateOf<List<Video>>(emptyList())
 
-    fun searchVideos() {
+    fun searchVideos(query:String="걷기") {
         viewModelScope.launch {
-            val response = youTubeService.searchVideos(query = "걷기")
+            val response = youTubeService.searchVideos(query = query)
             if (response.isSuccessful) {
                 val searchResponse = response.body()
                 videos.value = searchResponse?.items?.map {

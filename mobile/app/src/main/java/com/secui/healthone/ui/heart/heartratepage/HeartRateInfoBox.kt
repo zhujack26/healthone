@@ -11,13 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.secui.healthone.R;
-import com.secui.healthone.ui.common.AppColors
-import com.secui.healthone.util.PageRoutes
+import com.secui.healthone.constant.AppColors
+import com.secui.healthone.constant.PageRoutes
 import com.secui.healthone.util.PreferenceUtil
 
 @Composable
@@ -94,11 +92,10 @@ fun HeartRateInfoBox(
 
 class HeartRateInfoBoxText {
     companion object {
-        const val heartRateDateText = "2023년 4월 13일"
-        const val heartRateValue = "82"
+        const val heartRateDateText = "나의 BPM"
         const val heartRateUnit = "bpm"
         const val heartRateMin = "40"
         const val heartRateMax = "220"
-        const val heartRateBtnText = "측정 하기"
+        const val heartRateBtnText = "기록 하기"
     }
 }

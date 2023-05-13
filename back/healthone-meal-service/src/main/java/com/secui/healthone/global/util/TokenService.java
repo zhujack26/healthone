@@ -15,7 +15,7 @@ import java.util.Base64;
 @Service
 public class TokenService {
 
-    @Value("${jwt.secret}")
+    @Value("${springboot.jwt.secret}")
     private String secretKey;
 
     @PostConstruct

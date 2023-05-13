@@ -1,6 +1,7 @@
 package com.secui.healthone.ui.walking
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,11 +19,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.ui.text.style.TextAlign
+import androidx.navigation.NavController
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun LineGraph(steps: List<Int>) {
+fun LineGraph(navController: NavController, steps: List<Int>) {
     val lineColor = AppColors.green500
     val lineWidth = 4.dp
 
@@ -70,6 +72,9 @@ fun LineGraph(steps: List<Int>) {
                     modifier = Modifier
                         .weight(1f)
                         .align(Alignment.Bottom)
+                        .clickable {
+                            navController.navigate("walkingDetail/${date}")
+                        }
                 )
             }
         }

@@ -1,5 +1,6 @@
 package com.secui.healthone.ui.common
 
+import android.content.Context
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,7 +23,7 @@ import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.constant.PageRoutes
 
 @Composable
-fun TopBar() {
+fun TopBar(context: Context) {
     val navController = rememberNavController()
     val menuOpen = remember { mutableStateOf(false) } // 메뉴 상태를 기억하는 변수
     val menuOffset = animateDpAsState(if (menuOpen.value) 0.dp else 272.dp) // 애니메이션 상태
@@ -77,7 +78,7 @@ fun TopBar() {
                     }
                 )
             }
-            TopBarNavigation(navController)
+            TopBarNavigation(navController, context)
         }
         if (menuOpen.value) {
             Box(

@@ -29,8 +29,6 @@ import com.secui.healthone.ui.overviewpage.TotalHealthBox
 import com.secui.healthone.ui.overviewpage.UserWalkBox
 import com.secui.healthone.util.DBHelper
 
-lateinit var context: Context;
-lateinit var thisActivity: Activity;
 
 @Composable
 fun OverViewPage(
@@ -44,8 +42,8 @@ fun OverViewPage(
 
     // Log.d("OVERVIEW:::", "몇번 찍할까요 ----");
     // 초기값 세팅
-    context = LocalContext.current;
-    thisActivity = LocalContext.current as Activity;
+    val context = LocalContext.current;
+    val thisActivity = LocalContext.current as Activity;
     // pm
     val dbHelper = DBHelper(context)
     val totalSleepTime = dbHelper.getTotalSleeTime(context);

@@ -61,7 +61,7 @@ fun BirthDate(
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
         )
-        Spacer(modifier = Modifier.width(20.dp))
+        Spacer(modifier = Modifier.width(28.dp))
         TextField(
             value = value,
             onValueChange = {},
@@ -69,8 +69,9 @@ fun BirthDate(
             modifier = Modifier
                 .clickable { showDatePickerDialog() }
                 .width(240.dp)
-                .height(48.dp)
-                .clip(RoundedCornerShape(32.dp)),
+                .height(52.dp)
+                .clip(RoundedCornerShape(32.dp))
+                .height(IntrinsicSize.Min),
             colors = TextFieldDefaults.textFieldColors(
                 focusedIndicatorColor = AppColors.green200,
                 unfocusedIndicatorColor = AppColors.green200

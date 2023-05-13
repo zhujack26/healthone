@@ -50,12 +50,12 @@ fun NicknameInput() {
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
         )
-        Spacer(modifier = Modifier.width(32.dp))
+        Spacer(modifier = Modifier.width(40.dp))
         TextField(
             value = textState,
             onValueChange = { newText ->
                 setTextState(newText)
-                if (newText.isBlank() || newText.length > 8 || !newText.matches(Regex("^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{0,9}\$"))) {
+                if (newText.isBlank() || newText.length > 9 || !newText.matches(Regex("^(?=.*[ㄱ-힣])[ㄱ-힣]{1,9}\$"))) {
                     setShowDialog(true)
                 }
             },
@@ -64,7 +64,8 @@ fun NicknameInput() {
             textStyle = TextStyle(
                 color = AppColors.black,
                 fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
             ),
             colors = TextFieldDefaults.textFieldColors(
                 focusedIndicatorColor = AppColors.green200,

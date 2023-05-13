@@ -1,19 +1,38 @@
 package com.secui.healthone.ui.login
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.AlertDialog
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 
 @Composable
 fun PolicyDialog(onConfirm: () -> Unit) {
-    AlertDialog(
-        title = { Text("개인정보 처리방침") },
-        text = {
-            LazyColumn {
-                item {
-                    Text(
+    Dialog(onDismissRequest = onConfirm) {
+        Box(modifier = Modifier
+            .heightIn(max = 500.dp)
+            .background(Color.White)
+        ) {
+            Column {
+                Text("개인정보 처리방침", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                LazyColumn {
+                    items(
+                        items = listOf(
                         " 개인정보처리방침 \n" +
                                 "제1조(목적) \n" +
                                 "헬스원(healthone) (이하 '회사'라고 함)는 회사가 제공하고자 하는 서비스(이하 '회사 서비스')를 이용 \n" +
@@ -178,15 +197,15 @@ fun PolicyDialog(onConfirm: () -> Unit) {
                                 "2) 전화번호: 010-2009-7726 \n" +
                                 "3) 이메일: onehee9710@gmail.com \n" +
                                 "제1조 본 방침은 2023.05.08부터 시행됩니다. \n"
-                    )
-                }
-            }
-        },
-                onDismissRequest = { onConfirm() },
-                buttons = {
-                    TextButton(onClick = onConfirm) {
-                        Text("확인")
+                        )
+                    ) { item ->
+                        Text(item)
                     }
                 }
-            )
+                Button(onClick = onConfirm) {
+                    Text("확인")
+                }
+            }
+        }
+    }
 }

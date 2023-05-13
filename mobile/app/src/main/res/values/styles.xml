@@ -4,4 +4,7 @@
         <!-- 색상 변경 -->
         <item name="colorAccent">@color/green200</item>
     </style>
+    <style name="CustomTimePickerStyle" parent="android:Widget.Material.TimePicker">
+        <item name="android:background">@color/green200</item>
+    </style>
 </resources>

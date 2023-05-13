@@ -22,6 +22,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
+import com.secui.healthone.ui.common.AppColors
 
 @Composable
 fun ExcersiseAmount() {
@@ -67,6 +70,18 @@ fun ExcersiseAmount() {
             }
         }
     }
+    if (selectedAmount == null) {
+        Text(
+            text = "선택해주세요",
+            color = AppColors.mono400,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .fillMaxWidth(),
+            textAlign = TextAlign.Center
+        )
+    }
 }
 
 @Composable
@@ -75,7 +90,7 @@ fun ExerciseButton(
     isSelected: Boolean,
     onSelected: (ExerciseAmount) -> Unit
 ) {
-    val backgroundColor = if (isSelected) colorResource(id = R.color.blue800) else colorResource(id = R.color.mono200)
+    val backgroundColor = if (isSelected) AppColors.blue600 else AppColors.mono200
     val icon = when (amount) {
         ExerciseAmount.Less -> R.drawable.ic_excersise_less
         ExerciseAmount.Normal -> R.drawable.ic_excersise_normal

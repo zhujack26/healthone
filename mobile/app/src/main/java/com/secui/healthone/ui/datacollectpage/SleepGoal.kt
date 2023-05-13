@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import java.util.*
 import android.widget.TimePicker
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
@@ -21,10 +23,13 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.MutableState
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.secui.healthone.ui.common.AppColors
 import com.secui.healthone.util.PreferencesManager
 import java.text.SimpleDateFormat
 
@@ -37,11 +42,8 @@ fun SleepGoal(context: Context) {
     val wakeTime = remember { mutableStateOf(preferencesManager.getWakeTime()) }
     val sleepDuration = remember { mutableStateOf(preferencesManager.getSleepDuration()) }
 
-    Log.d("Sleeptime", "Sleep time : ${sleepTime.value}")
-    Log.d("waketime", "wake time : ${wakeTime.value}")
     val sleepEditMode = remember { mutableStateOf(false) }
     val wakeEditMode = remember { mutableStateOf(false) }
-
 
     Card(
         elevation = 4.dp,
@@ -65,20 +67,19 @@ fun SleepGoal(context: Context) {
                             val selectedTime = sdf.format(calendar.time)
                             if (sleepEditMode.value) {
                                 sleepTime.value = selectedTime
-                                preferencesManager.setSleepTime(selectedTime)
-                                sleepEditMode.value = false
                             } else if (wakeEditMode.value) {
                                 wakeTime.value = selectedTime
-                                preferencesManager.setWakeTime(selectedTime)
-                                wakeEditMode.value = false
                             }
-                            calculateSleepDuration(sleepTime, wakeTime, sleepDuration)
-                            preferencesManager.setSleepDuration(sleepDuration.value)
+                            if (sleepEditMode.value || wakeEditMode.value) {
+                                calculateSleepDuration(sleepTime, wakeTime, sleepDuration)
+                            }
                         }
+                        setBackgroundColor(AppColors.green200.toArgb())
                     }
                     timePicker
-            },
-        )
+                },
+            )
+            Spacer(modifier = Modifier.height(16.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = "취침 시간 : ",
@@ -90,10 +91,18 @@ fun SleepGoal(context: Context) {
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
-                IconButton(onClick = { sleepEditMode.value = true }) {
-                    Icon(Icons.Default.Edit, contentDescription = "Edit", tint = if (sleepEditMode.value)
-                        MaterialTheme.colors.secondary else MaterialTheme.colors.onSurface)
-                }
+                Spacer(modifier = Modifier.size(8.dp))
+                Text(
+                    text = if (sleepEditMode.value) "완료" else "수정",
+                    modifier = Modifier.clickable {
+                        sleepEditMode.value = !sleepEditMode.value
+                        if (!sleepEditMode.value) { // 완료를 누른 경우
+                            preferencesManager.setSleepTime(sleepTime.value)
+                        }
+                    },
+                    fontSize = 14.sp,
+                    color = Color.Gray,
+                )
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
@@ -106,10 +115,18 @@ fun SleepGoal(context: Context) {
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
-                IconButton(onClick = { wakeEditMode.value = true }) {
-                    Icon(Icons.Default.Edit, contentDescription = "Edit", tint = if (wakeEditMode.value)
-                        MaterialTheme.colors.secondary else MaterialTheme.colors.onSurface)
-                }
+                Spacer(modifier = Modifier.size(8.dp))
+                Text(
+                    text = if (wakeEditMode.value) "완료" else "수정",
+                    modifier = Modifier.clickable {
+                        wakeEditMode.value = !wakeEditMode.value
+                        if (!wakeEditMode.value) { // 완료를 누른 경우
+                            preferencesManager.setWakeTime(wakeTime.value)
+                        }
+                    },
+                    fontSize = 14.sp,
+                    color = Color.Gray,
+                )
             }
             Spacer(modifier = Modifier.size(16.dp))
             Text(

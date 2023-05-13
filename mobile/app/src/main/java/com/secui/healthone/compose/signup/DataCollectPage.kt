@@ -16,13 +16,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
+import com.secui.healthone.ui.common.AppColors
 
 @Composable
 fun DataCollectFirstPage(navController: NavController) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(20.dp),
     ) {
         item {
             // 인덱스 컴포넌트

@@ -67,7 +67,7 @@ fun GenderButton(
 
     Box(
         modifier = Modifier
-            .size(92.dp)
+            .size(84.dp)
             .clip(CircleShape)
             .background(backgroundColor)
             .clickable { onSelected(gender) },
@@ -77,7 +77,7 @@ fun GenderButton(
             painter = painterResource(id = icon),
             contentDescription = gender.name,
             contentScale = ContentScale.Fit,
-            modifier = Modifier.size(72.dp)
+            modifier = Modifier.size(64.dp)
         )
     }
 }

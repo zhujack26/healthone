@@ -22,6 +22,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -42,7 +43,7 @@ fun Weight() {
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold
         )
-        Spacer(modifier = Modifier.width(32.dp))
+        Spacer(modifier = Modifier.width(40.dp))
 
         TextField(
             value = if (textState.isNotEmpty()) "$textState kg" else "",
@@ -51,8 +52,9 @@ fun Weight() {
             maxLines = 1,
             textStyle = TextStyle(
                 color = colorResource(id = R.color.black),
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Bold
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
             ),
             enabled = false,
             modifier = Modifier

@@ -16,7 +16,7 @@ import java.util.Date;
 @Service
 public class TokenService {
 
-    @Value("${jwt.secret}")
+    @Value("${springboot.jwt.secret}")
     private String secretKey;
 
     @PostConstruct

@@ -90,9 +90,6 @@ fun MealInputPage(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
-            Spacer(modifier = Modifier.height(16.dp))
-        }
-        item {
             Card(modifier = Modifier.fillMaxWidth(), elevation = 4.dp) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),

@@ -50,7 +50,6 @@ fun OverViewPage(
     val dbHelper = DBHelper(context)
     val totalSleepTime = dbHelper.getTotalSleeTime(context);
     Log.i("OVERVIEW::::", "총 수면 시간은 : $totalSleepTime")
-    val sleepRecValue = totalSleepTime/60;
 
     // 권한 요청
     FitAPIConfig.askFitAPIPermission(context = context, thisActivity = thisActivity)
@@ -72,11 +71,11 @@ fun OverViewPage(
         .verticalScroll
             (rememberScrollState()))
     {
-        TotalHealthBox(walkValue.value, sleepRecValue.toInt(), calorieValue.value);
+        TotalHealthBox(walkValue.value, totalSleepTime.toInt(), calorieValue.value);
         UserWalkBox(navController, walkValue.value.toInt());
         HeartRateBox(navController, bpmValue.value.toInt());
         FoodCalorieBox(navController, calorieValue.value.toInt());
-        SleepCheckBox(navController,sleepRecValue.toInt());
+        SleepCheckBox(navController,totalSleepTime.toInt());
         HealthScoreBox(navController);
         Spacer(modifier = Modifier.height(64.dp));
     }

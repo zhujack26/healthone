@@ -1,6 +1,8 @@
 package com.secui.healthone.domain.data;
 
 import com.opencsv.CSVWriter;
+import com.secui.healthone.domain.heartRate.entity.HeartRate;
+import com.secui.healthone.domain.heartRate.repository.HeartRateRepository;
 import com.secui.healthone.domain.sleep.entity.Sleep;
 import com.secui.healthone.domain.sleep.repository.SleepRepository;
 import com.secui.healthone.domain.walk.entity.Walk;
@@ -20,6 +22,7 @@ public class CsvService {
 
     private final WalkRepository walkRepository;
     private final SleepRepository sleepRepository;
+    private final HeartRateRepository heartRateRepository;
 
     public HttpServletResponse writeWalkDtoToCsv(HttpServletResponse response, Integer userNo) throws IOException {
         try (CSVWriter writer = new CSVWriter(new OutputStreamWriter(response.getOutputStream(), StandardCharsets.UTF_8))) {
@@ -49,6 +52,22 @@ public class CsvService {
                         entity.getCreateTime().toString(),
                         String.valueOf(entity.getStartSleepTime()),
                         String.valueOf(entity.getEndSleepTime())
+                });
+            }
+            return response;
+        }
+    }
+
+    public HttpServletResponse writeHeartRateDtoToCsv(HttpServletResponse response, Integer userNo) throws IOException {
+        try (CSVWriter writer = new CSVWriter(new OutputStreamWriter(response.getOutputStream(), StandardCharsets.UTF_8))) {
+            writer.writeNext(new String[]{"식별번호", "유저식별번호", "기록시간", "심박수"});
+            List<HeartRate> heartRateList = heartRateRepository.findAllByUserNo(userNo);
+            for (HeartRate entity : heartRateList) {
+                writer.writeNext(new String[]{
+                        String.valueOf(entity.getNo()),
+                        String.valueOf(entity.getUserNo()),
+                        entity.getCreateTime().toString(),
+                        String.valueOf(entity.getCount())
                 });
             }
             return response;

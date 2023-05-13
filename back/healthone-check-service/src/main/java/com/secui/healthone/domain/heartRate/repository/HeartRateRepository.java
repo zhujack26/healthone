@@ -13,6 +13,7 @@ import java.util.Optional;
 public interface HeartRateRepository extends JpaRepository<HeartRate, Integer> {
 //    List<HeartRate> findAllByUserAndHeartRateCreatetimeBetween(User user, LocalDateTime startDateTime, LocalDateTime endDateTime);
     List<HeartRate> findAllByUserNoAndCreateTimeBetween(Integer userNo, LocalDateTime startDateTime, LocalDateTime endDateTime);
+    List<HeartRate> findAllByUserNo(Integer userNo);
     Optional<HeartRate> findByNoAndUserNo(Integer no, Integer userNo);
     HeartRate save(HeartRateInsertDto heartRateInsertDto);
     Slice<HeartRate> findAllByUserNoOrderByCreateTimeDesc(Integer userNo, Pageable pageable);

@@ -57,10 +57,27 @@ public class CsvController {
     @SecurityRequirement(name = "bearerAuth")
     @Parameter(name = "Authorization", description = "회원 Access Token", example = "Bearer access_token")
     @GetMapping(value = "/sleep", produces = "text/csv")
-    public ResponseEntity<?> downloadSleepData(@RequestHeader(required = false) String Authorization, HttpServletResponse response) throws IOException {
+    public ResponseEntity<?> downloadHeartRateData(@RequestHeader(required = false) String Authorization, HttpServletResponse response) throws IOException {
         String accessToken = HeaderUtil.getAccessTokenString(Authorization);
         Integer userNo = tokenService.getUserNo(accessToken);
         String exportFileName = "Sleep-" + LocalDateTime.now() + ".txt";
+        response.setContentType("text/csv; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setHeader("Content-disposition", "attachment;filename=" + exportFileName);
+        csvService.writeHeartRateDtoToCsv(response, userNo);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "심박수 데이터 다운", description = "심박수 데이터를 다운로드 한다", tags = {"check-data-download"})
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "HeartRate 데이터 다운로드 성공", content = {
+            @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
+    @SecurityRequirement(name = "bearerAuth")
+    @Parameter(name = "Authorization", description = "회원 Access Token", example = "Bearer access_token")
+    @GetMapping(value = "/heart-rate", produces = "text/csv")
+    public ResponseEntity<?> downloadSleepData(@RequestHeader(required = false) String Authorization, HttpServletResponse response) throws IOException {
+        String accessToken = HeaderUtil.getAccessTokenString(Authorization);
+        Integer userNo = tokenService.getUserNo(accessToken);
+        String exportFileName = "HeartRate-" + LocalDateTime.now() + ".txt";
         response.setContentType("text/csv; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Content-disposition", "attachment;filename=" + exportFileName);

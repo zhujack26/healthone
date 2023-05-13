@@ -21,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.secui.healthone.constant.AppColors
 
 @Composable
 fun GenderSelection() {
@@ -30,10 +31,10 @@ fun GenderSelection() {
     ) {
         Text(
             text = "성별",
-            fontSize = 12.sp,
+            fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
         )
-        Spacer(modifier = Modifier.width(44.dp))
+        Spacer(modifier = Modifier.width(60.dp))
             GenderButton(
                 gender = Gender.Male,
                 isSelected = selectedGender == Gender.Male,
@@ -58,7 +59,7 @@ fun GenderButton(
     isSelected: Boolean,
     onSelected: (Gender) -> Unit
 ) {
-    val backgroundColor = if (isSelected) colorResource(id = R.color.blue800 ) else colorResource(id = R.color.mono200)
+    val backgroundColor = if (isSelected) AppColors.blue800 else AppColors.mono200
     val icon = when (gender) {
         Gender.Male -> R.drawable.ic_male
         Gender.Female -> R.drawable.ic_female
@@ -66,7 +67,7 @@ fun GenderButton(
 
     Box(
         modifier = Modifier
-            .size(100.dp)
+            .size(84.dp)
             .clip(CircleShape)
             .background(backgroundColor)
             .clickable { onSelected(gender) },
@@ -76,7 +77,7 @@ fun GenderButton(
             painter = painterResource(id = icon),
             contentDescription = gender.name,
             contentScale = ContentScale.Fit,
-            modifier = Modifier.size(80.dp)
+            modifier = Modifier.size(64.dp)
         )
     }
 }

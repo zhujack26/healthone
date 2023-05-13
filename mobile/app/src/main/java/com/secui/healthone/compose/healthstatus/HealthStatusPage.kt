@@ -15,6 +15,9 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -29,12 +32,26 @@ import com.secui.healthone.ui.HealthStatus.HealthStatusItem
 import com.secui.healthone.constant.AppColors
 import com.secui.healthone.ui.mealplanpage.DateComponent
 import com.secui.healthone.constant.PageRoutes
+import com.secui.healthone.viewmodel.HealthStatusViewModel
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 @Composable
 fun HealthStatusPage(navController: NavHostController) {
     val initialDate = Calendar.getInstance()
     val selectedDate = remember { mutableStateOf(initialDate) }
+    val viewModel = remember { HealthStatusViewModel() }
+    val selectedDateString by remember {
+        derivedStateOf {
+            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            sdf.format(selectedDate.value.time)
+        }
+    }
+
+    LaunchedEffect(selectedDate) {
+        //viewModel.fetchHealthRecords(selectedDateString)
+    }
     LazyColumn(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally

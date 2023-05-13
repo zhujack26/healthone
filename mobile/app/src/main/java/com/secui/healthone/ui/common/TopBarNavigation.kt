@@ -16,12 +16,16 @@ import com.secui.healthone.compose.MealPlan.MealInputPage
 import com.secui.healthone.compose.MealPlanPage
 import com.secui.healthone.compose.MyPage
 import com.secui.healthone.compose.OverViewPage
+import com.secui.healthone.compose.Setting.UserInformDeletePage
+import com.secui.healthone.compose.Setting.UserInformDownPage
 import com.secui.healthone.compose.SettingPage
 import com.secui.healthone.compose.WalkingDetailPage
 import com.secui.healthone.compose.WalkingPage
 import com.secui.healthone.compose.healthstatus.HealthHelpPage
 import com.secui.healthone.compose.healthstatus.HealthInputPage
 import com.secui.healthone.compose.healthstatus.HealthStatusPage
+import com.secui.healthone.compose.signup.DataCollectFirstPage
+import com.secui.healthone.compose.signup.DataCollectSecondPage
 import com.secui.healthone.compose.sleep.SleepPage
 import com.secui.healthone.constant.PageRoutes
 
@@ -82,6 +86,18 @@ fun TopBarNavigation(navController: NavHostController) {
             }
             composable(PageRoutes.HealthHelp.route){
                 HealthHelpPage(navController = navController)
+            }
+            composable(PageRoutes.UserInformDelete.route){
+                UserInformDeletePage()
+            }
+            composable(PageRoutes.UserInformDown.route){
+                UserInformDownPage()
+            }
+            composable(PageRoutes.DataCollectFirst.route) {
+                DataCollectFirstPage(navController)
+            }
+            composable(PageRoutes.DataCollectSecond.route) {
+                DataCollectSecondPage(navController)
             }
         }
     }

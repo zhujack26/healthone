@@ -2,7 +2,6 @@ package com.secui.healthone.ui.datacollectpage
 
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
@@ -13,17 +12,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import java.util.*
 import android.widget.TimePicker
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.MutableState
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.secui.healthone.constant.AppColors
 import com.secui.healthone.util.PreferenceUtil
 import com.secui.healthone.util.PreferencesManager
 import java.text.SimpleDateFormat
@@ -38,13 +37,8 @@ fun SleepGoal(context: Context) {
     val wakeTime = remember { mutableStateOf(preferencesManager.getWakeTime()) }
     val sleepDuration = remember { mutableStateOf(preferencesManager.getSleepDuration()) }
 
-    Log.d("Sleeptime", "Sleep time : ${sleepTime.value}")
-    Log.d("waketime", "wake time : ${wakeTime.value}")
-
-
-    val calendar = Calendar.getInstance()
-    val hour = calendar[Calendar.HOUR_OF_DAY]
-    val minute = calendar[Calendar.MINUTE]
+    val sleepEditMode = remember { mutableStateOf(false) }
+    val wakeEditMode = remember { mutableStateOf(false) }
 
     Card(
         elevation = 4.dp,
@@ -55,41 +49,37 @@ fun SleepGoal(context: Context) {
             verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-        AndroidView(
-            factory = { context ->
-                val timePicker = TimePicker(context).apply {
-                    setIs24HourView(true)
-                    setOnTimeChangedListener { _, hourOfDay, minute ->
-                        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
-                        val calendar = Calendar.getInstance().apply {
-                            set(Calendar.HOUR_OF_DAY, hourOfDay)
-                            set(Calendar.MINUTE, minute)
+            AndroidView(
+                factory = { context ->
+                    val timePicker = TimePicker(context).apply {
+                        setIs24HourView(true)
+                        setOnTimeChangedListener { _, hourOfDay, minute ->
+                            val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+                            val calendar = Calendar.getInstance().apply {
+                                set(Calendar.HOUR_OF_DAY, hourOfDay)
+                                set(Calendar.MINUTE, minute)
+                            }
+                            val selectedTime = sdf.format(calendar.time)
+                            if (sleepEditMode.value) {
+                                sleepTime.value = selectedTime
+                                preferencesManager.setSleepTime(selectedTime)
+                            } else if (wakeEditMode.value) {
+                                wakeTime.value = selectedTime
+                                preferencesManager.setWakeTime(selectedTime)
+                            }
+                            if (sleepEditMode.value || wakeEditMode.value) {
+                                calculateSleepDuration(sleepTime, wakeTime, sleepDuration)
+                                preferencesManager.setSleepDuration(sleepDuration.value)
+                            }
                         }
-                        val selectedTime = sdf.format(calendar.time)
-                        if (sleepTime.value.isBlank()) {
-                            sleepTime.value = selectedTime
-                            preferencesManager.setSleepTime(selectedTime)
-                        } else if (wakeTime.value.isBlank()) {
-                            wakeTime.value = selectedTime
-                            preferencesManager.setWakeTime(selectedTime)
-                        }
-
-                        // sleepTime
-                        // wakeTime
+                        setBackgroundColor(AppColors.green200.toArgb())
                         prefs.setString("setting_sleep_time", "${sleepTime.value}")
                         prefs.setString("setting_wake_time", "${wakeTime.value}")
-
-                        calculateSleepDuration(sleepTime, wakeTime, sleepDuration)
-                        preferencesManager.setSleepDuration(sleepDuration.value)
                     }
-                }
-                timePicker
-            },
-            update = { view ->
-                view.hour = hour
-                view.minute = minute
-            }
-        )
+                    timePicker
+                },
+            )
+            Spacer(modifier = Modifier.height(16.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = "취침 시간 : ",
@@ -101,9 +91,18 @@ fun SleepGoal(context: Context) {
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
-                IconButton(onClick = { sleepTime.value = "" }) {
-                    Icon(Icons.Default.Edit, contentDescription = "Edit")
-                }
+                Spacer(modifier = Modifier.size(8.dp))
+                Text(
+                    text = if (sleepEditMode.value) "완료" else "수정",
+                    modifier = Modifier.clickable {
+                        sleepEditMode.value = !sleepEditMode.value
+                        if (!sleepEditMode.value) { // 완료를 누른 경우
+                            preferencesManager.setSleepTime(sleepTime.value)
+                        }
+                    },
+                    fontSize = 14.sp,
+                    color = Color.Gray,
+                )
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
@@ -116,9 +115,18 @@ fun SleepGoal(context: Context) {
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
-                IconButton(onClick = { wakeTime.value = "" }) {
-                    Icon(Icons.Default.Edit, contentDescription = "Edit")
-                }
+                Spacer(modifier = Modifier.size(8.dp))
+                Text(
+                    text = if (wakeEditMode.value) "완료" else "수정",
+                    modifier = Modifier.clickable {
+                        wakeEditMode.value = !wakeEditMode.value
+                        if (!wakeEditMode.value) { // 완료를 누른 경우
+                            preferencesManager.setWakeTime(wakeTime.value)
+                        }
+                    },
+                    fontSize = 14.sp,
+                    color = Color.Gray,
+                )
             }
             Spacer(modifier = Modifier.size(16.dp))
             Text(

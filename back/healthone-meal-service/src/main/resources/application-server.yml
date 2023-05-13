@@ -51,4 +51,4 @@ notification:
 
 springboot:
   jwt:
-    secret: 8q2ht89sbguniuqt9ieg
+    secret: tset

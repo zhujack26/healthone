@@ -35,7 +35,6 @@ public class HealthStatServiceImpl implements HealthStatService {
     @Override
     @Transactional
     public HealthStatDto addHealthStat(HealthStatDto healthStatDto) {
-        log.info("healthStatDto : {}", healthStatDto);
         StringDateTrans trans = new StringDateTrans(healthStatDto.getCreateTime());
         Optional<HealthStat> healthStat = healthStatRepository.findByUserNoAndCreateTimeBetween(healthStatDto.getUserNo(), trans.getStartDateTime(), trans.getEndDateTime());
         if(healthStat.isPresent()){

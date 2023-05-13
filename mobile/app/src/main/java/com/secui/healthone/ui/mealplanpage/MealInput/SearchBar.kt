@@ -1,5 +1,6 @@
 package com.secui.healthone.ui.mealplanpage.MealInput
 
+import android.util.Log
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
@@ -34,6 +35,8 @@ fun SearchBar(search: String,searchTerm: String, onSearchTermChanged: (String) -
             modifier = Modifier.weight(1f),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
             keyboardActions = KeyboardActions(onSearch = {
+                onSearchTermChanged(textFieldValue.text)
+                Log.d("SearchBar", "Search button clicked with term: ${textFieldValue.text}")
                 onSearchTermChanged(textFieldValue.text)
             }),
             leadingIcon = {

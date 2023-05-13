@@ -15,6 +15,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -26,8 +27,8 @@ fun NicknameInput() {
     val (textState, setTextState) = remember {
         mutableStateOf("")
     }
-    Row(verticalAlignment = Alignment.CenterVertically,
-    ) {
+
+    Row(verticalAlignment = Alignment.CenterVertically) {
         Text(
             text = "닉네임",
             fontSize = 12.sp,
@@ -50,7 +51,9 @@ fun NicknameInput() {
                 .clip(RoundedCornerShape(32.dp)),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Done
+                imeAction = ImeAction.Done,
+                autoCorrect = false,
+                capitalization = KeyboardCapitalization.None
             )
         )
     }

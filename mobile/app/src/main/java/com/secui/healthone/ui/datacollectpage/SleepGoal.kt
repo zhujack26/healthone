@@ -1,6 +1,8 @@
 package com.secui.healthone.ui.datacollectpage
 
 
+import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
@@ -18,19 +20,32 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.MutableState
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.secui.healthone.util.PreferenceUtil
+import com.secui.healthone.util.PreferencesManager
+import java.text.SimpleDateFormat
 
 @Composable
-fun SleepGoal() {
+fun SleepGoal(context: Context) {
+    val context = LocalContext.current
+    val preferencesManager = PreferencesManager(context)
+    val prefs = PreferenceUtil(context); // onehee9710
+
+    val sleepTime = remember { mutableStateOf(preferencesManager.getSleepTime()) }
+    val wakeTime = remember { mutableStateOf(preferencesManager.getWakeTime()) }
+    val sleepDuration = remember { mutableStateOf(preferencesManager.getSleepDuration()) }
+
+    Log.d("Sleeptime", "Sleep time : ${sleepTime.value}")
+    Log.d("waketime", "wake time : ${wakeTime.value}")
+
+
     val calendar = Calendar.getInstance()
     val hour = calendar[Calendar.HOUR_OF_DAY]
     val minute = calendar[Calendar.MINUTE]
 
-    val sleepTime = remember { mutableStateOf("") }
-    val wakeTime = remember { mutableStateOf("") }
-    val sleepDuration = remember { mutableStateOf("") }
     Card(
         elevation = 4.dp,
         shape = RoundedCornerShape(8.dp),
@@ -43,15 +58,29 @@ fun SleepGoal() {
         AndroidView(
             factory = { context ->
                 val timePicker = TimePicker(context).apply {
-                    setIs24HourView(false)
+                    setIs24HourView(true)
                     setOnTimeChangedListener { _, hourOfDay, minute ->
-                        val selectedTime = String.format("%02d:%02d", hourOfDay, minute)
+                        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+                        val calendar = Calendar.getInstance().apply {
+                            set(Calendar.HOUR_OF_DAY, hourOfDay)
+                            set(Calendar.MINUTE, minute)
+                        }
+                        val selectedTime = sdf.format(calendar.time)
                         if (sleepTime.value.isBlank()) {
                             sleepTime.value = selectedTime
+                            preferencesManager.setSleepTime(selectedTime)
                         } else if (wakeTime.value.isBlank()) {
                             wakeTime.value = selectedTime
+                            preferencesManager.setWakeTime(selectedTime)
                         }
+
+                        // sleepTime
+                        // wakeTime
+                        prefs.setString("setting_sleep_time", "${sleepTime.value}")
+                        prefs.setString("setting_wake_time", "${wakeTime.value}")
+
                         calculateSleepDuration(sleepTime, wakeTime, sleepDuration)
+                        preferencesManager.setSleepDuration(sleepDuration.value)
                     }
                 }
                 timePicker

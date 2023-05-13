@@ -1,6 +1,12 @@
 package com.secui.healthone.ui.sleep
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.runtime.MutableState
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 fun calculateAngleFromTime(time: String): Float {
     val (hour, minute) = time.split(':').map(String::toInt)
@@ -9,23 +15,32 @@ fun calculateAngleFromTime(time: String): Float {
 }
 
 fun calculateSleepDuration(
+    sleepDate: MutableState<String>,
+    wakeDate: MutableState<String>,
     sleepTime: MutableState<String>,
     wakeTime: MutableState<String>,
-    sleepDuration: MutableState<String>
+    sleepDuration: MutableState<String>,
+    context: Context
 ) {
-    val (sleepHours, sleepMinutes) = sleepTime.value.split(':').map(String::toInt)
-    val (wakeHours, wakeMinutes) = wakeTime.value.split(':').map(String::toInt)
+    val sleepDateTime = "${sleepDate.value} ${sleepTime.value}".toCalendar()
+    val wakeDateTime = "${wakeDate.value} ${wakeTime.value}".toCalendar()
 
-    val sleepMinutesTotal = sleepHours * 60 + sleepMinutes
-    val wakeMinutesTotal = wakeHours * 60 + wakeMinutes
-
-    val durationInMinutes = if (wakeMinutesTotal >= sleepMinutesTotal) {
-        wakeMinutesTotal - sleepMinutesTotal
+    if (wakeDateTime.before(sleepDateTime)) {
+        Toast.makeText(context, "기상시간이 취침시간보다 빠릅니다", Toast.LENGTH_SHORT).show()
+        sleepTime.value = ""
+        wakeTime.value = ""
+        sleepDuration.value = ""
     } else {
-        (24 * 60) - (sleepMinutesTotal - wakeMinutesTotal)
+        val diff = wakeDateTime.timeInMillis - sleepDateTime.timeInMillis
+        val hours = TimeUnit.MILLISECONDS.toHours(diff)
+        val minutes = TimeUnit.MILLISECONDS.toMinutes(diff) - TimeUnit.HOURS.toMinutes(hours)
+        sleepDuration.value = String.format("%02d:%02d", hours, minutes)
     }
-
-    val durationHours = durationInMinutes / 60
-    val durationMinutes = durationInMinutes % 60
-    sleepDuration.value = String.format("%02d:%02d", durationHours, durationMinutes)
+}
+fun String.toCalendar(): Calendar {
+    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+    val date = sdf.parse(this)
+    return Calendar.getInstance().apply {
+        time = date
+    }
 }

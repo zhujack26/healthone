@@ -25,7 +25,7 @@ import androidx.compose.ui.res.painterResource
 import com.secui.healthone.R
 
 @Composable
-fun MealInputTime() {
+fun MealInputTime(onIntervalSelected: (String) -> Unit) {
     val timeIntervals = listOf("아침", "점심", "저녁", "간식")
     var expanded by remember { mutableStateOf(false) }
     var selectedInterval by remember { mutableStateOf(timeIntervals.first()) }
@@ -67,6 +67,7 @@ fun MealInputTime() {
                     onClick = {
                         selectedInterval = interval
                         expanded = false
+                        onIntervalSelected(interval)
                     }
                 ) {
                     Text(text = interval)

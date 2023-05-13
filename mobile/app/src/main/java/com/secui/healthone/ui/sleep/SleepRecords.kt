@@ -1,43 +1,40 @@
 package com.secui.healthone.ui.sleep
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import com.secui.healthone.data.Sleep.SleepRecord
-
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import android.widget.Toast
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import com.secui.healthone.constant.AppColors
+import com.secui.healthone.viewmodel.SleepViewModel
 
 @Composable
-fun SleepRecords(selectedSleepTime: MutableState<String>, selectedWakeTime: MutableState<String>) {
-    val sleepRecords = remember { mutableStateListOf<SleepRecord>() }
-    val showInputFields = remember { mutableStateOf(sleepRecords.isEmpty()) }
+fun SleepRecords(
+    viewModel: SleepViewModel,
+    index: Int
+) {
+    val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
 
-    fun saveSleepRecord() {
-        if (selectedSleepTime.value.isNotEmpty() && selectedWakeTime.value.isNotEmpty()) {
-            sleepRecords.add(SleepRecord(selectedSleepTime.value, selectedWakeTime.value))
-            selectedSleepTime.value = ""
-            selectedWakeTime.value = ""
-            showInputFields.value = false
+    viewModel.errorMessage.observe(lifecycleOwner, Observer { errorMessage ->
+        if (!errorMessage.isNullOrEmpty()) {
+            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
         }
-    }
+    })
 
-    Column {
-        if (showInputFields.value) {
-            Button(onClick = ::saveSleepRecord) {
-                Text("저장")
-            }
-        } else {
-            Button(onClick = { showInputFields.value = true }) {
-                Text("수면 기록 추가")
-            }
-        }
-
-        sleepRecords.forEach { sleepRecord ->
-            Text("취침 시간: ${sleepRecord.sleepTime}, 기상 시간: ${sleepRecord.wakeTime}")
-        }
-    }
+    SleepRecordCard(sleepRecord = viewModel.sleepRecords[index], index = index, viewModel = viewModel)
 }

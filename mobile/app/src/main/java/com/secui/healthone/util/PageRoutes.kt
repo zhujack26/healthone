@@ -24,4 +24,6 @@ sealed class PageRoutes(val route:String){
     object HealthStatusInput: PageRoutes("HealthInputPage")
     object HealthHelp: PageRoutes("HealthHelpPage")
     object AlarmSetting: PageRoutes("AlarmSettingPage")
+    object UserInformDown: PageRoutes("UserInformDownPage")
+    object UserInformDelete: PageRoutes("UserInfromDeletePage")
 }

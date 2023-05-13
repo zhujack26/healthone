@@ -88,7 +88,7 @@ fun LoginPage(navController: NavController) {
                 .fillMaxWidth()
         ) {
             Image(
-                painter = painterResource(R.drawable.onboarding_first),
+                painter = painterResource(R.drawable.onboarding_second),
                 contentDescription = "Animation",
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.FillWidth,

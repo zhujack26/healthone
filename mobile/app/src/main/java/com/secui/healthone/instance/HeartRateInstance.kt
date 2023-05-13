@@ -66,7 +66,7 @@ class HeartRateInstance : AppCompatActivity() {
 
         var builder = OkHttpClient().newBuilder()
         var okHttpClient = builder
-            .cookieJar(cookieJar)
+            //.cookieJar(cookieJar)
             .connectTimeout(100, TimeUnit.SECONDS)
             .readTimeout(100,TimeUnit.SECONDS)
             .writeTimeout(100,TimeUnit.SECONDS)
@@ -77,8 +77,10 @@ class HeartRateInstance : AppCompatActivity() {
             @Throws(IOException::class)
             override fun intercept(chain: Interceptor.Chain) : Response = with(chain) {
                 Log.d(LOG, "엑세스 토큰 꺼낸 결과 : ${accToken.value}")
+                Log.d(LOG, "리프레쉬 토큰 꺼낸 결과 : ${refreshToken.value}")
                 val newRequest = request().newBuilder()
                     .addHeader("Authorization", "Bearer ${accToken.value}")
+                    .addHeader("set-cookie", "refreshtoken=${refreshToken.value}")
                     .build()
                 proceed(newRequest)
             }
@@ -97,11 +99,13 @@ class HeartRateInstance : AppCompatActivity() {
     }
 
     companion object {
+        // https://back.apihealthone.com/check/
         // http://check.apihealthone.com/
-        const val URL = "https://back.apihealthone.com/check/"
+        const val URL = "http://check.apihealthone.com/"
         // val prefs = PreferenceUtil(SplashActivity.context as Context);
         val accToken = mutableStateOf<String>("");
         val refreshToken = mutableStateOf<String>("")
+        val tempAccToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlbWFpbCIsIm5hbWUiOiJKb2huIERvZSIsImlhdCI6MTUxNjIzOTAyMiwibm8iOjF9.Qe2hD2Qjh078O1Nt6H9Ti_zZtC70BlmULh6O3ckuSOQ"
 
         const val LOG = "HEART_RATE_INSTANCE";
     }

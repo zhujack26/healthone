@@ -16,13 +16,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
+import com.secui.healthone.constant.AppColors
 
 @Composable
 fun DataCollectFirstPage(navController: NavController) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(20.dp),
     ) {
         item {
             // 인덱스 컴포넌트
@@ -50,7 +51,7 @@ fun DataCollectFirstPage(navController: NavController) {
             ) {
                 Text(
                     text = "프로필 사진",
-                    fontSize = 12.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                 )
                 PhotoPicker()

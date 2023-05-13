@@ -2,12 +2,15 @@ package com.secui.healthone.viewmodel
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.secui.healthone.api.SleepApi
 import com.secui.healthone.data.Sleep.SleepRecord
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -16,31 +19,41 @@ import java.util.Locale
 class SleepViewModel : ViewModel() {
     private val sleepApiService = SleepApi.create()
     val sleepRecords = mutableStateListOf<SleepRecord>()
+    private val _errorMessage = MutableLiveData<String?>()
+    val errorMessage: LiveData<String?> get() = _errorMessage
 
     fun saveSleepRecord(selectedSleepTime: String, selectedWakeTime: String) {
         if (selectedSleepTime.isNotEmpty() && selectedWakeTime.isNotEmpty()) {
             try {
                 val formattedSleepTime = convertToServerTimeFormat(selectedSleepTime)
                 val formattedWakeTime = convertToServerTimeFormat(selectedWakeTime)
+
+                for (record in sleepRecords) {
+                    if ((formattedSleepTime >= record.startSleepTime && formattedSleepTime <= record.endSleepTime) ||
+                        (formattedWakeTime >= record.startSleepTime && formattedWakeTime <= record.endSleepTime)) {
+                        _errorMessage.postValue("이미 등록된 수면시간입니다.")
+                        return
+                    }
+                }
+
                 val sleepRecord = SleepRecord(
                     userNo = 1,
                     createTime = getCurrentTimestamp(),
                     startSleepTime = formattedSleepTime,
                     endSleepTime = formattedWakeTime
                 )
-
                 viewModelScope.launch(Dispatchers.IO) {
                     val response = sleepApiService.postSleepRecord(sleepRecord)
                     if (response.success) {
-                        // After saving the record, fetch the records from the server
                         fetchSleepRecords(formattedSleepTime.substring(0, 10))
+                        withContext(Dispatchers.Main) {
+                        }
                     } else {
                         // Handle the error
                     }
                 }
-
             } catch (e: ParseException) {
-                // Handle the error...
+                _errorMessage.postValue("Invalid time format.")
             }
         }
     }

@@ -16,7 +16,7 @@ android {
         applicationId "com.secui.healthone"
         minSdk 26
         targetSdk 33
-        versionCode 18
+        versionCode 19
         versionName "19.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

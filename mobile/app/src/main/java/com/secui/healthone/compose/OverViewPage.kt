@@ -20,6 +20,7 @@ import com.secui.healthone.api.fit.FitHeartManager
 import com.secui.healthone.api.fit.FitNutritionManager
 import com.secui.healthone.api.fit.FitSleepManager
 import com.secui.healthone.api.fit.FitWalkManager
+import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.ui.overviewpage.FoodCalorieBox
 import com.secui.healthone.ui.overviewpage.HealthScoreBox
 import com.secui.healthone.ui.overviewpage.HeartRateBox
@@ -37,15 +38,18 @@ fun OverViewPage(
     modifier: Modifier = Modifier
         .fillMaxSize()
 ) {
+
+    // 타이틀 값 수정
+    HealthOnePage.pageTitle.value="메인"
+
     // Log.d("OVERVIEW:::", "몇번 찍할까요 ----");
     // 초기값 세팅
     context = LocalContext.current;
     thisActivity = LocalContext.current as Activity;
     // pm
     val dbHelper = DBHelper(context)
-    val totalSleepTime:Long = dbHelper.getTotalSleeTime(context);
+    val totalSleepTime = dbHelper.getTotalSleeTime(context);
     Log.i("OVERVIEW::::", "총 수면 시간은 : $totalSleepTime")
-    val sleepRecValue = totalSleepTime/60;
 
     // 권한 요청
     FitAPIConfig.askFitAPIPermission(context = context, thisActivity = thisActivity)
@@ -60,20 +64,18 @@ fun OverViewPage(
     // 더미로 fit API로 값을 보냄
     FitSleepManager.writeSleepValue(context);
     val sleepValue = remember { FitSleepManager.readSleepValue(context) };
-
     val calorieValue = remember { FitNutritionManager.readNutritionData(context = context) } // 칼로리 값 , 미구현!
-
 
     Column(modifier= Modifier
         .fillMaxSize()
         .verticalScroll
             (rememberScrollState()))
     {
-        TotalHealthBox(walkValue.value, sleepRecValue.toInt(), calorieValue.value);
+        TotalHealthBox(walkValue.value, totalSleepTime.toInt(), calorieValue.value);
         UserWalkBox(navController, walkValue.value.toInt());
         HeartRateBox(navController, bpmValue.value.toInt());
         FoodCalorieBox(navController, calorieValue.value.toInt());
-        SleepCheckBox(navController,sleepRecValue.toInt());
+        SleepCheckBox(navController,totalSleepTime.toInt());
         HealthScoreBox(navController);
         Spacer(modifier = Modifier.height(64.dp));
     }

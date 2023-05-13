@@ -17,6 +17,9 @@ import androidx.security.crypto.MasterKey
 import androidx.security.crypto.MasterKeys
 import com.google.gson.Gson
 import com.secui.healthone.api.LoginApi
+import com.secui.healthone.constant.PageRoutes
+import com.secui.healthone.instance.HeartRateInstance
+import com.secui.healthone.util.PreferenceUtil
 import okhttp3.Cookie
 import okhttp3.CookieJar
 import okhttp3.HttpUrl
@@ -47,6 +50,12 @@ class GoogleSignInRepository (
         override fun loadForRequest(url: HttpUrl): List<Cookie> {
             return cookies
         }
+
+        // 추가된 메서드 ///////////////
+        fun getCookiesByName(name: String): List<Cookie> {
+            return cookies.filter { it.name == name }
+        }
+        ///////////////////////////
     }
     private val client = OkHttpClient.Builder()
         .cookieJar(cookieJar)
@@ -87,7 +96,7 @@ class GoogleSignInRepository (
             val authCode = account.serverAuthCode
             Log.d("check", "Auth Code: $authCode")
             sendAuthCodeToServer(authCode, navController)
-//            navController.navigate(PageRoutes.DataCollectFirst.route)
+            navController.navigate(PageRoutes.DataCollectFirst.route)
             Log.d("check", "check")
         } catch (e: Exception) {
             Log.e("check", "Error2", e)
@@ -115,7 +124,7 @@ class GoogleSignInRepository (
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response = loginApi.sendAuthCodeToServer(requestBody)
+                val response = loginApi.sendAuthCodeToServer("http://login.apihealthone.com/auth/login", requestBody)
                 if (response.isSuccessful) {
                     val accessTokenResponse = response.headers().get("Authorization")
                     Log.d("ResponseHeaders", "Headers: ${response.headers()}")
@@ -124,6 +133,15 @@ class GoogleSignInRepository (
                         Log.d("check", "Received accessToken: $accessTokenResponse")
                         val url = response.raw().request.url
                         val cookies = cookieJar.loadForRequest(url)
+
+                        ///////// 추가된 코드 /////////
+                        val refreshToken = cookieJar.getCookiesByName("refreshtoken");
+                        Log.d("check","리프래쉬 토큰 꺼내보기 : $refreshToken");
+                        HeartRateInstance.accToken.value = accessTokenResponse.toString()
+                        HeartRateInstance.refreshToken.value = refreshToken.toString();
+                        PreferenceUtil(context).setTokenString("refreshtoken", "$refreshToken");// 저장
+                        ////////////////////////
+
                         for (cookie in cookies) {
                             Log.d("check", "Received cookie: $cookie")
                         }

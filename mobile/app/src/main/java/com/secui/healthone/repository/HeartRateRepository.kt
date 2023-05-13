@@ -1,5 +1,7 @@
 package com.secui.healthone.repository
 
+import android.content.Context
+import android.util.Log
 import com.secui.healthone.data.heart.HeartWrite
 import com.secui.healthone.instance.HeartRateInstance
 import okhttp3.ResponseBody

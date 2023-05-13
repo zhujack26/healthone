@@ -12,7 +12,6 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import com.secui.healthone.compose.OverViewPage
 import com.secui.healthone.compose.signup.DataCollectFirstPage
@@ -24,9 +23,6 @@ import com.secui.healthone.ui.common.TopBar
 import com.secui.healthone.constant.PageRoutes
 import com.secui.healthone.util.PreferenceUtil
 import okhttp3.Cookie
-import okhttp3.CookieJar
-
-
 
 
 class MainActivity : ComponentActivity() {
@@ -66,7 +62,7 @@ class MainActivity : ComponentActivity() {
                 Log.d("SharedPreferences", key + ": " + value.toString())
             }
 
-            NavHost(navController, startDestination = if (hasRefreshToken(sharedPreferences)) PageRoutes.OverView.route else PageRoutes.Login.route) {
+            NavHost(navController, startDestination = if (!hasRefreshToken(sharedPreferences)) PageRoutes.Login.route else PageRoutes.OverView.route) {
                 composable(PageRoutes.Login.route) {
                     LoginPage(navController)
                 }
@@ -91,14 +87,15 @@ class MainActivity : ComponentActivity() {
 
     override fun onStart() {
         super.onStart()
+        // 화면 on/off 감지를 위한 Service 시작
+        Log.i("SPLASH ::: ", "수면측정 기능 on...");
+        val serviceIntent = Intent(this, ScreenService::class.java)
+        startForegroundService(serviceIntent);
     }
 
     // Activity가 화면에서 사라질 때 호출
     override fun onStop() {
         super.onStop()
-        // 화면 on/off 감지를 위한 Service 시작
-        val serviceIntent = Intent(this, ScreenService::class.java)
-        startForegroundService(serviceIntent);
     }
 
     override fun onDestroy() {

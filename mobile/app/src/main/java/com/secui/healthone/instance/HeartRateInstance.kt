@@ -5,17 +5,20 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.mutableStateOf
 import com.secui.healthone.SplashActivity
+import com.secui.healthone.repository.GoogleSignInRepository
 import com.secui.healthone.service.HeartRateService
 import com.secui.healthone.util.PreferenceUtil
 import okhttp3.Cookie
 import okhttp3.CookieJar
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
+import okhttp3.JavaNetCookieJar
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
+import java.net.CookieManager
 import java.util.concurrent.TimeUnit
 
 class HeartRateInstance : AppCompatActivity() {
@@ -23,6 +26,7 @@ class HeartRateInstance : AppCompatActivity() {
     object RetrofitInstance {
 
         val cookieJar = object : CookieJar {
+
             private val cookieStore = HashMap<String, MutableList<Cookie>>()
 
             override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
@@ -33,7 +37,6 @@ class HeartRateInstance : AppCompatActivity() {
                 val cookies = cookieStore[url.host] ?: return emptyList()
                 val refreshTokenValue = refreshToken.value// 여기서 refresh token을 가져오세요
                 Log.d(LOG, "토큰을 적재합니다 (loadForRequest) : $refreshTokenValue")
-
                 // Add your Refresh Token to the cookies as a new Cookie object
                 val refreshTokenCookie = Cookie.Builder()
                     .name("refreshtoken")
@@ -48,20 +51,6 @@ class HeartRateInstance : AppCompatActivity() {
 
                 return newCookies
             }
-
-
-//            override fun loadForRequest(url: HttpUrl): List<Cookie> {
-//
-//                val cookies = cookieStore[url.host] ?: return emptyList()
-//                // Add your Refresh Token to the cookies as a new Cookie object
-//                val refreshTokenCookie = Cookie.Builder()
-//                    .name("refreshtoken")
-//                    .value(refreshToken.value)
-//                    .domain(url.host)
-//                    .build()
-//
-//                return cookies + refreshTokenCookie
-//            }
         }
 
         var builder = OkHttpClient().newBuilder()
@@ -76,12 +65,13 @@ class HeartRateInstance : AppCompatActivity() {
         class myInterceptor : Interceptor {
             @Throws(IOException::class)
             override fun intercept(chain: Interceptor.Chain) : Response = with(chain) {
-                Log.d(LOG, "엑세스 토큰 꺼낸 결과 : ${accToken.value}")
                 Log.d(LOG, "리프레쉬 토큰 꺼낸 결과 : ${refreshToken.value}")
+                Log.d(LOG, "엑세스 토큰 꺼낸 결과 : ${accToken.value}")
                 val newRequest = request().newBuilder()
                     .addHeader("Authorization", "Bearer ${accToken.value}")
-                    .addHeader("set-cookie", "refreshtoken=${refreshToken.value}")
+                    .addHeader("Cookie", "refreshtoken=${refreshToken.value}")
                     .build()
+                Log.d(LOG, "리퀘스트 정보 : ${newRequest.toString()}")
                 proceed(newRequest)
             }
         }
@@ -101,6 +91,7 @@ class HeartRateInstance : AppCompatActivity() {
     companion object {
         // https://back.apihealthone.com/check/
         // http://check.apihealthone.com/
+        const val BACK_URL = "https://back.apihealthone.com/";
         const val URL = "http://check.apihealthone.com/"
         // val prefs = PreferenceUtil(SplashActivity.context as Context);
         val accToken = mutableStateOf<String>("");
@@ -108,6 +99,8 @@ class HeartRateInstance : AppCompatActivity() {
         val tempAccToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlbWFpbCIsIm5hbWUiOiJKb2huIERvZSIsImlhdCI6MTUxNjIzOTAyMiwibm8iOjF9.Qe2hD2Qjh078O1Nt6H9Ti_zZtC70BlmULh6O3ckuSOQ"
 
         const val LOG = "HEART_RATE_INSTANCE";
+
+
     }
 
 

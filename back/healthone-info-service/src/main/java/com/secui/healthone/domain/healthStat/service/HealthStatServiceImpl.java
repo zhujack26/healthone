@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,43 +47,15 @@ public class HealthStatServiceImpl implements HealthStatService {
     @Transactional
     public HealthStatDto updateHealthStat(HealthStatDto healthStatDto) {
         HealthStat healthStat = healthStatRepository.findById(healthStatDto.getNo()).orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
-
-        Optional.ofNullable(healthStatDto.getCreateTime()).ifPresent(healthStat::setCreateTime);
-        Optional.ofNullable(healthStatDto.getHeight()).ifPresent(healthStat::setHeight);
-        Optional.ofNullable(healthStatDto.getWeight()).ifPresent(healthStat::setWeight);
-        Optional.ofNullable(healthStatDto.getBmi()).ifPresent(healthStat::setBmi);
-        Optional.ofNullable(healthStatDto.getBodyFatPercentage()).ifPresent(healthStat::setBodyFatPercentage);
-        Optional.ofNullable(healthStatDto.getSkeletalMuscleMass()).ifPresent(healthStat::setSkeletalMuscleMass);
-        Optional.ofNullable(healthStatDto.getTg()).ifPresent(healthStat::setTg);
-        Optional.ofNullable(healthStatDto.getHdlCholesterol()).ifPresent(healthStat::setHdlCholesterol);
-        Optional.ofNullable(healthStatDto.getFbg()).ifPresent(healthStat::setFbg);
-        Optional.ofNullable(healthStatDto.getLowBloodPressure()).ifPresent(healthStat::setLowBloodPressure);
-        Optional.ofNullable(healthStatDto.getHighBloodPressure()).ifPresent(healthStat::setHighBloodPressure);
-        Optional.ofNullable(healthStatDto.getWaistMeasurement()).ifPresent(healthStat::setWaistMeasurement);
-
+        healthStat.update(healthStatDto);
         return HealthStatDtoMapper.INSTANCE.entityToDto(healthStat);
     }
 
     @Override
     @Transactional
     public void deleteHealthStat(Integer no, Integer userNo) {
-        HealthStat result = healthStatRepository.findById(no).orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
+        healthStatRepository.findById(no).orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
         healthStatRepository.deleteByNoAndUserNo(no, userNo);
-    }
-
-    public LocalDateTime typeConverter(String dateTime) {
-        int year = Integer.parseInt(dateTime.substring(0, 4));
-        int month = Integer.parseInt(dateTime.substring(5, 7));
-        int dayOfMonth = Integer.parseInt(dateTime.substring(8, 10));
-        if (dateTime.length() == 10) {
-            return LocalDateTime.of(year, month, dayOfMonth, 0, 0);
-        }
-        int hour = Integer.parseInt(dateTime.substring(11, 13));
-        int minute = Integer.parseInt(dateTime.substring(14, 16));
-        LocalDateTime localDateTime = LocalDateTime.of(year, month, dayOfMonth, hour, minute);
-        int second = Integer.parseInt(dateTime.substring(17, 19));
-        int nano = Integer.parseInt(dateTime.substring(20, 26)) * 1000;
-        return localDateTime.withSecond(second).withNano(nano);
     }
 
 }

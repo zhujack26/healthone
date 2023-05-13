@@ -1,7 +1,5 @@
 package com.secui.healthone.compose.healthstatus
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,9 +25,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.secui.healthone.ui.HealthStatus.HealthInputItem
-import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.constant.AppColors
 import com.secui.healthone.ui.mealplanpage.DateComponent
-import com.secui.healthone.util.PageRoutes
+import com.secui.healthone.constant.PageRoutes
+import java.util.Calendar
 
 @Composable
 fun HealthInputPage(navController: NavHostController) {
@@ -42,6 +41,8 @@ fun HealthInputPage(navController: NavHostController) {
     val fastingBloodGlucoseValueState = remember { mutableStateOf("") }
     val hdlCholesterolValueState = remember { mutableStateOf("") }
     val triglyceridesValueState = remember { mutableStateOf("") }
+    val initialDate = Calendar.getInstance()
+    val selectedDate = remember { mutableStateOf(initialDate) }
     LazyColumn(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -57,7 +58,12 @@ fun HealthInputPage(navController: NavHostController) {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    DateComponent()
+                    DateComponent(
+                        selectedDate = selectedDate,
+                        onDateChanged = { newDate ->
+                            selectedDate.value = newDate
+                        }
+                    )
                 }
             }
         }

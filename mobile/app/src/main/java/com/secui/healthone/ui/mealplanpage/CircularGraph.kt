@@ -1,11 +1,13 @@
 package com.secui.healthone.ui.mealplanpage
 
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -19,25 +21,34 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.secui.healthone.data.MealPlan.CalorieStatus
-import com.secui.healthone.ui.common.AppColors
+import com.secui.healthone.data.MealPlan.CalorieStatusData
+import com.secui.healthone.constant.AppColors
 
 @Composable
-fun CircularGraph(intakeCalories: Int, burnedCalories: Int, totalCalories: Int, recommendedCalories: Int, modifier: Modifier = Modifier) {
+fun CircularGraph(
+    intakeCalories: Int,
+    burnedCalories: Int,
+    totalCalories: Int,
+    recommendedCalories: Int,
+    calorieStatusData: CalorieStatusData,
+    modifier: Modifier = Modifier
+) {
     val graphSize = 300.dp
     val strokeWidth = 45.dp
     val graphColors = listOf(Color(0xFFFFA726), Color(0xFFE53935))
     val backgroundColor = AppColors.mono200 // 옅은 회색 배경 색상
-    val calorieStatus = CalorieStatus(
-        totalCalories = totalCalories,
-        recommendedCalories = recommendedCalories
-    )
 
-    val status = calorieStatus.status
-    val emoji = calorieStatus.emoji
-    val textColor = calorieStatus.textColor
-    val statusText = calorieStatus.statusText
+    val calorieStatus = remember(totalCalories, recommendedCalories) {
+        Pair(totalCalories, recommendedCalories)
+    }
+
+    val status = CalorieStatus(calorieStatus.first, calorieStatus.second).status
+    val emoji = calorieStatusData.emoji
+    val textColor = calorieStatusData.textColor
+    val statusText = calorieStatusData.statusText
 
     Box(modifier = modifier) {
+        Log.d("CircularGraph", "Intake Calories: $intakeCalories, Burned Calories: $burnedCalories, Total Calories: $totalCalories, Recommended Calories: $recommendedCalories")
         Canvas(
             modifier = Modifier.height(250.dp)
                 .size(width = graphSize, height = graphSize)

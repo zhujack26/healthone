@@ -5,6 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -24,40 +26,45 @@ import androidx.compose.ui.text.font.FontWeight
 @Composable
 fun ExcersiseAmount() {
     var selectedAmount by remember { mutableStateOf<ExerciseAmount?>(null) }
-    Column {
+    Card(
+        elevation = 4.dp,
+        shape = RoundedCornerShape(8.dp),
+        ) {
         Row(
             horizontalArrangement = Arrangement.SpaceAround,
             modifier = Modifier.fillMaxWidth()
+                .padding(16.dp)
         ) {
-            ExerciseButton(
-                amount = ExerciseAmount.Less,
-                isSelected = selectedAmount == ExerciseAmount.Less,
-                onSelected = {
-                    selectedAmount = if (selectedAmount == it) null else it
-                }
-            )
-            ExerciseButton(
-                amount = ExerciseAmount.Normal,
-                isSelected = selectedAmount == ExerciseAmount.Normal,
-                onSelected = {
-                    selectedAmount = if (selectedAmount == it) null else it
-                }
-            )
-            ExerciseButton(
-                amount = ExerciseAmount.Much,
-                isSelected = selectedAmount == ExerciseAmount.Much,
-                onSelected = {
-                    selectedAmount = if (selectedAmount == it) null else it
-                }
-            )
-        }
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(text = "적음", fontWeight = FontWeight.Bold)
-            Text(text = "보통", fontWeight = FontWeight.Bold)
-            Text(text = "많음", fontWeight = FontWeight.Bold)
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                ExerciseButton(
+                    amount = ExerciseAmount.Less,
+                    isSelected = selectedAmount == ExerciseAmount.Less,
+                    onSelected = {
+                        selectedAmount = if (selectedAmount == it) null else it
+                    }
+                )
+                Text(text = "적음", fontWeight = FontWeight.Bold)
+            }
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                ExerciseButton(
+                    amount = ExerciseAmount.Normal,
+                    isSelected = selectedAmount == ExerciseAmount.Normal,
+                    onSelected = {
+                        selectedAmount = if (selectedAmount == it) null else it
+                    }
+                )
+                Text(text = "보통", fontWeight = FontWeight.Bold)
+            }
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                ExerciseButton(
+                    amount = ExerciseAmount.Much,
+                    isSelected = selectedAmount == ExerciseAmount.Much,
+                    onSelected = {
+                        selectedAmount = if (selectedAmount == it) null else it
+                    }
+                )
+                Text(text = "많음", fontWeight = FontWeight.Bold)
+            }
         }
     }
 }
@@ -77,7 +84,7 @@ fun ExerciseButton(
 
     Box(
         modifier = Modifier
-            .size(100.dp)
+            .size(76.dp)
             .clip(CircleShape)
             .background(backgroundColor)
             .clickable { onSelected(amount) },
@@ -87,7 +94,7 @@ fun ExerciseButton(
             painter = painterResource(id = icon),
             contentDescription = amount.name,
             contentScale = ContentScale.Fit,
-            modifier = Modifier.size(80.dp)
+            modifier = Modifier.size(56.dp)
         )
     }
 }

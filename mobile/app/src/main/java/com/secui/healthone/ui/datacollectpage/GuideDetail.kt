@@ -78,6 +78,9 @@ fun GuideDetail(navController: NavController) {
                         painter = painterResource(id = R.drawable.ic_check),
                         contentDescription = "check",
                         modifier = Modifier
+                            .padding(
+                                top = 8.dp
+                            )
                             .width(16.dp)
                             .height(16.dp),
                     )
@@ -99,6 +102,9 @@ fun GuideDetail(navController: NavController) {
                         painter = painterResource(id = R.drawable.ic_check),
                         contentDescription = "check",
                         modifier = Modifier
+                            .padding(
+                                top = 8.dp
+                            )
                             .width(16.dp)
                             .height(16.dp),
                     )
@@ -110,7 +116,7 @@ fun GuideDetail(navController: NavController) {
                     )
                 }
             }
-                Spacer(modifier = Modifier.height(48.dp))
+                Spacer(modifier = Modifier.height(56.dp))
             if (fifthText) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,

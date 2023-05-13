@@ -12,28 +12,21 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.secui.healthone.R
-
+import com.secui.healthone.constant.AppColors
 @Composable
 fun PhotoPicker() {
     var photoUri: Uri? by remember { mutableStateOf(null) }
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
         photoUri = uri
     }
-    val imageColor = colorResource(id = R.color.white)
-
-
+    val imageColor = AppColors.white
         Spacer(modifier = Modifier.width(64.dp))
         if (photoUri != null) {
             val painter = rememberAsyncImagePainter(

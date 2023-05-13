@@ -12,7 +12,8 @@ fun LogoutDialog(onConfirm: () -> Unit, onCancel: () -> Unit) {
         title = { Text("로그아웃") },
         text = { Text("로그아웃 하시겠습니까?") },
         confirmButton = {
-            TextButton(onClick = onConfirm) {
+            TextButton(onClick = onConfirm
+            ) {
                 Text("확인")
             }
         },

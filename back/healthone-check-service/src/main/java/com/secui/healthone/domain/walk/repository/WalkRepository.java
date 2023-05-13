@@ -14,4 +14,5 @@ public interface WalkRepository extends JpaRepository<Walk, Integer> {
     Optional<Walk> findByNoAndUserNo(Integer no, Integer userNo);
     Walk save(Walk walk);
     void deleteByNoAndUserNo(Integer no, Integer userNo);
+    List<Walk> findAllByUserNoOrderByCreatetimeDesc(Integer userNo);
 }

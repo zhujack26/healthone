@@ -65,11 +65,11 @@ class HeartRateInstance : AppCompatActivity() {
         class myInterceptor : Interceptor {
             @Throws(IOException::class)
             override fun intercept(chain: Interceptor.Chain) : Response = with(chain) {
-                Log.d(LOG, "리프레쉬 토큰 꺼낸 결과 : ${refreshToken.value}")
+                Log.d(LOG, "리프레쉬 토큰 꺼낸 결과 : ${refreshToken.value.replace("[","").replace("]", "")}")
                 Log.d(LOG, "엑세스 토큰 꺼낸 결과 : ${accToken.value}")
                 val newRequest = request().newBuilder()
                     .addHeader("Authorization", "Bearer ${accToken.value}")
-                    .addHeader("Cookie", "refreshtoken=${refreshToken.value}")
+                    .addHeader("Cookie", "${refreshToken.value.replace("[","").replace("]", "")}")
                     .build()
                 Log.d(LOG, "리퀘스트 정보 : ${newRequest.toString()}")
                 proceed(newRequest)

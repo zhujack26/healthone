@@ -95,31 +95,31 @@ class ScreenReceiver : BroadcastReceiver() {
 //        Log.d(LOG, "GET_SETTINGS >>> setSleepTime: $setSleepTime / setWakeTime: $setWakeTime")
 //        Log.d(LOG, "GET_SETTINGS >>> isSetSleep: $isSetSleep / isSetWake: $isSetWake")
 
-        // 수면 시간을 설정했다면 값을 바꿔준다.
-        if(!isSetSleep){
-            Log.i(LOG, "수면시간 : $setSleepTime")
-            val hour = setSleepTime.substring(0, 2);
-            val min = setSleepTime.substring(3);
-
-            targetSleepLT =
-                LocalTime.of(
-                    hour.toInt(),
-                    min.toInt(),
-                    0)
-        }
-
-        // 기상 시간을 설정했다면 값을 바꿔준다.
-        if(!isSetWake){
-            Log.i(LOG, "취침시간 : $setWakeTime")
-            val hour = setWakeTime.substring(0, 2);
-            val min = setWakeTime.substring(3);
-
-            targetWakeLT =
-                LocalTime.of(
-                    hour.toInt(),
-                    min.toInt(),
-                    0)
-        }
+//        // 수면 시간을 설정했다면 값을 바꿔준다.
+//        if(!isSetSleep){
+//            Log.i(LOG, "수면시간 : $setSleepTime")
+//            val hour = setSleepTime.substring(0, 2);
+//            val min = setSleepTime.substring(3);
+//
+//            targetSleepLT =
+//                LocalTime.of(
+//                    hour.toInt(),
+//                    min.toInt(),
+//                    0)
+//        }
+//
+//        // 기상 시간을 설정했다면 값을 바꿔준다.
+//        if(!isSetWake){
+//            Log.i(LOG, "취침시간 : $setWakeTime")
+//            val hour = setWakeTime.substring(0, 2);
+//            val min = setWakeTime.substring(3);
+//
+//            targetWakeLT =
+//                LocalTime.of(
+//                    hour.toInt(),
+//                    min.toInt(),
+//                    0)
+//        }
 
         // step3. 수면 시간에 대해서 유효성 검사를 해준다 > 유효한 수면시간이었다 ? 수면으로 기록
         // 실제 수면기록 측정을 위하 string로 저장된 시간 값을 날짜 객체로 바꿔준다.

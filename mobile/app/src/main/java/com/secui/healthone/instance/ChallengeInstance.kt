@@ -25,7 +25,7 @@ class ChallengeInstance {
             @Throws(IOException::class)
             override fun intercept(chain: Interceptor.Chain) : Response = with(chain) {
                 val newRequest = request().newBuilder()
-//                    .addHeader("Authorization", "Basic ${encodedString.toString()}")
+                    .addHeader("Authorization", "Bearer ${HeartRateInstance.tempAccToken}")
                     .build()
                 proceed(newRequest)
             }

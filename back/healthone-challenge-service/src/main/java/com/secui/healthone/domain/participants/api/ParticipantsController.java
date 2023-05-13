@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,7 @@ public class ParticipantsController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "챌린지 참가 등록 성공", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ParticipantsInsertDto.class)),
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
+    @SecurityRequirement(name = "bearerAuth")
     @Parameter(name = "Authorization", description = "회원 Access Token", example = "Bearer access_token")
     @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "챌린지 등록 객체", required = true,
             content = @Content(schema = @Schema(implementation = ParticipantsInsertDto.class)))
@@ -48,6 +50,7 @@ public class ParticipantsController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "챌린지 참가 취소 성공", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ParticipantsInsertDto.class)),
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
+    @SecurityRequirement(name = "bearerAuth")
     @Parameter(name = "Authorization", description = "회원 Access Token", example = "Bearer access_token")
     @Parameter(name = "no", description = "참가번호", example = "1")
     @DeleteMapping

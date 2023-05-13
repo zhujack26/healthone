@@ -36,24 +36,25 @@ class HeartRateViewModel(private val repository : HeartRateRepository) : ViewMod
             val response: Response<ResponseBody> = repository.getHeartRateList(page, size);
             val myList: MutableList<HeartRead> = mutableListOf();
 
-            if(!response.isSuccessful) throw Exception();
+            Log.d(HLOG, "${response.toString()}")
 
-            val jsonString = response.body()?.string()
-            val jsonObject = JSONObject(jsonString)
-            val dataArray = jsonObject.getJSONObject("data").getJSONArray("content")
+            if(response.isSuccessful){
+                val jsonString = response.body()?.string()
+                val jsonObject = JSONObject(jsonString)
+                val dataArray = jsonObject.getJSONObject("data").getJSONArray("content")
 
-            for (i in 0 until dataArray.length()) {
-                val item = dataArray.getJSONObject(i)
-                val no = item.getInt("no")
-                val userNo = item.getInt("userNo")
-                val createTime = item.getString("createTime")
-                val count = item.getInt("count")
+                for (i in 0 until dataArray.length()) {
+                    val item = dataArray.getJSONObject(i)
+                    val no = item.getInt("no")
+                    val userNo = item.getInt("userNo")
+                    val createTime = item.getString("createTime")
+                    val count = item.getInt("count")
 
-                myList.add(HeartRead(no, userNo, createTime, count))
-                // 추출한 데이터 활용
+                    myList.add(HeartRead(no, userNo, createTime, count))
+                    // 추출한 데이터 활용
+                }
+                heartListResponse.value = myList;
             }
-
-            heartListResponse.value = myList;
             //Log.d("RESPONSE :::: ", "${myList}")
         }
     }
@@ -67,6 +68,7 @@ class HeartRateViewModel(private val repository : HeartRateRepository) : ViewMod
 
     companion object {
         val heartRateList:MutableState<MutableList<HeartRead>> = mutableStateOf(mutableListOf());
+        const val HLOG = "HEART_RATE_VIEW::::"
     }
 
 }

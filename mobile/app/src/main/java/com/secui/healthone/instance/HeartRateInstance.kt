@@ -97,11 +97,13 @@ class HeartRateInstance : AppCompatActivity() {
     }
 
     companion object {
+        // https://back.apihealthone.com/check/
         // http://check.apihealthone.com/
-        const val URL = "https://back.apihealthone.com/check/"
+        const val URL = "http://check.apihealthone.com/"
         // val prefs = PreferenceUtil(SplashActivity.context as Context);
         val accToken = mutableStateOf<String>("");
         val refreshToken = mutableStateOf<String>("")
+        val tempAccToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlbWFpbCIsIm5hbWUiOiJKb2huIERvZSIsImlhdCI6MTUxNjIzOTAyMiwibm8iOjF9.Qe2hD2Qjh078O1Nt6H9Ti_zZtC70BlmULh6O3ckuSOQ"
 
         const val LOG = "HEART_RATE_INSTANCE";
     }

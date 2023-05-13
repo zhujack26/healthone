@@ -38,20 +38,20 @@ public class CsvService {
         }
     }
 
-//    public HttpServletResponse writeSleepDtoToCsv(HttpServletResponse response, Integer userNo) throws IOException {
-//        try (CSVWriter writer = new CSVWriter(new OutputStreamWriter(response.getOutputStream(), StandardCharsets.UTF_8))) {
-//            writer.writeNext(new String[]{"식별번호", "유저식별번호", "기록시간", "취침시간", "기상시간"});
-//            List<Sleep> sleepList = walkRepository(userNo);
-//            for (Walk entity : walkList) {
-//                writer.writeNext(new String[]{
-//                        String.valueOf(entity.getNo()),
-//                        String.valueOf(entity.getUserNo()),
-//                        entity.getCreatetime().toString(),
-//                        String.valueOf(entity.getStepCount()),
-//                        String.valueOf(entity.getDistance())
-//                });
-//            }
-//            return response;
-//        }
-//    }
+    public HttpServletResponse writeSleepDtoToCsv(HttpServletResponse response, Integer userNo) throws IOException {
+        try (CSVWriter writer = new CSVWriter(new OutputStreamWriter(response.getOutputStream(), StandardCharsets.UTF_8))) {
+            writer.writeNext(new String[]{"식별번호", "유저식별번호", "기록시간", "취침시간", "기상시간"});
+            List<Sleep> sleepList = sleepRepository.findAllByUserNo(userNo);
+            for (Sleep entity : sleepList) {
+                writer.writeNext(new String[]{
+                        String.valueOf(entity.getNo()),
+                        String.valueOf(entity.getUserNo()),
+                        entity.getCreateTime().toString(),
+                        String.valueOf(entity.getStartSleepTime()),
+                        String.valueOf(entity.getEndSleepTime())
+                });
+            }
+            return response;
+        }
+    }
 }

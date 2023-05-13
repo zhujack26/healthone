@@ -35,12 +35,12 @@ public class CsvController {
     private final TokenService tokenService;
 
     @Operation(summary = "걸음 수 데이터 다운", description = "걸음 수 데이터를 다운로드 한다", tags = {"check-data-download"})
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "Walk 데이터 호출 성공", content = {
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "Walk 데이터 다운로드 성공", content = {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
     @Parameter(name = "Authorization", description = "회원 Access Token", example = "Bearer access_token")
     @GetMapping(value = "/walk", produces = "text/csv")
-    public ResponseEntity<?> export(@RequestHeader(required = false) String Authorization, HttpServletResponse response) throws IOException {
+    public ResponseEntity<?> downloadWalkData(@RequestHeader(required = false) String Authorization, HttpServletResponse response) throws IOException {
         String accessToken = HeaderUtil.getAccessTokenString(Authorization);
         Integer userNo = tokenService.getUserNo(accessToken);
         String exportFileName = "walk-" + LocalDateTime.now() + ".txt";
@@ -48,6 +48,23 @@ public class CsvController {
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Content-disposition", "attachment;filename=" + exportFileName);
         csvService.writeWalkDtoToCsv(response, userNo);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "수면 데이터 다운", description = "수면 데이터를 다운로드 한다", tags = {"check-data-download"})
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "Sleep 데이터 다운로드 성공", content = {
+            @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
+    @SecurityRequirement(name = "bearerAuth")
+    @Parameter(name = "Authorization", description = "회원 Access Token", example = "Bearer access_token")
+    @GetMapping(value = "/sleep", produces = "text/csv")
+    public ResponseEntity<?> downloadSleepData(@RequestHeader(required = false) String Authorization, HttpServletResponse response) throws IOException {
+        String accessToken = HeaderUtil.getAccessTokenString(Authorization);
+        Integer userNo = tokenService.getUserNo(accessToken);
+        String exportFileName = "Sleep-" + LocalDateTime.now() + ".txt";
+        response.setContentType("text/csv; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setHeader("Content-disposition", "attachment;filename=" + exportFileName);
+        csvService.writeSleepDtoToCsv(response, userNo);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

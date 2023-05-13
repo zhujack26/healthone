@@ -10,16 +10,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SleepRepository extends JpaRepository<Sleep, Integer> {
-//    List<Sleep> findAllByUserAndSleepCreatetimeLike(User user, String date);
-//    List<Sleep> findAllByUserNoAndCreateTimeLike(int userNo, String date);\
 
     // 해당 날짜 수면 리스트 반환
     List<Sleep> findByCreateTimeBetweenAndUserNo(LocalDateTime startDateTime, LocalDateTime endDateTime, Integer userNo);
-
     // 해당 날짜 수면 7일 데이터 반환 날짜 오름차순
     List<Sleep> findByCreateTimeBetweenAndUserNoOrderByCreateTimeDesc(LocalDateTime startDateTime, LocalDateTime endDateTime, Integer userNo);
-//    Slice<Sleep> findAllByUserNoOrderByCreateTimeDesc(Integer userNo, Pageable pageable);
     Optional<Sleep> findByNoAndUserNo(Integer no, Integer userNo);
+    List<Sleep> findAllByUserNo(Integer userNo);
     Sleep save(Sleep sleep);
     void deleteByNoAndUserNo(Integer no, Integer userNo);
 }

@@ -4,7 +4,10 @@ import com.secui.healthone.domain.healthInfo.dto.HealthInfoDto;
 import com.secui.healthone.domain.healthInfo.service.HealthInfoService;
 import com.secui.healthone.global.error.response.ErrorResponse;
 import com.secui.healthone.global.response.RestApiResponse;
+import com.secui.healthone.global.util.HeaderUtil;
+import com.secui.healthone.global.util.TokenService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -25,15 +28,18 @@ import javax.validation.Valid;
 public class HealthInfoController {
 
     private final HealthInfoService healthInfoService;
+    private final TokenService tokenService;
 
     @Operation(summary = "회원 헬스 정보 조회", description = "회원 헬스 정보 조회 API", tags = {"HealthInfo"})
     @ApiResponses({@ApiResponse(responseCode = "200", description = "회원 헬스 정보 조회 성공", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = HealthInfoDto.class)),
             @Content(mediaType = "*/*", schema = @Schema(implementation = ErrorResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
+    @Parameter(name = "Authorization", description = "회원 Access Token", example = "Bearer access_token")
     @GetMapping
     public RestApiResponse<HealthInfoDto> getHealthInfo(@RequestHeader(required = false) String Authorization) {
-        Integer userNo = 1;
+        String accessToken = HeaderUtil.getAccessTokenString(Authorization);
+        Integer userNo = tokenService.getUserNo(accessToken);
         HealthInfoDto healthInfoDto = healthInfoService.getHealthInfo(userNo);
         return new RestApiResponse<>("회원 헬스 정보 조회 성공", healthInfoDto);
     }
@@ -43,9 +49,13 @@ public class HealthInfoController {
             @Content(mediaType = "application/json", schema = @Schema(implementation = HealthInfoDto.class)),
             @Content(mediaType = "*/*", schema = @Schema(implementation = ErrorResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
+    @Parameter(name = "Authorization", description = "회원 Access Token", example = "Bearer access_token")
     @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "회원 헬스 데이터 등록, 수정 객체")
     @PatchMapping
-    public RestApiResponse<HealthInfoDto> updateHealthInfo(@Valid @RequestBody HealthInfoDto healthInfoDto) {
+    public RestApiResponse<HealthInfoDto> updateHealthInfo(@RequestHeader(required = false) String Authorization, @Valid @RequestBody HealthInfoDto healthInfoDto) {
+        String accessToken = HeaderUtil.getAccessTokenString(Authorization);
+        Integer userNo = tokenService.getUserNo(accessToken);
+        healthInfoDto.setUserNo(userNo);
         return new RestApiResponse<>("회원 헬스 데이터 등록, 수정 성공", healthInfoService.updateHealthInfo(healthInfoDto));
     }
 

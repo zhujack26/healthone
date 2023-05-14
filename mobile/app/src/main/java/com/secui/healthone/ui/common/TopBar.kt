@@ -23,6 +23,7 @@ import com.secui.healthone.R
 import com.secui.healthone.constant.AppColors
 import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.constant.PageRoutes
+import com.secui.healthone.ui.datacollectpage.ImageUri
 
 @Composable
 fun TopBar(context: Context) {
@@ -104,7 +105,7 @@ fun TopBar(context: Context) {
                     .align(Alignment.TopEnd)
             ) {
                 DrawerButton(
-                    text = "박싸피",
+                    text = ImageUri.getNicknameFromPrefs(context),
                     showImage = true,
                     onClick = {
                         navController.navigate(PageRoutes.My.route)

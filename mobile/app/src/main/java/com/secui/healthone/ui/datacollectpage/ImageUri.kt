@@ -16,4 +16,16 @@ object ImageUri {
         val uriString = sharedPreferences.getString("profileImageUri", null)
         return uriString?.let { Uri.parse(it) }
     }
+
+    fun saveNicknameToPrefs(context: Context, nickname: String) {
+        val sharedPref = context.getSharedPreferences("com.secui.healthone", Context.MODE_PRIVATE)
+        with (sharedPref.edit()) {
+            putString("nickname", nickname)
+            apply()
+        }
+    }
+    fun getNicknameFromPrefs(context: Context): String {
+        val sharedPref = context.getSharedPreferences("com.secui.healthone", Context.MODE_PRIVATE)
+        return sharedPref.getString("nickname", "") ?: ""
+    }
 }

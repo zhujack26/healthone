@@ -36,15 +36,17 @@ import com.secui.healthone.ui.datacollectpage.ImageUri.loadImageUri
 
 @Composable
 fun DrawerButton(
-    text: String,
+    text: String? = null,
     icon: Int? = null,
     iconColor: Color? = null,
     showImage: Boolean = false,
     onClick: () -> Unit
 ) {
     val context = LocalContext.current
-    val photoUri = remember { mutableStateOf(if (showImage) loadImageUri(context) else null) } // showImage에 따라 이미지 로드
+    val photoUri = remember { mutableStateOf(if (showImage) loadImageUri(context) else null) }
+    val displayName = if (showImage && text.isNullOrEmpty()) "프로필을 완성해보세요" else text
     val textColor = AppColors.black
+
     TextButton(
         onClick = onClick,
         modifier = Modifier
@@ -60,15 +62,15 @@ fun DrawerButton(
                 )
                 Spacer(modifier = Modifier.width(8.dp))
             }
-            if (photoUri.value != null) {
+            if (photoUri.value != null && showImage) {
                 val painter = rememberAsyncImagePainter(
                     ImageRequest
                         .Builder(context)
                         .data(data = photoUri.value)
                         .build()
                 )
-                Column(horizontalAlignment = Alignment.Start) {
-                    Box(modifier = Modifier.padding(5.dp)) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Box(modifier = Modifier.padding(5.dp), contentAlignment = Alignment.Center) {
                         Image(
                             painter = painter,
                             contentDescription = null,
@@ -83,15 +85,16 @@ fun DrawerButton(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text,
-                        fontSize = 20.sp,
+                        displayName ?: "",
+                        fontSize = 16.sp,
                         color = textColor,
                         fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(bottom = 16.dp)
                     )
                 }
             } else {
                 Text(
-                    text,
+                    displayName ?: "",
                     fontSize = 20.sp,
                     color = textColor,
                     fontWeight = FontWeight.Bold,

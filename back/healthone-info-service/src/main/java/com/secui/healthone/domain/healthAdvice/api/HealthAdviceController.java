@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/health-adivce")
+@RequestMapping("/api/health-advice")
 @Tag(name = "HealthAdvice", description = "회원 조언 컨트롤러")
 public class HealthAdviceController {
 

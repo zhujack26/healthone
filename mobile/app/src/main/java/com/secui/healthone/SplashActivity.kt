@@ -15,10 +15,6 @@ class SplashActivity: ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        // 화면 on/off 감지를 위한 Service 시작
-        Log.i("SPLASH ::: ", "수면측정 기능 on...");
-        val serviceIntent = Intent(this, ScreenService::class.java)
-        startForegroundService(serviceIntent);
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

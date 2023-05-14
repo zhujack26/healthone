@@ -65,7 +65,7 @@ fun HeartRateInfoBox(
 
             Spacer(modifier = Modifier.height(16.dp))
             // bpm graph
-            HeartBpmGraph();
+            HeartBpmGraph(bpm = prefs.getString("current_heart_bpm", "0").toInt());
             Spacer(modifier = Modifier.height(32.dp))
             // bpm btn
             Button(colors = ButtonDefaults
@@ -88,7 +88,9 @@ fun HeartRateInfoBox(
             Spacer(modifier = Modifier.height(16.dp))
         }
     }
+
 }
+
 
 class HeartRateInfoBoxText {
     companion object {

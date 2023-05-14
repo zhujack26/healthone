@@ -87,14 +87,15 @@ class MainActivity : ComponentActivity() {
 
     override fun onStart() {
         super.onStart()
+        // 화면 on/off 감지를 위한 Service 시작
+        Log.i("SPLASH ::: ", "수면측정 기능 on...");
+        val serviceIntent = Intent(this, ScreenService::class.java)
+        startForegroundService(serviceIntent);
     }
 
     // Activity가 화면에서 사라질 때 호출
     override fun onStop() {
         super.onStop()
-        // 화면 on/off 감지를 위한 Service 시작
-        val serviceIntent = Intent(this, ScreenService::class.java)
-        startForegroundService(serviceIntent);
     }
 
     override fun onDestroy() {

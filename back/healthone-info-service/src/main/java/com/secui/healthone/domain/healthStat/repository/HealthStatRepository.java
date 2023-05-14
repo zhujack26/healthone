@@ -13,4 +13,5 @@ public interface HealthStatRepository extends JpaRepository<HealthStat, Integer>
     Optional<HealthStat> findTopByUserNoOrderByCreateTimeDesc(Integer userNo);
     HealthStat save (HealthStat healthStat);
     void deleteByNoAndUserNo(Integer no, Integer userNo);
+    List<HealthStat> findAllByUserNo(Integer userNo);
 }

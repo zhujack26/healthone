@@ -6,9 +6,7 @@ import java.util.List;
 
 public interface HealthStatService {
 
-//    List<HealthStatDto> getHealthStat(String date, Integer userNo);
-
-    HealthStatDto getHealthStat(String date, Integer userNo);
+    List<HealthStatDto> getHealthStat(String date, Integer userNo);
 
     HealthStatDto addHealthStat(HealthStatDto healthStatDto);
 

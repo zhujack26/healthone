@@ -41,10 +41,10 @@ public class HealthStatDto {
     private Float waistMeasurement;
     @Schema(description = "건강 기록 : 최저 혈압")
     @NotNull(message = "수축기 혈압은 null 일 수 없습니다.")
-    private Float LowBloodPressure;
+    private Float lowBloodPressure;
     @Schema(description = "건강 기록 : 최고 혈압")
     @NotNull(message = "이완기 혈압은 null 일 수 없습니다.")
-    private Float HighBloodPressure;
+    private Float highBloodPressure;
     @Schema(description = "건강 기록 : 공복혈당")
     @NotNull(message = "공복혈당 null 일 수 없습니다.")
     private Float fbg;

@@ -23,11 +23,11 @@ class WalkViewModel : ViewModel() {
         return walkRepository.getPastWeekWalkData()
     }
 
-    suspend fun postWalkData(walkData: WalkData): Response<ApiResponse<List<WalkData>>> {
-        return withContext(Dispatchers.IO) {
-            RetrofitClient.instance.postWalkData(walkData)
-        }
-    }
+//    suspend fun postWalkData(walkData: WalkData): Response<ApiResponse<List<WalkData>>> {
+//        return withContext(Dispatchers.IO) {
+//            RetrofitClient.instance.postWalkData(walkData)
+//        }
+//    }
 }
 
 //private val walkRepository = WalkRepository()

@@ -37,7 +37,7 @@ fun Contents(video: Video, isFirst: Boolean = true) {
                 end = 20.dp,
                 bottom = 20.dp
             )
-            .clip(RoundedCornerShape(32.dp))
+            .clip(RoundedCornerShape(16.dp))
             .clickable {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=${video.id}"))
                 context.startActivity(intent)

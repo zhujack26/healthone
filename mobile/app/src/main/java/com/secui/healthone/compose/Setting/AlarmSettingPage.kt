@@ -3,6 +3,7 @@ package com.secui.healthone.compose
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
 import androidx.compose.material.Switch
+import androidx.compose.material.SwitchDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -72,7 +73,10 @@ fun AlarmRow(text: String, isChecked: Boolean, onCheckedChange: (Boolean) -> Uni
         Switch(
             checked = isChecked,
             onCheckedChange = onCheckedChange,
-            modifier = Modifier.padding(start = 32.dp)
+            modifier = Modifier.padding(end = 32.dp),
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = AppColors.green200,
+            )
         )
     }
 }

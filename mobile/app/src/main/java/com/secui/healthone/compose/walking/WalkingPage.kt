@@ -1,6 +1,5 @@
-package com.secui.healthone.compose
+package com.secui.healthone.compose.walking
 
-import android.util.Log
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -15,17 +14,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.secui.healthone.data.WalkData
 import com.secui.healthone.ui.walking.*
 import com.secui.healthone.api.fit.FitAPIConfig
 import com.secui.healthone.api.fit.FitWalkManager
-import com.secui.healthone.viewmodel.WalkViewModel
-import retrofit2.Response
 import androidx.compose.runtime.mutableStateOf
 import com.secui.healthone.compose.factory.YouTubeViewModelFactory
-import com.secui.healthone.data.ApiResponse
 import com.secui.healthone.service.YouTubeService
 import com.secui.healthone.viewmodel.ContentViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -35,25 +32,14 @@ fun WalkingPage(
 ){
 
     val context = LocalContext.current
-    //test
-//    val preferencesManager = PreferencesManager(context)
-//    val sleepTime = preferencesManager.getSleepTime()
-//    val wakeTime = preferencesManager.getWakeTime()
-//    Log.d("Sleeptime", "Sleep time : ${sleepTime}")
-//    Log.d("waketime", "wake time : ${wakeTime}")
     val account = FitAPIConfig.getGoogleSignInAccount(context = context)
+
 
     // 오늘 걸음수
     val walkValue: State<Int> = remember {
         FitWalkManager.readWalkSteps(context, account)
     }
     val todaySteps = walkValue.value
-
-    // 걸은 거리
-    val distanceValue: State<Float> = remember {
-        FitWalkManager.readDistanceData(context, account)
-    }
-    val todayDistance = distanceValue.value
 
     // 최고 걸음수
     val highestStepsValue: State<Int> = remember {
@@ -81,44 +67,42 @@ fun WalkingPage(
     val factory = YouTubeViewModelFactory(youtubeService)
 
     val contentViewModel: ContentViewModel = viewModel(factory = factory)
-    val viewModel: WalkViewModel = viewModel()
     val walkDataListState = remember { mutableStateOf<List<Int>>(emptyList()) }
 
     LaunchedEffect(Unit) {
-        val pastWeekWalkData = viewModel.getPastWeekWalkData()
-        walkDataListState.value = List(7) { index -> pastWeekWalkData.getOrNull(index) ?: 0 }
+        val pastSixDaysSteps = withContext(Dispatchers.IO) { FitWalkManager.getPastSixDaysSteps(context, account) }
+        walkDataListState.value = listOf(todaySteps) + pastSixDaysSteps
     }
     val videos = contentViewModel.videos.value
     LaunchedEffect(Unit) {
         contentViewModel.searchVideos()
     }
-    val steps = walkDataListState.value + todaySteps
 
-    val walkData = WalkData(
-        userNo = 1, // 실제 사용자 번호로
-        stepCount = todaySteps,
-        distance = todayDistance.toDouble(), // 구글 Fit API에서 distance 값을 가져오거나 빈 값 사용
-    )
-    fun handleResponse(response: Response<ApiResponse<List<WalkData>>>) {
-        if (response.isSuccessful && response.body() != null) {
-            val apiResponse = response.body()!!
-            Log.d("WalkingPage", "postWalkData response: ${apiResponse.data}")
-        } else {
-            val errorBody = response.errorBody()?.string() ?: "Unknown error"
-            Log.e("WalkingPage", "postWalkData error: $errorBody")
-            throw Exception("Error posting walk data: $errorBody")
-        }
-    }
-    LaunchedEffect(Unit) {
-        try {
-            Log.d("WalkingPage", "Posting walk data: $walkData")
-            val response = viewModel.postWalkData(walkData)
-            handleResponse(response)
-            Log.d("WalkingPage", "Walk data posted successfully")
-        } catch (e: Exception) {
-            Log.d("WalkingPage", "Error posting walk data: ${e.message}")
-        }
-    }
+//    val walkData = WalkData(
+//        userNo = 1, // 실제 사용자 번호로
+//        stepCount = todaySteps,
+//        distance = todayDistance.toDouble(), // 구글 Fit API에서 distance 값을 가져오거나 빈 값 사용
+//    )
+//    fun handleResponse(response: Response<ApiResponse<List<WalkData>>>) {
+//        if (response.isSuccessful && response.body() != null) {
+//            val apiResponse = response.body()!!
+//            Log.d("WalkingPage", "postWalkData response: ${apiResponse.data}")
+//        } else {
+//            val errorBody = response.errorBody()?.string() ?: "Unknown error"
+//            Log.e("WalkingPage", "postWalkData error: $errorBody")
+//            throw Exception("Error posting walk data: $errorBody")
+//        }
+//    }
+//    LaunchedEffect(Unit) {
+//        try {
+//            Log.d("WalkingPage", "Posting walk data: $walkData")
+//            val response = viewModel.postWalkData(walkData)
+//            handleResponse(response)
+//            Log.d("WalkingPage", "Walk data posted successfully")
+//        } catch (e: Exception) {
+//            Log.d("WalkingPage", "Error posting walk data: ${e.message}")
+//        }
+//    }
 
     LazyColumn(
         modifier = Modifier
@@ -126,7 +110,8 @@ fun WalkingPage(
             .padding(16.dp),
     ) {
         item {
-            LineGraph(steps = walkDataListState.value)
+
+            LineGraph(steps = walkDataListState.value, navController = navController)
             Spacer(modifier = Modifier.height(16.dp))
             AchievementRate(
                 percentage = achievementRate, navController

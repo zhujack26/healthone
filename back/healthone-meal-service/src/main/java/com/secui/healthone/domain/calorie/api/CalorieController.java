@@ -2,7 +2,6 @@ package com.secui.healthone.domain.calorie.api;
 
 import com.secui.healthone.domain.calorie.dto.CalorieResDto;
 import com.secui.healthone.domain.calorie.service.CalorieService;
-import com.secui.healthone.global.error.exception.RestApiException;
 import com.secui.healthone.global.error.response.ErrorResponse;
 import com.secui.healthone.global.response.RestApiResponse;
 import com.secui.healthone.global.util.HeaderUtil;

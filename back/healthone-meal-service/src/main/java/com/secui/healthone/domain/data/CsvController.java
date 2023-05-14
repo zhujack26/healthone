@@ -32,7 +32,7 @@ public class CsvController {
     private final CsvService csvService;
     private final TokenService tokenService;
 
-    @Operation(summary = " 식단 데이터 다운", description = "식단 데이터를 다운로드 한다", tags = {"check-data-download"})
+    @Operation(summary = " 식단 데이터 다운", description = "식단 데이터를 다운로드 한다", tags = {"meal-data-download"})
     @ApiResponses({@ApiResponse(responseCode = "200", description = "Meal 데이터 다운로드 성공", content = {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
@@ -49,7 +49,7 @@ public class CsvController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @Operation(summary = "운동기록 데이터 다운", description = "운동기록 데이터를 다운로드 한다", tags = {"check-data-download"})
+    @Operation(summary = "운동기록 데이터 다운", description = "운동기록 데이터를 다운로드 한다", tags = {"meal-data-download"})
     @ApiResponses({@ApiResponse(responseCode = "200", description = "SportRecord 데이터 다운로드 성공", content = {
             @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")

@@ -23,8 +23,8 @@ import com.secui.healthone.compose.OverViewPage
 import com.secui.healthone.compose.Setting.UserInformDeletePage
 import com.secui.healthone.compose.Setting.UserInformDownPage
 import com.secui.healthone.compose.SettingPage
-import com.secui.healthone.compose.WalkingDetailPage
-import com.secui.healthone.compose.WalkingPage
+import com.secui.healthone.compose.walking.WalkingDetailPage
+import com.secui.healthone.compose.walking.WalkingPage
 import com.secui.healthone.compose.healthstatus.HealthHelpPage
 import com.secui.healthone.compose.healthstatus.HealthInputPage
 import com.secui.healthone.compose.healthstatus.HealthStatusPage

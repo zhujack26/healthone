@@ -22,8 +22,8 @@ import com.secui.healthone.constant.AppColors
 @Composable
 fun Records(
     totalTime: String = "1546분",
-    totalCalories: String = "6956kcal",
-    bestTime: String = "156분",
+    totalCalories: String = "9954kcal",
+    bestTime: String = "76분",
     bestCalories: String = "695kcal"
 ) {
     val context = LocalContext.current

@@ -1,4 +1,4 @@
-package com.secui.healthone.compose
+package com.secui.healthone.compose.walking
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize

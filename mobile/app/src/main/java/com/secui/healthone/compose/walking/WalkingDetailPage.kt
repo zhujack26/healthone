@@ -1,4 +1,4 @@
-package com.secui.healthone.compose
+package com.secui.healthone.compose.walking
 
 import android.content.Context
 import androidx.compose.foundation.background

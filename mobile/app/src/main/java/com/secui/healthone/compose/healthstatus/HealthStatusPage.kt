@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.secui.healthone.ui.HealthStatus.HealthStatusItem
 import com.secui.healthone.constant.AppColors
+import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.ui.mealplanpage.DateComponent
 import com.secui.healthone.constant.PageRoutes
 import com.secui.healthone.data.HealthStatus.HealthStatus
@@ -41,6 +42,7 @@ import java.util.Locale
 
 @Composable
 fun HealthStatusPage(navController: NavHostController) {
+    HealthOnePage.pageTitle.value="건강상태"
     val initialDate = Calendar.getInstance()
     val selectedDate = remember { mutableStateOf(initialDate) }
     val viewModel = remember { HealthStatusViewModel() }

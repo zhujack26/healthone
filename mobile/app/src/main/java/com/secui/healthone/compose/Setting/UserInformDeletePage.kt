@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -13,11 +14,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.secui.healthone.constant.AppColors
 
 @Composable
 fun UserInformDeletePage() {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize()
+            .padding(32.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -32,8 +35,10 @@ fun UserInformDeletePage() {
             modifier = Modifier.padding(vertical = 16.dp),
             textAlign = TextAlign.Center
         )
-        Button(onClick = { /* do nothing */ }) {
-            Text(text = "삭제")
+        Button(onClick = { /* do nothing */ },
+            colors = ButtonDefaults.buttonColors(backgroundColor = AppColors.green200)
+        ) {
+            Text(text = "삭제", color = AppColors.white)
         }
     }
 }

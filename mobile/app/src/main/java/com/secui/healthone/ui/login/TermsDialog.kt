@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.AlertDialog
@@ -24,6 +25,7 @@ fun TermsDialog(onConfirm: () -> Unit) {
         Box(modifier = Modifier
             .heightIn(max = 500.dp)
             .background(Color.White)
+            .padding(16.dp)
         ) {
             Column {
                 Text("서비스 이용약관", fontSize = 18.sp, fontWeight = FontWeight.Bold)

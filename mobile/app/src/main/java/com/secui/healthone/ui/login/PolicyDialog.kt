@@ -27,6 +27,7 @@ fun PolicyDialog(onConfirm: () -> Unit) {
         Box(modifier = Modifier
             .heightIn(max = 500.dp)
             .background(Color.White)
+            .padding(16.dp)
         ) {
             Column {
                 Text("개인정보 처리방침", fontSize = 18.sp, fontWeight = FontWeight.Bold)

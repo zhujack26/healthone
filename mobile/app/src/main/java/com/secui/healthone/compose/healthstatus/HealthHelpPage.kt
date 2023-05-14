@@ -9,88 +9,151 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.secui.healthone.constant.AppColors
+import com.secui.healthone.ui.HealthStatus.HelpButton
+import com.secui.healthone.ui.HealthStatus.onButtonClick
+import com.secui.healthone.viewmodel.HealthStatusViewModel
 
 @Composable
 fun HealthHelpPage(navController: NavHostController) {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(100.dp)
-                .background(AppColors.mono200)
-        )
+    val viewModel = remember { HealthStatusViewModel() }
+    viewModel.fetchHealthAdvice()
+    val HealthAdvices = viewModel.healthAdvice.value
 
-        val scrollState = rememberScrollState()
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .horizontalScroll(scrollState)
-                .padding(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            HelpButton(text = "체중", onClick = { onButtonClick("체중") })
-            HelpButton(text = "BMI", onClick = { onButtonClick("BMI") })
-            HelpButton(text = "체지방", onClick = { onButtonClick("체지방") })
-            HelpButton(text = "골격근", onClick = { onButtonClick("골격근") })
-            HelpButton(text = "복부비만", onClick = { onButtonClick("복부비만") })
-            HelpButton(text = "혈관", onClick = { onButtonClick("혈관") })
-            HelpButton(text = "혈압", onClick = { onButtonClick("혈압") })
-            HelpButton(text = "공복혈당", onClick = { onButtonClick("공복혈당") })
+    // 선택된 버튼을 저장하는 변수를 추가합니다.
+    val selectedButton = remember { mutableStateOf("체중") }
+    var dangerousText = ""
+    if (HealthAdvices != null) {
+        val bloodPipe = if (HealthAdvices.tg == "위험" || HealthAdvices.hdlCholesterol == "위험") {
+            "위험"
+        } else if (HealthAdvices.tg == "주의" || HealthAdvices.hdlCholesterol == "주의") {
+            "주의"
+        } else {
+            "정상"
         }
+        val weightValue = if (HealthAdvices.weight == "정상")
+        {"정상"}
+        else if(HealthAdvices.weight == "과체중")
+        {"주의"}
+        else{"위험"}
+
+        val dangerValues = listOf(
+            if (weightValue == "위험"|| weightValue =="주의") "체중" else "",
+            if (HealthAdvices.bmi == "위험" || HealthAdvices.bmi =="주의") "BMI" else "",
+            if (HealthAdvices.fatPercentage == "위험" || HealthAdvices.fatPercentage =="주의") "체지방" else "",
+            if (HealthAdvices.skeletalMuscleMass == "위험" || HealthAdvices.skeletalMuscleMass =="주의") "골격근" else "",
+            if (HealthAdvices.waistMeasurement == "위험" || HealthAdvices.waistMeasurement =="주의") "복부비만" else "",
+            if (bloodPipe == "위험" || bloodPipe == "주의") "혈관" else "",
+            if (HealthAdvices.bloodPressure == "위험" || HealthAdvices.bloodPressure =="주의") "혈압" else "",
+            if (HealthAdvices.fbg == "위험" || HealthAdvices.fbg =="주의") "공복혈당" else ""
+        ).filter { it.isNotEmpty() }
+
+        Column(modifier = Modifier.fillMaxWidth()) {
+            if(dangerValues.isNotEmpty()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(100.dp)
+                        .background(AppColors.red50),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column {
+                        dangerValues.forEach { value ->
+                            dangerousText += value + " "
+                        }
+                        Text(
+                            text = "\uD83D\uDCE2 ${dangerousText} \n 관리가 필요합니다",
+                            color = AppColors.red200,
+                            textAlign = TextAlign.Center,
+                            fontSize = 15.sp
+                        )
+                    }
+                }
+            }
+            else{
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(100.dp)
+                        .background(AppColors.green50),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column {
+                        dangerValues.forEach { value ->
+                            dangerousText += value + " "
+                        }
+                        Text(
+                            text = "\uD83D\uDCE2  건강관리가 잘 되고있습니다",
+                            color = AppColors.green200,
+                            textAlign = TextAlign.Center,
+                            fontSize = 15.sp
+                        )
+                    }
+                }
+            }
+            val scrollState = rememberScrollState()
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .horizontalScroll(scrollState)
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                HelpButton(
+                    text = "체중",
+                    state = weightValue,
+                    isSelected = selectedButton.value == "체중",
+                    onClick = { selectedButton.value = "체중"; onButtonClick("체중") })
+                HelpButton(
+                    text = "BMI",
+                    state = HealthAdvices.bmi,
+                    isSelected = selectedButton.value == "BMI",
+                    onClick = { selectedButton.value = "BMI"; onButtonClick("BMI") })
+                HelpButton(
+                    text = "체지방",
+                    state = HealthAdvices.fatPercentage,
+                    isSelected = selectedButton.value == "체지방",
+                    onClick = { selectedButton.value = "체지방"; onButtonClick("체지방") })
+                HelpButton(
+                    text = "골격근",
+                    state = HealthAdvices.skeletalMuscleMass,
+                    isSelected = selectedButton.value == "골격근",
+                    onClick = { selectedButton.value = "골격근"; onButtonClick("골격근") })
+                HelpButton(
+                    text = "복부비만",
+                    state = HealthAdvices.waistMeasurement,
+                    isSelected = selectedButton.value == "복부비만",
+                    onClick = { selectedButton.value = "복부비만"; onButtonClick("복부비만") })
+                HelpButton(
+                    text = "혈관",
+                    state = bloodPipe,
+                    isSelected = selectedButton.value == "혈관",
+                    onClick = { selectedButton.value = "혈관"; onButtonClick("혈관") })
+                HelpButton(
+                    text = "혈압",
+                    state = HealthAdvices.bloodPressure,
+                    isSelected = selectedButton.value == "혈압",
+                    onClick = { selectedButton.value = "혈압"; onButtonClick("혈압") })
+                HelpButton(
+                    text = "공복혈당",
+                    HealthAdvices.fbg,
+                    isSelected = selectedButton.value == "공복혈당",
+                    onClick = { selectedButton.value = "공복혈당"; onButtonClick("공복혈당") })
+            }
+        }
+    } else{
+        Text("기록이 없습니다")
     }
 }
 
-@Composable
-fun HelpButton(text: String, onClick: () -> Unit) {
-    Button(
-        onClick = onClick,
-        modifier = Modifier.width(100.dp)
-    ) {
-        Text(text = text, fontSize = 14.sp)
-    }
-}
-
-fun onButtonClick(buttonText: String) {
-    when (buttonText) {
-        "체중" -> {
-            // 체중 버튼 기능 구현
-        }
-
-        "BMI" -> {
-            // BMI 버튼 기능 구현
-        }
-
-        "체지방" -> {
-            // 체지방 버튼 기능 구현
-        }
-
-        "골격근" -> {
-            // 골격근 버튼 기능 구현
-        }
-
-        "복부비만" -> {
-            // 복부비만 버튼 기능 구현
-        }
-
-        "혈관" -> {
-            // 혈관 버튼 기능 구현
-        }
-
-        "혈압" -> {
-// 혈압 버튼 기능 구현
-        }
-        "공복혈당" -> {
-// 혈압 버튼 기능 구현
-        }
-    }
-}

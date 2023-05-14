@@ -2,6 +2,7 @@ package com.secui.healthone.api
 
 import com.secui.healthone.data.ApiResponse
 import com.secui.healthone.data.Sleep.SleepRecord
+import okhttp3.Interceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
@@ -26,8 +27,17 @@ interface SleepApi {
         fun create(): SleepApi {
             val logger = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
 
+            val authInterceptor = Interceptor { chain ->
+                val newRequest = chain.request().newBuilder()
+                    .addHeader("Authorization", "Bearer $JWT_TOKEN")
+                    .build()
+
+                chain.proceed(newRequest)
+            }
+
             val client = OkHttpClient.Builder()
                 .addInterceptor(logger)
+                .addInterceptor(authInterceptor)
                 .build()
 
             val retrofit = Retrofit.Builder()

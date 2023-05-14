@@ -1,6 +1,5 @@
 package com.secui.healthone.data.MealPlan
 
-import com.secui.healthone.api.FoodApi
 import com.secui.healthone.api.MealApi
 import retrofit2.Response
 
@@ -10,7 +9,7 @@ class MealRepository(private val mealApi: MealApi) {
     }
 }
 
-class FoodRepository(private val foodApi: FoodApi) {
+class FoodRepository(private val foodApi: MealApi) {
     suspend fun searchFood(searchTerm: String, page: Int = 1, size: Int = 20): Response<FoodResponse> {
         return foodApi.searchFood(searchTerm, page, size)
     }

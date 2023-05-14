@@ -102,6 +102,7 @@ fun TopBar(context: Context) {
             ) {
                 DrawerButton(
                     text = "박싸피",
+                    showImage = true,
                     onClick = {
                         navController.navigate(PageRoutes.My.route)
                     }

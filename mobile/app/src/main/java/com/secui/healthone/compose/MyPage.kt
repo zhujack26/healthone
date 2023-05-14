@@ -28,7 +28,7 @@ fun MyPage(navController: NavController) {
     ) {
         item {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                PhotoPicker()
+                ProfilePhoto()
                 Text(
                     text = "닉네임",
                     fontSize = 12.sp,

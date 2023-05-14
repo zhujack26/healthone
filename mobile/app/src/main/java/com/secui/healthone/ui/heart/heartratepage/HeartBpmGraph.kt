@@ -17,10 +17,11 @@ import com.secui.healthone.util.PreferenceUtil
 
 @Composable
 fun HeartBpmGraph(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    bpm:Int
 ){
 
-    val widthList = calcRatioHeart(LocalContext.current);
+    val bpmWidths:List<Int> = getGraphWidths(bpm);
 
     Column(modifier = Modifier
         .wrapContentWidth()
@@ -37,12 +38,12 @@ fun HeartBpmGraph(
         ) {
 
             Box(modifier = Modifier
-                .width(widthList[0].dp)
+                .width(bpmWidths[0].dp)
                 .height(18.dp)
                 .background(AppColors.red300)
             )
             Box(modifier = Modifier
-                .width(widthList[1].dp)
+                .width(bpmWidths[1].dp)
                 .height(18.dp)
                 .background(AppColors.red100)
             )
@@ -68,21 +69,10 @@ fun HeartBpmGraph(
         }
     }
 }
-
-fun calcRatioHeart(context:Context):List<Int>{
-    val prefs = PreferenceUtil(context);
-    val recordBpm = prefs.getString("current_heart_bpm", "0").toInt();
-
-    Log.d("BPM", "$recordBpm")
-
-    val basicWidth = 256;
-    val divValue = 180;
-    val standValue = recordBpm-40;
-    val heartRatio:Float = (divValue/standValue).toFloat();
-    Log.d("RATIO", "${heartRatio}")
-    val heartGageWidth = heartRatio*basicWidth.toInt();
-
-    val widthList = listOf<Int>(heartGageWidth.toInt(), (basicWidth-heartGageWidth).toInt())
-    Log.d("VALUES:::", "${widthList.toString()}")
-    return widthList;
+fun getGraphWidths(bpm:Int):List<Int>{
+    val total = 256;
+    val base = (220-40).toFloat();
+    val width1:Float = ((bpm-40)/base)*total;
+    val width2 = total-width1.toInt();
+    return listOf<Int>(width1.toInt(), width2);
 }

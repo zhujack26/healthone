@@ -56,19 +56,19 @@ class MainActivity : ComponentActivity() {
             val sharedPreferences = getSharedPreferences("healthone", Context.MODE_PRIVATE)
             val navController = rememberNavController()
             val mOwner = LocalLifecycleOwner.current
-
+            val context = this
             val allEntries: Map<String, *> = sharedPreferences.getAll()  //sharedPreferences 확인
             for ((key, value) in allEntries) {
                 Log.d("SharedPreferences", key + ": " + value.toString())
             }
 
-            NavHost(navController, startDestination = if (hasRefreshToken(sharedPreferences)) PageRoutes.Login.route else PageRoutes.OverView.route) {
+            NavHost(navController, startDestination = if (!hasRefreshToken(sharedPreferences)) PageRoutes.DataCollectFirst.route else PageRoutes.OverView.route) {
                 composable(PageRoutes.Login.route) {
                     LoginPage(navController)
                 }
                 composable(PageRoutes.OverView.route) {
                     Column {
-                        TopBar()
+                        TopBar(context)
                         OverViewPage(navController)
                     }
                 }
@@ -87,14 +87,15 @@ class MainActivity : ComponentActivity() {
 
     override fun onStart() {
         super.onStart()
+        // 화면 on/off 감지를 위한 Service 시작
+        Log.i("SPLASH ::: ", "수면측정 기능 on...");
+        val serviceIntent = Intent(this, ScreenService::class.java)
+        startForegroundService(serviceIntent);
     }
 
     // Activity가 화면에서 사라질 때 호출
     override fun onStop() {
         super.onStop()
-        // 화면 on/off 감지를 위한 Service 시작
-        val serviceIntent = Intent(this, ScreenService::class.java)
-        startForegroundService(serviceIntent);
     }
 
     override fun onDestroy() {

@@ -12,6 +12,6 @@ interface WalkApiService {
     @GET("api/walk")
     suspend fun getWalkData(@Query("dateTime") dateTime: String): Response<ApiResponse<List<WalkData>>>
 
-    @POST("api/walk")
-    suspend fun postWalkData(@Body walkData: WalkData): Response<ApiResponse<List<WalkData>>>
+//    @POST("api/walk")
+//    suspend fun postWalkData(@Body walkData: WalkData): Response<ApiResponse<List<WalkData>>>
 }

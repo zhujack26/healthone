@@ -190,7 +190,9 @@ fun MealInputPage(navController: NavController) {
                 }
             }
         }
-
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
+        }
         item {
             Column(
                 modifier = Modifier
@@ -212,7 +214,6 @@ fun MealInputPage(navController: NavController) {
                         tint = Color.White
                     )
                 }
-
                 // "추가하기" 텍스트
                 Text("직접 추가하기", textAlign = TextAlign.Center, color = AppColors.green200)
             }

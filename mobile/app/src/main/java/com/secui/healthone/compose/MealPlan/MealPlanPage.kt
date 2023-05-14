@@ -54,6 +54,7 @@ fun MealPlanPage(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
+
             item {
                 Card(modifier = Modifier.fillMaxWidth(), elevation = 4.dp) {
                     Column(
@@ -76,7 +77,18 @@ fun MealPlanPage(
             }
 
             item {
-                TimeIntervalSelector()
+                Card(modifier = Modifier.fillMaxWidth(), elevation = 4.dp) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            "건강 기록", modifier = Modifier.align(Alignment.CenterVertically),
+                            style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold)
+                        )
+                        TimeIntervalSelector()
+                    }
+                }
             }
 
             item {

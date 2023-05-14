@@ -3,6 +3,8 @@ package com.secui.healthone.domain.participants.service;
 import com.secui.healthone.domain.participants.dto.ParticipantsInsertDto;
 import com.secui.healthone.domain.participants.dto.ParticipantsResDto;
 import com.secui.healthone.domain.participants.repository.ParticipantsRepository;
+import com.secui.healthone.global.error.errorcode.CustomErrorCode;
+import com.secui.healthone.global.error.exception.RestApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,8 @@ public class ParticipantsService {
     }
 
     // 참가 제거
-    public void delete(Integer no) {
-        participantsRepository.deleteById(no);
+    public void delete(Integer no, Integer userNo) {
+        participantsRepository.findByNoAndUserNo(no, userNo).orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
+        participantsRepository.deleteByNoAndUserNo(no, userNo);
     }
 }

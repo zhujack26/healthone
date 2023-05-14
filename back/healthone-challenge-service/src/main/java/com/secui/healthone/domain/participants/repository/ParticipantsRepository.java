@@ -4,6 +4,8 @@ import com.secui.healthone.domain.participants.entity.Participants;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Optional;
+
 public interface ParticipantsRepository extends JpaRepository<Participants, Integer> {
     
     // 전체 참가한 챌린지 사람 수 출력
@@ -15,7 +17,7 @@ public interface ParticipantsRepository extends JpaRepository<Participants, Inte
     // 챌린지 참가
     Participants save(Participants participants);
 
-    // 챌린지 참가 취소
-    void delete(Participants participants);
+    Optional<Participants> findByNoAndUserNo(Integer no, Integer userNo);
+    void deleteByNoAndUserNo(Integer no, Integer userNo);
 
 }

@@ -54,7 +54,7 @@ fun NicknameInput() {
             value = textState,
             onValueChange = { newText ->
                 setTextState(newText)
-                if (newText.isBlank() || newText.length > 9 || !newText.matches(Regex("^(?=.*[ㄱ-힣])[ㄱ-힣]{1,9}\$"))) {
+                if (newText.isBlank() || newText.length > 9 || !newText.matches(Regex("^(?=.*[ㄱ-힣a-zA-Z])[ㄱ-힣a-zA-Z]{1,9}$"))) {
                     setShowDialog(true)
                 }
             },

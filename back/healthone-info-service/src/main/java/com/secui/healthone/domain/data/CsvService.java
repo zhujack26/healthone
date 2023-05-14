@@ -26,7 +26,7 @@ public class CsvService {
         try (CSVWriter writer = new CSVWriter(new OutputStreamWriter(response.getOutputStream(), StandardCharsets.UTF_8))) {
             writer.writeNext(new String[]
                     {"유저 헬스 정보 식별번호", "유저식별번호", "유저 닉네임", "유저 가입일시", "유저 성별", "유저 생년월일",
-                        "유저 키", "유저 체중", "활동량" , "목표 걸음 수", "목표 취침시간", "목표 기상시간", "목표 수면시간"});
+                        "유저 키", "유저 체중", "활동량" , "목표 걸음 수", "목표 취침시간", "목표 기상시간"});
             List<HealthInfo> healthInfoList = healthInfoRepository.findAllByUserNo(userNo);
             for (HealthInfo entity : healthInfoList) {
                 writer.writeNext(new String[]{
@@ -42,7 +42,7 @@ public class CsvService {
                         String.valueOf(entity.getStepGoal()),
                         String.valueOf(entity.getSleepTime()),
                         String.valueOf(entity.getWakeUpTime()),
-                        String.valueOf(entity.getSleepGoal())
+//                        String.valueOf(entity.getSleepGoal())
                 });
             }
             return response;

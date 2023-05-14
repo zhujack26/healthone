@@ -4,7 +4,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -28,13 +30,13 @@ public class HealthInfoDto {
     private Boolean gender;
     @Schema(description = "생년월일")
     @NotNull(message = "생년월일은 null 일 수 없습니다.")
-    private LocalDateTime birthdate;
+    private LocalDate birthdate;
     @Schema(description = "키")
     @NotNull(message = "키는 null 일 수 없습니다.")
-    private Float height;
+    private Integer height;
     @Schema(description = "몸무게")
     @NotNull(message = "체중은 null 일 수 없습니다.")
-    private Float weight;
+    private Integer weight;
     @Schema(description = "활동량")
     @NotNull(message = "활동량은 null 일 수 없습니다.")
     private String workRate;
@@ -43,11 +45,10 @@ public class HealthInfoDto {
     private Integer stepGoal;
     @Schema(description = "목표 취침 시간")
     @NotNull(message = "취침 목표 시간은 null 일 수 없습니다.")
-    private LocalDateTime sleepTime;
+    private LocalTime sleepTime;
     @Schema(description = "목표 기상 시간")
     @NotNull(message = "기상 목표 시간은 null 일 수 없습니다.")
-    private LocalDateTime wakeUpTime;
-    @Schema(description = "목표 수면 시간")
-    @NotNull(message = "수면 목표 시간은 null 일 수 없습니다.")
-    private Integer sleepGoal;
+    private LocalTime wakeUpTime;
+//    @Schema(description = "목표 수면 시간")
+//    private Integer sleepGoal;
 }

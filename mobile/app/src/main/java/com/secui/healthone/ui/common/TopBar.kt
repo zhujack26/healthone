@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import com.secui.healthone.R
 import com.secui.healthone.constant.AppColors
@@ -48,10 +49,11 @@ fun TopBar(context: Context) {
                                     .size(60.dp)
                                     .clickable { navController.navigate(PageRoutes.OverView.route) }
                             )
-                            Spacer(modifier = Modifier.width(88.dp))
+                            Spacer(modifier = Modifier.width(76.dp))
                             Text(
                                 text = HealthOnePage.pageTitle.value,
-                                color = AppColors.mono700,
+                                color = AppColors.mono900,
+                                fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold
                             )
                         }
@@ -65,7 +67,7 @@ fun TopBar(context: Context) {
                                 painter = painterResource(id = R.drawable.ic_bell),
                                 contentDescription = "Alert",
                                 modifier = Modifier.size(24.dp),
-                                tint = AppColors.mono700
+                                tint = AppColors.mono900
                             )
                         }
                         IconButton(onClick = {
@@ -75,7 +77,7 @@ fun TopBar(context: Context) {
                                 painter = painterResource(id = R.drawable.ic_topbar_toggle),
                                 contentDescription = "Menu",
                                 modifier = Modifier.size(24.dp),
-                                tint = AppColors.mono700
+                                tint = AppColors.mono900
                             )
                         }
                     }
@@ -135,7 +137,7 @@ fun TopBar(context: Context) {
                 DrawerButton(
                     text = "식단",
                     icon = R.drawable.ic_food,
-                    iconColor = AppColors.green600,
+                    iconColor = AppColors.orange500,
                     onClick = {
                         HealthOnePage.pageTitle.value = "식단"
                         navController.navigate(PageRoutes.MealPlan.route)
@@ -167,7 +169,7 @@ fun TopBar(context: Context) {
                     icon = R.drawable.ic_health_info,
                     iconColor = Color.Unspecified,
                     onClick = {
-                        HealthOnePage.pageTitle.value = "건강상태"
+                        HealthOnePage.pageTitle.value = "건강정보"
                         navController.navigate(PageRoutes.HealthStatus.route)
                     }
                 )

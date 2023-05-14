@@ -1,5 +1,6 @@
 package com.secui.healthone.domain.healthStat.entity;
 
+import com.secui.healthone.domain.healthStat.dto.HealthStatDto;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -45,4 +46,19 @@ public class HealthStat {
     private Float hdlCholesterol;
     @Column(name = "health_stat_tg")
     private Float tg;
+
+    public void update(HealthStatDto healthStatDto) {
+        this.createTime = healthStatDto.getCreateTime();
+        this.height = healthStatDto.getHeight();
+        this.weight = healthStatDto.getWeight();
+        this.bmi = healthStatDto.getBmi();
+        this.bodyFatPercentage = healthStatDto.getBodyFatPercentage();
+        this.skeletalMuscleMass = healthStatDto.getSkeletalMuscleMass();
+        this.waistMeasurement = healthStatDto.getWaistMeasurement();
+        this.lowBloodPressure = healthStatDto.getLowBloodPressure();
+        this.highBloodPressure = healthStatDto.getHighBloodPressure();
+        this.fbg = healthStatDto.getFbg();
+        this.hdlCholesterol = healthStatDto.getHdlCholesterol();
+        this.tg = healthStatDto.getTg();
+    }
 }

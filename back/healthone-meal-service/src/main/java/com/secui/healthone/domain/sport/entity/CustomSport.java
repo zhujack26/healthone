@@ -23,7 +23,7 @@ public class CustomSport {
     @Column(name = "customsport_name", nullable = false) // 운동 이름
     private String name;
     @Column(name = "customsport_consumekcal", nullable = false) // 시간당 소모 칼로리
-    private String consumeKcal;
+    private Integer consumeKcal;
 
     public void update(CustomSportReqDto customSportReqDto){
         this.name = customSportReqDto.getName();

@@ -48,3 +48,7 @@ notification:
     author-name:
     author-icon:
     footer:
+
+springboot:
+  jwt:
+    secret: tset

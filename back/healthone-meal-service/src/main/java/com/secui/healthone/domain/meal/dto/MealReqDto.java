@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Schema(description = "식사 등록, 수정 요청 DTO")
 public class MealReqDto {
     @Schema(description = "식사 식별번호")

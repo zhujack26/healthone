@@ -14,11 +14,12 @@ import java.time.LocalDateTime;
 public class SleepUpdateDto {
     @Schema(description = "수면 데이터 식별 번호")
     private String no;
+    @Schema(description = "회원 식별 번호")
+    private Integer userNo;
     @Schema(description = "수면 데이터 식별 번호")
     private LocalDateTime createTime;
     @Schema(description = "수면 시작 시간")
     private LocalDateTime startSleepTime;
     @Schema(description = "수면 기상 시간")
     private LocalDateTime endSleepTime;
-
 }

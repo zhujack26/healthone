@@ -19,9 +19,7 @@ public interface HeartRateDtoMapper {
     HeartRateDtoMapper INSTANCE = Mappers.getMapper(HeartRateDtoMapper.class);
 
     List<HeartRateResDto> entityToResDto(List<HeartRate> heartRate);
-
     HeartRateResDto entityToResDto(HeartRate heartRate);
     HeartRate insertDtoToEntity(HeartRateInsertDto heartRateInsertDto);
     HeartRateResDto insertDtoToResDto(HeartRateInsertDto heartRateInsertDto);
-
 }

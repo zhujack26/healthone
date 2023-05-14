@@ -33,10 +33,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.secui.healthone.constant.AppColors
+import com.secui.healthone.ui.datacollectpage.ImageUri.saveNicknameToPrefs
 
 
 @Composable
-fun NicknameInput() {
+fun NicknameInput(nicknameState: String, onNicknameChange: (String) -> Unit) {
     val (textState, setTextState) = remember { mutableStateOf("") }
     val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
@@ -56,6 +57,8 @@ fun NicknameInput() {
                 setTextState(newText)
                 if (newText.isBlank() || newText.length > 9 || !newText.matches(Regex("^(?=.*[ㄱ-힣a-zA-Z])[ㄱ-힣a-zA-Z]{1,9}$"))) {
                     setShowDialog(true)
+                } else {
+                    onNicknameChange(newText)
                 }
             },
             visualTransformation = VisualTransformation.None,

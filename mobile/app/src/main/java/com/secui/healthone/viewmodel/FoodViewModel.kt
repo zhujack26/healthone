@@ -11,17 +11,14 @@ import com.secui.healthone.data.MealPlan.MealData
 import kotlinx.coroutines.launch
 import android.util.Log
 import com.google.gson.GsonBuilder
-import com.google.gson.JsonDeserializer
 import com.google.gson.JsonPrimitive
 import com.google.gson.JsonSerializer
-import com.secui.healthone.api.FoodApi
-import com.secui.healthone.compose.MealPlanPage
 import retrofit2.Response
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class FoodViewModel : ViewModel() {
-    private val foodApi = FoodApi.create()
+    private val foodApi = MealApi.create()
     private val foodRepository = FoodRepository(foodApi)
     private val mealApi = MealApi.create()
     val hasMoreResults = MutableLiveData<Boolean>(false)

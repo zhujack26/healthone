@@ -11,7 +11,6 @@ import com.secui.healthone.api.ExerciseApi
 import com.secui.healthone.data.MealPlan.ExerciseList
 import com.secui.healthone.data.MealPlan.ExerciseSearch
 import com.secui.healthone.data.MealPlan.AddExercise
-import com.secui.healthone.data.MealPlan.Food
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.time.LocalDateTime
@@ -35,7 +34,6 @@ class ExerciseViewModel : ViewModel() {
                     JsonPrimitive(src.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 })
             .create()
-        val mealJson = gson.toJson(Exercise)
         try {
             val response = exerciseApi.addExercise(Exercise)
             Log.d("FoodViewModel", "${response}")

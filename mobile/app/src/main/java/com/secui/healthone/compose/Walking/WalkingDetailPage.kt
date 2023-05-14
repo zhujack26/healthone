@@ -20,6 +20,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -36,9 +39,13 @@ import java.time.format.DateTimeFormatter
 fun WalkingDetailPage(navController: NavController, context: Context, account: GoogleSignInAccount, date: LocalDate) {
 
     val stepsData = remember { mutableStateOf(emptyList<Int>()) }
+    val distanceData = remember { mutableStateOf(0f) }
+    val targetSteps = 6000
+
     LaunchedEffect(key1 = date) {
         launch {
             stepsData.value = FitWalkManager.readHourlySteps(context, account, date)
+            distanceData.value = FitWalkManager.readDistanceData(context, account).value
         }
     }
 
@@ -53,7 +60,26 @@ fun WalkingDetailPage(navController: NavController, context: Context, account: G
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
         Spacer(modifier = Modifier.height(16.dp))
-
+        val totalSteps = stepsData.value.sum()
+        Text(
+            text = buildAnnotatedString {
+                withStyle(style = SpanStyle(fontSize = 24.sp)) {
+                    append("$totalSteps")
+                }
+                append("/")
+                withStyle(style = SpanStyle(fontSize = 16.sp)) {
+                    append("$targetSteps")
+                }
+            },
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            text = "일일걸음",
+            fontSize = 16.sp,
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        )
+        Spacer(modifier = Modifier.height(16.dp))
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -81,5 +107,10 @@ fun WalkingDetailPage(navController: NavController, context: Context, account: G
                 }
             }
         }
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            text = "거리: ${"%.2f".format(distanceData.value)} km",
+            fontSize = 16.sp,
+        )
     }
 }

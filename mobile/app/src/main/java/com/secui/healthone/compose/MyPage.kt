@@ -16,12 +16,6 @@ import com.secui.healthone.ui.mypage.*
 
 @Composable
 fun MyPage(navController: NavController) {
-    val totalSteps = "10000" // 백엔드에서 받아올 데이터
-    val totalTime = "150분"
-    val totalCalories = "700kcal"
-    val bestSteps = "12000"
-    val bestTime = "160분"
-    val bestCalories = "800kcal"
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -43,7 +37,7 @@ fun MyPage(navController: NavController) {
                 ) {
                     WeeklyAnalysis()
                     Spacer(modifier = Modifier.height(16.dp))
-                    Records(totalSteps, totalTime, totalCalories, bestSteps, bestTime, bestCalories)
+                    Records()
                 }
             }
         }

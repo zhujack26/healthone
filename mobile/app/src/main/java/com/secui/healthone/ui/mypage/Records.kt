@@ -6,25 +6,42 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.secui.healthone.R
+import com.secui.healthone.api.fit.FitAPIConfig
+import com.secui.healthone.api.fit.FitWalkManager
 import com.secui.healthone.constant.AppColors
 
 @Composable
 fun Records(
-    totalSteps: String = "69568",
     totalTime: String = "1546분",
     totalCalories: String = "6956kcal",
-    bestSteps: String = "11322",
     bestTime: String = "156분",
     bestCalories: String = "695kcal"
 ) {
+    val context = LocalContext.current
+    val account = FitAPIConfig.getGoogleSignInAccount(context = context)
+    // 최고 걸음수
+    val highestStepsValue: State<Int> = remember {
+        FitWalkManager.readMaxDailySteps(context, account)
+    }
+    val highestSteps = highestStepsValue.value
+
+    // 총 걸음수
+    val totalStepsValue: State<Int> = remember {
+        FitWalkManager.readTotalSteps(context, account)
+    }
+    val totalSteps = totalStepsValue.value
+
     val textColor = AppColors.black
-        Card(
+    Card(
             elevation = 4.dp,
             shape = RoundedCornerShape(8.dp),
         ) {
@@ -34,7 +51,7 @@ fun Records(
                     .padding(16.dp)
             ) {
                 Text(
-                    text = "총 기록 (시작 2023년 1월 1일)",
+                    text = "총 기록",
                     color = textColor
                 )
                 Spacer(Modifier.height(16.dp))
@@ -44,7 +61,7 @@ fun Records(
                 ) {
                     RecordItem(
                         icon = painterResource(R.drawable.ic_walking_svg),
-                        value = totalSteps,
+                        value = totalSteps.toString(),
                         label = "걸음수",
                     )
                     RecordItem(
@@ -82,7 +99,7 @@ fun Records(
                 ) {
                     RecordItem(
                         icon = painterResource(R.drawable.ic_walking_svg),
-                        value = bestSteps,
+                        value = highestSteps.toString(),
                         label = "걸음수"
                     )
                     RecordItem(

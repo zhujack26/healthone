@@ -56,7 +56,7 @@ class MainActivity : ComponentActivity() {
             val sharedPreferences = getSharedPreferences("healthone", Context.MODE_PRIVATE)
             val navController = rememberNavController()
             val mOwner = LocalLifecycleOwner.current
-
+            val context = this
             val allEntries: Map<String, *> = sharedPreferences.getAll()  //sharedPreferences 확인
             for ((key, value) in allEntries) {
                 Log.d("SharedPreferences", key + ": " + value.toString())
@@ -68,7 +68,7 @@ class MainActivity : ComponentActivity() {
                 }
                 composable(PageRoutes.OverView.route) {
                     Column {
-                        TopBar()
+                        TopBar(context)
                         OverViewPage(navController)
                     }
                 }

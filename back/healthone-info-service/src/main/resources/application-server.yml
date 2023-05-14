@@ -48,3 +48,6 @@ notification:
     author-name:
     author-icon:
     footer:
+
+jwt:
+  secret: tset

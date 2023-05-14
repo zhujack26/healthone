@@ -8,7 +8,6 @@ import com.secui.healthone.domain.healthStat.repository.HealthStatRepository;
 import com.secui.healthone.domain.healthStat.entity.HealthStat;
 import com.secui.healthone.global.error.errorcode.CustomErrorCode;
 import com.secui.healthone.global.error.exception.RestApiException;
-import com.secui.healthone.global.util.StringDateTrans;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +17,9 @@ public class HealthAdviceService {
     private final HealthStatRepository healthStatRepository;
     private final HealthInfoRepository healthInfoRepository;
 
-    public HealthAdviceDto getHealthAdvice(String date, Integer userNo) {
+    public HealthAdviceDto getHealthAdvice(Integer userNo) {
         HealthInfo healthInfo = healthInfoRepository.findById(userNo).orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
-
-        StringDateTrans trans = new StringDateTrans(date);
-        HealthStat healthStat = healthStatRepository.findByUserNoAndCreateTimeBetween(userNo, trans.getStartDateTime(), trans.getEndDateTime())
+        HealthStat healthStat = healthStatRepository.findTopByUserNoOrderByCreateTimeDesc(userNo)
                 .orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
         float value = (healthStat.getWeight() / (healthStat.getHeight() * healthStat.getHeight())) * 100f;
 

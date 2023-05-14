@@ -4,6 +4,8 @@ import com.secui.healthone.domain.healthAdvice.dto.HealthAdviceDto;
 import com.secui.healthone.domain.healthAdvice.service.HealthAdviceService;
 import com.secui.healthone.global.error.response.ErrorResponse;
 import com.secui.healthone.global.response.RestApiResponse;
+import com.secui.healthone.global.util.HeaderUtil;
+import com.secui.healthone.global.util.TokenService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -17,23 +19,24 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/health-adivce")
+@RequestMapping("/api/health-advice")
 @Tag(name = "HealthAdvice", description = "회원 조언 컨트롤러")
 public class HealthAdviceController {
 
     private final HealthAdviceService healthAdviceService;
+    private final TokenService tokenService;
 
-    @Operation(summary = "회원 건강 조언 조회", description = "회원 건강 조언 조회 API", tags = {"HealthAdvice"})
+    @Operation(summary = "회원 건강 조언 조회", description = "회원 건강 조언 조회 (가장 최신) API", tags = {"HealthAdvice"})
     @ApiResponses({@ApiResponse(responseCode = "200", description = "회원 건강 조언 조회 성공", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = HealthAdviceDto.class)),
             @Content(mediaType = "*/*", schema = @Schema(implementation = ErrorResponse.class)) }), })
     @SecurityRequirement(name = "bearerAuth")
-    @Parameter(name = "Authorization", description = "회원 Access Token", required = false, example = "Bearer access_token")
-    @Parameter(name = "date", description = "건강 조언 조회 날짜", example = "2023-05-12T00:00:00")
+    @Parameter(name = "Authorization", description = "회원 Access Token", example = "Bearer access_token")
     @GetMapping
-    public RestApiResponse<HealthAdviceDto> getHealthAdvice(@RequestHeader(required = false) String Authorization, @RequestParam String date) {
-        Integer userNo = 1;
-        HealthAdviceDto healthAdviceResDto = healthAdviceService.getHealthAdvice(date, userNo);
+    public RestApiResponse<HealthAdviceDto> getHealthAdvice(@RequestHeader(required = false) String Authorization) {
+        String accessToken = HeaderUtil.getAccessTokenString(Authorization);
+        Integer userNo = tokenService.getUserNo(accessToken);
+        HealthAdviceDto healthAdviceResDto = healthAdviceService.getHealthAdvice(userNo);
         return new RestApiResponse<>("회원 건강 조언 조회 성공", healthAdviceResDto);
     }
 

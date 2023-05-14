@@ -6,11 +6,8 @@ import com.secui.healthone.domain.walk.dto.WalkResDto;
 import java.util.List;
 
 public interface WalkService {
-
-    List<WalkResDto> getWalkEntitiesForSevenDays(String date);
-
-    List<WalkResDto> getDetailedWalkInfo(String date);
+    List<WalkResDto> getWalkEntitiesForSevenDays(String date, Integer userNo);
+    List<WalkResDto> getDetailedWalkInfo(String date, Integer userNo);
     WalkResDto insertWalk(WalkReqDto walkReqDto);
-
-    void deleteWalk(Integer no);
+    void deleteWalk(Integer no, Integer userNo);
 }

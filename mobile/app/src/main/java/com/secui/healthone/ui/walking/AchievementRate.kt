@@ -33,19 +33,6 @@ fun AchievementRate(percentage: Float, navController: NavController) {
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.width(48.dp))
-            Box(
-                modifier = Modifier
-                    .clickable { navController.navigate(PageRoutes.WalkingDetail.route) }
-                    .padding(8.dp)
-            ) {
-                Text(
-                    buildAnnotatedString {
-                        withStyle(style = SpanStyle(fontSize = 24.sp, color = AppColors.black)) {
-                            append(">")
-                        }
-                    }
-                )
-            }
         }
         Spacer(modifier = Modifier.height(16.dp))
         ProgressBar(percentage = percentage)

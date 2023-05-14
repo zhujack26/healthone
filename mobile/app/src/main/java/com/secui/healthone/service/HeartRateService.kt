@@ -10,10 +10,10 @@ import retrofit2.http.Query
 
 interface HeartRateService {
 
-    @GET("/api/heart-rate")
+    @GET("api/heart-rate")
     suspend fun getHeartRateList(@Query("page") page:Int, @Query("size") size:Int): Response<ResponseBody>
 
-    @POST("/api/heart-rate")
+    @POST("api/heart-rate")
     suspend fun writeHeartRate(@Body heartWrite:HeartWrite):Response<ResponseBody>
 
 

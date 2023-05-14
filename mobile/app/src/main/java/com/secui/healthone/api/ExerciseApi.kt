@@ -4,6 +4,7 @@ import com.secui.healthone.data.MealPlan.AddExercise
 import com.secui.healthone.data.MealPlan.ExerciseList
 import com.secui.healthone.data.MealPlan.ExerciseListResponse
 import com.secui.healthone.data.MealPlan.ExerciseSearchResponse
+import okhttp3.Interceptor
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -38,16 +39,25 @@ interface ExerciseApi {
         fun create(): ExerciseApi {
             val logger = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
 
+            val authInterceptor = Interceptor { chain ->
+                val newRequest = chain.request().newBuilder()
+                    .addHeader("Authorization", "Bearer $JWT_TOKEN")
+                    .build()
+                chain.proceed(newRequest)
+            }
+
             val client = OkHttpClient.Builder()
                 .addInterceptor(logger)
+                .addInterceptor(authInterceptor)
                 .build()
 
-            return Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(ExerciseApi::class.java)
+                val retrofit = Retrofit.Builder()
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .baseUrl("http://meal.apihealthone.com/")
+                    .client(client)
+                    .build()
+
+                return retrofit.create(ExerciseApi::class.java)
         }
     }
 }

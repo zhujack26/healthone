@@ -33,6 +33,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.secui.healthone.data.MealPlan.AddExercise
 import com.secui.healthone.data.MealPlan.ExerciseSearch
 import com.secui.healthone.constant.AppColors
+import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.ui.mealplanpage.ExerciseInput.ExerciseSearchResults
 import com.secui.healthone.ui.mealplanpage.MealInput.SearchBar
 import com.secui.healthone.constant.PageRoutes
@@ -43,6 +44,7 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 fun ExerciseInputPage(navController: NavController) {
+    HealthOnePage.pageTitle.value="운동 기록"
     val viewModel: ExerciseViewModel = viewModel()
     val searchResults: State<List<ExerciseSearch>> = viewModel.searchResults.observeAsState(emptyList())
     Log.d("ExerciseInputPage", "searchResults: ${searchResults.value}") // 로그 추가
@@ -76,9 +78,6 @@ fun ExerciseInputPage(navController: NavController) {
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        item {
-            Spacer(modifier = Modifier.height(16.dp))
-        }
         item {
             Card(modifier = Modifier.fillMaxWidth(), elevation = 4.dp) {
                 Row(

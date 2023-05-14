@@ -16,13 +16,18 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
+import com.secui.healthone.constant.AppColors
+import com.secui.healthone.ui.datacollectpage.ImageUri.saveNicknameToPrefs
+
 
 @Composable
 fun DataCollectFirstPage(navController: NavController) {
+    val context = LocalContext.current
+    val (nickname, setNickname) = remember { mutableStateOf("") }
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(20.dp),
     ) {
         item {
             // 인덱스 컴포넌트
@@ -50,7 +55,7 @@ fun DataCollectFirstPage(navController: NavController) {
             ) {
                 Text(
                     text = "프로필 사진",
-                    fontSize = 12.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                 )
                 PhotoPicker()
@@ -60,7 +65,7 @@ fun DataCollectFirstPage(navController: NavController) {
             GenderSelection()
             Spacer(modifier = Modifier.height(16.dp))
             // 닉네임 컴포넌트
-            NicknameInput()
+            NicknameInput(nicknameState = nickname, onNicknameChange = setNickname)
             Spacer(modifier = Modifier.height(16.dp))
 
             // 생년월일 컴포넌트
@@ -83,7 +88,9 @@ fun DataCollectFirstPage(navController: NavController) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
-                NextButton(navController)
+                NextButton(navController, onClick = {
+                    saveNicknameToPrefs(context, nickname)
+                })
             }
             Spacer(modifier = Modifier.height(16.dp))
 

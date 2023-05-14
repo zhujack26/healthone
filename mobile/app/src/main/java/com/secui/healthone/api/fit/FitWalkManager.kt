@@ -11,12 +11,16 @@ import com.google.android.gms.fitness.data.DataSource
 import com.google.android.gms.fitness.data.DataType
 import com.google.android.gms.fitness.data.Field
 import com.google.android.gms.fitness.request.DataReadRequest
+import kotlinx.coroutines.suspendCancellableCoroutine
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.Calendar
 import java.util.Date
 import java.util.concurrent.TimeUnit
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 import kotlin.math.max
 
 
@@ -38,6 +42,8 @@ class FitWalkManager {
 
             return walkValue;
         }
+
+
 
         //일일 거리
         fun readDistanceData(context: Context, account: GoogleSignInAccount): MutableState<Float> {
@@ -164,5 +170,93 @@ class FitWalkManager {
                 }
             return totalSteps
         }
+
+        //시간 단위의 걸음수
+        suspend fun readHourlySteps(
+            context: Context,
+            account: GoogleSignInAccount,
+            date: LocalDate
+        ): List<Int> =
+            suspendCoroutine { continuation ->
+                val zonedDateTime = date.atStartOfDay(ZoneId.systemDefault())
+                val startTime = zonedDateTime.toInstant().toEpochMilli()
+                val endTime = zonedDateTime.plusDays(1).toInstant().toEpochMilli()
+
+                val readRequest = DataReadRequest.Builder()
+                    .aggregate(DataType.TYPE_STEP_COUNT_DELTA, DataType.AGGREGATE_STEP_COUNT_DELTA)
+                    .bucketByTime(1, TimeUnit.HOURS)
+                    .setTimeRange(startTime, endTime, TimeUnit.MILLISECONDS)
+                    .build()
+
+                Fitness.getHistoryClient(context, account)
+                    .readData(readRequest)
+                    .addOnSuccessListener { response ->
+                        val stepsData = mutableListOf<Int>()
+                        for (bucket in response.buckets) {
+                            val dataSets = bucket.dataSets
+                            for (dataSet in dataSets) {
+                                for (dp in dataSet.dataPoints) {
+                                    for (field in dp.dataType.fields) {
+                                        val value = dp.getValue(field)
+                                        stepsData.add(value.asInt())
+                                    }
+                                }
+                            }
+                        }
+                        continuation.resume(stepsData)
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e(TAG, "Failed to read hourly steps data", e)
+                        continuation.resumeWithException(e)
+                    }
+            }
+
+        suspend fun getPastSixDaysSteps(context: Context, account: GoogleSignInAccount): List<Int> {
+            val currentDate = LocalDate.now()
+            val pastWeekSteps = mutableListOf<Int>()
+
+            for (i in 1..6) {
+                val date = currentDate.minusDays(i.toLong())
+                val steps = readDailySteps(context, account, date)
+                pastWeekSteps.add(steps)
+            }
+
+            return pastWeekSteps
+        }
+
+        private suspend fun readDailySteps(context: Context, account: GoogleSignInAccount, date: LocalDate): Int =
+            suspendCoroutine { continuation ->
+                val zonedDateTime = date.atStartOfDay(ZoneId.systemDefault())
+                val startTime = zonedDateTime.toInstant().toEpochMilli()
+                val endTime = zonedDateTime.plusDays(1).toInstant().toEpochMilli()
+
+                val readRequest = DataReadRequest.Builder()
+                    .aggregate(DataType.TYPE_STEP_COUNT_DELTA, DataType.AGGREGATE_STEP_COUNT_DELTA)
+                    .bucketByTime(1, TimeUnit.DAYS)
+                    .setTimeRange(startTime, endTime, TimeUnit.MILLISECONDS)
+                    .build()
+
+                Fitness.getHistoryClient(context, account)
+                    .readData(readRequest)
+                    .addOnSuccessListener { response ->
+                        val stepsData = mutableListOf<Int>()
+                        for (bucket in response.buckets) {
+                            val dataSets = bucket.dataSets
+                            for (dataSet in dataSets) {
+                                for (dp in dataSet.dataPoints) {
+                                    for (field in dp.dataType.fields) {
+                                        val value = dp.getValue(field)
+                                        stepsData.add(value.asInt())
+                                    }
+                                }
+                            }
+                        }
+                        continuation.resume(stepsData.sum())
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e(TAG, "Failed to read daily steps data", e)
+                        continuation.resumeWithException(e)
+                    }
+            }
     }
 }

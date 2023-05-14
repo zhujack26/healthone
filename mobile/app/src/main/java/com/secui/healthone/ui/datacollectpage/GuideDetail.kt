@@ -7,6 +7,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.secui.healthone.R
+import com.secui.healthone.constant.AppColors
 import com.secui.healthone.constant.PageRoutes
 import kotlinx.coroutines.delay
 
@@ -78,6 +81,9 @@ fun GuideDetail(navController: NavController) {
                         painter = painterResource(id = R.drawable.ic_check),
                         contentDescription = "check",
                         modifier = Modifier
+                            .padding(
+                                top = 8.dp
+                            )
                             .width(16.dp)
                             .height(16.dp),
                     )
@@ -99,6 +105,9 @@ fun GuideDetail(navController: NavController) {
                         painter = painterResource(id = R.drawable.ic_check),
                         contentDescription = "check",
                         modifier = Modifier
+                            .padding(
+                                top = 8.dp
+                            )
                             .width(16.dp)
                             .height(16.dp),
                     )
@@ -110,26 +119,30 @@ fun GuideDetail(navController: NavController) {
                     )
                 }
             }
-                Spacer(modifier = Modifier.height(48.dp))
+                Spacer(modifier = Modifier.height(56.dp))
             if (fifthText) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Box(
+                    Button(
+                        onClick = {
+                            navController.navigate(PageRoutes.OverView.route)
+                        },
                         modifier = Modifier
                             .width(280.dp)
                             .height(56.dp)
                             .clip(RoundedCornerShape(32.dp))
-                            .background(colorResource(id = R.color.mono200))
-                            .clickable { navController.navigate(PageRoutes.OverView.route) },
-                        contentAlignment = Alignment.Center
+                            .background(AppColors.mono200),
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = AppColors.green200
+                        )
                     ) {
                         Text(
-                            text = "시작하기",
+                            text = "다음",
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Bold,
-                            color = colorResource(id = R.color.mono400)
+                            color = AppColors.white
                         )
                     }
                 }

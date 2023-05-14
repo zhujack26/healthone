@@ -84,11 +84,11 @@ fun LoginPage(navController: NavController) {
     ){
         Box(
             modifier = Modifier
-                .weight(0.70f)
+                .weight(0.67f)
                 .fillMaxWidth()
         ) {
             Image(
-                painter = painterResource(R.drawable.onboarding_first),
+                painter = painterResource(R.drawable.onboarding_second),
                 contentDescription = "Animation",
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.FillWidth,

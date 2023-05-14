@@ -1,10 +1,14 @@
 package com.secui.healthone.ui.common
 
+import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.secui.healthone.compose.AlarmSettingPage
 import com.secui.healthone.compose.AlertPage
 import com.secui.healthone.compose.challenge.PopularDetailPage
@@ -16,17 +20,23 @@ import com.secui.healthone.compose.MealPlan.MealInputPage
 import com.secui.healthone.compose.MealPlanPage
 import com.secui.healthone.compose.MyPage
 import com.secui.healthone.compose.OverViewPage
+import com.secui.healthone.compose.Setting.UserInformDeletePage
+import com.secui.healthone.compose.Setting.UserInformDownPage
 import com.secui.healthone.compose.SettingPage
-import com.secui.healthone.compose.WalkingDetailPage
-import com.secui.healthone.compose.WalkingPage
+import com.secui.healthone.compose.walking.WalkingDetailPage
+import com.secui.healthone.compose.walking.WalkingPage
 import com.secui.healthone.compose.healthstatus.HealthHelpPage
 import com.secui.healthone.compose.healthstatus.HealthInputPage
 import com.secui.healthone.compose.healthstatus.HealthStatusPage
+import com.secui.healthone.compose.signup.DataCollectFirstPage
+import com.secui.healthone.compose.signup.DataCollectSecondPage
 import com.secui.healthone.compose.sleep.SleepPage
 import com.secui.healthone.constant.PageRoutes
+import java.time.LocalDate
 
 @Composable
-fun TopBarNavigation(navController: NavHostController) {
+fun TopBarNavigation(navController: NavHostController, context: Context) {
+    val account = GoogleSignIn.getLastSignedInAccount(context)
     Column {
         NavHost(navController, startDestination = PageRoutes.OverView.route) {
             composable(PageRoutes.OverView.route) {
@@ -62,8 +72,11 @@ fun TopBarNavigation(navController: NavHostController) {
             composable(PageRoutes.Walking.route) {
                 WalkingPage(navController)
             }
-            composable(PageRoutes.WalkingDetail.route) {
-                WalkingDetailPage(navController)
+            composable("walkingDetail/{date}", arguments = listOf(navArgument("date") { type = NavType.StringType })) { backStackEntry ->
+                val date = LocalDate.parse(backStackEntry.arguments?.getString("date"))
+                account?.let {
+                    WalkingDetailPage(navController = navController, context = context, account = it, date = date)
+                }
             }
             composable(PageRoutes.PopularDetail.route) {
                 PopularDetailPage(navController)
@@ -82,6 +95,18 @@ fun TopBarNavigation(navController: NavHostController) {
             }
             composable(PageRoutes.HealthHelp.route){
                 HealthHelpPage(navController = navController)
+            }
+            composable(PageRoutes.UserInformDelete.route){
+                UserInformDeletePage()
+            }
+            composable(PageRoutes.UserInformDown.route){
+                UserInformDownPage()
+            }
+            composable(PageRoutes.DataCollectFirst.route) {
+                DataCollectFirstPage(navController)
+            }
+            composable(PageRoutes.DataCollectSecond.route) {
+                DataCollectSecondPage(navController)
             }
         }
     }

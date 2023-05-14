@@ -16,26 +16,37 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.secui.healthone.R
 import com.secui.healthone.constant.AppColors
+import com.secui.healthone.ui.datacollectpage.ImageUri.loadImageUri
 
 @Composable
 fun DrawerButton(
-    text: String,
+    text: String? = null,
     icon: Int? = null,
     iconColor: Color? = null,
+    showImage: Boolean = false,
     onClick: () -> Unit
 ) {
+    val context = LocalContext.current
+    val photoUri = remember { mutableStateOf(if (showImage) loadImageUri(context) else null) }
+    val displayName = if (showImage && text.isNullOrEmpty()) "프로필을 완성해보세요" else text
     val textColor = AppColors.black
+
     TextButton(
         onClick = onClick,
         modifier = Modifier
@@ -51,11 +62,17 @@ fun DrawerButton(
                 )
                 Spacer(modifier = Modifier.width(8.dp))
             }
-            if (text == "박싸피") {
-                Column(horizontalAlignment = Alignment.Start) {
-                    Box(modifier = Modifier.padding(5.dp)) {
+            if (photoUri.value != null && showImage) {
+                val painter = rememberAsyncImagePainter(
+                    ImageRequest
+                        .Builder(context)
+                        .data(data = photoUri.value)
+                        .build()
+                )
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Box(modifier = Modifier.padding(5.dp), contentAlignment = Alignment.Center) {
                         Image(
-                            painter = painterResource(id = R.drawable.onboarding_first),
+                            painter = painter,
                             contentDescription = null,
                             modifier = Modifier
                                 .padding(4.dp)
@@ -68,15 +85,16 @@ fun DrawerButton(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text,
-                        fontSize = 20.sp,
+                        displayName ?: "",
+                        fontSize = 16.sp,
                         color = textColor,
                         fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(bottom = 16.dp)
                     )
                 }
             } else {
                 Text(
-                    text,
+                    displayName ?: "",
                     fontSize = 20.sp,
                     color = textColor,
                     fontWeight = FontWeight.Bold,

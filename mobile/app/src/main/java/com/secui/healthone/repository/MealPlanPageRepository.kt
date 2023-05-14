@@ -1,6 +1,6 @@
 package com.secui.healthone.repository
 
-import com.secui.healthone.viewmodel.CaloriesApi
+import com.secui.healthone.api.MealApi
 import java.util.Calendar
 
 data class CaloriesData(
@@ -52,7 +52,7 @@ suspend fun fetchCaloriesData(date: String): CaloriesData? {
 
 
 suspend fun fetchCalories(date: String): CaloriesApiResponse {
-    val caloriesApi = CaloriesApi.create()
+    val caloriesApi = MealApi.create()
     val response = caloriesApi.getCalories(date)
 
     if (response.isSuccessful) {

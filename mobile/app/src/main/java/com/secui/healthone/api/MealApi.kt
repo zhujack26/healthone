@@ -19,42 +19,20 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface MealApi {
-    @POST("/api/meal")
+    @POST("/api/meal-record")
     suspend fun addMeal(@Body meal: Meal): Response<Void>
-    @DELETE("api/meal")
+    @DELETE("api/meal-record")
     suspend fun deleteMeal(@Query("no") mealNo: Int): Response<Unit>
     @GET("api/calorie")
     suspend fun getCalories(
         @Query("date") date: String
     ): Response<CaloriesApiResponse>
-    @GET("api/meal/list")
+    @GET("api/meal-record/list")
     suspend fun getMealList(
         @Query("date") date: String,
         @Query("userno") userNo: Int
     ): Response<MealResponse<List<MealData>>>
 
-
-    companion object {
-        private const val BASE_URL = "http://meal.apihealthone.com/"
-
-        fun create(): MealApi {
-            val logger = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
-
-            val client = OkHttpClient.Builder()
-                .addInterceptor(logger)
-                .build()
-
-            return Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(MealApi::class.java)
-        }
-    }
-}
-
-interface FoodApi {
     @GET("api/food/search")
     suspend fun searchFood(
         @Query("name") query: String,
@@ -62,15 +40,31 @@ interface FoodApi {
         @Query("size") size: Int
     ): retrofit2.Response<FoodResponse>
 
-    companion object {
-        private const val BASE_URL = "http://meal.apihealthone.com/"
 
-        fun create(): FoodApi {
-            return Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+    companion object {
+        fun create(): MealApi {
+            val logger = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
+
+            val authInterceptor = Interceptor { chain ->
+                val newRequest = chain.request().newBuilder()
+                    .addHeader("Authorization", "Bearer $JWT_TOKEN")
+                    .build()
+
+                chain.proceed(newRequest)
+            }
+
+            val client = OkHttpClient.Builder()
+                .addInterceptor(logger)
+                .addInterceptor(authInterceptor)
                 .build()
-                .create(FoodApi::class.java)
+
+            val retrofit = Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl("http://meal.apihealthone.com/")
+                .client(client)
+                .build()
+
+            return retrofit.create(MealApi::class.java)
         }
     }
 }

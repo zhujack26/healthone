@@ -42,6 +42,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.data.MealPlan.Meal
 import com.secui.healthone.data.MealPlan.MealType
 import kotlinx.coroutines.launch
@@ -49,6 +50,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 @Composable
 fun MealInputPage(navController: NavController) {
+    HealthOnePage.pageTitle.value="식단 기록"
     val viewModel: FoodViewModel = viewModel()
     val searchResults: State<List<Food>> = viewModel.searchResults.observeAsState(emptyList())
     var showWarning by remember { mutableStateOf(false) }
@@ -89,9 +91,6 @@ fun MealInputPage(navController: NavController) {
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        item {
-            Spacer(modifier = Modifier.height(16.dp))
-        }
         item {
             Card(modifier = Modifier.fillMaxWidth(), elevation = 4.dp) {
                 Row(
@@ -193,7 +192,9 @@ fun MealInputPage(navController: NavController) {
                 }
             }
         }
-
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
+        }
         item {
             Column(
                 modifier = Modifier
@@ -215,7 +216,6 @@ fun MealInputPage(navController: NavController) {
                         tint = Color.White
                     )
                 }
-
                 // "추가하기" 텍스트
                 Text("직접 추가하기", textAlign = TextAlign.Center, color = AppColors.green200)
             }

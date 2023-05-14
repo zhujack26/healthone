@@ -29,12 +29,10 @@ fun SettingPage(navController: NavController) {
         val textStyle = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.Black)
         val arrow = ">"
         val settingsItems = listOf(
-            "기본설정 및 목표 변경하기" to "basic_settings",
+            "기본설정 및 목표 변경하기" to PageRoutes.DataCollectFirst.route,
             "알림 설정" to PageRoutes.AlarmSetting.route,
-            "이용약관" to "terms",
-            "개인정보 보호방침" to "privacy",
-            "개인 데이터 다운로드" to "data_download",
-            "개인 데이터 삭제" to "data_deletion",
+            "개인 데이터 다운로드" to PageRoutes.UserInformDown.route,
+            "개인 데이터 삭제" to PageRoutes.UserInformDelete.route,
             "로그아웃" to "logout",
             "회원탈퇴" to "withdraw"
         )

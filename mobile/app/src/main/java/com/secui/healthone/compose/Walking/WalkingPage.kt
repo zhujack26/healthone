@@ -26,6 +26,8 @@ import com.secui.healthone.compose.factory.YouTubeViewModelFactory
 import com.secui.healthone.data.ApiResponse
 import com.secui.healthone.service.YouTubeService
 import com.secui.healthone.viewmodel.ContentViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -35,12 +37,6 @@ fun WalkingPage(
 ){
 
     val context = LocalContext.current
-    //test
-//    val preferencesManager = PreferencesManager(context)
-//    val sleepTime = preferencesManager.getSleepTime()
-//    val wakeTime = preferencesManager.getWakeTime()
-//    Log.d("Sleeptime", "Sleep time : ${sleepTime}")
-//    Log.d("waketime", "wake time : ${wakeTime}")
     val account = FitAPIConfig.getGoogleSignInAccount(context = context)
 
     // 오늘 걸음수
@@ -81,18 +77,16 @@ fun WalkingPage(
     val factory = YouTubeViewModelFactory(youtubeService)
 
     val contentViewModel: ContentViewModel = viewModel(factory = factory)
-//    val viewModel: WalkViewModel = viewModel()
     val walkDataListState = remember { mutableStateOf<List<Int>>(emptyList()) }
 
-//    LaunchedEffect(Unit) {
-//        val pastWeekWalkData = viewModel.getPastWeekWalkData()
-//        walkDataListState.value = List(7) { index -> pastWeekWalkData.getOrNull(index) ?: 0 }
-//    }
+    LaunchedEffect(Unit) {
+        val pastSixDaysSteps = withContext(Dispatchers.IO) { FitWalkManager.getPastSixDaysSteps(context, account) }
+        walkDataListState.value = listOf(todaySteps) + pastSixDaysSteps
+    }
     val videos = contentViewModel.videos.value
     LaunchedEffect(Unit) {
         contentViewModel.searchVideos()
     }
-    val steps = walkDataListState.value + todaySteps
 
 //    val walkData = WalkData(
 //        userNo = 1, // 실제 사용자 번호로

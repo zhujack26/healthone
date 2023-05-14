@@ -60,8 +60,10 @@ fun WalkingDetailPage(navController: NavController, context: Context, account: G
                 .padding(32.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            stepsData.value.forEachIndexed { index, steps: Int ->
-                val barHeight = steps * 0.07f
+            repeat(24) { index ->
+                val steps = stepsData.value.getOrNull(index)
+                val barHeight = steps?.toFloat()?.times(0.07f) ?: 0f
+
                 Column(verticalArrangement = Arrangement.Bottom, modifier = Modifier.height(100.dp)) {
                     Box(
                         modifier = Modifier

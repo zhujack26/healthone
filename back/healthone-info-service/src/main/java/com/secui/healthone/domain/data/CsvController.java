@@ -49,21 +49,21 @@ public class CsvController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @Operation(summary = "수면 데이터 다운", description = "수면 데이터를 다운로드 한다", tags = {"check-data-download"})
-//    @ApiResponses({@ApiResponse(responseCode = "200", description = "Sleep 데이터 다운로드 성공", content = {
-//            @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
-//    @SecurityRequirement(name = "bearerAuth")
-//    @Parameter(name = "Authorization", description = "회원 Access Token", example = "Bearer access_token")
-//    @GetMapping(value = "/sleep", produces = "text/csv")
-//    public ResponseEntity<?> downloadHeartRateData(@RequestHeader(required = false) String Authorization, HttpServletResponse response) throws IOException {
-//        String accessToken = HeaderUtil.getAccessTokenString(Authorization);
-//        Integer userNo = tokenService.getUserNo(accessToken);
-//        String exportFileName = "Sleep-" + LocalDateTime.now() + ".txt";
-//        response.setContentType("text/csv; charset=UTF-8");
-//        response.setCharacterEncoding("UTF-8");
-//        response.setHeader("Content-disposition", "attachment;filename=" + exportFileName);
-//        csvService.writeHeartRateDtoToCsv(response, userNo);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+    @Operation(summary = "회원 건강 기록 데이터 다운", description = "회원 건강 기록 다운로드 한다", tags = {"check-data-download"})
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "HealthStat 데이터 다운로드 성공", content = {
+            @Content(mediaType = "*/*", schema = @Schema(implementation = RestApiResponse.class)) }), })
+    @SecurityRequirement(name = "bearerAuth")
+    @Parameter(name = "Authorization", description = "회원 Access Token", example = "Bearer access_token")
+    @GetMapping(value = "/sleep", produces = "text/csv")
+    public ResponseEntity<?> downloadHeartRateData(@RequestHeader(required = false) String Authorization, HttpServletResponse response) throws IOException {
+        String accessToken = HeaderUtil.getAccessTokenString(Authorization);
+        Integer userNo = tokenService.getUserNo(accessToken);
+        String exportFileName = "HealthStat-" + LocalDateTime.now() + ".txt";
+        response.setContentType("text/csv; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setHeader("Content-disposition", "attachment;filename=" + exportFileName);
+        csvService.writeHealthStatDtoToCsv(response, userNo);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }

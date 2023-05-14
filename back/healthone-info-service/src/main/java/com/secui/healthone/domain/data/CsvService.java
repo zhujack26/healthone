@@ -3,6 +3,7 @@ package com.secui.healthone.domain.data;
 import com.opencsv.CSVWriter;
 import com.secui.healthone.domain.healthInfo.entity.HealthInfo;
 import com.secui.healthone.domain.healthInfo.repository.HealthInfoRepository;
+import com.secui.healthone.domain.healthStat.entity.HealthStat;
 import com.secui.healthone.domain.healthStat.repository.HealthStatRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -48,20 +49,29 @@ public class CsvService {
         }
     }
 
-//    public HttpServletResponse writeSleepDtoToCsv(HttpServletResponse response, Integer userNo) throws IOException {
-//        try (CSVWriter writer = new CSVWriter(new OutputStreamWriter(response.getOutputStream(), StandardCharsets.UTF_8))) {
-//            writer.writeNext(new String[]{"식별번호", "유저식별번호", "기록시간", "취침시간", "기상시간"});
-//            List<Sleep> sleepList = sleepRepository.findAllByUserNo(userNo);
-//            for (Sleep entity : sleepList) {
-//                writer.writeNext(new String[]{
-//                        String.valueOf(entity.getNo()),
-//                        String.valueOf(entity.getUserNo()),
-//                        entity.getCreateTime().toString(),
-//                        String.valueOf(entity.getStartSleepTime()),
-//                        String.valueOf(entity.getEndSleepTime())
-//                });
-//            }
-//            return response;
-//        }
-//    }
+    public HttpServletResponse writeHealthStatDtoToCsv(HttpServletResponse response, Integer userNo) throws IOException {
+        try (CSVWriter writer = new CSVWriter(new OutputStreamWriter(response.getOutputStream(), StandardCharsets.UTF_8))) {
+            writer.writeNext(new String[]
+                    {"헬스 기록 식별번호", "유저식별번호", "기록시간", "키", "체중", "BMI", "체지방률", "골격근량", "최저혈압" , "최고혈압", "중성지방", "공복혈당", "HDL 콜레스테롤"});
+            List<HealthStat> healthStatList = healthStatRepository.findAllByUserNo(userNo);
+            for (HealthStat entity : healthStatList) {
+                writer.writeNext(new String[]{
+                        String.valueOf(entity.getNo()),
+                        String.valueOf(entity.getUserNo()),
+                        entity.getCreateTime().toString(),
+                        String.valueOf(entity.getHeight()),
+                        String.valueOf(entity.getWeight()),
+                        String.valueOf(entity.getBmi()),
+                        String.valueOf(entity.getBodyFatPercentage()),
+                        String.valueOf(entity.getWaistMeasurement()),
+                        String.valueOf(entity.getLowBloodPressure()),
+                        String.valueOf(entity.getHighBloodPressure()),
+                        String.valueOf(entity.getTg()),
+                        String.valueOf(entity.getFbg()),
+                        String.valueOf(entity.getHdlCholesterol())
+                });
+            }
+            return response;
+        }
+    }
 }

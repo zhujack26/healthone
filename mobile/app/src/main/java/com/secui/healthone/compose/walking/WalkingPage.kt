@@ -19,6 +19,7 @@ import com.secui.healthone.api.fit.FitAPIConfig
 import com.secui.healthone.api.fit.FitWalkManager
 import androidx.compose.runtime.mutableStateOf
 import com.secui.healthone.compose.factory.YouTubeViewModelFactory
+import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.service.YouTubeService
 import com.secui.healthone.viewmodel.ContentViewModel
 import kotlinx.coroutines.Dispatchers
@@ -30,7 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 fun WalkingPage(
     navController: NavController,
 ){
-
+    HealthOnePage.pageTitle.value="걸음수"
     val context = LocalContext.current
     val account = FitAPIConfig.getGoogleSignInAccount(context = context)
 

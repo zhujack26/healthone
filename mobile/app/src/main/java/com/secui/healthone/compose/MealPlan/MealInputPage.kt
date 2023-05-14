@@ -42,6 +42,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.data.MealPlan.Meal
 import com.secui.healthone.data.MealPlan.MealType
 import kotlinx.coroutines.launch
@@ -49,6 +50,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 @Composable
 fun MealInputPage(navController: NavController) {
+    HealthOnePage.pageTitle.value="식단 기록"
     val viewModel: FoodViewModel = viewModel()
     val searchResults: State<List<Food>> = viewModel.searchResults.observeAsState(emptyList())
     var showWarning by remember { mutableStateOf(false) }

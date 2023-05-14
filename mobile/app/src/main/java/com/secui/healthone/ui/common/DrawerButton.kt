@@ -28,6 +28,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.secui.healthone.R
 import com.secui.healthone.constant.AppColors
 import com.secui.healthone.ui.datacollectpage.ImageUri.loadImageUri
@@ -58,11 +60,17 @@ fun DrawerButton(
                 )
                 Spacer(modifier = Modifier.width(8.dp))
             }
-            if (text == "박싸피") {
+            if (photoUri.value != null) {
+                val painter = rememberAsyncImagePainter(
+                    ImageRequest
+                        .Builder(context)
+                        .data(data = photoUri.value)
+                        .build()
+                )
                 Column(horizontalAlignment = Alignment.Start) {
                     Box(modifier = Modifier.padding(5.dp)) {
                         Image(
-                            painter = painterResource(id = R.drawable.onboarding_first),
+                            painter = painter,
                             contentDescription = null,
                             modifier = Modifier
                                 .padding(4.dp)

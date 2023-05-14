@@ -3,9 +3,11 @@ package com.secui.healthone.ui.common
 import android.content.Context
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -98,6 +100,7 @@ fun TopBar(context: Context) {
                     .width(272.dp)
                     .fillMaxHeight()
                     .background(AppColors.white)
+                    .border(2.dp, AppColors.mono200) // 왼쪽 경계선 추가
                     .align(Alignment.TopEnd)
             ) {
                 DrawerButton(
@@ -107,7 +110,7 @@ fun TopBar(context: Context) {
                         navController.navigate(PageRoutes.My.route)
                     }
                 )
-                Divider(color = AppColors.mono700, thickness = 1.dp)
+                Divider(color = AppColors.mono200, thickness = 1.dp)
                 DrawerButton(
                     text = "메인",
                     icon = R.drawable.ic_home,
@@ -117,7 +120,7 @@ fun TopBar(context: Context) {
                         navController.navigate(PageRoutes.OverView.route)
                     }
                 )
-                Divider(color = AppColors.mono700, thickness = 1.dp)
+                Divider(color = AppColors.mono200, thickness = 1.dp)
                 DrawerButton(
                     text = "심박수",
                     icon = R.drawable.ic_heart,
@@ -127,7 +130,7 @@ fun TopBar(context: Context) {
                         navController.navigate(PageRoutes.HeartRate.route)
                     }
                 )
-                Divider(color = AppColors.mono700, thickness = 1.dp)
+                Divider(color = AppColors.mono200, thickness = 1.dp)
                 DrawerButton(
                     text = "식단",
                     icon = R.drawable.ic_food,
@@ -137,7 +140,7 @@ fun TopBar(context: Context) {
                         navController.navigate(PageRoutes.MealPlan.route)
                     }
                 )
-                Divider(color = AppColors.mono700, thickness = 1.dp)
+                Divider(color = AppColors.mono200, thickness = 1.dp)
                 DrawerButton(
                     text = "수면",
                     icon = R.drawable.ic_sleep,
@@ -147,7 +150,7 @@ fun TopBar(context: Context) {
                         navController.navigate(PageRoutes.Sleep.route)
                     }
                 )
-                Divider(color = AppColors.mono700, thickness = 1.dp)
+                Divider(color = AppColors.mono200, thickness = 1.dp)
                 DrawerButton(
                     text = "걸음수",
                     icon = R.drawable.ic_walking_svg,
@@ -157,7 +160,7 @@ fun TopBar(context: Context) {
                         navController.navigate(PageRoutes.Walking.route)
                     }
                 )
-                Divider(color = AppColors.mono700, thickness = 1.dp)
+                Divider(color = AppColors.mono200, thickness = 1.dp)
                 DrawerButton(
                     text = "건강상태",
                     icon = R.drawable.ic_health_info,
@@ -167,7 +170,7 @@ fun TopBar(context: Context) {
                         navController.navigate(PageRoutes.HealthStatus.route)
                     }
                 )
-                Divider(color = AppColors.mono700, thickness = 1.dp)
+                Divider(color = AppColors.mono200, thickness = 1.dp)
                 DrawerButton(
                     text = "챌린지",
                     icon = R.drawable.ic_fire,
@@ -177,7 +180,7 @@ fun TopBar(context: Context) {
                         navController.navigate(PageRoutes.Challenge.route)
                     }
                 )
-                Divider(color = AppColors.mono700, thickness = 1.dp)
+                Divider(color = AppColors.mono200, thickness = 1.dp)
                 DrawerButton(
                     text = "설정",
                     icon = R.drawable.ic_setting,
@@ -187,7 +190,7 @@ fun TopBar(context: Context) {
                         navController.navigate(PageRoutes.Setting.route)
                     }
                 )
-                Divider(color = AppColors.mono700, thickness = 1.dp)
+                Divider(color = AppColors.mono200, thickness = 1.dp)
             }
         }
 }

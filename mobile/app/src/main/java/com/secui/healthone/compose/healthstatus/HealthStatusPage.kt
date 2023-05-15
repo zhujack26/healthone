@@ -54,6 +54,7 @@ fun HealthStatusPage(navController: NavHostController) {
     LaunchedEffect(selectedDateString) {
         viewModel.fetchHealthRecords(selectedDateString)
     }
+
     val defaultHealthStatus = HealthStatus(
         no = null,
         userNo = 0,

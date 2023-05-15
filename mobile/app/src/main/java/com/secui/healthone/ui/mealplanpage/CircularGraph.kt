@@ -96,7 +96,7 @@ fun CircularGraph(
             contentAlignment = Alignment.Center,
             modifier = Modifier
                 .matchParentSize()
-                .offset(y = 10.dp) // 박스의 위치를 아래로 내립니다.
+                .offset(y = 10.dp)
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,

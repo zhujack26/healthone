@@ -36,8 +36,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Healthone"
-            android:windowSoftInputMode="adjustResize"><!--키보드에 따른 화면 조정-->
+            android:theme="@style/Theme.Healthone">
         </activity>
         <!-- 스플래쉬 화면 -->
         <activity

@@ -4,6 +4,7 @@ import com.secui.healthone.data.MealPlan.FoodResponse
 import com.secui.healthone.data.MealPlan.Meal
 import com.secui.healthone.data.MealPlan.MealData
 import com.secui.healthone.data.MealPlan.MealResponse
+import com.secui.healthone.instance.HeartRateInstance
 import com.secui.healthone.repository.CaloriesApiResponse
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -47,7 +48,7 @@ interface MealApi {
 
             val authInterceptor = Interceptor { chain ->
                 val newRequest = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer $JWT_TOKEN")
+                    .addHeader("Authorization", "Bearer ${HeartRateInstance.tempAccToken}")
                     .build()
 
                 chain.proceed(newRequest)

@@ -103,9 +103,6 @@ fun MealPlanPage(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        val calorieStatusPair = remember {
-                            Pair(updatedTotalCalories, updatedRecommendedCalories)
-                        }
 
                         // Create the CalorieStatus object outside of the remember function
                         val calorieStatusData = CalorieStatus(

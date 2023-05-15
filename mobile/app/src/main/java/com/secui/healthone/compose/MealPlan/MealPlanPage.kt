@@ -17,6 +17,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.data.MealPlan.CalorieStatus
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -27,6 +28,7 @@ fun MealPlanPage(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
+    HealthOnePage.pageTitle.value="건강 기록"
     val scope = rememberCoroutineScope()
     var caloriesData by remember { mutableStateOf<CaloriesData?>(null) }
     val initialDate = Calendar.getInstance()

@@ -84,7 +84,7 @@ fun LoginPage(navController: NavController) {
     ){
         Box(
             modifier = Modifier
-                .weight(0.70f)
+                .weight(0.67f)
                 .fillMaxWidth()
         ) {
             Image(

@@ -127,7 +127,9 @@ fun GuideDetail(navController: NavController) {
                 ) {
                     Button(
                         onClick = {
-                            navController.navigate(PageRoutes.OverView.route)
+                            navController.navigate(PageRoutes.OverView.route) {
+                                popUpTo(PageRoutes.Login.route) { inclusive = true }
+                            }
                         },
                         modifier = Modifier
                             .width(280.dp)
@@ -139,7 +141,7 @@ fun GuideDetail(navController: NavController) {
                         )
                     ) {
                         Text(
-                            text = "다음",
+                            text = "시작하기",
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Bold,
                             color = AppColors.white

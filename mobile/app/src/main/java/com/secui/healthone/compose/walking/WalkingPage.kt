@@ -1,5 +1,6 @@
 package com.secui.healthone.compose.walking
 
+import android.util.Log
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -41,22 +42,26 @@ fun WalkingPage(
         FitWalkManager.readWalkSteps(context, account)
     }
     val todaySteps = walkValue.value
-
+    Log.d("WalkingPage", "Today's steps: $todaySteps")
     // 최고 걸음수
     val highestStepsValue: State<Int> = remember {
         FitWalkManager.readMaxDailySteps(context, account)
     }
     val highestSteps = highestStepsValue.value
+    Log.d("WalkingPage", "Highest steps: $highestSteps")
 
     // 총 걸음수
     val totalStepsValue: State<Int> = remember {
         FitWalkManager.readTotalSteps(context, account)
     }
     val totalSteps = totalStepsValue.value
+    Log.d("WalkingPage", "Total steps: $totalSteps")
+
 
     // 걸음 목표 달성률
     val stepGoal = 6000f // 목표 걸음수 설정
     val achievementRate = if (todaySteps > stepGoal) 1f else todaySteps / stepGoal // 달성률 계산
+    Log.d("WalkingPage", "Achievement rate: $achievementRate")
 
     // YouTube API에 대한 Retrofit 인스턴스 생성
     val retrofit = Retrofit.Builder()

@@ -4,6 +4,7 @@ import com.secui.healthone.data.MealPlan.AddExercise
 import com.secui.healthone.data.MealPlan.ExerciseList
 import com.secui.healthone.data.MealPlan.ExerciseListResponse
 import com.secui.healthone.data.MealPlan.ExerciseSearchResponse
+import com.secui.healthone.instance.HeartRateInstance
 import okhttp3.Interceptor
 
 import okhttp3.OkHttpClient
@@ -41,7 +42,7 @@ interface ExerciseApi {
 
             val authInterceptor = Interceptor { chain ->
                 val newRequest = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer $JWT_TOKEN")
+                    .addHeader("Authorization", "Bearer ${HeartRateInstance.tempAccToken}")
                     .build()
                 chain.proceed(newRequest)
             }

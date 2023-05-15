@@ -4,6 +4,7 @@ import com.secui.healthone.data.ApiResponse
 import com.secui.healthone.data.HealthStatus.HealthAdvice
 import com.secui.healthone.data.HealthStatus.HealthStatus
 import com.secui.healthone.data.HealthStatus.SendHealthStatus
+import com.secui.healthone.instance.HeartRateInstance
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -33,7 +34,7 @@ interface HealthStatusApi {
 
             val authInterceptor = Interceptor { chain ->
                 val newRequest = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer $JWT_TOKEN")
+                    .addHeader("Authorization", "Bearer ${HeartRateInstance.tempAccToken}")
                     .build()
 
                 chain.proceed(newRequest)

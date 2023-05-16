@@ -277,8 +277,7 @@
 <img src="./assets/healtone_challenge_main2.jpg" width="252px" height="560px"/>
 <img src="./assets/healtone_challenge_detail_2.jpg" width="252px" height="560px"/>
 <img src="./assets/healtone_challenge_detail_1.jpg" width="252px" height="560px"/>
-<img src="./assets/healtone-challenge_tool_modal
-.jpg" width="252px" height="560px"/>
+<img src="./assets/healtone-challenge_tool_modal.jpg" width="252px" height="560px"/>
 </div>
 <br/>
 

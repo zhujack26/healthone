@@ -72,7 +72,7 @@ class MainActivity : ComponentActivity() {
             }
             HandleBackPressExample(navController, this)
 
-            NavHost(navController, startDestination = if (!hasRefreshToken(sharedPreferences)) PageRoutes.DataCollectFirst.route else PageRoutes.OverView.route) {
+            NavHost(navController, startDestination = if (!hasRefreshToken(sharedPreferences)) PageRoutes.Login.route else PageRoutes.OverView.route) {
                 composable(PageRoutes.Login.route) {
                     LoginPage(navController)
                 }
@@ -113,6 +113,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+//백스텍 제어 및 토스트 문구
 @Composable
 fun HandleBackPressExample(navController: NavController, context: Context) {
     var backPressedTime = remember { mutableStateOf(0L) }
@@ -122,6 +123,7 @@ fun HandleBackPressExample(navController: NavController, context: Context) {
                 if (navController.currentDestination?.route == PageRoutes.OverView.route) {
                     val currentTime = System.currentTimeMillis()
                     if (currentTime - backPressedTime.value > 2000) {
+                        //두 번 눌린 시간 사이의 차이가 2초보다 작으면 앱을 종료하고, 그렇지 않으면 토스트 메시지
                         backPressedTime.value = currentTime
                         Toast.makeText(context, "한번 더 누르면 앱이 종료됩니다", Toast.LENGTH_SHORT).show()
                     } else {

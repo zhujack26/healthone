@@ -96,7 +96,9 @@ class GoogleSignInRepository (
             val authCode = account.serverAuthCode
             Log.d("check", "Auth Code: $authCode")
             sendAuthCodeToServer(authCode, navController)
-            navController.navigate(PageRoutes.DataCollectFirst.route)
+            navController.navigate(PageRoutes.DataCollectFirst.route) {
+                popUpTo(PageRoutes.Login.route) { inclusive = true }
+            }
             Log.d("check", "check")
         } catch (e: Exception) {
             Log.e("check", "Error2", e)

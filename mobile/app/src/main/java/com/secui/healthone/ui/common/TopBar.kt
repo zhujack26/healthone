@@ -47,7 +47,12 @@ fun TopBar(context: Context) {
                                 contentDescription = "logo",
                                 modifier = Modifier
                                     .size(60.dp)
-                                    .clickable { navController.navigate(PageRoutes.OverView.route) }
+                                    .clickable { navController.navigate(PageRoutes.OverView.route) {
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            inclusive = true
+                                        }
+                                        launchSingleTop = true
+                                    }}
                             )
                             Spacer(modifier = Modifier.width(76.dp))
                             Text(
@@ -120,7 +125,12 @@ fun TopBar(context: Context) {
                     iconColor = AppColors.mono700,
                     onClick = {
                         HealthOnePage.pageTitle.value = "메인"
-                        navController.navigate(PageRoutes.OverView.route)
+                        navController.navigate(PageRoutes.OverView.route) {
+                            popUpTo(navController.graph.startDestinationId) {
+                                inclusive = true
+                            }
+                            launchSingleTop = true
+                        }
                     }
                 )
                 Divider(color = AppColors.mono200, thickness = 1.dp)

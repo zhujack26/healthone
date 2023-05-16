@@ -30,10 +30,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.secui.healthone.R
 import com.secui.healthone.constant.AppColors
+import com.secui.healthone.viewmodel.AlertViewModel
 
 @Composable
 fun AlertItem(
     navController: NavController,
+    alert: AlertViewModel.AlertItemText,
     modifier: Modifier = Modifier
 ){
     Row(
@@ -72,12 +74,12 @@ fun AlertItem(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(text = AlertItemText.alertType, fontSize = 16.sp)
-                    Text(text = AlertItemText.alertTime, fontSize = 16.sp)
+                    Text(text = alert.alertType, fontSize = 16.sp)
+                    Text(text = alert.alertTime, fontSize = 16.sp)
                 }
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = AlertItemText.alertContent,
+                    text = alert.alertContent,
                     fontSize = 14.sp,
                     color = AppColors.mono700
                 )

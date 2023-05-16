@@ -1,0 +1,116 @@
+@charset "UTF-8";
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.manage-page-header {
+  /* manage-page-header */
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  gap: 32px;
+  width: 100%;
+  /* 720px 이하일 때 */
+  /* 721px ~ 1024px 때 */
+  /* 1024px 이상일 때 */
+}
+@media (max-width: 720px) {
+  .manage-page-header {
+    font-size: 16px;
+    height: 64px;
+  }
+}
+@media (min-width: 721px) and (max-width: 1024px) {
+  .manage-page-header {
+    font-size: 18px;
+    height: 72px;
+  }
+}
+@media (min-width: 1025px) {
+  .manage-page-header {
+    font-size: 20px;
+    height: 80px;
+  }
+}
+.manage-page-header .page-title {
+  /* page-title */
+  /* Auto layout */
+  width: max-content;
+  height: max-content;
+  font-weight: 900;
+  text-align: left;
+}
+.manage-page-header .right-btn {
+  /* right-btn */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 0px;
+  gap: 64px;
+  width: max-content;
+  height: max-content;
+}
+.manage-page-header .right-btn .nav-btns {
+  /* nav-btn */
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 8px 0px;
+  gap: 64px;
+  width: max-content;
+  height: max-content;
+}
+.manage-page-header .right-btn .nav-btns p {
+  /* 회원 관리 */
+  width: max-content;
+  height: max-content;
+  font-weight: 700;
+  color: #6e6969;
+  cursor: pointer;
+}
+.manage-page-header .right-btn .nav-btns .nav-btn-active {
+  color: #aad1ae;
+}
+.manage-page-header .right-btn .logout-btn {
+  /* logout-btn */
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 16px 12px;
+  background-color: #ff5f6d;
+  color: #fdfdfd;
+  /* 720px 이하일 때 */
+  /* 721px ~ 1024px 때 */
+  /* 1024px 이상일 때 */
+}
+@media (max-width: 720px) {
+  .manage-page-header .right-btn .logout-btn {
+    font-size: 10px;
+    width: 72px;
+    height: 28px;
+  }
+}
+@media (min-width: 721px) and (max-width: 1024px) {
+  .manage-page-header .right-btn .logout-btn {
+    font-size: 12px;
+    width: 96px;
+    height: 32px;
+  }
+}
+@media (min-width: 1025px) {
+  .manage-page-header .right-btn .logout-btn {
+    font-size: 14px;
+    width: 112px;
+    height: 40px;
+  }
+}
+
+/*# sourceMappingURL=ManagePageHeader.css.map */

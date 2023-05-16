@@ -1,0 +1,186 @@
+@charset "UTF-8";
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.report-table-item {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 8px;
+  height: max-content;
+  justify-content: center;
+}
+.report-table-item td {
+  flex: 1;
+  box-sizing: border-box;
+  vertical-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid #c0c0c0;
+  /* 720px 이하일 때 */
+  /* 721px ~ 1024px 때 */
+  /* 1024px 이상일 때 */
+}
+@media (max-width: 720px) {
+  .report-table-item td {
+    font-size: 14px;
+  }
+}
+@media (min-width: 721px) and (max-width: 1024px) {
+  .report-table-item td {
+    font-size: 16px;
+  }
+}
+@media (min-width: 1025px) {
+  .report-table-item td {
+    font-size: 18px;
+  }
+}
+.report-table-item td .long-text {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* 720px 이하일 때 */
+  /* 721px ~ 1024px 때 */
+  /* 1024px 이상일 때 */
+}
+@media (max-width: 720px) {
+  .report-table-item td .long-text {
+    width: 64px;
+  }
+}
+@media (min-width: 721px) and (max-width: 1024px) {
+  .report-table-item td .long-text {
+    width: 96px;
+  }
+}
+@media (min-width: 1025px) {
+  .report-table-item td .long-text {
+    width: 112px;
+  }
+}
+.report-table-item td .report-status-option {
+  border-radius: 4px;
+  background-color: #fdfdfd;
+  border: 1px solid #aad1ae;
+  text-align: center;
+  /* 720px 이하일 때 */
+  /* 721px ~ 1024px 때 */
+  /* 1024px 이상일 때 */
+}
+@media (max-width: 720px) {
+  .report-table-item td .report-status-option {
+    width: 64px;
+    height: 28px;
+    font-size: 10px;
+  }
+}
+@media (min-width: 721px) and (max-width: 1024px) {
+  .report-table-item td .report-status-option {
+    width: 72px;
+    height: 32px;
+    font-size: 12px;
+  }
+}
+@media (min-width: 1025px) {
+  .report-table-item td .report-status-option {
+    width: 112px;
+    height: 36px;
+    font-size: 14px;
+  }
+}
+.report-table-item td:first-child {
+  flex: 0.47;
+}
+.report-table-item td:last-child {
+  border-right: none;
+  flex: 1.45;
+  height: max-content;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  /* 720px 이하일 때 */
+  /* 721px ~ 1024px 때 */
+  /* 1024px 이상일 때 */
+}
+@media (max-width: 720px) {
+  .report-table-item td:last-child {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 8px;
+  }
+}
+@media (min-width: 721px) and (max-width: 1024px) {
+  .report-table-item td:last-child {
+    gap: 16px;
+  }
+}
+@media (min-width: 1025px) {
+  .report-table-item td:last-child {
+    gap: 32px;
+  }
+}
+.report-table-item td:last-child .answer-btn,
+.report-table-item td:last-child .save-btn {
+  color: #fdfdfd;
+}
+.report-table-item td:last-child .answer-btn {
+  background-color: #aad1ae;
+  /* 720px 이하일 때 */
+  /* 721px ~ 1024px 때 */
+  /* 1024px 이상일 때 */
+}
+@media (max-width: 720px) {
+  .report-table-item td:last-child .answer-btn {
+    width: 64px;
+    font-size: 10px;
+  }
+}
+@media (min-width: 721px) and (max-width: 1024px) {
+  .report-table-item td:last-child .answer-btn {
+    width: 72px;
+    font-size: 12px;
+  }
+}
+@media (min-width: 1025px) {
+  .report-table-item td:last-child .answer-btn {
+    width: 112px;
+    font-size: 14px;
+  }
+}
+.report-table-item td:last-child .save-btn {
+  background-color: #408fff;
+  /* 720px 이하일 때 */
+  /* 721px ~ 1024px 때 */
+  /* 1024px 이상일 때 */
+}
+@media (max-width: 720px) {
+  .report-table-item td:last-child .save-btn {
+    width: 48px;
+    font-size: 10px;
+  }
+}
+@media (min-width: 721px) and (max-width: 1024px) {
+  .report-table-item td:last-child .save-btn {
+    width: 64px;
+    font-size: 12px;
+  }
+}
+@media (min-width: 1025px) {
+  .report-table-item td:last-child .save-btn {
+    width: 72px;
+    font-size: 14px;
+  }
+}
+
+/*# sourceMappingURL=ReportTableItem.css.map */

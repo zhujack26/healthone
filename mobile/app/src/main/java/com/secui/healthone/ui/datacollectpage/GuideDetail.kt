@@ -128,7 +128,10 @@ fun GuideDetail(navController: NavController) {
                     Button(
                         onClick = {
                             navController.navigate(PageRoutes.OverView.route) {
-                                popUpTo(PageRoutes.Login.route) { inclusive = true }
+                                popUpTo(navController.graph.startDestinationId) {
+                                    inclusive = true
+                                }
+                                launchSingleTop = true
                             }
                         },
                         modifier = Modifier

@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
-import com.secui.healthone.constant.AppColors
 import com.secui.healthone.ui.datacollectpage.ImageUri.saveNicknameToPrefs
 
 

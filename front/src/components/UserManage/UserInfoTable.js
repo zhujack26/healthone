@@ -31,6 +31,7 @@ const UserInfoTable = ({ tableColumnName }) => {
   const [userInfoItem, setUserIntoItem] = useState([]);
 
   useEffect(() => {
+    console.log('first-effect')
     if (!userList.length) {
       getUerList().then((res) => {
         // console.dir(res);
@@ -51,15 +52,18 @@ const UserInfoTable = ({ tableColumnName }) => {
   }, [userList.length, userFilterStatus]);
 
   useEffect(() => {
+    console.log('second-effect')
     if (searchUserInfoList.length) {
       setUserIntoItem(searchUserInfoList.map((userInfoData, i) => <UserTableItem key={i} UserInfo={userInfoData} />));
     }
   }, [searchUserInfoList]);
 
   useEffect(() => {
+    console.log('third-effect')
     if (sortUserInfoList.length) {
       console.dir(sortUserInfoList);
       setUserIntoItem(sortUserInfoList.map((userInfoData, i) => <UserTableItem key={i} UserInfo={userInfoData} />));
+      console.log('sorted');
     }
   }, [sortUserInfoList]);
 

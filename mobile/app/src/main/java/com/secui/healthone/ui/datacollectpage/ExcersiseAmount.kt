@@ -40,8 +40,8 @@ fun ExcersiseAmount() {
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 ExerciseButton(
-                    amount = ExerciseAmount.Less,
-                    isSelected = selectedAmount == ExerciseAmount.Less,
+                    amount = ExerciseAmount.LITTLE,
+                    isSelected = selectedAmount == ExerciseAmount.LITTLE,
                     onSelected = {
                         selectedAmount = if (selectedAmount == it) null else it
                     }
@@ -50,8 +50,8 @@ fun ExcersiseAmount() {
             }
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 ExerciseButton(
-                    amount = ExerciseAmount.Normal,
-                    isSelected = selectedAmount == ExerciseAmount.Normal,
+                    amount = ExerciseAmount.NORMAL,
+                    isSelected = selectedAmount == ExerciseAmount.NORMAL,
                     onSelected = {
                         selectedAmount = if (selectedAmount == it) null else it
                     }
@@ -60,8 +60,8 @@ fun ExcersiseAmount() {
             }
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 ExerciseButton(
-                    amount = ExerciseAmount.Much,
-                    isSelected = selectedAmount == ExerciseAmount.Much,
+                    amount = ExerciseAmount.MANY,
+                    isSelected = selectedAmount == ExerciseAmount.MANY,
                     onSelected = {
                         selectedAmount = if (selectedAmount == it) null else it
                     }
@@ -92,9 +92,9 @@ fun ExerciseButton(
 ) {
     val backgroundColor = if (isSelected) AppColors.blue600 else AppColors.mono200
     val icon = when (amount) {
-        ExerciseAmount.Less -> R.drawable.ic_excersise_less
-        ExerciseAmount.Normal -> R.drawable.ic_excersise_normal
-        ExerciseAmount.Much -> R.drawable.ic_excersise_much
+        ExerciseAmount.LITTLE -> R.drawable.ic_excersise_less
+        ExerciseAmount.NORMAL -> R.drawable.ic_excersise_normal
+        ExerciseAmount.MANY -> R.drawable.ic_excersise_much
     }
 
     Box(
@@ -115,7 +115,7 @@ fun ExerciseButton(
 }
   
 enum class ExerciseAmount {
-    Less,
-    Normal,
-    Much
+    LITTLE,
+    NORMAL,
+    MANY
 }

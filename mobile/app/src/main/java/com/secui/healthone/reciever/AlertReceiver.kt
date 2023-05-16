@@ -7,23 +7,24 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.secui.healthone.MainActivity
 import com.secui.healthone.R
-import com.secui.healthone.ui.alert.AlertItemText.Companion.alertContent
-import com.secui.healthone.ui.alert.AlertItemText.Companion.alertType
 
 class AlertReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val notificationIntent = Intent(context, MainActivity::class.java).apply {
+            Log.d("AlertReceiver", "Alarm received")
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
         val alertType = intent.getStringExtra("alertType")
         val alertTime = intent.getStringExtra("alertTime")
+        Log.d("AlertReceiver", "Alarm received. Type: $alertType, Time: $alertTime")
         val alertContent = intent.getStringExtra("alertContent")
 
         val builder = NotificationCompat.Builder(context, "alertChannel")
@@ -56,8 +57,8 @@ class AlertReceiver : BroadcastReceiver() {
         LocalBroadcastManager.getInstance(context).sendBroadcast(localIntent)
 
         with(NotificationManagerCompat.from(context)) {
-            // notificationId is a unique int for each notification that you must define
             notify(0, builder.build())
         }
+
     }
 }

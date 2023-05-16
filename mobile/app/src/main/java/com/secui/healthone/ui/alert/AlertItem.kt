@@ -48,21 +48,20 @@ fun AlertItem(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
-            // 알림 아이콘
-//            Surface(modifier = Modifier
-//                .wrapContentWidth()
-//                .wrapContentHeight(),
-//                shape = CircleShape) {
-//                Image(
-//                    painter = painterResource(id = R.drawable.recommand_sample1),
-//                    contentDescription = "이미지",
-//                    modifier = Modifier
-//                        .width(64.dp)
-//                        .height(64.dp),
-//                    contentScale = ContentScale.Crop,
-//                )
-//            }
-//            Spacer(modifier = Modifier.width(16.dp))
+            Surface(modifier = Modifier
+                .wrapContentWidth()
+                .wrapContentHeight(),
+                shape = CircleShape) {
+                Image(
+                    painter = painterResource(id = R.drawable.recommand_sample1),
+                    contentDescription = "이미지",
+                    modifier = Modifier
+                        .width(64.dp)
+                        .height(64.dp),
+                    contentScale = ContentScale.Crop,
+                )
+            }
+            Spacer(modifier = Modifier.width(16.dp))
             Column(modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
@@ -85,14 +84,6 @@ fun AlertItem(
                 )
 
             }
-    }
-}
-
-class AlertItemText {
-    companion object {
-        const val alertType = "공지사항"
-        const val alertTime = "14:02"
-        const val alertContent = "오늘 하루 활기차게 보내기 위해 한번 뛰어볼까요?"
     }
 }
 

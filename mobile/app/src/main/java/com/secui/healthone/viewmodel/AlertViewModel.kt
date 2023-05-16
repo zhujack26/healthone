@@ -11,11 +11,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.secui.healthone.reciever.AlertReceiver
-import com.secui.healthone.ui.alert.AlertItemText
 import com.secui.healthone.util.PreferencesManager
 import java.text.SimpleDateFormat
 import java.util.Locale
-
+import android.net.Uri
+import android.os.Build
+import android.util.Log
+import androidx.core.app.AlarmManagerCompat
+import androidx.core.content.ContextCompat
 
 class AlertViewModel(private val context: Context, private val prefs: PreferencesManager) : ViewModel() {
     private val _alert = MutableLiveData<AlertItemText>()
@@ -47,7 +50,15 @@ class AlertViewModel(private val context: Context, private val prefs: Preference
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
         )
-
+        Log.d("AlertViewModel", "Alarm set at $timeInMillis")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (!alarmManager.canScheduleExactAlarms()) {
+                val intent = Intent("android.app.action.ACTION_SCHEDULE_EXACT_ALARM_PERMISSION_REQUEST_ACTION").apply {
+                    data = Uri.fromParts("package", context.packageName, null)
+                }
+                context.startActivity(intent)
+            }
+        }
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent)
     }
 

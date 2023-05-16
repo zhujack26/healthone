@@ -25,6 +25,7 @@ fun AlertPage(
     navController: NavHostController,
     alertViewModel: AlertViewModel = viewModel(factory = AlertViewModelFactory(LocalContext.current, PreferencesManager(LocalContext.current))),
     modifier: Modifier=Modifier){
+    alertViewModel.setAlert()
     val alert = alertViewModel.alert.observeAsState(initial = AlertViewModel.AlertItemText("", "", "")).value
     Column(modifier= Modifier
         .fillMaxSize()
@@ -33,7 +34,7 @@ fun AlertPage(
         horizontalAlignment = Alignment.CenterHorizontally,
     )
     {
-        repeat(8) {
+        repeat(1) {
             AlertItem(navController, alert)
         }
     }

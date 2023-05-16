@@ -56,19 +56,19 @@ const ManageSortFilterOptionBar = ({
   };
 
   const onSortHandle = (e) => {
-    if (userList.length > 0) {
+    if (userList.length > 0) { //검색했다!
       if (searchUserInfoList.length > 0) {
         // 검색했다.
         let sortUserList = [...searchUserInfoList];
         sortUserList.sort((a, b) => a.userEmail.localeCompare(b.userEmail));
-        console.dir(searchUserInfoList);
-        console.dir(sortUserList);
+        // console.dir(searchUserInfoList);
+        // console.dir(sortUserList);
         dispatch(setSortUserInfoList(sortUserList));
       } else {
         let sortUserList = [...userList];
         sortUserList.sort((a, b) => a.userEmail.localeCompare(b.userEmail));
-        console.dir(userList);
-        console.dir(sortUserList);
+        // console.dir(userList);
+        // console.dir(sortUserList);
         dispatch(setSortUserInfoList(sortUserList));
       }
     }

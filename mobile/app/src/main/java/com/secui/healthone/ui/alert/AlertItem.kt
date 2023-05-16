@@ -40,34 +40,27 @@ fun AlertItem(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .topBorder(1.dp, AppColors.mono300),
+            .topBorder(1.dp, AppColors.mono300)
+            .padding(16.dp),
+
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
-
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-
             // 알림 아이콘
-            Surface(modifier = Modifier
-                .wrapContentWidth()
-                .wrapContentHeight(),
-                shape = CircleShape) {
-                Image(
-                    painter = painterResource(id = R.drawable.recommand_sample1),
-                    contentDescription = "이미지",
-                    modifier = Modifier
-                        .width(64.dp)
-                        .height(64.dp),
-                    contentScale = ContentScale.Crop,
-                )
-            }
-            Spacer(modifier = Modifier.width(16.dp))
+//            Surface(modifier = Modifier
+//                .wrapContentWidth()
+//                .wrapContentHeight(),
+//                shape = CircleShape) {
+//                Image(
+//                    painter = painterResource(id = R.drawable.recommand_sample1),
+//                    contentDescription = "이미지",
+//                    modifier = Modifier
+//                        .width(64.dp)
+//                        .height(64.dp),
+//                    contentScale = ContentScale.Crop,
+//                )
+//            }
+//            Spacer(modifier = Modifier.width(16.dp))
             Column(modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
@@ -90,7 +83,6 @@ fun AlertItem(
                 )
 
             }
-        }
     }
 }
 

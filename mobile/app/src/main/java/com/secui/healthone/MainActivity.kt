@@ -1,14 +1,23 @@
 package com.secui.healthone
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -61,6 +70,7 @@ class MainActivity : ComponentActivity() {
             for ((key, value) in allEntries) {
                 Log.d("SharedPreferences", key + ": " + value.toString())
             }
+            HandleBackPressExample(navController, this)
 
             NavHost(navController, startDestination = if (!hasRefreshToken(sharedPreferences)) PageRoutes.Login.route else PageRoutes.OverView.route) {
                 composable(PageRoutes.Login.route) {
@@ -102,3 +112,41 @@ class MainActivity : ComponentActivity() {
         super.onDestroy()
     }
 }
+
+//백스텍 제어 및 토스트 문구
+@Composable
+fun HandleBackPressExample(navController: NavController, context: Context) {
+    var backPressedTime = remember { mutableStateOf(0L) }
+    val backCallback = remember {
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (navController.currentDestination?.route == PageRoutes.OverView.route) {
+                    val currentTime = System.currentTimeMillis()
+                    if (currentTime - backPressedTime.value > 2000) {
+                        //두 번 눌린 시간 사이의 차이가 2초보다 작으면 앱을 종료하고, 그렇지 않으면 토스트 메시지
+                        backPressedTime.value = currentTime
+                        Toast.makeText(context, "한번 더 누르면 앱이 종료됩니다", Toast.LENGTH_SHORT).show()
+                    } else {
+                        (context as Activity).finish()
+                    }
+                } else {
+                    navController.popBackStack()
+                }
+            }
+        }
+    }
+
+    val backDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+    DisposableEffect(key1 = backDispatcher) {
+        backDispatcher?.addCallback(backCallback)
+        onDispose {
+            backCallback.remove()
+        }
+    }
+}
+
+
+
+
+
+

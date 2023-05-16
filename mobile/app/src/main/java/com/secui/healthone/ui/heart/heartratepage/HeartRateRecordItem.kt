@@ -13,7 +13,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.secui.healthone.R;
+import com.secui.healthone.R
 import com.secui.healthone.data.heart.HeartRead
 import com.secui.healthone.constant.AppColors
 import java.text.SimpleDateFormat

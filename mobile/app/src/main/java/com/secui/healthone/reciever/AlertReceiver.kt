@@ -24,9 +24,9 @@ class AlertReceiver : BroadcastReceiver() {
 
         val alertType = intent.getStringExtra("alertType")
         val alertTime = intent.getStringExtra("alertTime")
-        Log.d("AlertReceiver", "Alarm received. Type: $alertType, Time: $alertTime")
         val alertContent = intent.getStringExtra("alertContent")
-
+        val alertImage = intent.getStringExtra("alertImage")
+        Log.d("AlertReceiver", "Alarm received. Type: $alertType, Time: $alertTime")
         val builder = NotificationCompat.Builder(context, "alertChannel")
             .setSmallIcon(R.drawable.ic_bell)
             .setContentTitle(alertType)
@@ -53,6 +53,7 @@ class AlertReceiver : BroadcastReceiver() {
             putExtra("alertType", alertType)
             putExtra("alertTime", alertTime)
             putExtra("alertContent", alertContent)
+            putExtra("alertImage", alertImage)
         }
         LocalBroadcastManager.getInstance(context).sendBroadcast(localIntent)
 

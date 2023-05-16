@@ -19,6 +19,7 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.ContextCompat
+import com.secui.healthone.R
 
 class AlertViewModel(private val context: Context, private val prefs: PreferencesManager) : ViewModel() {
     private val _alert = MutableLiveData<AlertItemText>()
@@ -29,20 +30,22 @@ class AlertViewModel(private val context: Context, private val prefs: Preference
             val alertType = intent.getStringExtra("alertType")
             val alertTime = intent.getStringExtra("alertTime")
             val alertContent = intent.getStringExtra("alertContent")
-
-            _alert.postValue(AlertItemText(alertType ?: "", alertTime ?: "", alertContent ?: ""))
+            val alertImage = intent.getStringExtra("alertImage")
+            _alert.postValue(AlertItemText(alertType ?: "", alertTime ?: "", alertContent ?: "", alertImage ?: ""))
         }
     }
 
     fun setAlert() {
         val wakeTime = prefs.getWakeTime()
         val timeInMillis = parseTimeToMillis(wakeTime)
-
+        val image = R.drawable.ic_speaker
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, AlertReceiver::class.java).apply {
             putExtra("alertType", "기상")
             putExtra("alertTime", wakeTime)
-            putExtra("alertContent", "오늘 하루 활기차게 보내기 위해 한번 뛰어볼까요?")
+            putExtra("alertContent", "하루가 시작되었네요. 활기차게 움직여볼까요?")
+            putExtra("alertImage", image)
+
         }
         val pendingIntent = PendingIntent.getBroadcast(
             context,
@@ -82,6 +85,7 @@ class AlertViewModel(private val context: Context, private val prefs: Preference
     data class AlertItemText(
         val alertType: String,
         val alertTime: String,
-        val alertContent: String
+        val alertContent: String,
+        val alertImage: String
     )
 }

@@ -53,7 +53,7 @@ fun AlertItem(
                 .wrapContentHeight(),
                 shape = CircleShape) {
                 Image(
-                    painter = painterResource(id = R.drawable.recommand_sample1),
+                    painter = painterResource(id = alert.alertImage.toInt()),
                     contentDescription = "이미지",
                     modifier = Modifier
                         .width(64.dp)

@@ -52,5 +52,8 @@ notification:
 jwt:
   secret: tset
 
-servers:
-  - url: https://back.apihealthone.com/challenge
+
+springdoc:
+  swagger-ui:
+    urls:
+      url: /challenge/v3/api-docs

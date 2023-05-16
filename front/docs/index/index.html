@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>건강관리 서비스</title>
+    <style>
+      *{
+        padding: 0;
+        margin: 0;
+      }
+
+      /* Create the animation... */
+      @keyframes slide-in {
+        from {
+          transform: translateX(100%);
+        }
+        to {
+          transform: translateX(0%);
+        }
+      }
+      body{
+        /* overflow: hidden; */
+      }
+    
+      .header{
+        z-index: 1;
+        width: 100vw;
+        height: 64px;
+        background-color: #FDFDFD;
+        border-bottom: 1px solid #D4D4D4;
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+        cursor: pointer;
+      }
+
+
+      .header > p {
+        line-height: 64px;        
+        color: #0C0A0B;
+        font-size: 18px;
+        font-weight: 900;
+        transition: .3s;
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+      .header > p:first-child{
+        margin-left: 16px;
+      }
+
+      .header > p:hover{
+        color: #0c0a0b25;
+        background-color: rgba(173, 173, 173, 0.1);
+      }
+      
+
+      main{
+        z-index: 1;
+        width: 100vw;
+        min-height: max-content;
+        height: max-content;
+        background-color: none;
+      }
+      main > *{
+        margin: 24px;
+      }
+      main >*:first-child{
+        margin-top: 0;
+        padding-top: 16px;
+      }
+      main >*:last-child{
+        margin-bottom: 0;
+      }
+
+      main > .brand-slogun-text{
+        font-size: 48px;
+        font-weight: 900;
+        color: white;
+
+      }
+
+      main > .adv-text{
+        font-size: 20px;
+        color: white;
+        margin-top: 8px;
+        margin-bottom: 8px;        
+        font-weight: 700;
+        position: relative;
+        z-index: 999;
+      }
+
+      main > .concept-img-boxes{
+        z-index: 0;
+        position: relative;
+        top: -35vh;
+        left: 40vw;
+        width: max-content;
+        height: max-content;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 16px;
+      }
+      main > .concept-img-boxes > .phone-img{
+        width: 162px;
+        height: 360px;
+      }
+      main > .concept-img-boxes > .card-img-boxes {
+        width: max-content;
+        height: max-content;
+        padding: 8px;
+        display: flex;
+        flex-direction: column;
+        justify-content: right;
+        gap: 16px;        
+      }
+      main > .concept-img-boxes > .card-img-boxes > .card-img-head-boxes{
+        width: max-content;
+        height: max-content;
+        padding: 8px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;        
+        gap: 16px;
+      }
+
+      .card-img1{
+        width: 162px;
+      }
+      .card-img2{
+        width: 228px;
+        border-radius: 8px;
+      }
+      .card-img3{
+        width: 228px;
+        border-radius: 8px;
+      }
+      .card-img4{
+        width: 228px;
+        position: relative;
+        left: 192px;
+        border-radius: 8px;
+      }
+
+      .download-field-set{
+        margin-top: 64px;
+        width: max-content;
+        height: max-content;
+        padding: 16px;
+        border: 2px solid white;
+        border-radius: 8px;
+
+      }
+      .download-field-set > .stores-box {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+      }
+      .download-field-set > .download-legend {
+        font-size: 18px;
+        font-weight: 900;
+        padding-left: 8px;
+        padding-right: 8px;
+        color: white;
+      }
+
+
+      .download-field-set > .stores-box > .btn-box{
+        padding: 8px;
+        border: 2px solid white;
+        border-radius: 8px;
+      }
+
+      .play-store-logo{
+        width: 36px;
+        height: 36px;
+        padding: 8px;
+        cursor: pointer;
+      }
+
+      .download-field-set > .stores-box  > p{
+        font-size: 20px;
+        font-weight: 900;
+        color: white;
+      }
+
+      .background-img{
+        width: 100vw;
+        height: 125vh;
+        position: absolute;
+        top: 0;
+        z-index: -2;
+      }
+
+      .background-filter{
+        background-color: #0C0A0B;
+        opacity: .3;
+        width: 100vw;
+        height: 125vh;
+        position: absolute;
+        top: 0;
+        z-index: -1;
+      }
+    </style>    
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <div class="header">
+      <p>헬스원(HEALTHONE)</p>
+      <p>서비스 이용약관</p>
+      <p>개인정보 처리방침</p>
+    </div>
+    <main>
+      <p class="brand-slogun-text">LIFE IS EVERYWHERE</p>
+      <p class="adv-text">나? 요즘 건강관리 하잖아</p>
+      <p class="adv-text">언제 어디서나 나만을 위한 건강 관리 매니저</p>
+      <p class="adv-text">헬스원으로!</p>
+      <fieldset class="download-field-set">
+        <legend class="download-legend">다운로드</legend>
+        <div class="stores-box">
+          <div class="btn-box">
+            <img class="play-store-logo" src="https://www.freepnglogos.com/uploads/google-play-png-logo/google-play-arrow-png-logo-8.png" />
+          </div>
+          <p>지금 바로, 플레이 스토어에서</p>            
+        </div>
+      </fieldset>
+      <div class="concept-img-boxes">
+        <img class="phone-img" src="./assets/img/phone1.png" alt="컨셉"/>
+        <img class="phone-img" src="./assets/img/phone2.png" alt="컨셉"/>
+        <div class="card-img-boxes">
+          <div class="card-img-head-boxes">
+            <img class="card-img1" src="./assets/img/card1.png" alt="컨셉"/>            
+            <img class="card-img2" src="./assets/img/bottom1.png" alt="컨셉"/>
+          </div>
+          <img class="card-img3" src="./assets/img/bottom2.png" alt="컨셉"/>
+          <img class="card-img4" src="./assets/img/bottom3.png" alt="컨셉"/>
+        </div>
+      </div>      
+    </main>
+    <img class="background-img" src="https://cdn.pixabay.com/photo/2016/11/18/13/23/action-1834465_960_720.jpg" alt="메인 이미지"/>
+    <div class="background-filter"></div>
+
+
+
+    <script>
+
+      document.querySelector(".btn-box:first-child").addEventListener('click', ()=>{
+        window.location = "https://play.google.com/store/apps/details?id=com.secui.healthone&pli=1";
+      })
+
+      document.querySelector(".header > p:nth-child(1)").addEventListener('click', ()=>{
+        window.location = "/"
+      })
+
+      document.querySelector(".header > p:nth-child(2)").addEventListener('click', ()=>{
+        window.location = "./term.html"
+      })
+      document.querySelector(".header > p:nth-child(3)").addEventListener('click', ()=>{
+        window.location = "./policy.html"
+
+      })
+    </script>
+  </body>
+</html>
+

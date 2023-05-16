@@ -51,3 +51,6 @@ notification:
 
 jwt:
   secret: tset
+
+servers:
+  - url: https://back.apihealthone.com/challenge

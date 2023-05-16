@@ -8,3 +8,8 @@ server:
 spring:
   profiles:
     active: server
+
+
+springdoc:
+  api-docs:
+    path: /info/v3/api-docs

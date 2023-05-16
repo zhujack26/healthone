@@ -1,0 +1,144 @@
+@import "Colors.scss";
+
+.user-table-item {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 8px;
+  height: max-content;
+  justify-content: center;
+
+  td {
+    flex: 1;
+    box-sizing: border-box;
+    vertical-align: center;
+    height: 100%;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+
+    border-right: 1px solid $mono300;
+
+    /* 720px 이하일 때 */
+    @media (max-width: 720px) {
+      font-size: 14px;
+    }
+    /* 721px ~ 1024px 때 */
+    @media (min-width: 721px) and (max-width: 1024px) {
+      font-size: 16px;
+    }
+    /* 1024px 이상일 때 */
+    @media (min-width: 1025px) {
+      font-size: 18px;
+    }
+    .long-text {
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      /* 720px 이하일 때 */
+      @media (max-width: 720px) {
+        width: 64px;
+      }
+      /* 721px ~ 1024px 때 */
+      @media (min-width: 721px) and (max-width: 1024px) {
+        width: 96px;
+      }
+      /* 1024px 이상일 때 */
+      @media (min-width: 1025px) {
+        width: 112px;
+      }
+    }
+  }
+
+  td:first-child {
+    flex: 0.97;
+  }
+
+  td:last-child {
+    border-right: none;
+    flex: 1.45;
+    height: max-content;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+
+    /* 720px 이하일 때 */
+    @media (max-width: 720px) {
+      flex-direction: column;
+      flex-wrap: nowrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    /* 721px ~ 1024px 때 */
+    @media (min-width: 721px) and (max-width: 1024px) {
+      gap: 16px;
+    }
+    /* 1024px 이상일 때 */
+    @media (min-width: 1025px) {
+      gap: 32px;
+    }
+
+    .user-status-option,
+    .apply-btn,
+    .cancel-btn {
+      margin-left: 8px;
+      margin-right: 8px;
+    }
+
+    .user-status-option {
+      border-radius: 4px;
+      background-color: $white;
+      border: 1px solid $green300;
+
+      text-align: center;
+
+      /* 720px 이하일 때 */
+      @media (max-width: 720px) {
+        width: 64px;
+        height: 28px;
+        font-size: 10px;
+      }
+
+      /* 721px ~ 1024px 때 */
+      @media (min-width: 721px) and (max-width: 1024px) {
+        width: 72px;
+        height: 32px;
+        font-size: 12px;
+      }
+      /* 1024px 이상일 때 */
+      @media (min-width: 1025px) {
+        width: 112px;
+        height: 36px;
+        font-size: 14px;
+      }
+    }
+    .apply-btn {
+      background-color: $orange300;
+      color: $white;
+
+      /* 720px 이하일 때 */
+      @media (max-width: 720px) {
+        width: 64px;
+        font-size: 10px;
+      }
+
+      /* 721px ~ 1024px 때 */
+      @media (min-width: 721px) and (max-width: 1024px) {
+        width: 72px;
+        font-size: 12px;
+      }
+      /* 1024px 이상일 때 */
+      @media (min-width: 1025px) {
+        width: 112px;
+        font-size: 14px;
+      }
+    }
+  }
+}

@@ -65,7 +65,7 @@ fun NicknameInput(nicknameState: String, onNicknameChange: (String) -> Unit) {
             maxLines = 1,
             textStyle = TextStyle(
                 color = AppColors.black,
-                fontSize = 16.sp,
+                fontSize = 12.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
             ),

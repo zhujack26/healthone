@@ -57,11 +57,11 @@ suspend fun downloadData(context: Context, url: String, accessToken: String) {
     val service = retrofit.create(DataApi::class.java)
 
     val responseBody = when (url) {
-        "https://back.apihealthone.com/info/check-data-download/sleep" -> service.downloadHealthRecordData(accessToken)
-        "https://back.apihealthone.com/info/check-data-download/healthinfo" -> service.downloadHealthData(accessToken)
-        "https://back.apihealthone.com/check/check-data-download/walk" -> service.downloadWalkData(accessToken)
-        "https://back.apihealthone.com/check/check-data-download/sleep" -> service.downloadSleepData(accessToken)
-        "https://back.apihealthone.com/check/check-data-download/heart-rate" -> service.downloadHeartRateData(accessToken)
+        "https://back.apihealthone.com/info/check-data-download/sleep" -> service.downloadHealthRecordData("Bearer $accessToken")
+        "https://back.apihealthone.com/info/check-data-download/healthinfo" -> service.downloadHealthData("Bearer $accessToken")
+        "https://back.apihealthone.com/check/check-data-download/walk" -> service.downloadWalkData("Bearer $accessToken")
+        "https://back.apihealthone.com/check/check-data-download/sleep" -> service.downloadSleepData("Bearer $accessToken")
+        "https://back.apihealthone.com/check/check-data-download/heart-rate" -> service.downloadHeartRateData("Bearer $accessToken")
         else -> throw IllegalArgumentException("Invalid URL")
     }
 

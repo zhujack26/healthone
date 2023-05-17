@@ -33,6 +33,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.Scope
+import com.secui.healthone.constant.PageRoutes
 import com.secui.healthone.repository.GoogleSignInRepository
 import com.secui.healthone.ui.login.PolicyDialog
 import com.secui.healthone.ui.login.TermsDialog

@@ -1,5 +1,6 @@
 package com.secui.healthone.compose.setting
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -66,6 +67,7 @@ fun UserInformDownPage() {
                     try {
                         downloadData(context, "https://back.apihealthone.com/check/check-data-download/walk", accessToken)
                     } catch (e: Exception) {
+                        Log.e("UserInformDownPage", "걸음 수 데이터 다운로드 중 오류 발생: ${e.message}")
                         e.printStackTrace()
                     }
                 }

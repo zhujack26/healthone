@@ -3,9 +3,11 @@ package com.secui.healthone.api
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -32,7 +34,15 @@ interface DataApi {
 
 // Retrofit 클라이언트 생성
 fun createRetrofitClient(baseUrl: String): Retrofit {
-    val client = OkHttpClient.Builder().build()
+    val loggingInterceptor = HttpLoggingInterceptor { message ->
+        Log.d("UserInformDownPage", "Request Body: $message")
+    }.apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
+
+    val client = OkHttpClient.Builder()
+        .addInterceptor(loggingInterceptor)
+        .build()
 
     return Retrofit.Builder()
         .baseUrl(baseUrl)

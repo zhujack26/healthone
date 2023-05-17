@@ -3,6 +3,7 @@ package com.secui.healthone.ui.common
 import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -32,11 +33,13 @@ import com.secui.healthone.compose.signup.DataCollectFirstPage
 import com.secui.healthone.compose.signup.DataCollectSecondPage
 import com.secui.healthone.compose.sleep.SleepPage
 import com.secui.healthone.constant.PageRoutes
+import com.secui.healthone.viewmodel.HealthInfoViewModel
 import java.time.LocalDate
 
 @Composable
 fun TopBarNavigation(navController: NavHostController, context: Context) {
     val account = GoogleSignIn.getLastSignedInAccount(context)
+
     Column {
         NavHost(navController, startDestination = PageRoutes.OverView.route) {
             composable(PageRoutes.OverView.route) {

@@ -1,5 +1,6 @@
 package com.secui.healthone.compose.signup
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -15,14 +16,24 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKeys
+import com.secui.healthone.data.HealthInfo
+import com.secui.healthone.instance.HealthInfoInstance
 import com.secui.healthone.ui.datacollectpage.ImageUri.saveNicknameToPrefs
+import com.secui.healthone.viewmodel.HealthInfoViewModel
+import com.secui.healthone.viewmodel.HealthInfoViewModelFactory
+import java.time.Instant
 
 
 @Composable
 fun DataCollectFirstPage(navController: NavController) {
+
     val context = LocalContext.current
     val (nickname, setNickname) = remember { mutableStateOf("") }
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -98,6 +109,31 @@ fun DataCollectFirstPage(navController: NavController) {
 }
 @Composable
 fun DataCollectSecondPage(navController: NavController) {
+    Log.d("DataCollectSecondPage", "DataCollectSecondPage started")
+
+    val healthInfoApi = HealthInfoInstance.api
+    val viewModelFactory = HealthInfoViewModelFactory(healthInfoApi)
+    val viewModel: HealthInfoViewModel = viewModel(factory = viewModelFactory)
+
+    // Context
+    val context = LocalContext.current
+
+    // 암호화된 SharedPreferences 인스턴스
+    val keyGenParameterSpec = MasterKeys.AES256_GCM_SPEC
+    val masterKeyAlias = MasterKeys.getOrCreate(keyGenParameterSpec)
+    val sharedPreferences = EncryptedSharedPreferences.create(
+        "secret_shared_prefs",
+        masterKeyAlias,
+        context,
+        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+    )
+
+    // accessToken을 가져오기
+    val accessToken = sharedPreferences.getString("access_token", "") ?: ""
+
+    // 사용자 입력 값 저장
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -159,7 +195,24 @@ fun DataCollectSecondPage(navController: NavController) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
-                NextSecondButton(navController)
+                NextSecondButton(navController) {
+                    Log.d("DataCollectSecondPage", "Button clicked!")
+                    val accessToken = accessToken
+                    val currentTime = Instant.now().toString()
+                    val healthInfo = HealthInfo(
+                        nickname = "ju",
+                        createTime = currentTime,
+                        gender = true,
+                        birthdate = "2013-05-14",
+                        height = 170,
+                        weight = 70,
+                        workRate = "normal",
+                        stepGoal = 6000,
+                        sleepTime = "22:00:00",
+                        wakeUpTime = "08:00:00"
+                    )
+                    viewModel.updateHealthInfo(accessToken, healthInfo)
+                }
             }
             Spacer(modifier = Modifier.height(32.dp))
 

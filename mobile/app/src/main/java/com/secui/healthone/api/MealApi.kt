@@ -1,11 +1,13 @@
 package com.secui.healthone.api
 
+import com.secui.healthone.data.ApiResponse
 import com.secui.healthone.data.MealPlan.FoodResponse
 import com.secui.healthone.data.MealPlan.Meal
 import com.secui.healthone.data.MealPlan.MealData
 import com.secui.healthone.data.MealPlan.MealResponse
 import com.secui.healthone.instance.HeartRateInstance
 import com.secui.healthone.repository.CaloriesApiResponse
+import com.secui.healthone.repository.CaloriesWeekApiResponse
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -20,7 +22,7 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface MealApi {
-    @POST("/api/meal-record")
+    @POST("api/meal-record")
     suspend fun addMeal(@Body meal: Meal): Response<Void>
     @DELETE("api/meal-record")
     suspend fun deleteMeal(@Query("no") mealNo: Int): Response<Unit>
@@ -28,6 +30,11 @@ interface MealApi {
     suspend fun getCalories(
         @Query("date") date: String
     ): Response<CaloriesApiResponse>
+
+    @GET("api/calorie/week")
+    suspend fun getWeekCalories(
+        @Query("date") date: String
+    ): Response<ApiResponse<List<CaloriesWeekApiResponse>>>
     @GET("api/meal-record/list")
     suspend fun getMealList(
         @Query("date") date: String,
@@ -61,7 +68,7 @@ interface MealApi {
 
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://meal.apihealthone.com/")
+                .baseUrl("https://back.apihealthone.com/meal/")
                 .client(client)
                 .build()
 

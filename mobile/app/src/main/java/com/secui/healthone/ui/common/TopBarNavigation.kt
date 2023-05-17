@@ -9,7 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.secui.healthone.compose.AlarmSettingPage
+import com.secui.healthone.compose.setting.AlarmSettingPage
 import com.secui.healthone.compose.AlertPage
 import com.secui.healthone.compose.challenge.PopularDetailPage
 import com.secui.healthone.compose.ChallengePage
@@ -20,9 +20,9 @@ import com.secui.healthone.compose.MealPlan.MealInputPage
 import com.secui.healthone.compose.MealPlanPage
 import com.secui.healthone.compose.MyPage
 import com.secui.healthone.compose.OverViewPage
-import com.secui.healthone.compose.Setting.UserInformDeletePage
-import com.secui.healthone.compose.Setting.UserInformDownPage
-import com.secui.healthone.compose.SettingPage
+import com.secui.healthone.compose.setting.UserInformDeletePage
+import com.secui.healthone.compose.setting.UserInformDownPage
+import com.secui.healthone.compose.setting.SettingPage
 import com.secui.healthone.compose.walking.WalkingDetailPage
 import com.secui.healthone.compose.walking.WalkingPage
 import com.secui.healthone.compose.healthstatus.HealthHelpPage

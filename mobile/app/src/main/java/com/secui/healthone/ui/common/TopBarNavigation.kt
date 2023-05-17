@@ -34,6 +34,7 @@ import com.secui.healthone.compose.signup.DataCollectSecondPage
 import com.secui.healthone.compose.sleep.SleepPage
 import com.secui.healthone.constant.PageRoutes
 import com.secui.healthone.viewmodel.HealthInfoViewModel
+import com.secui.healthone.viewmodel.UserViewModel
 import java.time.LocalDate
 
 @Composable
@@ -105,12 +106,14 @@ fun TopBarNavigation(navController: NavHostController, context: Context) {
             composable(PageRoutes.UserInformDown.route){
                 UserInformDownPage()
             }
-            composable(PageRoutes.DataCollectFirst.route) {
-                DataCollectFirstPage(navController)
-            }
-            composable(PageRoutes.DataCollectSecond.route) {
-                DataCollectSecondPage(navController)
-            }
+//            composable(PageRoutes.DataCollectFirst.route) {
+//                val userViewModel: UserViewModel = viewModel()
+//                DataCollectFirstPage(navController, userViewModel)
+//            }
+//            composable(PageRoutes.DataCollectSecond.route) {
+//                val userViewModel: UserViewModel = viewModel()
+//                DataCollectSecondPage(navController, userViewModel)
+//            }
         }
     }
 }

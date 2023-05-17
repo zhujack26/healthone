@@ -25,11 +25,12 @@ import com.secui.healthone.instance.HealthInfoInstance
 import com.secui.healthone.ui.datacollectpage.ImageUri.saveNicknameToPrefs
 import com.secui.healthone.viewmodel.HealthInfoViewModel
 import com.secui.healthone.viewmodel.HealthInfoViewModelFactory
+import com.secui.healthone.viewmodel.UserViewModel
 import java.time.Instant
 
 
 @Composable
-fun DataCollectFirstPage(navController: NavController) {
+fun DataCollectFirstPage(navController: NavController, userViewModel: UserViewModel) {
 
     val context = LocalContext.current
     val (nickname, setNickname) = remember { mutableStateOf("") }
@@ -100,6 +101,9 @@ fun DataCollectFirstPage(navController: NavController) {
             ) {
                 NextButton(navController, onClick = {
                     saveNicknameToPrefs(context, nickname)
+                    userViewModel.nickname.value = nickname
+                    Log.d("DataCollectFirstPage", "Updated nickname: ${userViewModel.nickname.value}")
+
                 })
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -108,8 +112,8 @@ fun DataCollectFirstPage(navController: NavController) {
     }
 }
 @Composable
-fun DataCollectSecondPage(navController: NavController) {
-    Log.d("DataCollectSecondPage", "DataCollectSecondPage started")
+fun DataCollectSecondPage(navController: NavController, userViewModel: UserViewModel) {
+    Log.d("DataCollectSecondPage", "Received nickname: ${userViewModel.nickname.value}")
 
     val healthInfoApi = HealthInfoInstance.api
     val viewModelFactory = HealthInfoViewModelFactory(healthInfoApi)
@@ -196,11 +200,13 @@ fun DataCollectSecondPage(navController: NavController) {
                 horizontalArrangement = Arrangement.Center
             ) {
                 NextSecondButton(navController) {
-                    Log.d("DataCollectSecondPage", "Button clicked!")
+                    val nickname = userViewModel.nickname.value
+
+                    Log.d("DataCollectSecondPage", "nickname : $nickname")
                     val accessToken = accessToken
                     val currentTime = Instant.now().toString()
                     val healthInfo = HealthInfo(
-                        nickname = "juu",
+                        nickname = nickname,
                         createTime = currentTime,
                         gender = true,
                         birthdate = "2013-05-14",
@@ -211,7 +217,11 @@ fun DataCollectSecondPage(navController: NavController) {
                         sleepTime = "22:00:00",
                         wakeUpTime = "08:00:00"
                     )
+                    Log.d("DataCollectSecondPage", "nickname : $nickname")
+
                     viewModel.updateHealthInfo(accessToken, healthInfo)
+                    Log.d("DataCollectSecondPage", "nickname : $nickname")
+
                 }
             }
             Spacer(modifier = Modifier.height(32.dp))

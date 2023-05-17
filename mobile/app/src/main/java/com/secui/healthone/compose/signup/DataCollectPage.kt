@@ -200,7 +200,7 @@ fun DataCollectSecondPage(navController: NavController) {
                     val accessToken = accessToken
                     val currentTime = Instant.now().toString()
                     val healthInfo = HealthInfo(
-                        nickname = "ju",
+                        nickname = "juu",
                         createTime = currentTime,
                         gender = true,
                         birthdate = "2013-05-14",

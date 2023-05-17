@@ -47,7 +47,7 @@ interface HealthStatusApi {
 
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://info.apihealthone.com/")
+                .baseUrl("https://back.apihealthone.com/info/")
                 .client(client)
                 .build()
 

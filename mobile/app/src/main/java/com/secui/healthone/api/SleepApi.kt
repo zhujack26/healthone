@@ -15,13 +15,13 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface SleepApi {
-    @POST("/api/sleep")
+    @POST("api/sleep")
     suspend fun postSleepRecord(@Body sleepRecord: SleepRecord): ApiResponse<SleepRecord>
-    @GET("/api/sleep/detail")
+    @GET("api/sleep/detail")
     suspend fun getSleepRecords(
         @Query("date") query: String
     ): ApiResponse<List<SleepRecord>>
-    @DELETE("/api/sleep")
+    @DELETE("api/sleep")
     suspend fun deleteSleepRecord(@Query("no") sleepRecordId: Int): ApiResponse<SleepRecord>
 
     companion object {
@@ -43,7 +43,7 @@ interface SleepApi {
 
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://check.apihealthone.com/")
+                .baseUrl("https://back.apihealthone.com/check/")
                 .client(client)
                 .build()
 

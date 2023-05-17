@@ -35,7 +35,7 @@ interface ExerciseApi {
     @POST("/api/sportrecord")
     suspend fun addExercise(@Body exercise: AddExercise): Response<Void>
     companion object {
-        private const val BASE_URL = "http://meal.apihealthone.com/"
+        private const val BASE_URL = "https://back.apihealthone.com/meal/"
 
         fun create(): ExerciseApi {
             val logger = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
@@ -54,7 +54,7 @@ interface ExerciseApi {
 
                 val retrofit = Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl("http://meal.apihealthone.com/")
+                    .baseUrl("https://back.apihealthone.com/meal/")
                     .client(client)
                     .build()
 

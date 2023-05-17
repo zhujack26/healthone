@@ -85,10 +85,6 @@ fun HealthStatusPage(navController: NavHostController) {
     ) {
 
         item {
-            Spacer(modifier = Modifier.height(16.dp))
-        }
-
-        item {
             Card(modifier = Modifier.fillMaxWidth(), elevation = 4.dp) {
                 Column(
                     modifier = Modifier.fillMaxWidth(),

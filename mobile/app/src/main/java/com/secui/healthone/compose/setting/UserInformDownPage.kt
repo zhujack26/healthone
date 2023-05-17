@@ -35,10 +35,39 @@ fun UserInformDownPage() {
             modifier = Modifier.padding(vertical = 16.dp),
             textAlign = TextAlign.Center
         )
-        Button(onClick = { /* do nothing */ },
+        Button(
+            onClick = { /* do nothing */ },
             colors = ButtonDefaults.buttonColors(backgroundColor = AppColors.green200)
         ) {
-            Text(text = "다운로드", color = AppColors.white)
+            Text(text = "걸음 수 데이터", color = AppColors.white)
+        }
+        Button(
+            onClick = { /* do nothing */ },
+            colors = ButtonDefaults.buttonColors(backgroundColor = AppColors.green200),
+            modifier = Modifier.padding(top = 8.dp)
+        ) {
+            Text(text = "수면 데이터", color = AppColors.white)
+        }
+        Button(
+            onClick = { /* do nothing */ },
+            colors = ButtonDefaults.buttonColors(backgroundColor = AppColors.green200),
+            modifier = Modifier.padding(top = 8.dp)
+        ) {
+            Text(text = "심박수 데이터", color = AppColors.white)
+        }
+        Button(
+            onClick = { /* do nothing */ },
+            colors = ButtonDefaults.buttonColors(backgroundColor = AppColors.green200),
+            modifier = Modifier.padding(top = 8.dp)
+        ) {
+            Text(text = "회원 건강 데이터", color = AppColors.white)
+        }
+        Button(
+            onClick = { /* do nothing */ },
+            colors = ButtonDefaults.buttonColors(backgroundColor = AppColors.green200),
+            modifier = Modifier.padding(top = 8.dp)
+        ) {
+            Text(text = "회원 건강기록 데이터", color = AppColors.white)
         }
     }
 }

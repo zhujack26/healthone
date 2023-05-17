@@ -29,8 +29,9 @@ import com.secui.healthone.viewmodel.HealthStatusViewModel
 fun HealthHelpPage(navController: NavHostController) {
     val viewModel = remember { HealthStatusViewModel() }
     viewModel.fetchHealthAdvice()
-    val HealthAdvices = viewModel.healthAdvice.value
-
+    val HealthAdvices = viewModel.healthAdvice.value  // Here, use the 'value' property.
+    val healthRecords = viewModel.healthRecords
+    val record = if(healthRecords.isNotEmpty()) { healthRecords.last() } else { null }
     // 선택된 버튼을 저장하는 변수를 추가합니다.
     val selectedButton = remember { mutableStateOf("체중") }
     var dangerousText = ""
@@ -150,6 +151,25 @@ fun HealthHelpPage(navController: NavHostController) {
                     HealthAdvices.fbg,
                     isSelected = selectedButton.value == "공복혈당",
                     onClick = { selectedButton.value = "공복혈당"; onButtonClick("공복혈당") })
+            }
+
+            if (HealthAdvices != null) {
+                val displayValue = when (selectedButton.value) {
+                    "체중" -> record?.weight  // null 검사 추가
+                    "BMI" -> record?.bmi  // null 검사 추가
+                    "체지방" -> record?.bodyFatPercentage  // null 검사 추가
+                    "골격근" -> record?.skeletalMuscleMass  // null 검사 추가
+                    "복부비만" -> record?.waistMeasurement  // null 검사 추가
+                    "혈관" -> "${record?.tg}, ${record?.hdlCholesterol}"  // null 검사 추가
+                    "혈압" -> "${record?.lowBloodPressure}${record?.highBloodPressure}"  // null 검사 추가
+                    "공복혈당" -> record?.fbg  // null 검사 추가
+                    else -> ""
+                }
+
+                Text(
+                    text = displayValue.toString(),
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
             }
         }
     } else{

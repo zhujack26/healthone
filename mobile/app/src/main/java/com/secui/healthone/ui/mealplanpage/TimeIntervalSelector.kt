@@ -22,10 +22,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun TimeIntervalSelector() {
+fun TimeIntervalSelector(initialInterval: String) {
     val timeIntervals = listOf("일간", "주간")
     var expanded by remember { mutableStateOf(false) }
-    var selectedInterval by remember { mutableStateOf(timeIntervals.first()) }
+    var selectedInterval by remember { mutableStateOf(initialInterval) }
 
     Box {
         Row(

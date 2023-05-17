@@ -73,10 +73,14 @@ fun DataCollectFirstPage(navController: NavController, userViewModel: UserViewMo
             }
             Spacer(modifier = Modifier.height(16.dp))
             // 성별 컴포넌트
-            GenderSelection()
+            GenderSelection { selectedGender ->
+                userViewModel.gender.value = selectedGender ?: false
+            }
             Spacer(modifier = Modifier.height(16.dp))
             // 닉네임 컴포넌트
             NicknameInput(nicknameState = nickname, onNicknameChange = setNickname)
+            val showDialog = nickname.isBlank() || nickname.length > 9 || !nickname.matches(Regex("^(?=.*[ㄱ-힣a-zA-Z])[ㄱ-힣a-zA-Z]{1,9}$"))
+            val (showDialogState, setShowDialogState) = remember { mutableStateOf(showDialog) }
             Spacer(modifier = Modifier.height(16.dp))
 
             // 생년월일 컴포넌트
@@ -103,8 +107,7 @@ fun DataCollectFirstPage(navController: NavController, userViewModel: UserViewMo
                     saveNicknameToPrefs(context, nickname)
                     userViewModel.nickname.value = nickname
                     Log.d("DataCollectFirstPage", "Updated nickname: ${userViewModel.nickname.value}")
-
-                })
+                }, showDialog = showDialogState, setShowDialog = setShowDialogState)
             }
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -201,14 +204,14 @@ fun DataCollectSecondPage(navController: NavController, userViewModel: UserViewM
             ) {
                 NextSecondButton(navController) {
                     val nickname = userViewModel.nickname.value
-
-                    Log.d("DataCollectSecondPage", "nickname : $nickname")
+                    val gender = userViewModel.gender.value
+                    Log.d("DataCollectSecondPage", "nickname : $nickname, gender : $gender")
                     val accessToken = accessToken
                     val currentTime = Instant.now().toString()
                     val healthInfo = HealthInfo(
                         nickname = nickname,
                         createTime = currentTime,
-                        gender = true,
+                        gender = gender,
                         birthdate = "2013-05-14",
                         height = 170,
                         weight = 70,

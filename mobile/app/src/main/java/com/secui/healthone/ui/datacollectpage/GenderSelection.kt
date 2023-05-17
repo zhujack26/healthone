@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.sp
 import com.secui.healthone.constant.AppColors
 
 @Composable
-fun GenderSelection() {
+fun GenderSelection(onGenderChange: (Boolean?) -> Unit) {
     var selectedGender by remember { mutableStateOf<Boolean?>(null) }
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -37,13 +37,19 @@ fun GenderSelection() {
         GenderButton(
             gender = Gender.Male,
             isSelected = selectedGender == true,
-            onSelected = { selectedGender = if (selectedGender == true) null else true }
+            onSelected = {
+                selectedGender = if (selectedGender == true) null else true
+                onGenderChange(selectedGender ?: false)
+            }
         )
         Spacer(modifier = Modifier.width(16.dp))
         GenderButton(
             gender = Gender.Female,
             isSelected = selectedGender == false,
-            onSelected = { selectedGender = if (selectedGender == false) null else false }
+            onSelected = {
+                selectedGender = if (selectedGender == false) null else false
+                onGenderChange(selectedGender ?: false)
+            }
         )
     }
 }

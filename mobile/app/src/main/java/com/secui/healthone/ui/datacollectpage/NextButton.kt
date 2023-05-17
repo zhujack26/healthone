@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
@@ -23,11 +24,36 @@ import com.secui.healthone.constant.AppColors
 import com.secui.healthone.constant.PageRoutes
 
 @Composable
-fun NextButton(navController: NavController, onClick: () -> Unit) {
+fun NextButton(navController: NavController, onClick: () -> Unit, showDialog: Boolean, setShowDialog: (Boolean) -> Unit) {
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { setShowDialog(false) },
+            title = { Text("경고") },
+            text = { Text("닉네임이 유효하지 않습니다.") },
+            confirmButton = {
+                Button(
+                    onClick = { setShowDialog(false) },
+                    colors = ButtonDefaults
+                        .outlinedButtonColors(
+                            backgroundColor =
+                            AppColors.green200
+                        ),
+                ) {
+                    Text("확인",
+                        fontSize = 12.sp,
+                        color = AppColors.white)
+                }
+            }
+        )
+    }
     Button(
         onClick = {
-            onClick()
-            navController.navigate(PageRoutes.DataCollectSecond.route)
+            if (showDialog) {
+                setShowDialog(true)
+            } else {
+                onClick()
+                navController.navigate(PageRoutes.DataCollectSecond.route)
+            }
         },
         modifier = Modifier
             .width(280.dp)

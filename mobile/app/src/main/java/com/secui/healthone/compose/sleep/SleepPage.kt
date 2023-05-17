@@ -17,6 +17,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -48,7 +49,8 @@ fun SleepPage(navController: NavHostController, modifier: Modifier = Modifier) {
             sdf.format(selectedDate.value.time)
         }
     }
-
+    val timeIntervals = listOf("일간", "주간")
+    var selectedInterval by remember { mutableStateOf(timeIntervals.first()) }
     LaunchedEffect(selectedDateString) {
         sleepViewModel.fetchSleepRecords(selectedDateString)
         // 날짜가 변경될 때마다 buttonCheck를 true로 설정
@@ -78,8 +80,6 @@ fun SleepPage(navController: NavHostController, modifier: Modifier = Modifier) {
                 }
             }
         }
-        item { Spacer(modifier = Modifier.height(16.dp)) } // spacing between DateComponent and TimeIntervalSelector
-        item { TimeIntervalSelector() }
         item { Spacer(modifier = Modifier.height(16.dp)) } // spacing after TimeIntervalSelector
         item {
             Card(modifier = Modifier.fillMaxWidth()) {

@@ -1,5 +1,6 @@
 package com.secui.healthone.ui.walking
 
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -25,6 +26,7 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 fun LineGraph(navController: NavController, steps: List<Int>) {
+    Log.d("LineGraph", "Steps: $steps")
     val lineColor = AppColors.green500
     val lineWidth = 4.dp
 

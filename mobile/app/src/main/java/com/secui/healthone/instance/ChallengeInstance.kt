@@ -25,7 +25,7 @@ class ChallengeInstance {
             @Throws(IOException::class)
             override fun intercept(chain: Interceptor.Chain) : Response = with(chain) {
                 val newRequest = request().newBuilder()
-                    .addHeader("Authorization", "Bearer ${HeartRateInstance.tempAccToken}")
+                    .addHeader("Authorization", "Bearer ${HeartRateInstance.accToken.value}")
                     .build()
                 proceed(newRequest)
             }
@@ -33,7 +33,7 @@ class ChallengeInstance {
 
         private val retrofit by lazy {
             Retrofit.Builder()
-                .baseUrl(URL)
+                .baseUrl(HeartRateInstance.URL)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
@@ -44,6 +44,6 @@ class ChallengeInstance {
     }
 
     companion object {
-        const val URL = "http://challenge.apihealthone.com/"
+        //const val URL = "https://back.apihealthone.com/check/"
     }
 }

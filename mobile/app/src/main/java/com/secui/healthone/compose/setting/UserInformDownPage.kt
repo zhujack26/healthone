@@ -10,14 +10,38 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKeys
 import com.secui.healthone.constant.AppColors
+import com.secui.healthone.util.DownloadData
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun UserInformDownPage() {
+    // Context
+    val context = LocalContext.current
+
+    // 암호화된 SharedPreferences 인스턴스
+    val keyGenParameterSpec = MasterKeys.AES256_GCM_SPEC
+    val masterKeyAlias = MasterKeys.getOrCreate(keyGenParameterSpec)
+    val sharedPreferences = EncryptedSharedPreferences.create(
+        "secret_shared_prefs",
+        masterKeyAlias,
+        context,
+        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+    )
+
+    // accessToken을 가져오기
+    val accessToken = sharedPreferences.getString("access_token", "") ?: ""
+
     Column(
         modifier = Modifier.fillMaxSize()
             .padding(32.dp),
@@ -36,34 +60,79 @@ fun UserInformDownPage() {
             textAlign = TextAlign.Center
         )
         Button(
-            onClick = { /* do nothing */ },
+            onClick = {
+                // "걸음 수 데이터" 다운로드 요청
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        DownloadData(context, "https://back.apihealthone.com/check/check-data-download/walk", accessToken)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            },
             colors = ButtonDefaults.buttonColors(backgroundColor = AppColors.green200)
         ) {
             Text(text = "걸음 수 데이터", color = AppColors.white)
         }
         Button(
-            onClick = { /* do nothing */ },
+            onClick = {
+                // "수면 데이터" 다운로드 요청
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        DownloadData(context, "https://back.apihealthone.com/check/check-data-download/sleep", accessToken)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            },
             colors = ButtonDefaults.buttonColors(backgroundColor = AppColors.green200),
             modifier = Modifier.padding(top = 8.dp)
         ) {
             Text(text = "수면 데이터", color = AppColors.white)
         }
         Button(
-            onClick = { /* do nothing */ },
+            onClick = {
+                // "심박수 데이터" 다운로드 요청
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        DownloadData(context, "https://back.apihealthone.com/check/check-data-download/heart-rate", accessToken)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            },
             colors = ButtonDefaults.buttonColors(backgroundColor = AppColors.green200),
             modifier = Modifier.padding(top = 8.dp)
         ) {
             Text(text = "심박수 데이터", color = AppColors.white)
         }
         Button(
-            onClick = { /* do nothing */ },
+            onClick = {
+                // "회원 건강 데이터" 다운로드 요청
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        DownloadData(context, "https://back.apihealthone.com/info/check-data-download/healthinfo", accessToken)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            },
             colors = ButtonDefaults.buttonColors(backgroundColor = AppColors.green200),
             modifier = Modifier.padding(top = 8.dp)
         ) {
             Text(text = "회원 건강 데이터", color = AppColors.white)
         }
         Button(
-            onClick = { /* do nothing */ },
+            onClick = {
+                // "회원 건강기록 데이터" 다운로드 요청
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        DownloadData(context, "https://back.apihealthone.com/info/check-data-download/sleep", accessToken)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            },
             colors = ButtonDefaults.buttonColors(backgroundColor = AppColors.green200),
             modifier = Modifier.padding(top = 8.dp)
         ) {

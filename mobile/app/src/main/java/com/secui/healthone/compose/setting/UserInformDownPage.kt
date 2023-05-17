@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
+import com.secui.healthone.api.downloadData
 import com.secui.healthone.constant.AppColors
-import com.secui.healthone.util.DownloadData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -64,7 +64,7 @@ fun UserInformDownPage() {
                 // "걸음 수 데이터" 다운로드 요청
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
-                        DownloadData(context, "https://back.apihealthone.com/check/check-data-download/walk", accessToken)
+                        downloadData(context, "https://back.apihealthone.com/check/check-data-download/walk", accessToken)
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
@@ -79,7 +79,7 @@ fun UserInformDownPage() {
                 // "수면 데이터" 다운로드 요청
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
-                        DownloadData(context, "https://back.apihealthone.com/check/check-data-download/sleep", accessToken)
+                        downloadData(context, "https://back.apihealthone.com/check/check-data-download/sleep", accessToken)
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
@@ -95,7 +95,7 @@ fun UserInformDownPage() {
                 // "심박수 데이터" 다운로드 요청
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
-                        DownloadData(context, "https://back.apihealthone.com/check/check-data-download/heart-rate", accessToken)
+                        downloadData(context, "https://back.apihealthone.com/check/check-data-download/heart-rate", accessToken)
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
@@ -111,7 +111,7 @@ fun UserInformDownPage() {
                 // "회원 건강 데이터" 다운로드 요청
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
-                        DownloadData(context, "https://back.apihealthone.com/info/check-data-download/healthinfo", accessToken)
+                        downloadData(context, "https://back.apihealthone.com/info/check-data-download/healthinfo", accessToken)
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
@@ -127,7 +127,7 @@ fun UserInformDownPage() {
                 // "회원 건강기록 데이터" 다운로드 요청
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
-                        DownloadData(context, "https://back.apihealthone.com/info/check-data-download/sleep", accessToken)
+                        downloadData(context, "https://back.apihealthone.com/info/check-data-download/sleep", accessToken)
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }

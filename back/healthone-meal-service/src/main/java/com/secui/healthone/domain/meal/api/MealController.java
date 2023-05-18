@@ -20,11 +20,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.text.ParseException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/meal-record")
+@RequestMapping("/meal/api/meal-record")
 @RequiredArgsConstructor
 @Tag(name = "Meal", description = "식사 관련 컨트롤러")
 public class MealController {

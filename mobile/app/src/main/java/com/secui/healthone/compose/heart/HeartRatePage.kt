@@ -40,7 +40,6 @@ fun HeartRatePage(
 
     viewModel.getHeartRateList();
     viewModel.heartListResponse.observe(mOwner, Observer{
-        //Log.d("HEART_PAGE:::", "${it.toString()}")
         heartList.value = it;
     })
     HeartRateViewModel.heartRateList.value = heartList.value;

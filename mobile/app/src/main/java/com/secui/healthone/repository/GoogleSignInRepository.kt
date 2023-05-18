@@ -16,7 +16,9 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import androidx.security.crypto.MasterKeys
 import com.google.gson.Gson
+import com.secui.healthone.R
 import com.secui.healthone.api.LoginApi
+import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.constant.PageRoutes
 import com.secui.healthone.instance.HeartRateInstance
 import com.secui.healthone.util.PreferenceUtil
@@ -139,9 +141,25 @@ class GoogleSignInRepository (
                         ///////// 추가된 코드 /////////
                         val refreshToken = cookieJar.getCookiesByName("refreshtoken");
                         Log.d("check","리프래쉬 토큰 꺼내보기 : $refreshToken");
-                        HeartRateInstance.accToken.value = accessTokenResponse.toString()
-                        HeartRateInstance.refreshToken.value = refreshToken.toString();
-                        PreferenceUtil(context).setTokenString("refreshtoken", "$refreshToken");// 저장
+//                        HeartRateInstance.accToken.value = accessTokenResponse.toString()
+//                        HeartRateInstance.refreshToken.value = refreshToken.toString();
+//                        PreferenceUtil(context).setTokenString("refreshtoken", "$refreshToken");// 저장0
+
+                        // 암호화된 SharedPreferences 인스턴스
+                        val keyGenParameterSpec = MasterKeys.AES256_GCM_SPEC
+                        val masterKeyAlias = MasterKeys.getOrCreate(keyGenParameterSpec)
+                        val sharedPreferences = EncryptedSharedPreferences.create(
+                            "secret_shared_prefs",
+                            masterKeyAlias,
+                            context,
+                            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+                        )
+
+                        // accessToken을 가져오기
+                        HealthOnePage.accToken.value =
+                            sharedPreferences.getString("access_token", "") ?: ""
+                        HealthOnePage.tempToken.value = context.getString(R.string.temp_token)
                         ////////////////////////
 
                         for (cookie in cookies) {

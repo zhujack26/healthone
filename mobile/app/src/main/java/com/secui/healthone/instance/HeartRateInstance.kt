@@ -1,24 +1,19 @@
 package com.secui.healthone.instance
 
-import android.content.Context
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.mutableStateOf
-import com.secui.healthone.SplashActivity
-import com.secui.healthone.repository.GoogleSignInRepository
+import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.service.HeartRateService
-import com.secui.healthone.util.PreferenceUtil
 import okhttp3.Cookie
 import okhttp3.CookieJar
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
-import okhttp3.JavaNetCookieJar
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
-import java.net.CookieManager
 import java.util.concurrent.TimeUnit
 
 class HeartRateInstance : AppCompatActivity() {
@@ -67,9 +62,9 @@ class HeartRateInstance : AppCompatActivity() {
             override fun intercept(chain: Interceptor.Chain) : Response = with(chain) {
 
                 Log.d(LOG, "리프레쉬 토큰 꺼낸 결과 : ${refreshToken.value.replace("[","").replace("]", "")}")
-                Log.d(LOG, "엑세스 토큰 꺼낸 결과 : ${accToken.value}")
+                Log.d(LOG, "엑세스 토큰 꺼낸 결과 : ${HealthOnePage.accToken.value}")
                 val newRequest = request().newBuilder()
-                    .addHeader("Authorization", "Bearer ${accToken.value}")
+                    .addHeader("Authorization", "Bearer ${HealthOnePage.accToken.value}")
                     //.addHeader("Authorization", "Bearer ${tempAccToken}")
                     .addHeader("Cookie", "${refreshToken.value.replace("[","").replace("]", "")}")
                     .build()
@@ -80,7 +75,7 @@ class HeartRateInstance : AppCompatActivity() {
 
         private val retrofit by lazy {
             Retrofit.Builder()
-                .baseUrl(URL)
+                .baseUrl(HealthOnePage.checkURL.value)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
@@ -91,11 +86,7 @@ class HeartRateInstance : AppCompatActivity() {
     }
 
     companion object {
-        const val URL = "https://back.apihealthone.com/check/"
-        // val prefs = PreferenceUtil(SplashActivity.context as Context);
-        val accToken = mutableStateOf<String>("");
         val refreshToken = mutableStateOf<String>("")
-        val tempAccToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlbWFpbCIsIm5hbWUiOiJKb2huIERvZSIsImlhdCI6MTUxNjIzOTAyMiwibm8iOjF9.Qe2hD2Qjh078O1Nt6H9Ti_zZtC70BlmULh6O3ckuSOQ"
         const val LOG = "HEART_RATE_INSTANCE";
     }
 

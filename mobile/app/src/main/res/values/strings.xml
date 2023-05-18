@@ -9,4 +9,6 @@
     <string name="less_bpm_guide">최소 심박수는 20 입니다</string>
     <string name="over_bpm_guide">최대 심박수는 220 입니다</string>
     <string name="err_bpm_guide">유효 하지 않은 값 입니다</string>
+    <string name="temp_token">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlbWFpbCIsIm5hbWUiOiJKb2huIERvZSIsImlhdCI6MTUxNjIzOTAyMiwibm8iOjF9.Qe2hD2Qjh078O1Nt6H9Ti_zZtC70BlmULh6O3ckuSOQ</string>
+    <string name="check_url">https://back.apihealthone.com/check/</string>
 </resources>

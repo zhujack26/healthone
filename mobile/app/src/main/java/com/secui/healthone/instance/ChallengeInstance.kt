@@ -34,7 +34,7 @@ class ChallengeInstance {
 
         private val retrofit by lazy {
             Retrofit.Builder()
-                .baseUrl(HealthOnePage.checkURL.value)
+                .baseUrl(HealthOnePage.challengeURL.value)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()

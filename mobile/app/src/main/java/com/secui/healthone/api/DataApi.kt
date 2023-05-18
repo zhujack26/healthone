@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import androidx.core.content.FileProvider
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
@@ -77,11 +78,12 @@ suspend fun downloadData(context: Context, url: String, accessToken: String) {
     outputStream.close()
     Log.d("DownloadData", "File saved3")
     // 다운로드 완료 후 파일 열기
-    val uri = Uri.fromFile(file)
+    val uri = FileProvider.getUriForFile(context, "${context.packageName}.provider", file)
     Log.d("DownloadData", "File open1")
     val intent = Intent(Intent.ACTION_VIEW)
     Log.d("DownloadData", "File open2")
     intent.setDataAndType(uri, "text/plain")
+    intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
     Log.d("DownloadData", "File open3")
     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
     Log.d("DownloadData", "File open4")

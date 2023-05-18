@@ -58,7 +58,7 @@ fun BirthDate(
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
         )
-        Spacer(modifier = Modifier.width(28.dp))
+        Spacer(modifier = Modifier.width(24.dp))
         TextField(
             value = value,
             onValueChange = {},

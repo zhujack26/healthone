@@ -41,6 +41,7 @@ fun UserInformDownPage() {
     )
 
     // accessToken을 가져오기
+//    val accessToken = sharedPreferences.getString("access_token", "") ?: ""
     val accessToken = sharedPreferences.getString("access_token", "") ?: ""
 
     Column(

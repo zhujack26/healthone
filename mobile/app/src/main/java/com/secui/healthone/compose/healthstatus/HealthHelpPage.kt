@@ -24,12 +24,15 @@ import com.secui.healthone.constant.AppColors
 import com.secui.healthone.ui.HealthStatus.HelpButton
 import com.secui.healthone.ui.HealthStatus.onButtonClick
 import com.secui.healthone.viewmodel.HealthStatusViewModel
+import java.time.LocalDate
 
 @Composable
 fun HealthHelpPage(navController: NavHostController) {
     val viewModel = remember { HealthStatusViewModel() }
     viewModel.fetchHealthAdvice()
-    val HealthAdvices = viewModel.healthAdvice.value  // Here, use the 'value' property.
+    val HealthAdvices = viewModel.healthAdvice.value
+    val today = LocalDate.now().toString()
+    viewModel.fetchHealthRecords(today)
     val healthRecords = viewModel.healthRecords
     val record = if(healthRecords.isNotEmpty()) { healthRecords.last() } else { null }
     // 선택된 버튼을 저장하는 변수를 추가합니다.

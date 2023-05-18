@@ -54,7 +54,6 @@ fun createRetrofitClient(baseUrl: String): Retrofit {
 
 // 다운로드 함수
 suspend fun downloadData(context: Context, url: String, accessToken: String) {
-    Log.d("DownloadData", "Start downloading data...")
     val retrofit = createRetrofitClient("https://back.apihealthone.com/")
     val service = retrofit.create(DataApi::class.java)
 
@@ -67,14 +66,10 @@ suspend fun downloadData(context: Context, url: String, accessToken: String) {
         else -> throw IllegalArgumentException("Invalid URL")
     }
     // 파일 저장
-    val file = File(context.filesDir, "downloaded_data.txt")
+    val fileName = url.split("/").last()
+    val file = File(context.filesDir, fileName)
     Log.d("DownloadData", "File absolute path: ${file.absolutePath}")
-    if (file.exists()) {
-        Log.d("DownloadData", "File exists")
-        Log.d("DownloadData", "File content: ${file.readText()}")
-    } else {
-        Log.d("DownloadData", "File does not exist")
-    }
+    // 파일 저장
     val outputStream = FileOutputStream(file)
     outputStream.write(responseBody.bytes())
     outputStream.close()

@@ -5,8 +5,11 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
 
 @Component
 public class OpenApiConfig {
@@ -22,6 +25,9 @@ public class OpenApiConfig {
                 .license(new License().name("MIT Licence").url("https://opensource.org/licenses/MIT"));
 
         return new OpenAPI()
+                .servers(Arrays.asList(
+                        new Server().url("https://back.apihealthone.com/meal")
+                ))
                 .info(info)
                 .components(new Components()
                         .addSecuritySchemes(securitySchemeName, new SecurityScheme()

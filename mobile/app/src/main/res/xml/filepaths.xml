@@ -1,3 +1,4 @@
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
-    <files-path name="downloaded_data" path="." />
+    <files-path name="internal_downloaded_data" path="." />
+    <external-path name="external_downloaded_data" path="Android/data/com.secui.healthone" />
 </paths>

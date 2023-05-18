@@ -41,7 +41,7 @@ fun Height(userViewModel: UserViewModel) {
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold
         )
-        Spacer(modifier = Modifier.width(56.dp))
+        Spacer(modifier = Modifier.width(52.dp))
 
         TextField(
             value = if (userViewModel.height.value.isNotEmpty()) "${userViewModel.height.value} cm" else "",

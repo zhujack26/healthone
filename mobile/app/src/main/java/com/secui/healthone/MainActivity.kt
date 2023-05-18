@@ -73,7 +73,7 @@ class MainActivity : ComponentActivity() {
             }
             HandleBackPressExample(navController, this)
 
-            NavHost(navController, startDestination = if (!hasRefreshToken(sharedPreferences)) PageRoutes.DataCollectFirst.route else PageRoutes.OverView.route) {
+            NavHost(navController, startDestination = if (!hasRefreshToken(sharedPreferences)) PageRoutes.Login.route else PageRoutes.OverView.route) {
                 composable(PageRoutes.Login.route) {
                     LoginPage(navController)
                 }

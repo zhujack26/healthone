@@ -47,11 +47,11 @@ public class AuthController {
     }
 
     // 토큰 검증
-    @PostMapping("/verify")
-    public ResponseEntity<?> verifyToken(@RequestHeader("Authorization") String Authorization){
-        log.info("Authorization = {}",Authorization);
-        return ResponseEntity.ok().build();
-    }
+//    @PostMapping("/verify")
+//    public ResponseEntity<?> verifyToken(@RequestHeader("Authorization") String Authorization){
+//        log.info("Authorization = {}",Authorization);
+//        return ResponseEntity.ok().build();
+//    }
 
     @PostMapping("/logout")
     public ResponseEntity<?> logout(@RequestHeader("Authorization")String Authorization, HttpServletRequest request){

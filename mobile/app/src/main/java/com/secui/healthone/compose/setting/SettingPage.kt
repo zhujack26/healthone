@@ -16,11 +16,13 @@ import androidx.navigation.NavController
 import androidx.compose.foundation.clickable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import com.secui.healthone.ui.setting.*
 import com.secui.healthone.constant.PageRoutes
 
 @Composable
-fun SettingPage(navController: NavController, context: Context) {
+fun SettingPage(navController: NavController) {
+    val context = LocalContext.current
     val showLogoutDialog = remember { mutableStateOf(false) }
 //    val showWithdrawDialog = remember { mutableStateOf(false) }
     Column(

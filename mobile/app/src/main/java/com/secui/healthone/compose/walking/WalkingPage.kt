@@ -116,7 +116,6 @@ fun WalkingPage(
             .padding(16.dp),
     ) {
         item {
-
             LineGraph(steps = walkDataListState.value, navController = navController)
             Spacer(modifier = Modifier.height(16.dp))
             AchievementRate(

@@ -100,7 +100,30 @@
 **CI/CD**
 
 ```
-
+- Elastic Amazone Kubernetes : 1.25
+- EC2 : Ubuntu 20.04 LTS, Amazon Linux 2 v20230509
+- S3
+- CloudFront
+- Jenkins : 2.387.2
+- ArgoCD : v2.6.7+5bcd846
+- docker : 23.0.4
+- Istio : 1.27
+- Envoy Proxy : 1.25.4
+- Docker registry : latest
+- Joxit-ui : 1.5
+- Ambassador Edge Stack : 3.6.0
+- ElasticSearch : 8.6.2
+- Fluentd : 0.9.1
+- Kibana : 7.9.1
+- AWS Network LoadBalancer
+- AWS Elastic LoadBalancer
+- Route53
+- SonarQube : 8.9.9
+- Prometheus
+- Grafana
+- HorizontalPodAuthScaler
+- Cluster AutoScaler : 1.25.1
+- AWS EBS CSI
 ```
 
 ## 협업방식

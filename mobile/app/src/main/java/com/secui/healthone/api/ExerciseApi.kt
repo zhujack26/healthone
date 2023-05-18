@@ -1,5 +1,6 @@
 package com.secui.healthone.api
 
+import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.data.MealPlan.AddExercise
 import com.secui.healthone.data.MealPlan.ExerciseList
 import com.secui.healthone.data.MealPlan.ExerciseListResponse
@@ -42,7 +43,7 @@ interface ExerciseApi {
 
             val authInterceptor = Interceptor { chain ->
                 val newRequest = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer ${HeartRateInstance.tempAccToken}")
+                    .addHeader("Authorization", "Bearer ${HealthOnePage.tempToken}")
                     .build()
                 chain.proceed(newRequest)
             }

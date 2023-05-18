@@ -18,7 +18,7 @@ public class HealthAdviceService {
     private final HealthInfoRepository healthInfoRepository;
 
     public HealthAdviceDto getHealthAdvice(Integer userNo) {
-        HealthInfo healthInfo = healthInfoRepository.findById(userNo).orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
+        HealthInfo healthInfo = healthInfoRepository.findByUserNo(userNo).orElseThrow(()-> new RestApiException(CustomErrorCode.DB_100));
         HealthStat healthStat = healthStatRepository.findTopByUserNoOrderByCreateTimeDesc(userNo)
                 .orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
         float value = (healthStat.getWeight() / (healthStat.getHeight() * healthStat.getHeight())) * 100f;

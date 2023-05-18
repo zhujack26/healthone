@@ -71,6 +71,7 @@ suspend fun downloadData(context: Context, url: String, accessToken: String) {
     Log.d("DownloadData", "File absolute path: ${file.absolutePath}")
     if (file.exists()) {
         Log.d("DownloadData", "File exists")
+        Log.d("DownloadData", "File content: ${file.readText()}")
     } else {
         Log.d("DownloadData", "File does not exist")
     }

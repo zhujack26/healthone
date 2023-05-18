@@ -47,14 +47,7 @@ fun NextButton(navController: NavController, onClick: () -> Unit, showDialog: Bo
         )
     }
     Button(
-        onClick = {
-            if (showDialog) {
-                setShowDialog(true)
-            } else {
-                onClick()
-                navController.navigate(PageRoutes.DataCollectSecond.route)
-            }
-        },
+        onClick = onClick,
         modifier = Modifier
             .width(280.dp)
             .height(56.dp)

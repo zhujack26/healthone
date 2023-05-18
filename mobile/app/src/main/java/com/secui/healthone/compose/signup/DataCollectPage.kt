@@ -20,6 +20,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
+import com.secui.healthone.constant.PageRoutes
 import com.secui.healthone.data.HealthInfo
 import com.secui.healthone.instance.HealthInfoInstance
 import com.secui.healthone.ui.datacollectpage.ImageUri.saveNicknameToPrefs
@@ -34,6 +35,7 @@ fun DataCollectFirstPage(navController: NavController, userViewModel: UserViewMo
 
     val context = LocalContext.current
     val (nickname, setNickname) = remember { mutableStateOf("") }
+    val (showDialogState, setShowDialogState) = remember { mutableStateOf(false) }  // Initialize to false
 
     LazyColumn(
         modifier = Modifier
@@ -79,8 +81,6 @@ fun DataCollectFirstPage(navController: NavController, userViewModel: UserViewMo
             Spacer(modifier = Modifier.height(16.dp))
             // 닉네임 컴포넌트
             NicknameInput(nicknameState = nickname, onNicknameChange = setNickname)
-            val showDialog = nickname.isBlank() || nickname.length > 9 || !nickname.matches(Regex("^(?=.*[ㄱ-힣a-zA-Z])[ㄱ-힣a-zA-Z]{1,9}$"))
-            val (showDialogState, setShowDialogState) = remember { mutableStateOf(showDialog) }
             Spacer(modifier = Modifier.height(16.dp))
 
             // 생년월일 컴포넌트
@@ -104,11 +104,18 @@ fun DataCollectFirstPage(navController: NavController, userViewModel: UserViewMo
                 horizontalArrangement = Arrangement.Center
             ) {
                 NextButton(navController, onClick = {
-                    saveNicknameToPrefs(context, nickname)
-                    userViewModel.nickname.value = nickname
-                    Log.d("DataCollectFirstPage", "Updated nickname: ${userViewModel.nickname.value}")
+                    val isInvalidNickname = nickname.isBlank() || nickname.length > 9 || !nickname.matches(Regex("^(?=.*[ㄱ-힣a-zA-Z])[ㄱ-힣a-zA-Z]{1,9}$"))
+                    if (isInvalidNickname) {
+                        setShowDialogState(true)
+                    } else {
+                        saveNicknameToPrefs(context, nickname)
+                        userViewModel.nickname.value = nickname
+                        Log.d("DataCollectFirstPage", "Updated nickname: ${userViewModel.nickname.value}")
+                        navController.navigate(PageRoutes.DataCollectSecond.route)
+                    }
                 }, showDialog = showDialogState, setShowDialog = setShowDialogState)
             }
+
             Spacer(modifier = Modifier.height(16.dp))
 
         }

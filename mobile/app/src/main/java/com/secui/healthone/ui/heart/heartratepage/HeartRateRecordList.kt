@@ -7,8 +7,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.secui.healthone.R
 import com.secui.healthone.data.heart.HeartRead
 
 @Composable
@@ -17,7 +19,7 @@ fun HeartRateRecordList(
     heartList:MutableList<HeartRead> = mutableListOf()
 ) {
 
-    Text(text = HeartRateRecordListText.heartRateRecordListTitle,
+    Text(text = stringResource(R.string.heart_rate_record_list_title),
         fontSize = 20.sp,
         modifier = Modifier
             .fillMaxWidth()
@@ -29,7 +31,8 @@ fun HeartRateRecordList(
 
     Column(modifier = Modifier
         .fillMaxWidth()
-        .height(512.dp)
+        .wrapContentHeight()
+        .heightIn(0.dp, 512.dp)
         .padding(16.dp)
         .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Center,
@@ -40,11 +43,5 @@ fun HeartRateRecordList(
             HeartRateRecordItem(heartRate = heartList.get(idx++));
             Spacer(modifier = Modifier.height(8.dp))
         }
-    }
-}
-
-class HeartRateRecordListText {
-    companion object {
-        const val heartRateRecordListTitle = "측정 기록"
     }
 }

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -13,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jaikeerthick.composable_graphs.color.Gradient2
@@ -25,6 +27,7 @@ import com.jaikeerthick.composable_graphs.composables.LineGraph
 import com.jaikeerthick.composable_graphs.data.GraphData
 import com.jaikeerthick.composable_graphs.style.LineGraphStyle
 import com.jaikeerthick.composable_graphs.style.LinearGraphVisibility
+import com.secui.healthone.R
 import com.secui.healthone.data.heart.HeartRead
 import com.secui.healthone.constant.AppColors
 import com.secui.healthone.viewmodel.HeartRateViewModel
@@ -37,7 +40,7 @@ fun HeartGraphBox(
     heartList: MutableList<HeartRead>
 ){
 
-    if(heartList.size>0){
+    if(heartList.size>1){
 
         // LineGraph
         val heartGraphStyle = LineGraphStyle(
@@ -58,14 +61,16 @@ fun HeartGraphBox(
             .height(196.dp)
         ) {
 
-            if(!HeartRateViewModel.heartRateList.value.isEmpty()
-                && HeartRateViewModel.heartRateList.value.size > 0){
+            if(!heartList.isEmpty()
+                && heartList.size > 0){
+
+
+                heartList.reverse();
 
                 val xAxisDataList = mutableListOf<String>();
                 val yAxisDataList = mutableListOf<Int>();
 
-                for(h in 0..heartList.size-1){
-                    val idx = heartList.size - h -1;
+                for(idx in 0..heartList.size-1){
                     val LocalDateTime = LocalDateTime.parse(heartList[idx].createTime);
                     val dateString = "${LocalDateTime.monthValue}/${LocalDateTime.dayOfMonth}"
                     xAxisDataList.add(dateString)
@@ -89,11 +94,13 @@ fun HeartGraphBox(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Spacer(modifier = Modifier.height(32.dp))
             Text(
-                text = "불러올 데이터가 없습니다. \n 데이터를 기록해보세요!",
+                text = stringResource(R.string.heart_graph_guide_text),
                 fontSize = 16.sp,
                 color = AppColors.mono700
             )
+            Spacer(modifier = Modifier.height(32.dp))
         }
     }
 }

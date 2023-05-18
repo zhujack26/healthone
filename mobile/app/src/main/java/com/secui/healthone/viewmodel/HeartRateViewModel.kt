@@ -45,8 +45,7 @@ class HeartRateViewModel(private val repository : HeartRateRepository) : ViewMod
                 val dataArray = jsonObject.getJSONObject("data").getJSONArray("content")
 
                 // 로깅용
-                Log.d(HLOG, "${response.body()?.string()}")
-
+                Log.d(HLOG, "${jsonObject}")
 
                 for (i in 0 until dataArray.length()) {
                     val item = dataArray.getJSONObject(i)

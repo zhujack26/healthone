@@ -10,5 +10,6 @@ class HealthOnePage {
         val accToken = mutableStateOf<String>("")
         val tempToken = mutableStateOf<String>("")
         val checkURL = mutableStateOf<String>("")
+        val challengeURL = mutableStateOf<String>("")
     }
 }

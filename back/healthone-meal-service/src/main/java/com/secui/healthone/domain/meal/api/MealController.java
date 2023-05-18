@@ -23,7 +23,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/meal/api/meal-record")
+@RequestMapping("/api/meal-record")
 @RequiredArgsConstructor
 @Tag(name = "Meal", description = "식사 관련 컨트롤러")
 public class MealController {

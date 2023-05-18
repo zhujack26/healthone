@@ -36,7 +36,7 @@ class ChallengeInstance {
         private val retrofit by lazy {
             Log.d("CHALLENEGE_INSTNACE", "${okHttpClient.toString()}")
             Retrofit.Builder()
-                .baseUrl(HealthOnePage.challengeURL.value)
+                .baseUrl("https://back.apihealthone.com/challenge")
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()

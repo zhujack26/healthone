@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/food")
+@RequestMapping("/meal/api/food")
 @RequiredArgsConstructor
 @Tag(name = "Food", description = "음식 데이터 관련 컨트롤러")
 public class FoodController {

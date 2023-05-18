@@ -1,5 +1,6 @@
 package com.secui.healthone.instance
 
+import android.util.Log
 import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.service.ChallengeService
 import com.secui.healthone.service.HeartRateService
@@ -33,6 +34,7 @@ class ChallengeInstance {
         }
 
         private val retrofit by lazy {
+            Log.d("CHALLENEGE_INSTNACE", "${okHttpClient.toString()}")
             Retrofit.Builder()
                 .baseUrl(HealthOnePage.challengeURL.value)
                 .client(okHttpClient)

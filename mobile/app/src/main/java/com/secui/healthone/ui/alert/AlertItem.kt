@@ -38,6 +38,13 @@ fun AlertItem(
     alert: AlertViewModel.AlertItemText,
     modifier: Modifier = Modifier
 ){
+    val imageId = try {
+        alert.alertImage.toInt()
+    } catch (e: NumberFormatException) {
+        // 기본 이미지 ID 또는 오류 이미지 ID
+        R.drawable.ic_speaker
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -53,7 +60,7 @@ fun AlertItem(
                 .wrapContentHeight(),
                 shape = CircleShape) {
                 Image(
-                    painter = painterResource(id = alert.alertImage.toInt()),
+                    painter = painterResource(id = imageId),
                     contentDescription = "이미지",
                     modifier = Modifier
                         .width(64.dp)

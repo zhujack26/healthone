@@ -7,7 +7,7 @@ import retrofit2.http.GET
 
 interface ChallengeService {
 
-    @GET("/api/challenge")
+    @GET("api/challenge")
     suspend fun getChallengeList():Response<ResponseBody>
 
 }

@@ -1,5 +1,6 @@
 package com.secui.healthone.api
 
+import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.data.ApiResponse
 import com.secui.healthone.data.Sleep.SleepRecord
 import com.secui.healthone.instance.HeartRateInstance
@@ -30,7 +31,7 @@ interface SleepApi {
 
             val authInterceptor = Interceptor { chain ->
                 val newRequest = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer ${HeartRateInstance.tempAccToken}")
+                    .addHeader("Authorization", "Bearer ${HealthOnePage.tempToken}")
                     .build()
 
                 chain.proceed(newRequest)

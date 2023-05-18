@@ -64,6 +64,34 @@ class AlertViewModel(private val context: Context, private val prefs: Preference
         }
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent)
     }
+    fun setSleepAlert() {
+        val sleepTime = prefs.getSleepTime()
+        val timeInMillis = parseTimeToMillis(sleepTime)
+        val image = R.drawable.ic_speaker
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(context, AlertReceiver::class.java).apply {
+            putExtra("alertType", "취침")
+            putExtra("alertTime", sleepTime)
+            putExtra("alertContent", "이제 주무실 시간이에요")
+            putExtra("alertImage", image)
+        }
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            1,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+        )
+        Log.d("AlertViewModel", "Sleep Alarm set at $timeInMillis")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (!alarmManager.canScheduleExactAlarms()) {
+                val intent = Intent("android.app.action.ACTION_SCHEDULE_EXACT_ALARM_PERMISSION_REQUEST_ACTION").apply {
+                    data = Uri.fromParts("package", context.packageName, null)
+                }
+                context.startActivity(intent)
+            }
+        }
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent)
+    }
 
     init {
         LocalBroadcastManager.getInstance(context)

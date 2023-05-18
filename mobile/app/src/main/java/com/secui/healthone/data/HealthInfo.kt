@@ -2,7 +2,6 @@ package com.secui.healthone.data
 
 data class HealthInfo(
     val nickname: String,
-    val createTime: String,
     val gender: Boolean,
     val birthdate: String,
     val height: Int,

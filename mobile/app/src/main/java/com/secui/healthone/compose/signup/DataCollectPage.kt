@@ -93,7 +93,7 @@ fun DataCollectFirstPage(navController: NavController, userViewModel: UserViewMo
             )
             Spacer(modifier = Modifier.height(16.dp))
             // 신장 컴포넌트
-            Height()
+            Height(userViewModel = userViewModel)
             Spacer(modifier = Modifier.height(16.dp))
             // 체중 컴포넌트
             Weight()
@@ -110,7 +110,7 @@ fun DataCollectFirstPage(navController: NavController, userViewModel: UserViewMo
                     } else {
                         saveNicknameToPrefs(context, nickname)
                         userViewModel.nickname.value = nickname
-                        Log.d("DataCollectFirstPage", "Updated nickname: ${userViewModel.nickname.value}")
+                        userViewModel.birthdate.value = birthDate.value
                         navController.navigate(PageRoutes.DataCollectSecond.route)
                     }
                 }, showDialog = showDialogState, setShowDialog = setShowDialogState)
@@ -212,17 +212,21 @@ fun DataCollectSecondPage(navController: NavController, userViewModel: UserViewM
                 NextSecondButton(navController) {
                     val nickname = userViewModel.nickname.value
                     val gender = userViewModel.gender.value
-                    Log.d("DataCollectSecondPage", "nickname : $nickname, gender : $gender")
+                    val birthdate = userViewModel.birthdate.value
+                    val height = userViewModel.height.value.toIntOrNull() ?: 170
+                    Log.d("DataCollectSecondPage"
+                        , "nickname : $nickname, gender : $gender ,birthdae : $birthdate " +
+                                ", height : $height")
                     val accessToken = accessToken
                     val currentTime = Instant.now().toString()
                     val healthInfo = HealthInfo(
                         nickname = nickname,
                         createTime = currentTime,
                         gender = gender,
-                        birthdate = "2013-05-14",
-                        height = 170,
+                        birthdate = birthdate,
+                        height = height,
                         weight = 70,
-                        workRate = "normal",
+                        workRate = "NORMAL",
                         stepGoal = 6000,
                         sleepTime = "22:00:00",
                         wakeUpTime = "08:00:00"

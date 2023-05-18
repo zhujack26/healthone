@@ -7,4 +7,6 @@ import androidx.lifecycle.ViewModel
 class UserViewModel : ViewModel() {
     var nickname = mutableStateOf("")
     val gender: MutableState<Boolean> = mutableStateOf(false)
+    val birthdate = mutableStateOf("")
+    val height = mutableStateOf("")
 }

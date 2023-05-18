@@ -29,12 +29,10 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
 import com.secui.healthone.R
 import com.secui.healthone.constant.AppColors
+import com.secui.healthone.viewmodel.UserViewModel
 
 @Composable
-fun Height() {
-    val (textState, setTextState) = remember {
-        mutableStateOf("")
-    }
+fun Height(userViewModel: UserViewModel) {
     val (isDialogVisible, setDialogVisible) = remember { mutableStateOf(false) }
 
     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -46,7 +44,7 @@ fun Height() {
         Spacer(modifier = Modifier.width(52.dp))
 
         TextField(
-            value = if (textState.isNotEmpty()) "$textState cm" else "",
+            value = userViewModel.height.value, // 변경된 부분: cm 접미사를 제거
             onValueChange = {},
             visualTransformation = VisualTransformation.None,
             maxLines = 1,
@@ -83,9 +81,9 @@ fun Height() {
                             NumberPicker(context).apply {
                                 minValue = 100
                                 maxValue = 200
-                                value = if (textState.isBlank()) 170 else textState.toInt()
+                                value = if (userViewModel.height.value.isEmpty()) 170 else userViewModel.height.value.toInt() // 변경된 부분: value의 타입을 Int로 변환
                                 setOnValueChangedListener { _, _, newVal ->
-                                    setTextState(newVal.toString())
+                                    userViewModel.height.value = newVal.toString() // 변경된 부분: 새 값의 타입을 String으로 변환
                                 }
                             }
                         },
@@ -95,9 +93,8 @@ fun Height() {
                     Button(
                         onClick = {
                             setDialogVisible(false)
-                            if (textState.isBlank()) {
-                                setTextState("170")
-                            // 예외 케이스 추가 : 초기 값에서 확인 버튼을 눌렀을 경우에도 값이 표시되도록 설정
+                            if (userViewModel.height.value.isEmpty()) {
+                                userViewModel.height.value = "170" // 초기 값의 타입을 String으로 변환
                             }
                         },
                         colors = ButtonDefaults

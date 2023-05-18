@@ -158,14 +158,69 @@ fun HealthHelpPage(navController: NavHostController) {
 
             if (HealthAdvices != null) {
                 val displayValue = when (selectedButton.value) {
-                    "체중" -> record?.weight  // null 검사 추가
-                    "BMI" -> record?.bmi  // null 검사 추가
-                    "체지방" -> record?.bodyFatPercentage  // null 검사 추가
-                    "골격근" -> record?.skeletalMuscleMass  // null 검사 추가
-                    "복부비만" -> record?.waistMeasurement  // null 검사 추가
-                    "혈관" -> "${record?.tg}, ${record?.hdlCholesterol}"  // null 검사 추가
-                    "혈압" -> "${record?.lowBloodPressure}${record?.highBloodPressure}"  // null 검사 추가
-                    "공복혈당" -> record?.fbg  // null 검사 추가
+                    "체중" -> "초고도 비만 : ${record?.height!! * record?.height * 35}kg 이상 \n 고도 비만 : ${record?.height!! * record?.height * 30}kg 이상 \n 비만 : ${record?.height!! * record?.height * 25}kg 이상 \n" +
+                            "저체중 : ${record?.height!! * record?.height * 25}kg 미만 \n 당신 : ${record?.weight}kg"   // null 검사 추가
+                    "BMI" -> "초고도 비만 : 35이상 \n 고도 비만 : 30이상 \n 비만 : 25이상 \n 저체중 : 18.5미만 \n 당신 : ${record?.bmi}"  // null 검사 추가
+                    "체지방" -> "체지방\n" +
+                            "(좋음)\n" +
+                            "남 = 15 ~ 18\n" +
+                            "여 = 20 ~ 25\n" +
+                            "(주의)\n" +
+                            "남 = 19 ~ 24\n" +
+                            "여 = 26 ~ 29\n" +
+                            "(위험)\n" +
+                            "남 = 25 이상\n" +
+                            "여 = 30 이상\n당신 : ${record?.bodyFatPercentage}"  // null 검사 추가
+                    "골격근" -> "골격근\n" +
+                            "(좋음)\n" +
+                            "남 = ${record?.weight!! * 0.4} 이상\n" +
+                            "여 = ${record?.weight!! * 0.35} 이상\n" +
+                            "(주의)\n" +
+                            "남 = ${record?.weight * 0.4} 미만\n" +
+                            "여 = ${record?.weight * 0.35} 미만\n" +
+                            "당신 : ${record?.skeletalMuscleMass}"  // null 검사 추가
+                    "복부비만" -> "복부비만\n" +
+                            "(좋음)\n" +
+                            "남 = 90미만\n" +
+                            "여 = 85미만\n" +
+                            "(주의)\n" +
+                            "남 = 90이상\n" +
+                            "여 = 85이상${record?.waistMeasurement}"  // null 검사 추가
+                    "혈관" -> "중성지방\n" +
+                            "(좋음)\n" +
+                            "150 미만\n" +
+                            "(주의)\n" +
+                            "150~199\n" +
+                            "(위험)\n" +
+                            "200이상$\n" +
+                            "당신 : ${record?.tg}" +
+                            "HDL콜레스테롤\n" +
+                            "(좋음)\n" +
+                            "60이상\n" +
+                            "(주의)\n" +
+                            "41~59\n" +
+                            "(위험)\n" +
+                            "40이하\n" +
+                            "당신 : ${record?.hdlCholesterol}"  // null 검사 추가
+                    "혈압" -> "혈압\n" +
+                            "(좋음)\n" +
+                            "수축기혈압 120미만\n" +
+                            "이완기혈압 80미만\n" +
+                            "(주의)\n" +
+                            "수축기혈압 120~139\n" +
+                            "이완기혈압 80~89\n" +
+                            "(위험)\n" +
+                            "수축기혈압 140이상\n" +
+                            "이완기혈압 90이상\n" +
+                            "당신 : ${record?.lowBloodPressure} ~ ${record?.highBloodPressure}"  // null 검사 추가
+                    "공복혈당" -> "공복혈당\n" +
+                            "(좋음)\n" +
+                            "100미만\n" +
+                            "(주의)\n" +
+                            "100~125\n" +
+                            "(위험)\n" +
+                            "126이상\n" +
+                            "당신 : ${record?.fbg}"  // null 검사 추가
                     else -> ""
                 }
 

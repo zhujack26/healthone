@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage"/> <!-- 안드로이드 11 (API 레벨 30) 이상에서 외부저장소-->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 브로드 캐스트 리시버를 위한 권한 설정 -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -26,6 +26,7 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Healthone"
+        android:requestLegacyExternalStorage="true"
         tools:targetApi="31">
 
         <!-- 레트로핏 통신을 위한 객체 생성용 액티비티 추가 -->

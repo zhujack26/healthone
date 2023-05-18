@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/meal/test")
+@RequestMapping("/test")
 @Tag(name = "Test", description = "Meal 서버 테스트 관련 컨트롤러")
 public class TestController {
 

@@ -53,12 +53,7 @@ fun TimePickerRow(dateState: MutableState<String>, timeState: MutableState<Strin
         )
         IconButton(onClick = {
             coroutineScope.launch {
-                val datePickerResult = showDatePicker(context, selectedDate, dateState, timeState, sleepRecords, selectedTime)
-                if (datePickerResult) {
-                    val timePickerResult = showTimePicker(context, selectedDate, dateState, timeState, sleepRecords, selectedTime)
-                    if (timePickerResult) {
-                    }
-                }
+                showDatePicker(context, selectedDate, dateState, timeState, sleepRecords, selectedTime)
             }
         }) {
             Icon(painter = painterResource(id = R.drawable.baseline_schedule_24), contentDescription = "Edit")
@@ -66,31 +61,27 @@ fun TimePickerRow(dateState: MutableState<String>, timeState: MutableState<Strin
     }
 }
 
-fun showDatePicker(context: Context, selectedDate: Calendar, dateState: MutableState<String>, timeState: MutableState<String>, sleepRecords: MutableList<SleepRecord>, selectedTime: MutableState<String>): Boolean {
+fun showDatePicker(context: Context, selectedDate: Calendar, dateState: MutableState<String>, timeState: MutableState<String>, sleepRecords: MutableList<SleepRecord>, selectedTime: MutableState<String>) {
     val calendar = Calendar.getInstance()
 
     val previousDay = selectedDate.clone() as Calendar
     previousDay.add(Calendar.DAY_OF_MONTH, -1)
-
-    var result = true  // 수정 필요한 부분
 
     val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
         calendar.set(year, month, dayOfMonth)
         val newDate = String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth)
         dateState.value = newDate
         selectedTime.value = "$newDate ${timeState.value}"
+
+        // Call TimePicker here after the DatePickerDialog is dismissed
+        showTimePicker(context, selectedDate, dateState, timeState, sleepRecords, selectedTime)
     }
 
     DatePickerDialog(context, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).apply {
         datePicker.minDate = previousDay.timeInMillis
         datePicker.maxDate = selectedDate.timeInMillis
-        setOnCancelListener {
-            result = false  // 수정 필요한 부분
-        }
         show()
     }
-
-    return result  // 수정 필요한 부분
 }
 
 fun showTimePicker(context: Context, selectedDate: Calendar, dateState: MutableState<String>, timeState: MutableState<String>, sleepRecords: MutableList<SleepRecord>, selectedTime: MutableState<String>): Boolean {
@@ -124,7 +115,8 @@ fun isValidTime(selectedDate: Calendar, newTime: String, sleepRecords: MutableLi
     // Check if the new time is in the future
     val currentTime = Calendar.getInstance()
 
-    val newTimeCalendar = selectedDate.apply {
+    val newTimeCalendar = selectedDate.clone() as Calendar
+    newTimeCalendar.apply {
         val (hour, minute) = newTime.split(":").map(String::toInt)
         set(Calendar.HOUR_OF_DAY, hour)
         set(Calendar.MINUTE, minute)

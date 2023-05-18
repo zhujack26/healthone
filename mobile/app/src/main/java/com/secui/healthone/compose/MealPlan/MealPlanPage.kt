@@ -19,7 +19,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.data.MealPlan.CalorieStatus
+import com.secui.healthone.viewmodel.HealthStatusViewModel
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.Calendar
 import java.util.Locale
 
@@ -34,7 +36,11 @@ fun MealPlanPage(
     val initialDate = Calendar.getInstance()
     val selectedDate = remember { mutableStateOf(initialDate) }
     var refreshGraph by remember { mutableStateOf(false) }
-
+    val viewModel = remember { HealthStatusViewModel() }
+    val today = LocalDate.now().toString()
+    viewModel.fetchHealthRecords(today)
+    val healthRecords = viewModel.healthRecords
+    val record = if(healthRecords.isNotEmpty()) { healthRecords.last() } else { null }
     LaunchedEffect(key1 = selectedDate.value, key2 = refreshGraph) {
         scope.launch {
             val formattedDate = formatDate(selectedDate.value)
@@ -49,7 +55,7 @@ fun MealPlanPage(
         val updatedIntakeCalories = caloriesData!!.intakeCalories
         val updatedBurnedCalories = caloriesData!!.burnedCalories
         val updatedTotalCalories = caloriesData!!.totalCalories
-        val updatedRecommendedCalories = caloriesData!!.recommendedCalories
+        val updatedRecommendedCalories = (((record?.height!! - 100) * 0.9) * 30).toInt()
 
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
@@ -79,21 +85,6 @@ fun MealPlanPage(
             }
 
             item {
-                Card(modifier = Modifier.fillMaxWidth(), elevation = 4.dp) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(
-                            "건강 기록", modifier = Modifier.align(Alignment.CenterVertically),
-                            style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold)
-                        )
-                        TimeIntervalSelector()
-                    }
-                }
-            }
-
-            item {
                 Spacer(modifier = Modifier.height(16.dp))
             }
 
@@ -103,9 +94,6 @@ fun MealPlanPage(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        val calorieStatusPair = remember {
-                            Pair(updatedTotalCalories, updatedRecommendedCalories)
-                        }
 
                         // Create the CalorieStatus object outside of the remember function
                         val calorieStatusData = CalorieStatus(

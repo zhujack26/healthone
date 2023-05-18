@@ -23,9 +23,10 @@ import com.secui.healthone.constant.AppColors
 import com.secui.healthone.constant.PageRoutes
 
 @Composable
-fun NextSecondButton(navController: NavController) {
+fun NextSecondButton(navController: NavController, onClick: () -> Unit) {
     Button(
         onClick = {
+            onClick()
             navController.navigate(PageRoutes.Guide.route)
         },
         modifier = Modifier

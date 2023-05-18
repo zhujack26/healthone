@@ -56,6 +56,7 @@ fun HealthStatusPage(navController: NavHostController) {
     LaunchedEffect(selectedDateString) {
         viewModel.fetchHealthRecords(selectedDateString)
     }
+
     val defaultHealthStatus = HealthStatus(
         no = null,
         userNo = 0,
@@ -82,10 +83,6 @@ fun HealthStatusPage(navController: NavHostController) {
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-        item {
-            Spacer(modifier = Modifier.height(16.dp))
-        }
 
         item {
             Card(modifier = Modifier.fillMaxWidth(), elevation = 4.dp) {

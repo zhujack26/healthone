@@ -33,15 +33,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.secui.healthone.constant.AppColors
-import com.secui.healthone.ui.datacollectpage.ImageUri.saveNicknameToPrefs
 
 
 @Composable
 fun NicknameInput(nicknameState: String, onNicknameChange: (String) -> Unit) {
     val (textState, setTextState) = remember { mutableStateOf("") }
-    val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
-    val focusRequester = remember { FocusRequester() }
     val interactionSource = remember { MutableInteractionSource() }
 
     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -55,17 +52,13 @@ fun NicknameInput(nicknameState: String, onNicknameChange: (String) -> Unit) {
             value = textState,
             onValueChange = { newText ->
                 setTextState(newText)
-                if (newText.isBlank() || newText.length > 9 || !newText.matches(Regex("^(?=.*[ㄱ-힣a-zA-Z])[ㄱ-힣a-zA-Z]{1,9}$"))) {
-                    setShowDialog(true)
-                } else {
-                    onNicknameChange(newText)
-                }
+                onNicknameChange(newText)
             },
             visualTransformation = VisualTransformation.None,
             maxLines = 1,
             textStyle = TextStyle(
                 color = AppColors.black,
-                fontSize = 16.sp,
+                fontSize = 12.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
             ),
@@ -76,12 +69,7 @@ fun NicknameInput(nicknameState: String, onNicknameChange: (String) -> Unit) {
             modifier = Modifier
                 .width(240.dp)
                 .height(48.dp)
-                .clip(RoundedCornerShape(32.dp))
-                .onFocusChanged { focusState ->
-                    if (!focusState.isFocused) {
-                        focusManager.clearFocus()
-                    }
-                },
+                .clip(RoundedCornerShape(32.dp)),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Done,
@@ -92,28 +80,6 @@ fun NicknameInput(nicknameState: String, onNicknameChange: (String) -> Unit) {
                 focusManager.clearFocus()
             }),
             interactionSource = interactionSource
-        )
-    }
-
-    if (showDialog) {
-        AlertDialog(
-            onDismissRequest = { setShowDialog(false) },
-            title = { Text("경고") },
-            text = { Text("닉네임이 유효하지 않습니다.") },
-            confirmButton = {
-                Button(
-                    onClick = { setShowDialog(false) },
-                    colors = ButtonDefaults
-                        .outlinedButtonColors(
-                            backgroundColor =
-                            AppColors.green200
-                        ),
-                ) {
-                    Text("확인",
-                        fontSize = 12.sp,
-                        color = AppColors.white)
-                }
-            }
         )
     }
 }

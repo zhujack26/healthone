@@ -69,6 +69,7 @@ fun OverViewPage(
 
     // URL init
     HealthOnePage.checkURL.value = stringResource(R.string.check_url)
+    HealthOnePage.challengeURL.value = stringResource(R.string.challenge_url)
 
     Column(modifier= Modifier
         .fillMaxSize()

@@ -17,10 +17,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.secui.healthone.R
 import com.secui.healthone.compose.factory.YouTubeViewModelFactory
 import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.data.ChallengeInfo
@@ -47,7 +49,6 @@ fun ChallengePage(
 
     HealthOnePage.pageTitle.value="Do it!, 챌린지"
 
-
     val mOwner = LocalLifecycleOwner.current
     val repository = ChallengeRepository();
     val viewModel = ChallenegeViewModel(repository)
@@ -55,7 +56,6 @@ fun ChallengePage(
 
     viewModel.getChallengeList();
     viewModel.challengeList.observe(mOwner, Observer{
-        //Log.d("HEART_PAGE:::", "${it.toString()}")
         challengeList.value = it;
     })
 
@@ -65,7 +65,7 @@ fun ChallengePage(
 
     // YouTube API에 대한 Retrofit 인스턴스 생성
     val retrofit = Retrofit.Builder()
-        .baseUrl("https://www.googleapis.com/youtube/v3/") // YouTube API base URL
+        .baseUrl(stringResource(R.string.youtube_url)) // YouTube API base URL
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
@@ -91,7 +91,7 @@ fun ChallengePage(
         Spacer(modifier = Modifier.height(32.dp))
         ChallengeContentBox(navController, videos=videos)
         Spacer(modifier = Modifier.height(16.dp))
-        ChallengeRankItem(navController)
+//        ChallengeRankItem(navController)
 
     }
 }

@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -42,8 +43,7 @@ fun PopularDetailItem(
     val challnegeInfo =  ChallenegeViewModel.currentChallenge.value;
     val isEmpthyChallenge = challnegeInfo == null;
 
-    HealthOnePage.pageTitle.value = if(isEmpthyChallenge) "" else challnegeInfo!!.name;
-
+    HealthOnePage.pageTitle.value = challnegeInfo?.name ?: ""
 
     val openDialog = remember { mutableStateOf(false) }
     // 다이얼로그
@@ -72,17 +72,13 @@ fun PopularDetailItem(
         horizontalAlignment = Alignment.Start
     ){
         Text(
-            text = if(isEmpthyChallenge)
-                        "이름 없음"
-                    else challnegeInfo?.name.toString(),
+            text = challnegeInfo?.name ?: "",
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = if(isEmpthyChallenge)
-                        "..."
-                    else challnegeInfo?.introduce.toString(),
+            text = challnegeInfo?.introduce ?: "",
             fontSize = 16.sp,
             color = AppColors.mono700
         )
@@ -98,7 +94,7 @@ fun PopularDetailItem(
     {
         // title
         Text(
-            text = PopularDetailItemText.challengeOverViewText,
+            text = stringResource(id = R.string.challenge_over_view_text),
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )
@@ -124,7 +120,7 @@ fun PopularDetailItem(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = PopularDetailItemText.totalTimesText,
+                    text = stringResource(R.string.total_times_text),
                     fontSize = 16.sp
                 )
             }
@@ -143,7 +139,7 @@ fun PopularDetailItem(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = PopularDetailItemText.totalPeriodText,
+                    text = stringResource(R.string.total_period_text),
                     fontSize = 16.sp
                 )
             }
@@ -155,13 +151,12 @@ fun PopularDetailItem(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = PopularDetailItemText.levelText,
+                    text = stringResource(R.string.programme_level_text),
                     fontSize = 16.sp
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = if(isEmpthyChallenge) "-"
-                    else challnegeInfo?.level.toString(),
+                    text = challnegeInfo?.level.toString(),
                     fontSize = 16.sp
                 )
             }
@@ -181,7 +176,7 @@ fun PopularDetailItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = PopularDetailItemText.averageText,
+                    text = stringResource(R.string.average_text),
                     fontSize = 16.sp
                 ) // category
                 Text(
@@ -202,7 +197,7 @@ fun PopularDetailItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = PopularDetailItemText.toolsText,
+                    text = stringResource(R.string.tools_text),
                     fontSize = 16.sp
                 ) // category
                Row(modifier = Modifier
@@ -243,12 +238,11 @@ fun PopularDetailItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = PopularDetailItemText.progammeType,
+                    text = stringResource(R.string.progamme_type),
                     fontSize = 16.sp
                 ) // category
                 Text(
-                    text = if(isEmpthyChallenge) "-"
-                            else challnegeInfo?.programType.toString(),
+                    text = challnegeInfo?.programType.toString(),
                     fontSize = 16.sp
                 ) // value
             }
@@ -262,7 +256,7 @@ fun PopularDetailItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = PopularDetailItemText.recommendDay,
+                    text = stringResource(R.string.recommend_day),
                     fontSize = 16.sp
                 ) // category
                 Text(
@@ -273,7 +267,7 @@ fun PopularDetailItem(
             }
             Spacer(modifier = Modifier.height(32.dp))
             // guide text
-            Text(text = PopularDetailItemText.recommendGuideText,
+            Text(text = stringResource(R.string.recommend_guide_text),
                 fontSize = 16.sp,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -298,7 +292,7 @@ fun PopularDetailItem(
         onClick = {
         }) {
         Text(
-            text = PopularDetailItemText.seeVideoBtnText,
+            text =  stringResource(R.string.see_video_btn_text),
             fontSize = 16.sp,
             color = AppColors.white
         )
@@ -309,19 +303,6 @@ fun PopularDetailItem(
 
 class PopularDetailItemText {
     companion object {
-        const val challengeOverViewText = "프로그램 개요" // not to data
-        const val totalTimesText = "총 운동 횟수"
-        const val totalPeriodText = "총 기간(주)"
-        const val levelText = "난이도"
-        const val averageText = "평균 운동 시간"
-        const val toolsText = "운동 기구"
-        const val progammeType = "프로그램 유형"
-        const val needToolText = "필요한 운동 기구"
-        const val needToolValue = "요가매트, 짐볼, 풀업 바, 트레드밀"
-        const val toolOkBtnText = "확인"
-        const val recommendDay = "추천 운동 요일"
-        const val recommendGuideText = "상기 일정에 맞추어 운동에 도전해보세요"
-        const val seeVideoBtnText = "운동 영상 보러가기"
     }
 }
 
@@ -349,7 +330,7 @@ fun ToolsInfoDialog(openDialog:MutableState<Boolean>, equipment:String){
         .padding(16.dp)
     ) {
         Text(
-            text = PopularDetailItemText.needToolText,
+            text = stringResource(R.string.programme_need_tooL_text),
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )
@@ -365,7 +346,7 @@ fun ToolsInfoDialog(openDialog:MutableState<Boolean>, equipment:String){
         )
         Spacer(modifier = Modifier.height(32.dp))
         Text(
-            text = PopularDetailItemText.toolOkBtnText,
+            text = stringResource(R.string.check_btn_text),
             fontSize = 16.sp,
             modifier = Modifier
                 .fillMaxWidth()

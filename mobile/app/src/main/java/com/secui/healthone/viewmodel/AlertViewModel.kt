@@ -22,8 +22,11 @@ import androidx.core.content.ContextCompat
 import com.secui.healthone.R
 
 class AlertViewModel(private val context: Context, private val prefs: PreferencesManager) : ViewModel() {
-    private val _alert = MutableLiveData<AlertItemText>()
-    val alert: LiveData<AlertItemText> get() = _alert
+    private val _wakeAlert = MutableLiveData<AlertItemText>()
+    val wakeAlert: LiveData<AlertItemText> get() = _wakeAlert
+
+    private val _sleepAlert = MutableLiveData<AlertItemText>()
+    val sleepAlert: LiveData<AlertItemText> get() = _sleepAlert
 
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -31,12 +34,22 @@ class AlertViewModel(private val context: Context, private val prefs: Preference
             val alertTime = intent.getStringExtra("alertTime")
             val alertContent = intent.getStringExtra("alertContent")
             val alertImage = intent.getStringExtra("alertImage")
-            _alert.postValue(AlertItemText(alertType ?: "", alertTime ?: "", alertContent ?: "", alertImage ?: ""))
+            val alertItem = AlertItemText(alertType ?: "", alertTime ?: "", alertContent ?: "", alertImage ?: "")
+
+            if (alertType == "기상") {
+                _wakeAlert.postValue(alertItem)
+            } else if (alertType == "취침") {
+                _sleepAlert.postValue(alertItem)
+            }
         }
     }
 
     fun setAlert() {
         val wakeTime = prefs.getWakeTime()
+        if (wakeTime.isBlank()) {
+            Log.d("AlertViewModel", "Wake time is empty")
+            return
+        }
         val timeInMillis = parseTimeToMillis(wakeTime)
         val image = R.drawable.ic_speaker
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -66,6 +79,10 @@ class AlertViewModel(private val context: Context, private val prefs: Preference
     }
     fun setSleepAlert() {
         val sleepTime = prefs.getSleepTime()
+        if (sleepTime.isBlank()) {
+            Log.d("AlertViewModel", "Sleep time is empty")
+            return
+        }
         val timeInMillis = parseTimeToMillis(sleepTime)
         val image = R.drawable.ic_speaker
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -104,9 +121,14 @@ class AlertViewModel(private val context: Context, private val prefs: Preference
     }
 
     private fun parseTimeToMillis(time: String): Long {
-        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
-        val date = sdf.parse(time)
-        return date?.time ?: 0L
+        return if (time.isBlank()) {
+            Log.d("AlertViewModel", "Time string is blank")
+            0L
+        } else {
+            val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+            val date = sdf.parse(time)
+            date?.time ?: 0L
+        }
     }
 
 

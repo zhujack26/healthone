@@ -22,7 +22,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/customsport")
+@RequestMapping("/meal/api/customsport")
 @RequiredArgsConstructor
 @Tag(name = "CustomSport", description = "사용자 운동 데이터 관련 컨트롤러")
 public class CustomSportController {

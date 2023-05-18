@@ -108,7 +108,7 @@ fun WalkingDetailPage(navController: NavController, context: Context, account: G
         }
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "거리: ${"%.2f".format(distanceDataState.value)} km",
+            text = "거리: ${"%.2f".format(distanceDataState.value / 1000)} km",
             fontSize = 16.sp,
         )
     }

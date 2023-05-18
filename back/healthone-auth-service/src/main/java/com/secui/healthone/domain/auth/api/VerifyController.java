@@ -22,7 +22,7 @@ public class VerifyController {
     }
 
     @PostMapping("/meal/test")
-    public ResponseEntity<?> verifyToken(@RequestHeader("Authorization") String Authorization){
+    public ResponseEntity<?> mealtestToken(@RequestHeader("Authorization") String Authorization){
         log.info("Authorization = {}",Authorization);
         return ResponseEntity.ok().build();
     }

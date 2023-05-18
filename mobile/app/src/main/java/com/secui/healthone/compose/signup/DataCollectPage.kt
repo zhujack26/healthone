@@ -232,8 +232,8 @@ fun DataCollectSecondPage(navController: NavController, userViewModel: UserViewM
                         weight = weight,
                         workRate = workRate,
                         stepGoal = stepGoal,
-                        sleepTime = if (sleepTime.isNotBlank()) sleepTime else "22:00:00",
-                        wakeUpTime = if (wakeUpTime.isNotBlank()) wakeUpTime else "08:00:00"
+                        sleepTime = if (sleepTime != null && sleepTime.isNotBlank()) sleepTime else "22:00:00",
+                        wakeUpTime = if (wakeUpTime != null && wakeUpTime.isNotBlank()) wakeUpTime else "08:00:00"
                     )
 
                     viewModel.updateHealthInfo(accessToken, healthInfo)

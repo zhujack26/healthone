@@ -106,14 +106,14 @@ fun TopBarNavigation(navController: NavHostController, context: Context) {
             composable(PageRoutes.UserInformDown.route){
                 UserInformDownPage()
             }
-//            composable(PageRoutes.DataCollectFirst.route) {
-//                val userViewModel: UserViewModel = viewModel()
-//                DataCollectFirstPage(navController, userViewModel)
-//            }
-//            composable(PageRoutes.DataCollectSecond.route) {
-//                val userViewModel: UserViewModel = viewModel()
-//                DataCollectSecondPage(navController, userViewModel)
-//            }
+            composable(PageRoutes.DataCollectFirst.route) {
+                val userViewModel: UserViewModel = viewModel()
+                DataCollectFirstPage(navController, userViewModel)
+            }
+            composable(PageRoutes.DataCollectSecond.route) {
+                val userViewModel: UserViewModel = viewModel()
+                DataCollectSecondPage(navController, userViewModel)
+            }
         }
     }
 }

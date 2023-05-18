@@ -30,36 +30,37 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.secui.healthone.R
 import com.secui.healthone.constant.AppColors
+import com.secui.healthone.viewmodel.AlertViewModel
 
 @Composable
 fun AlertItem(
     navController: NavController,
+    alert: AlertViewModel.AlertItemText,
     modifier: Modifier = Modifier
 ){
+    val imageId = try {
+        alert.alertImage.toInt()
+    } catch (e: NumberFormatException) {
+        // 기본 이미지 ID 또는 오류 이미지 ID
+        R.drawable.ic_speaker
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .topBorder(1.dp, AppColors.mono300),
+            .topBorder(1.dp, AppColors.mono300)
+            .padding(16.dp),
+
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
-
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-
-            // 알림 아이콘
             Surface(modifier = Modifier
                 .wrapContentWidth()
                 .wrapContentHeight(),
                 shape = CircleShape) {
                 Image(
-                    painter = painterResource(id = R.drawable.recommand_sample1),
+                    painter = painterResource(id = imageId),
                     contentDescription = "이미지",
                     modifier = Modifier
                         .width(64.dp)
@@ -79,26 +80,17 @@ fun AlertItem(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(text = AlertItemText.alertType, fontSize = 16.sp)
-                    Text(text = AlertItemText.alertTime, fontSize = 16.sp)
+                    Text(text = alert.alertType, fontSize = 16.sp)
+                    Text(text = alert.alertTime, fontSize = 16.sp)
                 }
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = AlertItemText.alertContent,
+                    text = alert.alertContent,
                     fontSize = 14.sp,
                     color = AppColors.mono700
                 )
 
             }
-        }
-    }
-}
-
-class AlertItemText {
-    companion object {
-        const val alertType = "공지사항"
-        const val alertTime = "14:02"
-        const val alertContent = "오늘 하루 활기차게 보내기 위해 한번 뛰어볼까요?"
     }
 }
 

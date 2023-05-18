@@ -21,12 +21,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.secui.healthone.constant.AppColors
 import com.secui.healthone.R
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @Composable
 fun BirthDate(
     value: String,
     onValueChange: (String) -> Unit = {},
-    pattern: String = "yyyy년 MM월 dd일"
 ) {
     val context = LocalContext.current
 
@@ -41,12 +42,8 @@ fun BirthDate(
                     set(Calendar.MONTH, month)
                     set(Calendar.DAY_OF_MONTH, dayOfMonth)
                 }
-                onValueChange(
-                    String.format("%1\$d년 %2\$d월 %3\$d일",
-                        newDate.get(Calendar.YEAR),
-                        newDate.get(Calendar.MONTH) + 1,
-                        newDate.get(Calendar.DAY_OF_MONTH))
-                )
+                val formattedDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(newDate.time)
+                onValueChange(formattedDate)
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
@@ -54,14 +51,14 @@ fun BirthDate(
         )
         datePickerDialog.show()
     }
-    Row(verticalAlignment = Alignment.CenterVertically,
-    ) {
+
+    Row(verticalAlignment = Alignment.CenterVertically) {
         Text(
             text = "생년월일",
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
         )
-        Spacer(modifier = Modifier.width(28.dp))
+        Spacer(modifier = Modifier.width(24.dp))
         TextField(
             value = value,
             onValueChange = {},
@@ -82,7 +79,6 @@ fun BirthDate(
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
             ),
-
         )
     }
 }

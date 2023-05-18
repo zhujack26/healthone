@@ -23,7 +23,12 @@ data class CaloriesDataResponse(
     val sumKcalConsume: Int,
     val sumKcalEaten: Int
 )
-
+data class CaloriesWeekApiResponse(
+    val timestamp: String,
+    val message: String,
+    val data: List<CaloriesDataResponse>,
+    val success: Boolean
+)
 suspend fun fetchCaloriesData(date: String): CaloriesData? {
     val dateString = "${date}T00:00:00"
     return try {

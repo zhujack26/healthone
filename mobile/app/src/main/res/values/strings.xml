@@ -9,4 +9,25 @@
     <string name="less_bpm_guide">최소 심박수는 20 입니다</string>
     <string name="over_bpm_guide">최대 심박수는 220 입니다</string>
     <string name="err_bpm_guide">유효 하지 않은 값 입니다</string>
+    <string name="temp_token">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0QGVtYWlsLmNvbSIsIm5hbWUiOiJuaWNrbmFtZSIsImlhdCI6MjAxNjIzOTAyMiwibm8iOjF9.3T3tWbHfTFQCfAz0SqOBTHU2lDsm5NBu0pvvJKqgRdc</string>
+    <string name="check_url">https://back.apihealthone.com/check/</string>
+    <string name="youtube_url">https://www.googleapis.com/youtube/v3/</string>
+    <string name="challenge_over_view_text">프로그램 개요</string>
+    <string name="total_times_text">총 운동 횟수</string>
+    <string name="total_period_text">총 기간(주)</string>
+    <string name="level_text">난이도</string>
+    <string name="programme_level_text">난이도</string>
+    <string name="average_text">평균 운동 시간</string>
+    <string name="tools_text">운동 기구</string>
+    <string name="progamme_type">프로그램 유형</string>
+    <string name="recommend_day">추천 운동 요일</string>
+    <string name="recommend_guide_text">상기 일정에 맞추어 운동에 도전해보세요</string>
+    <string name="see_video_btn_text">운동 영상 보러가기</string>
+    <string name="programme_need_tooL_text">필요한 운동기구</string>
+    <string name="check_btn_text">확인</string>
+    <string name="challenge_url">https://back.apihealthone.com/challenge/</string>
+    <string name="heart_graph_guide_text">불러올 데이터가 없거나, 측정된 데이터가 부족합니다 \n 지금 바로 데이터를 기록해보세요!</string>
+    <string name="heart_rate_record_list_title">측정 기록</string>
+    <string name="challange_popular_box_error">지금은 추천 할만한 챌린지가 없네요...😂</string>
+    <string name="challange_popular_box_title">인기 있는 운동 챌린지</string>
 </resources>

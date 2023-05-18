@@ -13,7 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.secui.healthone.R
@@ -24,8 +23,8 @@ import androidx.compose.ui.unit.sp
 import com.secui.healthone.constant.AppColors
 
 @Composable
-fun GenderSelection() {
-    var selectedGender by remember { mutableStateOf<Gender?>(null) }
+fun GenderSelection(onGenderChange: (Boolean?) -> Unit) {
+    var selectedGender by remember { mutableStateOf<Boolean?>(null) }
     Row(
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -35,22 +34,24 @@ fun GenderSelection() {
             fontWeight = FontWeight.Bold,
         )
         Spacer(modifier = Modifier.width(60.dp))
-            GenderButton(
-                gender = Gender.Male,
-                isSelected = selectedGender == Gender.Male,
-                onSelected = {
-                    selectedGender = if (selectedGender == it) null else it
-                }
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            GenderButton(
-                gender = Gender.Female,
-                isSelected = selectedGender == Gender.Female,
-                onSelected = {
-                    selectedGender = if (selectedGender == it) null else it
-                }
-            )
-        }
+        GenderButton(
+            gender = Gender.Male,
+            isSelected = selectedGender == true,
+            onSelected = {
+                selectedGender = if (selectedGender == true) null else true
+                onGenderChange(selectedGender ?: false)
+            }
+        )
+        Spacer(modifier = Modifier.width(16.dp))
+        GenderButton(
+            gender = Gender.Female,
+            isSelected = selectedGender == false,
+            onSelected = {
+                selectedGender = if (selectedGender == false) null else false
+                onGenderChange(selectedGender ?: false)
+            }
+        )
+    }
 }
 
 @Composable

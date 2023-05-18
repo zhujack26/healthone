@@ -39,13 +39,12 @@ import java.time.format.DateTimeFormatter
 fun WalkingDetailPage(navController: NavController, context: Context, account: GoogleSignInAccount, date: LocalDate) {
 
     val stepsData = remember { mutableStateOf(emptyList<Int>()) }
-    val distanceData = remember { mutableStateOf(0f) }
+    val distanceDataState = remember { FitWalkManager.readDistanceData(context, account) }
     val targetSteps = 6000
 
     LaunchedEffect(key1 = date) {
         launch {
             stepsData.value = FitWalkManager.readHourlySteps(context, account, date)
-            distanceData.value = FitWalkManager.readDistanceData(context, account).value
         }
     }
 
@@ -88,7 +87,7 @@ fun WalkingDetailPage(navController: NavController, context: Context, account: G
         ) {
             repeat(24) { index ->
                 val steps = stepsData.value.getOrNull(index)
-                val barHeight = steps?.toFloat()?.times(0.07f) ?: 0f
+                val barHeight = steps?.toFloat()?.times(0.07f)?.coerceIn(0f, 88f) ?: 0f
 
                 Column(verticalArrangement = Arrangement.Bottom, modifier = Modifier.height(100.dp)) {
                     Box(
@@ -109,7 +108,7 @@ fun WalkingDetailPage(navController: NavController, context: Context, account: G
         }
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "거리: ${"%.2f".format(distanceData.value)} km",
+            text = "거리: ${"%.2f".format(distanceDataState.value / 1000)} km",
             fontSize = 16.sp,
         )
     }

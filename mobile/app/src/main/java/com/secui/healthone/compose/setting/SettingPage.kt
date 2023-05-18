@@ -1,5 +1,7 @@
-package com.secui.healthone.compose
+package com.secui.healthone.compose.setting
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -14,13 +16,15 @@ import androidx.navigation.NavController
 import androidx.compose.foundation.clickable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import com.secui.healthone.ui.setting.*
 import com.secui.healthone.constant.PageRoutes
 
 @Composable
 fun SettingPage(navController: NavController) {
+    val context = LocalContext.current
     val showLogoutDialog = remember { mutableStateOf(false) }
-    val showWithdrawDialog = remember { mutableStateOf(false) }
+//    val showWithdrawDialog = remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -34,15 +38,17 @@ fun SettingPage(navController: NavController) {
             "개인 데이터 다운로드" to PageRoutes.UserInformDown.route,
             "개인 데이터 삭제" to PageRoutes.UserInformDelete.route,
             "로그아웃" to "logout",
-            "회원탈퇴" to "withdraw"
+//            "회원탈퇴" to "withdraw"
         )
 
         settingsItems.forEach { (item, route) ->
             if (item == "로그아웃") {
                 SettingsRow(item = item, textStyle = textStyle, arrow = arrow, onClick = { showLogoutDialog.value = true })
-            } else if (item == "회원탈퇴") {
-                SettingsRow(item = item, textStyle = textStyle, arrow = arrow, onClick = { showWithdrawDialog.value = true })
-            } else if (item == "알림 설정") {
+            }
+//            else if (item == "회원탈퇴") {
+//                SettingsRow(item = item, textStyle = textStyle, arrow = arrow, onClick = { showWithdrawDialog.value = true })
+//            }
+            else if (item == "알림 설정") {
                 SettingsRow(item = item, textStyle = textStyle, arrow = arrow, onClick = { navController.navigate(route) })
             } else {
                 SettingsRow(item = item, textStyle = textStyle, arrow = arrow, onClick = { navController.navigate(route) })
@@ -51,12 +57,19 @@ fun SettingPage(navController: NavController) {
         }
 
         if (showLogoutDialog.value) {
-            LogoutDialog(onConfirm = { /* 로그아웃 코드 */ }, onCancel = { showLogoutDialog.value = false })
+            LogoutDialog(
+                onConfirm = {
+                    logout(context, navController)
+                },
+                onCancel = {
+                    showLogoutDialog.value = false
+                })
         }
 
-        if (showWithdrawDialog.value) {
-            WithdrawDialog(onConfirm = { /* 회원탈퇴 코드 */ }, onCancel = { showWithdrawDialog.value = false })
-        }
+
+//        if (showWithdrawDialog.value) {
+//            WithdrawDialog(onConfirm = { /* 회원탈퇴 코드 */ }, onCancel = { showWithdrawDialog.value = false })
+//        }
     }
 }
 
@@ -78,4 +91,10 @@ fun SettingsRow(item: String, textStyle: TextStyle, arrow: String, onClick: () -
             style = textStyle
         )
     }
+}
+
+fun logout(context: Context, navController: NavController) {
+    val sharedPreferences: SharedPreferences = context.getSharedPreferences("secret_shared_prefs", Context.MODE_PRIVATE)
+    sharedPreferences.edit().remove("access_token").apply()
+    navController.navigate(PageRoutes.Login.route)
 }

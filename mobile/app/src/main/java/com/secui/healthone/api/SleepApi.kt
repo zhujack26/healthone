@@ -1,7 +1,9 @@
 package com.secui.healthone.api
 
+import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.data.ApiResponse
 import com.secui.healthone.data.Sleep.SleepRecord
+import com.secui.healthone.instance.HeartRateInstance
 import okhttp3.Interceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -14,13 +16,13 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface SleepApi {
-    @POST("/api/sleep")
+    @POST("api/sleep")
     suspend fun postSleepRecord(@Body sleepRecord: SleepRecord): ApiResponse<SleepRecord>
-    @GET("/api/sleep/detail")
+    @GET("api/sleep/detail")
     suspend fun getSleepRecords(
         @Query("date") query: String
     ): ApiResponse<List<SleepRecord>>
-    @DELETE("/api/sleep")
+    @DELETE("api/sleep")
     suspend fun deleteSleepRecord(@Query("no") sleepRecordId: Int): ApiResponse<SleepRecord>
 
     companion object {
@@ -29,7 +31,7 @@ interface SleepApi {
 
             val authInterceptor = Interceptor { chain ->
                 val newRequest = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer $JWT_TOKEN")
+                    .addHeader("Authorization", "Bearer ${HealthOnePage.accToken.value}")
                     .build()
 
                 chain.proceed(newRequest)
@@ -42,7 +44,7 @@ interface SleepApi {
 
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://check.apihealthone.com/")
+                .baseUrl("https://back.apihealthone.com/check/")
                 .client(client)
                 .build()
 

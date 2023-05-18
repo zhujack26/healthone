@@ -1,9 +1,11 @@
 package com.secui.healthone.api
 
+import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.data.ApiResponse
 import com.secui.healthone.data.HealthStatus.HealthAdvice
 import com.secui.healthone.data.HealthStatus.HealthStatus
 import com.secui.healthone.data.HealthStatus.SendHealthStatus
+import com.secui.healthone.instance.HeartRateInstance
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -33,7 +35,7 @@ interface HealthStatusApi {
 
             val authInterceptor = Interceptor { chain ->
                 val newRequest = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer $JWT_TOKEN")
+                    .addHeader("Authorization", "Bearer ${HealthOnePage.accToken.value}")
                     .build()
 
                 chain.proceed(newRequest)
@@ -46,7 +48,7 @@ interface HealthStatusApi {
 
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://info.apihealthone.com/")
+                .baseUrl("https://back.apihealthone.com/info/")
                 .client(client)
                 .build()
 

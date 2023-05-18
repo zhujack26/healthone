@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -25,9 +26,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.secui.healthone.constant.AppColors
+import com.secui.healthone.viewmodel.UserViewModel
 
 @Composable
-fun ExcersiseAmount() {
+fun ExcersiseAmount(userViewModel: UserViewModel) {
     var selectedAmount by remember { mutableStateOf<ExerciseAmount?>(null) }
     Card(
         elevation = 4.dp,
@@ -40,30 +42,33 @@ fun ExcersiseAmount() {
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 ExerciseButton(
-                    amount = ExerciseAmount.Less,
-                    isSelected = selectedAmount == ExerciseAmount.Less,
+                    amount = ExerciseAmount.LITTLE,
+                    isSelected = selectedAmount == ExerciseAmount.LITTLE,
                     onSelected = {
                         selectedAmount = if (selectedAmount == it) null else it
+                        userViewModel.workRate.value = it.name
                     }
                 )
                 Text(text = "적음", fontWeight = FontWeight.Bold)
             }
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 ExerciseButton(
-                    amount = ExerciseAmount.Normal,
-                    isSelected = selectedAmount == ExerciseAmount.Normal,
+                    amount = ExerciseAmount.NORMAL,
+                    isSelected = selectedAmount == ExerciseAmount.NORMAL,
                     onSelected = {
                         selectedAmount = if (selectedAmount == it) null else it
+                        userViewModel.workRate.value = it.name
                     }
                 )
                 Text(text = "보통", fontWeight = FontWeight.Bold)
             }
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 ExerciseButton(
-                    amount = ExerciseAmount.Much,
-                    isSelected = selectedAmount == ExerciseAmount.Much,
+                    amount = ExerciseAmount.MANY,
+                    isSelected = selectedAmount == ExerciseAmount.MANY,
                     onSelected = {
                         selectedAmount = if (selectedAmount == it) null else it
+                        userViewModel.workRate.value = it.name
                     }
                 )
                 Text(text = "많음", fontWeight = FontWeight.Bold)
@@ -92,9 +97,9 @@ fun ExerciseButton(
 ) {
     val backgroundColor = if (isSelected) AppColors.blue600 else AppColors.mono200
     val icon = when (amount) {
-        ExerciseAmount.Less -> R.drawable.ic_excersise_less
-        ExerciseAmount.Normal -> R.drawable.ic_excersise_normal
-        ExerciseAmount.Much -> R.drawable.ic_excersise_much
+        ExerciseAmount.LITTLE -> R.drawable.ic_excersise_less
+        ExerciseAmount.NORMAL -> R.drawable.ic_excersise_normal
+        ExerciseAmount.MANY -> R.drawable.ic_excersise_much
     }
 
     Box(
@@ -115,7 +120,7 @@ fun ExerciseButton(
 }
   
 enum class ExerciseAmount {
-    Less,
-    Normal,
-    Much
+    LITTLE,
+    NORMAL,
+    MANY
 }

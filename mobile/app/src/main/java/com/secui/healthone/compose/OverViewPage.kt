@@ -13,14 +13,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.secui.healthone.R
 import com.secui.healthone.api.fit.FitAPIConfig
 import com.secui.healthone.api.fit.FitHeartManager
 import com.secui.healthone.api.fit.FitNutritionManager
 import com.secui.healthone.api.fit.FitSleepManager
 import com.secui.healthone.api.fit.FitWalkManager
 import com.secui.healthone.constant.HealthOnePage
+import com.secui.healthone.instance.HeartRateInstance
 import com.secui.healthone.ui.overviewpage.FoodCalorieBox
 import com.secui.healthone.ui.overviewpage.HealthScoreBox
 import com.secui.healthone.ui.overviewpage.HeartRateBox
@@ -63,6 +66,10 @@ fun OverViewPage(
     FitSleepManager.writeSleepValue(context);
     val sleepValue = remember { FitSleepManager.readSleepValue(context) };
     val calorieValue = remember { FitNutritionManager.readNutritionData(context = context) } // 칼로리 값 , 미구현!
+
+    // URL init
+    HealthOnePage.checkURL.value = stringResource(R.string.check_url)
+    HealthOnePage.challengeURL.value = stringResource(R.string.challenge_url)
 
     Column(modifier= Modifier
         .fillMaxSize()

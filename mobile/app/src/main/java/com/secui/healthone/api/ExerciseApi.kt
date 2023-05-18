@@ -1,9 +1,11 @@
 package com.secui.healthone.api
 
+import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.data.MealPlan.AddExercise
 import com.secui.healthone.data.MealPlan.ExerciseList
 import com.secui.healthone.data.MealPlan.ExerciseListResponse
 import com.secui.healthone.data.MealPlan.ExerciseSearchResponse
+import com.secui.healthone.instance.HeartRateInstance
 import okhttp3.Interceptor
 
 import okhttp3.OkHttpClient
@@ -34,14 +36,14 @@ interface ExerciseApi {
     @POST("/api/sportrecord")
     suspend fun addExercise(@Body exercise: AddExercise): Response<Void>
     companion object {
-        private const val BASE_URL = "http://meal.apihealthone.com/"
+        private const val BASE_URL = "https://back.apihealthone.com/meal/"
 
         fun create(): ExerciseApi {
             val logger = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
 
             val authInterceptor = Interceptor { chain ->
                 val newRequest = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer $JWT_TOKEN")
+                    .addHeader("Authorization", "Bearer ${HealthOnePage.accToken.value}")
                     .build()
                 chain.proceed(newRequest)
             }
@@ -53,7 +55,7 @@ interface ExerciseApi {
 
                 val retrofit = Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl("http://meal.apihealthone.com/")
+                    .baseUrl("https://back.apihealthone.com/meal/")
                     .client(client)
                     .build()
 

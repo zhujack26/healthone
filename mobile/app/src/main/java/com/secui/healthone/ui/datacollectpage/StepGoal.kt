@@ -16,16 +16,17 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.secui.healthone.constant.AppColors
+import com.secui.healthone.viewmodel.UserViewModel
 
 @Composable
-fun StepGoal() {
+fun StepGoal(userViewModel: UserViewModel) {
     val stepCount = remember { mutableStateOf(6000) }
     val textColor = AppColors.black
     Card(
         elevation = 4.dp,
         shape = RoundedCornerShape(8.dp),
 
-    ) {
+        ) {
         Row(
             horizontalArrangement = Arrangement.SpaceAround,
             modifier = Modifier.fillMaxWidth()
@@ -40,6 +41,7 @@ fun StepGoal() {
                     .clickable {
                         if (stepCount.value > 0) {
                             stepCount.value -= 500
+                            userViewModel.stepGoal.value = stepCount.value
                         }
                     }
             )
@@ -71,7 +73,10 @@ fun StepGoal() {
                 fontSize = 28.sp,
                 color = textColor,
                 modifier = Modifier
-                    .clickable { stepCount.value += 500 }
+                    .clickable {
+                        stepCount.value += 500
+                        userViewModel.stepGoal.value = stepCount.value
+                    }
             )
         }
     }

@@ -44,7 +44,7 @@ fun Height(userViewModel: UserViewModel) {
         Spacer(modifier = Modifier.width(52.dp))
 
         TextField(
-            value = userViewModel.height.value, // 변경된 부분: cm 접미사를 제거
+            value = if (userViewModel.height.value.isNotEmpty()) "${userViewModel.height.value} cm" else "",
             onValueChange = {},
             visualTransformation = VisualTransformation.None,
             maxLines = 1,

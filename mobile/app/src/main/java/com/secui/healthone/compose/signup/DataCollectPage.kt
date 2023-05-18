@@ -96,7 +96,7 @@ fun DataCollectFirstPage(navController: NavController, userViewModel: UserViewMo
             Height(userViewModel = userViewModel)
             Spacer(modifier = Modifier.height(16.dp))
             // 체중 컴포넌트
-            Weight()
+            Weight(userViewModel = userViewModel)
             Spacer(modifier = Modifier.height(32.dp))
             // 다음 버튼 컴포넌트
             Row(
@@ -124,7 +124,7 @@ fun DataCollectFirstPage(navController: NavController, userViewModel: UserViewMo
 @Composable
 fun DataCollectSecondPage(navController: NavController, userViewModel: UserViewModel) {
     Log.d("DataCollectSecondPage", "Received nickname: ${userViewModel.nickname.value}")
-
+    val workRate = remember { mutableStateOf<String?>(null) }
     val healthInfoApi = HealthInfoInstance.api
     val viewModelFactory = HealthInfoViewModelFactory(healthInfoApi)
     val viewModel: HealthInfoViewModel = viewModel(factory = viewModelFactory)
@@ -176,7 +176,7 @@ fun DataCollectSecondPage(navController: NavController, userViewModel: UserViewM
                     fontWeight = FontWeight.Bold,
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                ExcersiseAmount()
+                ExcersiseAmount(userViewModel)
             }
             Spacer(modifier = Modifier.height(32.dp))
             // 목표 걸음수 컴포넌트
@@ -188,7 +188,7 @@ fun DataCollectSecondPage(navController: NavController, userViewModel: UserViewM
                     fontWeight = FontWeight.Bold,
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                StepGoal()
+                StepGoal(userViewModel)
             }
             Spacer(modifier = Modifier.height(16.dp))
             // 목표 수면시간 컴포넌트
@@ -201,7 +201,7 @@ fun DataCollectSecondPage(navController: NavController, userViewModel: UserViewM
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 val context = LocalContext.current
-                SleepGoal(context)
+                SleepGoal(userViewModel, context)
             }
             Spacer(modifier = Modifier.height(32.dp))
             // 완료버튼 컴포넌트
@@ -213,10 +213,16 @@ fun DataCollectSecondPage(navController: NavController, userViewModel: UserViewM
                     val nickname = userViewModel.nickname.value
                     val gender = userViewModel.gender.value
                     val birthdate = userViewModel.birthdate.value
-                    val height = userViewModel.height.value.toIntOrNull() ?: 170
+                    val height = userViewModel.height.value.toInt()
+                    val weight = userViewModel.weight.value.toInt()
+                    val stepGoal = userViewModel.stepGoal.value
+                    val sleepTime = userViewModel.sleepTime.value
+                    val wakeUpTime = userViewModel.wakeUpTime.value
+                    val workRate = userViewModel.workRate.value
+
                     Log.d("DataCollectSecondPage"
-                        , "nickname : $nickname, gender : $gender ,birthdae : $birthdate " +
-                                ", height : $height")
+                        , "nickname : $nickname, gender : $gender, birthdae : $birthdate, " +
+                                "height : $height, weight : $weight")
                     val accessToken = accessToken
                     val currentTime = Instant.now().toString()
                     val healthInfo = HealthInfo(
@@ -225,16 +231,13 @@ fun DataCollectSecondPage(navController: NavController, userViewModel: UserViewM
                         gender = gender,
                         birthdate = birthdate,
                         height = height,
-                        weight = 70,
-                        workRate = "NORMAL",
-                        stepGoal = 6000,
-                        sleepTime = "22:00:00",
-                        wakeUpTime = "08:00:00"
+                        weight = weight,
+                        workRate = workRate,
+                        stepGoal = stepGoal,
+                        sleepTime = if (sleepTime.isNotBlank()) sleepTime else "",
+                        wakeUpTime = if (wakeUpTime.isNotBlank()) wakeUpTime else ""
                     )
-                    Log.d("DataCollectSecondPage", "nickname : $nickname")
-
                     viewModel.updateHealthInfo(accessToken, healthInfo)
-                    Log.d("DataCollectSecondPage", "nickname : $nickname")
 
                 }
             }

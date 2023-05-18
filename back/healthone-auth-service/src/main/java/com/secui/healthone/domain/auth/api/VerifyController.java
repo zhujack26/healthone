@@ -20,4 +20,10 @@ public class VerifyController {
         log.info("Authorization = {}",Authorization);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/meal/test")
+    public ResponseEntity<?> verifyToken(@RequestHeader("Authorization") String Authorization){
+        log.info("Authorization = {}",Authorization);
+        return ResponseEntity.ok().build();
+    }
 }

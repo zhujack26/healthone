@@ -2,9 +2,7 @@ package com.secui.healthone.api
 
 import android.content.Context
 import android.content.Intent
-import android.provider.Settings
-import android.os.Build
-import android.os.Environment
+import android.net.Uri
 import android.util.Log
 import androidx.core.content.FileProvider
 import com.google.gson.Gson
@@ -80,19 +78,10 @@ suspend fun downloadData(context: Context, url: String, accessToken: String) {
     val outputStream = FileOutputStream(file)
     outputStream.write(responseBody.bytes())
     outputStream.close()
-
-    // 안드로이드 11 이상일 경우, 파일 액세스 권한 요청
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-        if (!Environment.isExternalStorageManager()) {
-            val intent = Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
-            context.startActivity(intent)
-        }
-    }
-
     // 다운로드 완료 후 파일 열기
-    val contentUri = FileProvider.getUriForFile(context, "${context.packageName}.provider", file)
+    val uri = FileProvider.getUriForFile(context, "${context.packageName}.provider", file)
     val intent = Intent(Intent.ACTION_VIEW)
-    intent.setDataAndType(contentUri, "text/plain")
-    intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK
+    intent.setDataAndType(uri, "text/plain")
+    intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
     context.startActivity(intent)
 }

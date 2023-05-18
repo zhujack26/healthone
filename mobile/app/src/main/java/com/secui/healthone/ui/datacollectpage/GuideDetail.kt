@@ -131,7 +131,6 @@ fun GuideDetail(navController: NavController) {
                                 popUpTo(PageRoutes.Guide.route) {
                                     inclusive = true
                                 }
-                                launchSingleTop = true
                             }
                         },
                         modifier = Modifier

@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class VerifyController {
 
+    @PatchMapping("**")
+    public ResponseEntity<?> verifyToken5(@RequestHeader("Authorization") String Authorization){
+        log.info("Authorization = {}",Authorization);
+        return ResponseEntity.ok().build();
+    }
+    
     @PostMapping("**")
     public ResponseEntity<?> verifyToken(@RequestHeader("Authorization") String Authorization){
         log.info("Authorization = {}",Authorization);

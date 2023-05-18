@@ -96,10 +96,5 @@ fun SettingsRow(item: String, textStyle: TextStyle, arrow: String, onClick: () -
 fun logout(context: Context, navController: NavController) {
     val sharedPreferences: SharedPreferences = context.getSharedPreferences("secret_shared_prefs", Context.MODE_PRIVATE)
     sharedPreferences.edit().remove("access_token").apply()
-    navController.navigate(PageRoutes.Login.route) {
-        popUpTo(navController.graph.startDestinationId) {
-            inclusive = true
-        }
-        launchSingleTop = true
-    }
+    navController.navigate(PageRoutes.Login.route)
 }

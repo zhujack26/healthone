@@ -31,6 +31,7 @@ import com.secui.healthone.compose.healthstatus.HealthInputPage
 import com.secui.healthone.compose.healthstatus.HealthStatusPage
 import com.secui.healthone.compose.signup.DataCollectFirstPage
 import com.secui.healthone.compose.signup.DataCollectSecondPage
+import com.secui.healthone.compose.signup.GuidePage
 import com.secui.healthone.compose.signup.LoginPage
 import com.secui.healthone.compose.sleep.SleepPage
 import com.secui.healthone.constant.PageRoutes
@@ -117,6 +118,9 @@ fun TopBarNavigation(navController: NavHostController, context: Context) {
             }
             composable(PageRoutes.Login.route){
                 LoginPage(navController)
+            }
+            composable(PageRoutes.Guide.route) {
+                GuidePage(navController)
             }
         }
     }

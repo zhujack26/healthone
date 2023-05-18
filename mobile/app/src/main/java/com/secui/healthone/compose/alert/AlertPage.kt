@@ -26,6 +26,7 @@ fun AlertPage(
     alertViewModel: AlertViewModel = viewModel(factory = AlertViewModelFactory(LocalContext.current, PreferencesManager(LocalContext.current))),
     modifier: Modifier=Modifier){
     alertViewModel.setAlert()
+    alertViewModel.setSleepAlert()
     val alert = alertViewModel.alert.observeAsState(initial = AlertViewModel.AlertItemText("", "", "", "")).value
     Column(modifier= Modifier
         .fillMaxSize()

@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/calorie")
+@RequestMapping("/meal/api/calorie")
 @RequiredArgsConstructor
 @Tag(name = "Calorie", description = "칼로리 관련 컨트롤러")
 public class CalorieController {

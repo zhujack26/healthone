@@ -1,8 +1,6 @@
 package com.secui.healthone.global;
 
-import com.secui.healthone.domain.meal.dto.MealResDto;
 import com.secui.healthone.global.error.exception.RestApiException;
-import com.secui.healthone.global.error.response.ErrorResponse;
 import com.secui.healthone.global.response.RestApiResponse;
 import com.secui.healthone.global.error.errorcode.CustomErrorCode;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,7 +8,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/test")
+@RequestMapping("/meal/test")
 @Tag(name = "Test", description = "Meal 서버 테스트 관련 컨트롤러")
 public class TestController {
 

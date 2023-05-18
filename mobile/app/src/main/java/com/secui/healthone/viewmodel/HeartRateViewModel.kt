@@ -37,11 +37,16 @@ class HeartRateViewModel(private val repository : HeartRateRepository) : ViewMod
             val myList: MutableList<HeartRead> = mutableListOf();
 
             Log.d(HLOG, "${response.toString()}")
+            //Log.d(HLOG, "${response.body()?.string()}")
 
             if(response.isSuccessful){
                 val jsonString = response.body()?.string()
                 val jsonObject = JSONObject(jsonString)
                 val dataArray = jsonObject.getJSONObject("data").getJSONArray("content")
+
+                // 로깅용
+                Log.d(HLOG, "${response.body()?.string()}")
+
 
                 for (i in 0 until dataArray.length()) {
                     val item = dataArray.getJSONObject(i)

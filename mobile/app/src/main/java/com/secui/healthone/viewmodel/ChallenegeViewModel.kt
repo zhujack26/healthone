@@ -23,11 +23,14 @@ class ChallenegeViewModel(val repository: ChallengeRepository):ViewModel() {
             val response = repository.getChallengeList();
             val myList: MutableList<ChallengeInfo> = mutableListOf();
 
+            Log.d(CLOG, "${response.toString()}")
+
             if(!response.isSuccessful) throw Exception();
 
             val jsonString = response.body()?.string()
             val jsonObject = JSONObject(jsonString)
             val dataArray = jsonObject.getJSONObject("data").getJSONArray("popularChallengeList")
+            Log.d(CLOG, "${jsonString}")
 
             for (i in 0 until dataArray.length()) {
                 val item = dataArray.getJSONObject(i)
@@ -79,7 +82,7 @@ class ChallenegeViewModel(val repository: ChallengeRepository):ViewModel() {
     companion object{
         val challengeList: MutableState<MutableList<ChallengeInfo>> = mutableStateOf(mutableListOf())
         val currentChallenge : MutableState<ChallengeInfo?> = mutableStateOf(null);
-
+        const val CLOG = "CHALLENGE_VIEW::::"
     }
 
 

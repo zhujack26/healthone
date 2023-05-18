@@ -1,5 +1,6 @@
 package com.secui.healthone.instance
 
+import com.secui.healthone.constant.HealthOnePage
 import com.secui.healthone.service.ChallengeService
 import com.secui.healthone.service.HeartRateService
 import okhttp3.Interceptor
@@ -25,7 +26,7 @@ class ChallengeInstance {
             @Throws(IOException::class)
             override fun intercept(chain: Interceptor.Chain) : Response = with(chain) {
                 val newRequest = request().newBuilder()
-                    .addHeader("Authorization", "Bearer ${HeartRateInstance.tempAccToken}")
+                    .addHeader("Authorization", "Bearer ${HealthOnePage.accToken.value}")
                     .build()
                 proceed(newRequest)
             }
@@ -33,7 +34,7 @@ class ChallengeInstance {
 
         private val retrofit by lazy {
             Retrofit.Builder()
-                .baseUrl(URL)
+                .baseUrl(HealthOnePage.checkURL.value)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
@@ -44,6 +45,6 @@ class ChallengeInstance {
     }
 
     companion object {
-        const val URL = "http://challenge.apihealthone.com/"
+
     }
 }

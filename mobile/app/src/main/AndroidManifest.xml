@@ -26,7 +26,6 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Healthone"
-        android:requestLegacyExternalStorage="true"
         tools:targetApi="31">
 
         <!-- 레트로핏 통신을 위한 객체 생성용 액티비티 추가 -->

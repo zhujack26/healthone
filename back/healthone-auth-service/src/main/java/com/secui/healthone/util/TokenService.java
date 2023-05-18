@@ -22,7 +22,7 @@ public class TokenService {
 
 //    @Value("${springboot.jwt.secret}")
     private String secretKey = "tset";
-    public static long accessPeriod = 1000L* 5L;
+    public static long accessPeriod = 1000L * 60L * 60L * 24L * 30L;
     public static long refreshPeriod = 1000L * 60L * 60L * 24L * 30L;
 
 

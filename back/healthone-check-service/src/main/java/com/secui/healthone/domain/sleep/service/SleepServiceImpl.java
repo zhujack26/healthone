@@ -54,6 +54,7 @@ public class SleepServiceImpl implements SleepService {
 
     // 수면정보 삭제하기
     @Override
+    @Transactional
     public void deleteSleepInfo(Integer no, Integer userNo) {
         sleepRepository.findByNoAndUserNo(no, userNo).orElseThrow(() -> new RestApiException(CustomErrorCode.DB_100));
         sleepRepository.deleteByNoAndUserNo(no, userNo);

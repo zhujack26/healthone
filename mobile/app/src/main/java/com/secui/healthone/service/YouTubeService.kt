@@ -12,6 +12,6 @@ interface YouTubeService {
         @Query("q") query: String,
         @Query("type") type: String = "video",
         @Query("maxResults") maxResults: Int = 5,
-        @Query("key") key: String = "AIzaSyAtZQGhWIiLRVNcQ9sUYUP6rb0HHjZFA6g"
+        @Query("key") key: String = "AIzaSyCHoK4aj-WfLq3KAVD4ealBsK4CE3PXvHc"
     ): Response<YouTubeSearchResponse>
 }

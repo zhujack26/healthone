@@ -176,8 +176,173 @@
 
 ### **3. 파이프라인**
 
+__Android Pipeline__
+```
+pipeline{
+    agent{
+        label 'healthone-front-jenkins'
+    }
+    tools{
+        gradle 'Android-Gradle'
+        jdk 'jdk-17'
+    }
+    
+    stages{
+        stage('GitLab Clone'){
+            steps{
+                git branch: "APP-build",credentialsId:"${env.GIT_CREDENTIAL_ID}",url:"${env.GITLAB_URL}"
+                sh "chmod +x -R ${env.WORKSPACE}"
+            }
+        }
+        
+        stage('SonarQube analysis'){
+            steps{
+                withSonarQubeEnv('SonarQubeServer'){
+                    dir('mobile'){
+                        sh '''
+                           ./gradlew init
+                           chmod +x gradlew
+                           '''
+                    }
+                }
+            }
+        }
+        stage('Build ') {
+            steps {
+                echo 'Building'
+                script {
+//                    VARIANT = getBuildType()
+                    dir('mobile'){
+                        sh "gradle wrapper"
+                        sh "chmod +x gradlew"
+//                        sh "./gradlew clean bundleRelease" // 일반 APK 빌드
+                        sh "find $WORKSPACE -name '*.aab'"
+                    }
+                }
+            }
+        }
+        
+        stage('Deploy App to Store') {
+            steps {
+                echo 'Deploying'
+                script {
+                    dir('mobile'){
+                    }
+                }
+            }
+        }
+    }
+    
+    post {
+        failure {
+            mattermostSend (color: '#ff0000', message: "### Build Failure \n __Name__ \n ${env.JOB_NAME} \n __Version__ \n 0.0.${currentBuild.number}")
+        }
+        success {
+            mattermostSend (color: '#81c147', message: "### Build Success \n __Name__ \n ${env.JOB_NAME} \n __Version__ \n 0.0.${currentBuild.number}")
+            
+        }
+    }
+}
+```
 
+__Back-End Pipeline Template__
+```
+pipeline{
+    agent{
+        label 'healthone-back-jenkins'
+    }
+    tools{
+        gradle 'Gradle'
+    }
 
+ 
+    
+    stages{
+        stage('GitLab Clone'){
+            steps{
+                git branch: "be-challenge-service-build",credentialsId:"${env.GIT_CREDENTIAL_ID}",url:"${env.GITLAB_URL}"
+                sh "chmod +x -R ${env.WORKSPACE}"
+            }
+        }
+        
+        stage('SonarQube analysis'){
+            steps{
+                withSonarQubeEnv('SonarQubeServer'){
+                    dir('back/healthone-challenge-service'){
+                        sh '''
+                           gradle init
+                           chmod +x gradlew
+		  '''
+                    }
+                }
+            }
+        }
+        
+        stage('JUnit Test'){
+            steps{
+                dir('back/healthone-challenge-service'){
+                    script {
+                        try {
+                            sh "./gradlew test"
+                        } catch (Exception e) {
+                            throw mattermostSend (color: '#ff0000', message: "Junit Test Failure: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL}) \n ### Detail \n ```\n ${currentBuild.rawBuild.getLog(1000).join('\n')}\n```")
+                        }
+                    }
+                }
+            }
+        }
+        
+        stage('Build'){
+            steps{
+                dir('back/healthone-challenge-service'){
+                    sh "./gradlew clean build --exclude-task test"
+                }
+            }
+        }
+        
+        stage('Push Docker Image'){
+            steps{
+                dir('back/healthone-challenge-service'){
+                    script{
+                       image.push()
+                    }
+                }
+            }
+        }
+            
+        stage('Clone ArgoCD'){
+            steps{
+                git branch: "master",credentialsId:"${env.GIT_CREDENTIAL_ID}",url:"${env.GITLAB_ARGO_URL}"
+                sh "chmod +x -R ${env.WORKSPACE}"
+            }
+        }
+        
+        stage('Update Version'){
+            steps{
+            }
+        }
+        
+        stage('Push ArgoCD Repo'){
+            steps{
+                sh """
+                   git push 
+                   """
+            }
+        }
+    }
+        
+    
+    post {
+        failure {
+            mattermostSend (color: '#ff0000', message: "### Build Failure \n __Name__ \n ${env.JOB_NAME} \n __Version__ \n 0.0.${currentBuild.number}")
+        }
+        success {
+            mattermostSend (color: '#81c147', message: "### Build Success \n __Name__ \n ${env.JOB_NAME} \n __Version__ \n 0.0.${currentBuild.number}")
+            
+        }
+    }
+}
+```
 
 <br/>
 

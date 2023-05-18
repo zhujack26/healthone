@@ -115,7 +115,8 @@ fun isValidTime(selectedDate: Calendar, newTime: String, sleepRecords: MutableLi
     // Check if the new time is in the future
     val currentTime = Calendar.getInstance()
 
-    val newTimeCalendar = selectedDate.apply {
+    val newTimeCalendar = selectedDate.clone() as Calendar
+    newTimeCalendar.apply {
         val (hour, minute) = newTime.split(":").map(String::toInt)
         set(Calendar.HOUR_OF_DAY, hour)
         set(Calendar.MINUTE, minute)

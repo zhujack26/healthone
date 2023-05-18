@@ -128,7 +128,7 @@ fun GuideDetail(navController: NavController) {
                     Button(
                         onClick = {
                             navController.navigate(PageRoutes.OverView.route) {
-                                popUpTo(navController.graph.startDestinationId) {
+                                popUpTo(PageRoutes.Guide.route) {
                                     inclusive = true
                                 }
                                 launchSingleTop = true

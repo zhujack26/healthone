@@ -372,7 +372,8 @@ pipeline{
 ### **8. API 명세서**
 
 ![API 명세서 Link](./assets/healthone_api_docs.PNG)
-[API 문서 보러가기](https://www.notion.so/BE-API-91a49862404d448e8c23e7051880e293?pvs=4)
+[API 문서 보러가기 (최종)](./assets/healthone-apidocs.html)
+[API 문서 보러가기 (초안)](https://www.notion.so/BE-API-91a49862404d448e8c23e7051880e293?pvs=4)
 <br/>
 
 ### **9. 간트 차트(Gantt Chart)**

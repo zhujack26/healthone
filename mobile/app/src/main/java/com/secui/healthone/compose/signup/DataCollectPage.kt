@@ -213,8 +213,8 @@ fun DataCollectSecondPage(navController: NavController, userViewModel: UserViewM
                     val nickname = userViewModel.nickname.value
                     val gender = userViewModel.gender.value
                     val birthdate = userViewModel.birthdate.value
-                    val height = userViewModel.height.value.toInt()
-                    val weight = userViewModel.weight.value.toInt()
+                    val height = userViewModel.height.value.toIntOrNull() ?: 170
+                    val weight = userViewModel.weight.value.toIntOrNull() ?: 70
                     val stepGoal = userViewModel.stepGoal.value
                     val sleepTime = userViewModel.sleepTime.value
                     val wakeUpTime = userViewModel.wakeUpTime.value
@@ -224,19 +224,18 @@ fun DataCollectSecondPage(navController: NavController, userViewModel: UserViewM
                         , "nickname : $nickname, gender : $gender, birthdae : $birthdate, " +
                                 "height : $height, weight : $weight")
                     val accessToken = accessToken
-                    val currentTime = Instant.now().toString()
                     val healthInfo = HealthInfo(
                         nickname = nickname,
-                        createTime = currentTime,
                         gender = gender,
                         birthdate = birthdate,
                         height = height,
                         weight = weight,
                         workRate = workRate,
                         stepGoal = stepGoal,
-                        sleepTime = if (sleepTime.isNotBlank()) sleepTime else "",
-                        wakeUpTime = if (wakeUpTime.isNotBlank()) wakeUpTime else ""
+                        sleepTime = if (sleepTime.isNotBlank()) sleepTime else "22:00:00",
+                        wakeUpTime = if (wakeUpTime.isNotBlank()) wakeUpTime else "08:00:00"
                     )
+
                     viewModel.updateHealthInfo(accessToken, healthInfo)
 
                 }

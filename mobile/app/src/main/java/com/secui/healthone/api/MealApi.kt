@@ -56,7 +56,7 @@ interface MealApi {
 
             val authInterceptor = Interceptor { chain ->
                 val newRequest = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer ${HealthOnePage.tempToken}")
+                    .addHeader("Authorization", "Bearer ${HealthOnePage.accToken.value}")
                     .build()
 
                 chain.proceed(newRequest)

@@ -43,7 +43,8 @@ public class SecurityConfig {
         return web -> {
             web.ignoring()
                     .antMatchers("/auth/login")
-                    .antMatchers("/auth/logout");
+                    .antMatchers("/auth/logout")
+                    .antMatchers("/auth/verify");
         };
     }
 }

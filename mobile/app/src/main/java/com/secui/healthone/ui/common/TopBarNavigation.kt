@@ -31,6 +31,7 @@ import com.secui.healthone.compose.healthstatus.HealthInputPage
 import com.secui.healthone.compose.healthstatus.HealthStatusPage
 import com.secui.healthone.compose.signup.DataCollectFirstPage
 import com.secui.healthone.compose.signup.DataCollectSecondPage
+import com.secui.healthone.compose.signup.LoginPage
 import com.secui.healthone.compose.sleep.SleepPage
 import com.secui.healthone.constant.PageRoutes
 import com.secui.healthone.viewmodel.HealthInfoViewModel
@@ -113,6 +114,9 @@ fun TopBarNavigation(navController: NavHostController, context: Context) {
             composable(PageRoutes.DataCollectSecond.route) {
                 val userViewModel: UserViewModel = viewModel()
                 DataCollectSecondPage(navController, userViewModel)
+            }
+            composable(PageRoutes.Login.route){
+                LoginPage(navController)
             }
         }
     }

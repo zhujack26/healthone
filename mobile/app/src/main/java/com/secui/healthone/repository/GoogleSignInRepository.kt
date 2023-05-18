@@ -81,12 +81,14 @@ class GoogleSignInRepository (
         .build()
     private val loginApi = retrofit.create(LoginApi::class.java)
 
-    private val keyGenParameterSpec = MasterKeys.AES256_GCM_SPEC
-    private val masterKeyAlias = MasterKeys.getOrCreate(keyGenParameterSpec)
-    private val sharedPreferences = EncryptedSharedPreferences.create(
-        "secret_shared_prefs",
-        masterKeyAlias,
+    val masterKey = MasterKey.Builder(context)
+        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+        .build()
+
+    val sharedPreferences = EncryptedSharedPreferences.create(
         context,
+        "secret_shared_prefs",
+        masterKey,
         EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
     )

@@ -32,7 +32,7 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests()
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(tokenService,cookieUtil,redisUtil), UsernamePasswordAuthenticationFilter.class);
                 return http.build();
@@ -43,8 +43,7 @@ public class SecurityConfig {
         return web -> {
             web.ignoring()
                     .antMatchers("/auth/login")
-                    .antMatchers("/auth/logout")
-                    .antMatchers("/auth/verify");
+                    .antMatchers("/auth/logout");
         };
     }
 }

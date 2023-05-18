@@ -1,3 +1,3 @@
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
-    <files-path name="downloaded_data" path="." />
+    <files-path name="downloaded_data" path="downloaded_data.txt" />
 </paths>

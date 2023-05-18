@@ -53,6 +53,7 @@ fun createRetrofitClient(baseUrl: String): Retrofit {
 
 // 다운로드 함수
 suspend fun downloadData(context: Context, url: String, accessToken: String) {
+    Log.d("DownloadData", "Start downloading data...")
     val retrofit = createRetrofitClient("https://back.apihealthone.com/")
     val service = retrofit.create(DataApi::class.java)
 
@@ -64,17 +65,25 @@ suspend fun downloadData(context: Context, url: String, accessToken: String) {
         "https://back.apihealthone.com/check/check-data-download/heart-rate" -> service.downloadHeartRateData("Bearer $accessToken")
         else -> throw IllegalArgumentException("Invalid URL")
     }
-
+    Log.d("DownloadData", "Data downloaded successfully...")
     // 파일 저장
     val file = File(context.filesDir, "downloaded_data.txt")
-    val outputStream = FileOutputStream(file)
-    outputStream.write(responseBody.bytes())
-    outputStream.close()
+    Log.d("DownloadData", "File saved0")
 
+    val outputStream = FileOutputStream(file)
+    Log.d("DownloadData", "File saved1")
+    outputStream.write(responseBody.bytes())
+    Log.d("DownloadData", "File saved2")
+    outputStream.close()
+    Log.d("DownloadData", "File saved3")
     // 다운로드 완료 후 파일 열기
     val uri = Uri.fromFile(file)
+    Log.d("DownloadData", "File open1")
     val intent = Intent(Intent.ACTION_VIEW)
-    intent.setDataAndType(uri, "application/octet-stream")
+    Log.d("DownloadData", "File open2")
+    intent.setDataAndType(uri, "text/plain")
+    Log.d("DownloadData", "File open3")
     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+    Log.d("DownloadData", "File open4")
     context.startActivity(intent)
 }

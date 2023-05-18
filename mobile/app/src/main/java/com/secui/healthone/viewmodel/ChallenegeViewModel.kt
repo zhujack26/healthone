@@ -24,13 +24,13 @@ class ChallenegeViewModel(val repository: ChallengeRepository):ViewModel() {
             val myList: MutableList<ChallengeInfo> = mutableListOf();
 
             Log.d(CLOG, "${response.toString()}")
-            Log.d(CLOG, "${response.body()?.string()}")
 
             if(!response.isSuccessful) throw Exception();
 
             val jsonString = response.body()?.string()
             val jsonObject = JSONObject(jsonString)
             val dataArray = jsonObject.getJSONObject("data").getJSONArray("popularChallengeList")
+            Log.d(CLOG, "${jsonString}")
 
             for (i in 0 until dataArray.length()) {
                 val item = dataArray.getJSONObject(i)

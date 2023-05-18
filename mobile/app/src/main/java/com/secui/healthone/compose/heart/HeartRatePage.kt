@@ -30,7 +30,7 @@ fun HeartRatePage(
     modifier: Modifier=Modifier){
 
     // 타이틀 값 수정
-    HealthOnePage.pageTitle.value="심박수"
+    HealthOnePage.pageTitle.value = "심박수"
 
     val heartList = HeartRateViewModel.heartRateList;
     // heartRate 세팅
@@ -54,9 +54,10 @@ fun HeartRatePage(
         Spacer(modifier = Modifier.height(16.dp))
         HeartRateInfoBox(navController);
         Spacer(modifier = Modifier.height(16.dp))
-        HeartRateRecordList(heartList = heartList.value);
-        Spacer(modifier = Modifier.height(32.dp))
-
+        if(heartList.value.size>0){
+            HeartRateRecordList(heartList = heartList.value);
+            Spacer(modifier = Modifier.height(32.dp))
+        }
     }
 
 }

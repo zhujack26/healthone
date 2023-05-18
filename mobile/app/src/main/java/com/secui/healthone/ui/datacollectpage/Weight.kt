@@ -29,8 +29,10 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
 import com.secui.healthone.R
 import com.secui.healthone.constant.AppColors
+import com.secui.healthone.viewmodel.UserViewModel
+
 @Composable
-fun Weight() {
+fun Weight(userViewModel: UserViewModel) {
     val (textState, setTextState) = remember {
         mutableStateOf("")
     }
@@ -85,6 +87,7 @@ fun Weight() {
                                 value = if (textState.isBlank()) 60 else textState.toInt()
                                 setOnValueChangedListener { _, _, newVal ->
                                     setTextState(newVal.toString())
+                                    userViewModel.weight.value = newVal.toString()  // 체중 값 변경
                                 }
                             }
                         },

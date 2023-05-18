@@ -25,10 +25,11 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.secui.healthone.constant.AppColors
 import com.secui.healthone.util.PreferenceUtil
 import com.secui.healthone.util.PreferencesManager
+import com.secui.healthone.viewmodel.UserViewModel
 import java.text.SimpleDateFormat
 
 @Composable
-fun SleepGoal(context: Context) {
+fun SleepGoal(userViewModel: UserViewModel, context: Context) {
     val context = LocalContext.current
     val preferencesManager = PreferencesManager(context)
     val prefs = PreferenceUtil(context); // onehee9710
@@ -63,9 +64,12 @@ fun SleepGoal(context: Context) {
                             if (sleepEditMode.value) {
                                 sleepTime.value = selectedTime
                                 preferencesManager.setSleepTime(selectedTime)
+                                userViewModel.sleepTime.value = selectedTime
                             } else if (wakeEditMode.value) {
                                 wakeTime.value = selectedTime
                                 preferencesManager.setWakeTime(selectedTime)
+                                userViewModel.wakeUpTime.value = selectedTime
+
                             }
                             if (sleepEditMode.value || wakeEditMode.value) {
                                 calculateSleepDuration(sleepTime, wakeTime, sleepDuration)

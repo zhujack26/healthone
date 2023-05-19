@@ -1,0 +1,53 @@
+# SERVER Setting
+spring:
+  datasource:
+    url: jdbc:mariadb://healthonedb.c2gi2aefdpge.ap-northeast-2.rds.amazonaws.com:3306/healthone
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: healthonedev
+    password: "!Hea1th#ne#050123"
+    hikari:
+      pool-name: jpa-hikari-pool
+      maximum-pool-size: 5
+      jdbc-url: ${spring.datasource.url}
+      username: ${spring.datasource.username}
+      password: ${spring.datasource.password}
+      driver-class-name: ${spring.datasource.driver-class-name}
+      data-source-properties:
+        rewriteBatchedStatements: true
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    properties:
+      hibernate:
+        jdbc.batch_size: 1000
+        format_sql: true
+        show_sql: true
+        use_sql_comments: true
+    defer-datasource-initialization: true
+
+# cors 설정
+cors:
+  allowed-origins: 'http://localhost:3000'
+  allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+  allowed-headers: '*'
+  max-age: 3600
+
+logging:
+  level:
+    root: info
+    org:
+      hibernate: info
+
+notification:
+  mattermost:
+    enabled: true
+    webhook-url: "https://meeting.ssafy.com/hooks/w613sg4shjbufngbxdcryobory"
+    channel:
+    pretext:
+    color:
+    author-name:
+    author-icon:
+    footer:
+
+jwt:
+  secret: tset

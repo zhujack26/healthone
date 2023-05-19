@@ -1,0 +1,108 @@
+@import "Colors.scss";
+
+.manage-page-header {
+  /* manage-page-header */
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  gap: 32px;
+
+  width: 100%;
+
+  /* 720px 이하일 때 */
+  @media (max-width: 720px) {
+    font-size: 16px;
+    height: 64px;
+  }
+  /* 721px ~ 1024px 때 */
+  @media (min-width: 721px) and (max-width: 1024px) {
+    font-size: 18px;
+    height: 72px;
+  }
+  /* 1024px 이상일 때 */
+  @media (min-width: 1025px) {
+    font-size: 20px;
+    height: 80px;
+  }
+
+  .page-title {
+    /* page-title */
+    /* Auto layout */
+    width: max-content;
+    height: max-content;
+    font-weight: 900;
+    text-align: left;
+  }
+  .right-btn {
+    /* right-btn */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 0px;
+    gap: 64px;
+    width: max-content;
+    height: max-content;
+
+    .nav-btns {
+      /* nav-btn */
+      /* Auto layout */
+
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      padding: 8px 0px;
+      gap: 64px;
+
+      width: max-content;
+      height: max-content;
+
+      p {
+        /* 회원 관리 */
+        width: max-content;
+        height: max-content;
+
+        font-weight: 700;
+        color: $mono700;
+
+        cursor: pointer;
+      }
+      .nav-btn-active {
+        color: $green300;
+      }
+    }
+    .logout-btn {
+      /* logout-btn */
+      /* Auto layout */
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 16px 12px;
+      background-color: $red300;
+
+      color: $white;
+
+      /* 720px 이하일 때 */
+      @media (max-width: 720px) {
+        font-size: 10px;
+        width: 72px;
+        height: 28px;
+      }
+      /* 721px ~ 1024px 때 */
+      @media (min-width: 721px) and (max-width: 1024px) {
+        font-size: 12px;
+        width: 96px;
+        height: 32px;
+      }
+      /* 1024px 이상일 때 */
+      @media (min-width: 1025px) {
+        font-size: 14px;
+        width: 112px;
+        height: 40px;
+      }
+    }
+  }
+}

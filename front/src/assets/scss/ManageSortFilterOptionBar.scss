@@ -1,0 +1,115 @@
+@import "Colors.scss";
+
+.manage-sort-filter-option-bar {
+  /* 본체 */
+
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0px 16px;
+
+  width: 100%;
+  height: 64px;
+
+  .option-div-frame {
+    /* 정렬 */
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0px;
+
+    width: max-content;
+    height: max-content;
+
+    /* 720px 이하일 때 */
+    @media (max-width: 720px) {
+      gap: 16px;
+      font-size: 12px;
+    }
+
+    /* 721px ~ 1024px 때 */
+    @media (min-width: 721px) and (max-width: 1024px) {
+      gap: 24px;
+      font-size: 14px;
+    }
+    /* 1024px 이상일 때 */
+    @media (min-width: 1025px) {
+      gap: 32px;
+      font-size: 16px;
+    }
+
+    .sort-option-div,
+    .state-filter-div {
+      /* Auto layout */
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+
+      width: max-content;
+      height: max-content;
+
+      /* 720px 이하일 때 */
+      @media (max-width: 720px) {
+        gap: 16px;
+      }
+
+      /* 721px ~ 1024px 때 */
+      @media (min-width: 721px) and (max-width: 1024px) {
+        gap: 24px;
+      }
+      /* 1024px 이상일 때 */
+      @media (min-width: 1025px) {
+        gap: 32px;
+      }
+
+      p {
+        /* 정렬 기준 */
+        width: max-content;
+        height: max-content;
+        text-align: center;
+      }
+      .sort-role-select,
+      .user-state-select {
+        /* select box */
+        box-sizing: border-box;
+
+        /* Auto layout */
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: max-content;
+
+        border: 1px solid $green300;
+        text-align: center;
+        // text media;
+
+        /* 720px 이하일 때 */
+        @media (max-width: 720px) {
+          font-size: 12px;
+          padding: 4px 0px;
+          width: 72px;
+        }
+
+        /* 721px ~ 1024px 때 */
+        @media (min-width: 721px) and (max-width: 1024px) {
+          font-size: 14px;
+          padding: 6px 0px;
+          width: 96px;
+        }
+        /* 1024px 이상일 때 */
+        @media (min-width: 1025px) {
+          font-size: 16px;
+          padding: 8px 0px;
+          width: 128px;
+        }
+      }
+    }
+  }
+}

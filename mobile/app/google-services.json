@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "150894542895",
+    "project_id": "secui-project",
+    "storage_bucket": "secui-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:150894542895:android:31951ab18b7702021206da",
+        "android_client_info": {
+          "package_name": "com.secui.healthone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "150894542895-ckgov1fn1it0ao1hrqusnrqdatls66u8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQic3Rt8eJuzHvnX4GhRycvnW9YuDgQII"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "150894542895-ckgov1fn1it0ao1hrqusnrqdatls66u8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

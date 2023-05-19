@@ -1,0 +1,173 @@
+@charset "UTF-8";
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.login-form {
+  /* login-form */
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 16px 32px;
+  gap: 64px;
+  height: max-content;
+  /* 360px 이하일 때 */
+  /* 361px ~ 720px일 때 */
+  /* 361px ~ 720px일 때 */
+  /* 1024px 이상일 때 */
+  /* mono50 */
+  background: #fdfdfd;
+}
+@media (max-width: 400px) {
+  .login-form {
+    width: 256px;
+  }
+}
+@media (min-width: 401px) and (max-width: 720px) {
+  .login-form {
+    width: 320px;
+  }
+}
+@media (min-width: 721px) and (max-width: 1024px) {
+  .login-form {
+    width: 448px;
+  }
+}
+@media (min-width: 1025px) {
+  .login-form {
+    /* 스타일 속성 */
+    width: 560px;
+  }
+}
+@media (max-height: 720px) {
+  .login-form {
+    height: 560px;
+  }
+}
+@media (min-height: 721px) {
+  .login-form {
+    height: 592px;
+  }
+}
+.login-form .admin-login-title {
+  /* 헬스원(HEALTHONE) */
+  width: max-content;
+  font-weight: 700;
+  /* identical to box height */
+  color: #0c0a0b;
+  /* 360px 이하일 때 */
+  /* 361px ~ 720px일 때 */
+  /* 361px ~ 720px일 때 */
+  /* 1024px 이상일 때 */
+}
+@media (max-width: 400px) {
+  .login-form .admin-login-title {
+    font-size: 20px;
+  }
+}
+@media (min-width: 401px) and (max-width: 720px) {
+  .login-form .admin-login-title {
+    font-size: 24px;
+  }
+}
+@media (min-width: 721px) and (max-width: 1024px) {
+  .login-form .admin-login-title {
+    font-size: 24px;
+  }
+}
+@media (min-width: 1025px) {
+  .login-form .admin-login-title {
+    /* 스타일 속성 */
+    font-size: 32px;
+  }
+}
+.login-form .admin-id-label {
+  /* admin-id-label */
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 8px;
+  gap: 8px;
+  width: 100%;
+  height: max-content;
+  /* mono50 */
+  background: #fdfdfd;
+}
+.login-form .admin-id-label .id-title {
+  /* id-title */
+  width: max-content;
+  height: max-content;
+  font-size: 18px;
+  color: #0c0a0b;
+}
+.login-form .admin-id-label .admin-id-input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 54px;
+  /* green300 */
+  border: 1px solid #aad1ae;
+  padding-left: 16px;
+  font-size: 16px;
+}
+.login-form .admin-pwd-label {
+  /* admin-id-label */
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 8px;
+  gap: 8px;
+  /* mono50 */
+  background: #fdfdfd;
+  width: 100%;
+  height: max-content;
+}
+.login-form .admin-pwd-label .pwd-title {
+  /* id-title */
+  width: max-content;
+  height: max-content;
+  font-size: 18px;
+  color: #0c0a0b;
+}
+.login-form .admin-pwd-label .admin-pwd-input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 54px;
+  padding-left: 16px;
+  /* green300 */
+  border: 1px solid #aad1ae;
+  font-size: 16px;
+}
+.login-form .login-btn-frame {
+  /* login-btn-frame */
+  /* Auto layout */
+  /* mono50 */
+  background: #fdfdfd;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+  height: 64px;
+}
+.login-form .login-btn-frame .admin-login-btn {
+  /* admin-login-btn */
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  gap: 10px;
+  width: 156px;
+  height: 48px;
+  background: #aad1ae;
+  /* Inside auto layout */
+  font-size: 20px;
+  color: #fdfdfd;
+}
+
+/*# sourceMappingURL=LoginForm.css.map */

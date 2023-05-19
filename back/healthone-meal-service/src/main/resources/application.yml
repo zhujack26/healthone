@@ -1,0 +1,14 @@
+server:
+  port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+
+spring:
+  profiles:
+    active: server
+
+springdoc:
+  api-docs:
+    path: /meal/v3/api-docs

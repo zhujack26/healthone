@@ -348,46 +348,50 @@ pipeline{
 
 <br/>
 
-### **4. 와이어 프레임**
+### **4. 안드로이드 패키지 전략**
+
+![안드로이드 패키지](./assets/android_package.png)
+
+### **5. 와이어 프레임**
 
 ![와이어 프레임](./assets/wire_frame.PNG)
 [와이어 프레임(피그마) 보러가기](https://www.figma.com/file/c6VDORQFg4rsYtcoMQqrsf/%EC%99%80%EC%9D%B4%EC%96%B4%ED%94%84%EB%A0%88%EC%9E%84?type=design&node-id=0%3A1&t=jultSwCYdOwtg0AB-1)
 <br/>
 
-### **5. 기능명세서**
+### **6. 기능명세서**
 
 ![기능명세서 Link](./assets/function_specification.PNG)
 [기능 명세서(스프레드 시트) 보러가기](https://docs.google.com/spreadsheets/d/1FvsPqu87S44rUIjdc5jsqBZ0VdeLXa8o/edit?usp=share_link&ouid=102208980798385722229&rtpof=true&sd=true)
 <br/>
 
-### **6. 아키텍쳐 설계**
+### **7. 아키텍쳐 설계**
 
 ![아키텍처 설계](./assets/healthone_architecture.png)
 <br/>
 
-### **7. E-R Diagram**
+### **8. E-R Diagram**
 
 ![ERD](./assets/erd_table.jpg)
 [ERD 보러가기](https://drive.google.com/file/d/1GRkUi9qbZjGUuojL2Cbs_ZNRKNWhOH9Z/view?usp=share_link)
 <br/>
 
-### **8. API 명세서**
+### **9. API 명세서**
 
 ![API 명세서 Link](./assets/healthone_api_docs.PNG)
 [API 문서 보러가기](https://www.notion.so/BE-API-91a49862404d448e8c23e7051880e293?pvs=4)
 <br/>
 
-### **9. 간트 차트(Gantt Chart)**
+### **10. 간트 차트(Gantt Chart)**
 
 ![간트 차트](./assets/gantt_chart.PNG)
 <br/>
 
-### **10. 프로젝트 기술스택 한눈에 보기**
+### **11. 프로젝트 기술스택 한눈에 보기**
 
 ![기술 스택](./assets/heathone_techstacks.PNG)
 <br/>
 
-### **11. 앱 출시 화면(App Production )**
+### **12. 앱 출시 화면(App Production )**
 
 ![앱 출시 화면](./assets/app_production.png)
 [플레이 스토어에서 자세히 보기](https://play.google.com/store/apps/details?id=com.secui.healthone&pli=1)

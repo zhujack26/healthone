@@ -176,7 +176,8 @@
 
 ### **3. 파이프라인**
 
-__Android Pipeline__
+**Android Pipeline**
+
 ```
 pipeline{
     agent{
@@ -186,7 +187,7 @@ pipeline{
         gradle 'Android-Gradle'
         jdk 'jdk-17'
     }
-    
+
     stages{
         stage('GitLab Clone'){
             steps{
@@ -194,7 +195,7 @@ pipeline{
                 sh "chmod +x -R ${env.WORKSPACE}"
             }
         }
-        
+
         stage('SonarQube analysis'){
             steps{
                 withSonarQubeEnv('SonarQubeServer'){
@@ -221,7 +222,7 @@ pipeline{
                 }
             }
         }
-        
+
         stage('Deploy App to Store') {
             steps {
                 echo 'Deploying'
@@ -232,21 +233,22 @@ pipeline{
             }
         }
     }
-    
+
     post {
         failure {
             mattermostSend (color: '#ff0000', message: "### Build Failure \n __Name__ \n ${env.JOB_NAME} \n __Version__ \n 0.0.${currentBuild.number}")
         }
         success {
             mattermostSend (color: '#81c147', message: "### Build Success \n __Name__ \n ${env.JOB_NAME} \n __Version__ \n 0.0.${currentBuild.number}")
-            
+
         }
     }
 }
 ```
 
-__Back-End Pipeline Template__
-```
+**Back-End Pipeline Template**
+
+````
 pipeline{
     agent{
         label 'healthone-back-jenkins'
@@ -255,8 +257,8 @@ pipeline{
         gradle 'Gradle'
     }
 
- 
-    
+
+
     stages{
         stage('GitLab Clone'){
             steps{
@@ -264,7 +266,7 @@ pipeline{
                 sh "chmod +x -R ${env.WORKSPACE}"
             }
         }
-        
+
         stage('SonarQube analysis'){
             steps{
                 withSonarQubeEnv('SonarQubeServer'){
@@ -277,7 +279,7 @@ pipeline{
                 }
             }
         }
-        
+
         stage('JUnit Test'){
             steps{
                 dir('back/healthone-challenge-service'){
@@ -291,7 +293,7 @@ pipeline{
                 }
             }
         }
-        
+
         stage('Build'){
             steps{
                 dir('back/healthone-challenge-service'){
@@ -299,7 +301,7 @@ pipeline{
                 }
             }
         }
-        
+
         stage('Push Docker Image'){
             steps{
                 dir('back/healthone-challenge-service'){
@@ -309,40 +311,40 @@ pipeline{
                 }
             }
         }
-            
+
         stage('Clone ArgoCD'){
             steps{
                 git branch: "master",credentialsId:"${env.GIT_CREDENTIAL_ID}",url:"${env.GITLAB_ARGO_URL}"
                 sh "chmod +x -R ${env.WORKSPACE}"
             }
         }
-        
+
         stage('Update Version'){
             steps{
             }
         }
-        
+
         stage('Push ArgoCD Repo'){
             steps{
                 sh """
-                   git push 
+                   git push
                    """
             }
         }
     }
-        
-    
+
+
     post {
         failure {
             mattermostSend (color: '#ff0000', message: "### Build Failure \n __Name__ \n ${env.JOB_NAME} \n __Version__ \n 0.0.${currentBuild.number}")
         }
         success {
             mattermostSend (color: '#81c147', message: "### Build Success \n __Name__ \n ${env.JOB_NAME} \n __Version__ \n 0.0.${currentBuild.number}")
-            
+
         }
     }
 }
-```
+````
 
 <br/>
 
@@ -392,12 +394,6 @@ pipeline{
 
 <br/>
 
-### 유저 플로우
-
-### 시연 영상
-
-<br/>
-
 ### 서비스 화면
 
 ### 📱 안드로이드 앱
@@ -444,12 +440,6 @@ pipeline{
 <img src="./assets/healtone_health_diet_search.jpg" width="252px" height="560px"/>
 <img src="./assets/healtone_health_calendar_dialog.jpg" width="252px" height="560px"/>
 <img src="./assets/healtone_health_excercise_input.jpg" width="252px" height="560px"/>
-</div>
-<br/>
-
-### 수면 측정 페이지
-
-<div style="display:flex; flex-direction:row; gap:16px; overflow:scroll;">
 </div>
 <br/>
 

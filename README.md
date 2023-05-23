@@ -173,18 +173,23 @@
 
 #### 로그인 및 간편가입 페이지
 
+<div align="left">
 <img src="./assets/healthone_login.jpg" width="252px" height="560px"/>
 <img src="./assets/healthone_join1.jpg" width="252px" height="560px"/>
 <img src="./assets/healthone_join2.jpg" width="252px" height="560px"/>
-
+</div>
+	
 <br/>
 
 #### 메인 페이지
 
+<div align="left">
 <img src="./assets/healthone_main1.jpg" width="252px" height="560px"/>
 <img src="./assets/healthone_main2.jpg" width="252px" height="560px"/>
 <img src="./assets/healtone_slide_bar.jpg" width="252px" height="560px"/>
-<br/>
+</div>
+
+<br>
 
 #### 걸음수 측정 페이지
 
@@ -194,48 +199,61 @@
 
 #### 심박수 측정 페이지
 
+<div align="left">
 <img src="./assets/healtone_heart_main1.jpg" width="252px" height="560px"/>
 <img src="./assets/healtone_heart_main1-focused.jpg" width="252px" height="560px"/>
-
+</div>
+	
 <br/>
 
+<div align="left">
 <img src="./assets/healtone_heart_main2.jpg" width="252px" height="560px"/>
 <img src="./assets/healtone_heart_input.jpg" width="252px" height="560px"/>
-
+</div>
+	
 <br/>
 
 ### 식단 기록 페이지
 
-
+<div align="left">
 <img src="./assets/healtone_diet_main.jpg" width="252px" height="560px"/>
 <img src="./assets/healtone_health_diet_input1.jpg" width="252px" height="560px"/>
 <img src="./assets/healtone_health_diet_input2.jpg" width="252px" height="560px"/>
-
+</div>
+	
 <br/>
 
+<div align="left">
 <img src="./assets/healtone_health_diet_search.jpg" width="252px" height="560px"/>
 <img src="./assets/healtone_health_calendar_dialog.jpg" width="252px" height="560px"/>
 <img src="./assets/healtone_health_excercise_input.jpg" width="252px" height="560px"/>
+</div>
 
 <br/>
 
 ### 건강 정보 페이지
 
+<div align="left">
 <img src="./assets/healtone_health_info.jpg" width="252px" height="560px"/>
 <img src="./assets/healtone_health_info2.jpg" width="252px" height="560px"/>
+</div>
 
 <br/>
 
 ### 🔥 챌린지 페이지
 
+<div align="left">
 <img src="./assets/healtone_challenge_main1.jpg" width="252px" height="560px"/>
 <img src="./assets/healtone_challenge_main2.jpg" width="252px" height="560px"/>
 <img src="./assets/healtone_challenge_detail_2.jpg" width="252px" height="560px"/>
-
+</div>
+	
 <br/>
 
+<div align="left">
 <img src="./assets/healtone_challenge_detail_1.jpg" width="252px" height="560px"/>
 <img src="./assets/healtone-challenge_tool_modal.jpg" width="252px" height="560px"/>
+</div>
 
 <br/>
 
@@ -263,22 +281,30 @@
 
 #### 로그인 페이지
 
+<div align="left">
 <img src="./assets/web_login1.png"/>
 <img src="./assets/web_login2.png"/>
+</div>
 
 <br/>
 
 #### 회원관리 페이지
 
+<div align="left">
 <img src="./assets/web_user_manage_list1.png"/>
 <img src="./assets/web_user_manage_list2.png"/> 
 <img src="./assets/web_user_manage_search.png"/>
+</div>
+
 <br/>
 
 #### 불편사항 관리 페이지
 
+<div align="left">
 <img src="./assets/web_voice_list.png"/>
 <img src="./assets/web_voice_answer.png"/>
+</div>
+
 <br/>
 
 ## 협업방식

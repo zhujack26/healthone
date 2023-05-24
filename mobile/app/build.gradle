@@ -82,13 +82,13 @@ dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
     // Graph Libraries
-    implementation 'com.github.madrapps:plot:0.1.1' // line-graph
-    implementation 'com.github.jaikeerthick:Composable-Graphs:v1.0' // bar-graph
+    implementation 'com.github.madrapps:plot:0.1.1'
+    implementation 'com.github.jaikeerthick:Composable-Graphs:v1.0'
 
     // Retrofit and OkHttp
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation "com.squareup.okhttp3:okhttp-urlconnection:4.9.1"
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.9.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
     implementation 'com.squareup.okhttp3:okhttp:4.9.3'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'

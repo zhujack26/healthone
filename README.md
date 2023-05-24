@@ -22,10 +22,13 @@
 
 ## 📃 주요기능
 
-1. 모바일 디바이스의 센서와 Google fit API를 사용한 걸음수 측정, 수면 측정, 심박수 데이터 기록 
-2. 오늘 먹은 식단과 운동을 기록 및 칼로리 계산
-3. 혼자서 하는 지루한 운동은 그만, 당신을 위한 운동 프로그램 소개
-    - 많이 참여한, 유저들이 관심있어하는 운동 프로그램 소개
+1. 건강 데이터 입력 및 목표 설정
+2. 모바일 디바이스의 센서와 Google fit API를 사용한 걸음수 측정, 자체 수면 측정, 심박수 데이터 기록 (시각화 및 대시보드 제공)
+3. 섭취 식단과 운동을 기록하고 칼로리 계산
+4. 유저 맞춤형 운동 프로그램 소개
+   - 많이 참여한, 유저들이 관심있어하는 운동 프로그램 소개
+
+5. 건강 데이터 백업 및 다운로드
 
 <br>
 
@@ -67,27 +70,22 @@
 ```
 - Kotlin 222-1.8.0-release-AS3739.54
 - Gradle 8.0
-- compileSdk 33
+- Android compileSdk 33
 - Java 8
-- minSdk 26
-- targetSdk 33
-- compose 1.6.1
-- compose-ui 1.3.3
-- compose-material 1.2.0
-- navigation-compose 2.4.1
-- gms:play-services-location 21.0.1
-- gms:play-services-auth 20.5.0
-- kotlinx-coroutines-android 1.6.0
-- retrofit 2.9.0
-- converter-gson 2.9.0
-- gms:play-services-fitness 21.0.1
-- okhttp 4.9.3
-- firebase-core 9.6.1
-- firebase-messaging 21.1.0
-- compileSdk 33
-- minSDK 31
-- targetSdk 32
-- lifecycle-runtime-ktx 2.3.1
+- Android minSdk 26
+- Android targetSdk 33
+- Jetpack compose 1.6.1
+- Compose UI 1.3.3
+- Compose Material 1.2.0
+- Compose Runtime: Runtime 1.3.3, Runtime LiveData 1.3.3, Runtime RxJava2 1.3.3
+- Kotlin Extensions: Core KTX 1.7.0, Lifecycle Runtime KTX 2.3.1, Activity KTX 1.6.1
+- Navigation Compose 2.4.1
+- Coroutines Android 1.6.0
+- Google Play Services: Location 21.0.1, Auth 20.1.0, Fitness 21.0.1
+- Retrofit 2.9.0
+- Converter Gson 2.9.0
+- OkHttp 4.9.3
+- Persistent Cookie Jar v1.0.1
 ```
 
 **CI/CD**
@@ -178,7 +176,7 @@
 <img src="./assets/healthone_join1.jpg" width="252px" height="560px"/>
 <img src="./assets/healthone_join2.jpg" width="252px" height="560px"/>
 </div>
-	
+
 <br/>
 
 #### 메인 페이지
@@ -193,7 +191,10 @@
 
 #### 걸음수 측정 페이지
 
-<img src="./assets/healthone_walk_main.jpg" width="252px" height="560px"/>
+<div align="left">
+<img src="./assets/healthone_walk_main.png" width="252px" height="560px"/>
+<img src="./assets/healthone_walk_detail.png" width="252px" height="560px"/>
+</div>
 
 <br/>
 
@@ -203,14 +204,14 @@
 <img src="./assets/healtone_heart_main1.jpg" width="252px" height="560px"/>
 <img src="./assets/healtone_heart_main1-focused.jpg" width="252px" height="560px"/>
 </div>
-	
+
 <br/>
 
 <div align="left">
 <img src="./assets/healtone_heart_main2.jpg" width="252px" height="560px"/>
 <img src="./assets/healtone_heart_input.jpg" width="252px" height="560px"/>
 </div>
-	
+
 <br/>
 
 ### 식단 기록 페이지
@@ -220,7 +221,7 @@
 <img src="./assets/healtone_health_diet_input1.jpg" width="252px" height="560px"/>
 <img src="./assets/healtone_health_diet_input2.jpg" width="252px" height="560px"/>
 </div>
-	
+
 <br/>
 
 <div align="left">
@@ -247,7 +248,7 @@
 <img src="./assets/healtone_challenge_main2.jpg" width="252px" height="560px"/>
 <img src="./assets/healtone_challenge_detail_2.jpg" width="252px" height="560px"/>
 </div>
-	
+
 <br/>
 
 <div align="left">
@@ -256,6 +257,18 @@
 </div>
 
 <br/>
+
+
+
+### 건강 데이터 다운로드 페이지
+
+<div align="left">
+<img src="./assets/healthone_data.png" width="252px" height="560px"/>
+</div>
+
+
+
+
 
 ### WEB
 
@@ -370,22 +383,21 @@ com
          |   |   ㄴ entity 
          |   |   ㄴ service
          |   |   ㄴ dto
-         |   |   ㄴ repository		
+         |   |   ㄴ repository        
          |   ㄴ walk
          |   |   ㄴ api 
          |   |   ㄴ entity 
          |   |   ㄴ service
          |   |   ㄴ dto
-         |   |   ㄴ repository		
+         |   |   ㄴ repository        
          |   ...
          ㄴ global
              ㄴ config
              ㄴ error
              ㄴ response
              ㄴ util
-		     |   ...
+             |   ...
 ```
-
 
 ### 4. 파이프라인
 
@@ -461,7 +473,7 @@ pipeline{
 
 **Back-End Pipeline Template**
 
-````
+```
 pipeline{
     agent{
         label 'healthone-back-jenkins'
@@ -487,7 +499,7 @@ pipeline{
                         sh '''
                            gradle init
                            chmod +x gradlew
-		  '''
+          '''
                     }
                 }
             }
@@ -557,8 +569,7 @@ pipeline{
         }
     }
 }
-````
-
+```
 
 ### Project Member - 이산가족
 
